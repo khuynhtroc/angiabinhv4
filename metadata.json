@@ -1,0 +1,6 @@
+{
+  "name": "Bê Tông An Gia Bình",
+  "description": "Website doanh nghiệp Bê Tông An Gia Bình Ninh Bình với blog chuẩn SEO, hồ sơ năng lực dự án, chatbot AI 24/7, phân tích thời gian thực và trung tâm quản trị Jekyll.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

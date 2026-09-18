@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="2.0" 
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
+  <xsl:template match="/">
+    <html lang="vi">
+      <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title><xsl:value-of select="/rss/channel/title"/> | RSS Feed 2.0</title>
+        <style>
+          * { box-sizing: border-box; margin: 0; padding: 0; }
+          body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+            padding: 32px 16px;
+            line-height: 1.6;
+          }
+          .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+          }
+          .header {
+            background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+            color: #ffffff;
+            padding: 36px 32px;
+            border-bottom: 4px solid #f59e0b;
+          }
+          .badge {
+            display: inline-block;
+            background: #f59e0b;
+            color: #020617;
+            font-size: 11px;
+            font-weight: 900;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+          }
+          h1 {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 8px;
+          }
+          .desc {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 16px;
+          }
+          .feed-meta {
+            font-size: 12px;
+            color: #cbd5e1;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+          }
+          .feed-meta span {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 6px;
+          }
+          .items-list {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+          }
+          .item-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 20px 24px;
+            background: #ffffff;
+            transition: border-color 0.2s, transform 0.2s;
+          }
+          .item-card:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.08);
+          }
+          .item-cat {
+            display: inline-block;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+          }
+          .item-title {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 8px;
+          }
+          .item-title a {
+            color: #0f172a;
+            text-decoration: none;
+          }
+          .item-title a:hover {
+            color: #d97706;
+          }
+          .item-desc {
+            font-size: 13px;
+            color: #475569;
+            margin-bottom: 14px;
+            line-height: 1.6;
+          }
+          .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #64748b;
+            border-top: 1px dashed #e2e8f0;
+            padding-top: 12px;
+          }
+          .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: #d97706;
+            font-weight: 700;
+            text-decoration: none;
+          }
+          .read-more:hover {
+            text-decoration: underline;
+          }
+          .footer {
+            padding: 20px 32px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            font-size: 12px;
+            color: #64748b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+          }
+          .footer a {
+            color: #f59e0b;
+            text-decoration: none;
+            font-weight: 700;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <div class="badge">Kênh Dữ Liệu RSS 2.0 Chuẩn Hóa</div>
+            <h1><xsl:value-of select="/rss/channel/title"/></h1>
+            <p class="desc"><xsl:value-of select="/rss/channel/description"/></p>
+            <div class="feed-meta">
+              <span>Ngôn ngữ: <xsl:value-of select="/rss/channel/language"/></span>
+              <span>Tổng số bài viết: <xsl:value-of select="count(/rss/channel/item)"/></span>
+              <span>Cập nhật: <xsl:value-of select="/rss/channel/lastBuildDate"/></span>
+            </div>
+          </div>
+
+          <div class="items-list">
+            <xsl:for-each select="/rss/channel/item">
+              <div class="item-card">
+                <xsl:if test="category">
+                  <div class="item-cat"><xsl:value-of select="category"/></div>
+                </xsl:if>
+                <div class="item-title">
+                  <a href="{link}" target="_blank"><xsl:value-of select="title"/></a>
+                </div>
+                <div class="item-desc">
+                  <xsl:value-of select="description"/>
+                </div>
+                <div class="item-footer">
+                  <div>Ngày đăng: <xsl:value-of select="pubDate"/></div>
+                  <a class="read-more" href="{link}" target="_blank">Đọc bài viết →</a>
+                </div>
+              </div>
+            </xsl:for-each>
+          </div>
+
+          <div class="footer">
+            <div>
+              Trang web: <a href="https://betongangiabinh.vn">betongangiabinh.vn</a> • Hotline: <strong>0988 2662 93</strong>
+            </div>
+            <div>
+              Sơ đồ trang web: <a href="/sitemap.xml">XML Sitemap</a>
+            </div>
+          </div>
+        </div>
+      </body>
+    </html>
+  </xsl:template>
+</xsl:stylesheet>

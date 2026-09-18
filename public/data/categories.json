@@ -1,0 +1,23 @@
+[
+  {
+    "id": "cat-tin-tuc",
+    "name": "Tin Tức",
+    "slug": "tin-tuc",
+    "description": "Tin tức thị trường bê tông tươi Ninh Bình, hoạt động trạm trộn, báo giá mới nhất và các dự án triển khai.",
+    "color": "amber"
+  },
+  {
+    "id": "cat-kinh-nghiem",
+    "name": "Kinh Nghiệm",
+    "slug": "kinh-nghiem",
+    "description": "Kinh nghiệm đổ bê tông móng, cột, dầm, sàn, lựa chọn nhà cung cấp uy tín, cẩm nang xây dựng và mẹo thi công thực tế.",
+    "color": "emerald"
+  },
+  {
+    "id": "cat-kien-thuc",
+    "name": "Kiến Thức",
+    "slug": "kien-thuc",
+    "description": "Kiến thức kỹ thuật xây dựng, tiêu chuẩn mác bê tông R7, R28, cấp phối vật liệu, thí nghiệm LAS-XD và bảo dưỡng chống nứt.",
+    "color": "blue"
+  }
+]

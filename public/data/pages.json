@@ -1,0 +1,311 @@
+[
+  {
+    "id": "page-home",
+    "title": "Trang Chủ - Bê Tông An Gia Bình",
+    "slug": "/",
+    "menuTitle": "Trang chủ",
+    "showInMenu": true,
+    "menuLocation": "header",
+    "menuOrder": 0,
+    "layout": "hero-content",
+    "summary": "Cấu hình và nội dung các khối hiển thị trên trang chủ: Video banner hero, thông số công suất 450m³/h, máy tính số khối bê tông, bảng giá tham khảo và các dự án trọng điểm.",
+    "heroImage": "https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1200&auto=format&fit=crop&q=80",
+    "heroCtaText": "Xem Báo Giá Bê Tông",
+    "heroCtaLink": "/bang-gia",
+    "sections": [
+      {
+        "id": "sec-home-hero",
+        "type": "hero",
+        "title": "BÊ TÔNG AN GIA BÌNH - NỀN MÓNG VỮNG BỀN",
+        "content": "Cung ứng bê tông thương phẩm mác 150 – 450, hệ thống 2 cụm trạm trộn tự động tổng công suất 450m³/h (Trạm KCN Khánh Phú 300m³/h & Trạm Xã Kim Sơn 150m³/h), đội xe 35+ xe bồn và dàn xe bơm cần vươn xa 37m - 56m. Đo nén mẫu R7, R28 kiểm định LAS-XD trực tiếp tại hiện trường.",
+        "badge": "Trạm Đôi 450m³/h KCN Khánh Phú & Kim Sơn",
+        "buttonText": "Xem Báo Giá Tham Khảo",
+        "buttonLink": "/bang-gia"
+      },
+      {
+        "id": "sec-home-capacity",
+        "type": "features",
+        "title": "Năng Lực Thiết Bị & Trạm Trộn Công Nghệ Cao",
+        "content": "Hệ thống trạm trộn tự động hóa PLC cùng dàn thiết bị cơ giới chuyên dụng sẵn sàng phục vụ 24/7 trên toàn địa bàn tỉnh Ninh Bình.",
+        "badge": "Năng Lực Thiết Bị",
+        "items": [
+          "Cụm trạm đôi tự động hóa PLC tổng công suất 450 m³/h",
+          "Đội ngũ hơn 35 xe bồn chuyên dụng dung tích 10m³ – 12m³",
+          "Dàn xe bơm cần vươn xa 37m, 43m, 52m, 56m và bơm tĩnh áp lực cao",
+          "Phòng thí nghiệm hợp chuẩn LAS-XD nén mẫu R7, R28 và đo độ sụt tận công trình"
+        ]
+      },
+      {
+        "id": "sec-home-pricing",
+        "type": "rich_text",
+        "title": "Bảng Giá Tham Khảo & Máy Tính Dự Toán Thể Tích",
+        "content": "Cung cấp công cụ tính thể tích bê tông cho móng đơn, móng băng, móng bè, cột, dầm, sàn và cập nhật bảng giá tham khảo mới nhất tại thời điểm hiện tại cho từng mác bê tông.",
+        "badge": "Giá Cả Minh Bạch"
+      },
+      {
+        "id": "sec-home-projects",
+        "type": "features",
+        "title": "Công Trình & Dự Án Tiêu Biểu",
+        "content": "Đồng hành cùng các nhà thầu và chủ đầu tư trong những công trình công nghiệp và dân dụng trọng điểm.",
+        "badge": "Dự Án Thực Tế",
+        "items": [
+          "Nhà xưởng KCN Khánh Phú & KCN Gián Khẩu",
+          "Dự án Mở rộng Tuyến đường ĐT477 & Cầu Mai Sơn",
+          "Các khu đô thị, biệt thự sinh thái Tràng An, TP. Tam Điệp",
+          "Hàng ngàn công trình nhà phố, trường học, bệnh viện tại Ninh Bình"
+        ]
+      },
+      {
+        "id": "sec-home-process",
+        "type": "features",
+        "title": "Quy Trình Kiểm Định & Sản Xuất Chuẩn TCVN",
+        "content": "Từng mẻ trộn đều tuân thủ các bước nghiêm ngặt từ kiểm định cát đá xi măng đầu vào đến thử nghiệm độ sụt tại hiện trường.",
+        "badge": "TCVN 3105 & TCVN 3118",
+        "items": [
+          "Sàng lọc cát vàng hạt lớn và rửa sạch đá dăm 1x2",
+          "Định lượng tự động bằng hệ thống cân điện tử sai số < 1%",
+          "Kẹp chì niêm phong bồn xả trước khi xe xuất trạm",
+          "Đúc tổ mẫu lưu kiểm tra cường độ nén R7 và R28"
+        ],
+        "buttonText": "Xem Quy Trình Kiểm Định",
+        "buttonLink": "/quy-trinh-san-xuat"
+      },
+      {
+        "id": "sec-home-cta",
+        "type": "cta",
+        "title": "Liên Hệ Kỹ Sư Tư Vấn & Đặt Lịch Đổ Bê Tông 24/7",
+        "content": "Khảo sát mặt bằng miễn phí, tư vấn mác bê tông và điều phối xe bơm bồn chuyên nghiệp trên toàn tỉnh Ninh Bình.",
+        "badge": "Hotline 24/7: 0988 2662 93",
+        "buttonText": "Gọi 0988 2662 93",
+        "buttonLink": "tel:0988266293"
+      }
+    ],
+    "content": "## Nội Dung Các Khối Trang Chủ - Bê Tông An Gia Bình\n \n### 1. Khối Banner Hero & Video Giới Thiệu\n- **Tiêu đề chính:** BÊ TÔNG AN GIA BÌNH - NỀN MÓNG VỮNG BỀN\n- **Tiêu đề phụ:** Đồng Hành Mọi Công Trình Trọng Điểm Tại Ninh Bình\n- **Nội dung mô tả:** Cung ứng bê tông thương phẩm mác 150 – 450, hệ thống 2 cụm trạm trộn tự động tổng công suất 450m³/h (Trạm KCN Khánh Phú 300m³/h & Trạm Xã Kim Sơn 150m³/h), đội xe 35+ xe bồn và dàn xe bơm cần vươn xa 37m - 56m. Đo nén mẫu R7, R28 kiểm định LAS-XD trực tiếp tại hiện trường.\n- **Media:** Video toàn cảnh trạm trộn và đoàn xe bồn (WebM & MP4).\n \n### 2. Khối Số Liệu Năng Lực Trạm Trộn\n- **Công suất:** 450 m³/h (2 trạm điều khiển PLC tự động)\n- **Đội xe bồn:** 35+ xe bồn chuyên dụng 10 - 12m³\n- **Xe bơm cần:** 56 mét vươn xa tối đa (dàn xe 37m, 43m, 52m, 56m)\n- **Tiêu chuẩn kỹ thuật:** TCVN 3105 & TCVN 3118 (kiểm định nén mẫu R7, R28)\n \n### 3. Khối Bảng Giá Tham Khảo & Máy Tính Dự Toán\n- Công cụ tính nhanh khối lượng bê tông cho móng, dầm, cột, sàn.\n- Bảng đơn giá tham khảo tại thời điểm hiện tại cho các mác M150, M200, M250, M300, M350, M400 và phụ gia.\n \n### 4. Khối Dự Án Tiêu Biểu & Khách Hàng\n- KCN Khánh Phú, Nhà máy Changshin, KCN Gián Khẩu, Cầu Mai Sơn, Cao tốc Bắc - Nam...\n \n### 5. Khối Quy Trình Kiểm Định & Sản Xuất\n- Tiêu chuẩn TCVN 3105, TCVN 3118, kẹp chì xe bồn, thử độ sụt và đúc mẫu thí nghiệm nén LAS-XD.\n \n### 6. Khối Liên Hệ & Tư Vấn 24/7\n- Hotline Kỹ Sư: 0988 2662 93, 2 cụm trạm KCN Khánh Phú & Xã Kim Sơn.",
+    "seoTitle": "Bê Tông An Gia Bình Ninh Bình | Trạm Trộn Bê Tông Tươi Chuẩn TCVN",
+    "seoDescription": "Trạm trộn bê tông tươi An Gia Bình Ninh Bình. Cung cấp bê tông thương phẩm mác 150-450, xe bơm cần 37m-56m, 35+ xe bồn tại TP Ninh Bình, KCN Khánh Phú, Kim Sơn.",
+    "seoKeywords": [
+      "bê tông an gia bình",
+      "bê tông tươi ninh bình",
+      "trạm trộn bê tông ninh bình",
+      "giá bê tông tươi ninh bình"
+    ],
+    "canonicalUrl": "https://betongangiabinh.vn/",
+    "isPublished": true,
+    "updatedAt": "2026-09-15"
+  },
+  {
+    "id": "page-gioi-thieu",
+    "title": "Giới Thiệu Doanh Nghiệp Bê Tông An Gia Bình",
+    "slug": "gioi-thieu",
+    "menuTitle": "Giới thiệu",
+    "showInMenu": true,
+    "menuLocation": "both",
+    "menuOrder": 1,
+    "layout": "hero-content",
+    "summary": "Nhà cung cấp bê tông thương phẩm công nghệ cao hàng đầu tại Ninh Bình với 2 cụm trạm tự động hóa 450m³/h.",
+    "content": "## Về Chúng Tôi - Bê Tông An Gia Bình Ninh Bình\n\nCông ty Cổ phần Thương mại và Dịch vụ An Gia Bình (MST: 2700870972) được thành lập với sứ mệnh mang đến giải pháp **bê tông thương phẩm (bê tông tươi)** chất lượng cao, chuẩn mác, đủ khối lượng và đáp ứng tiến độ cho mọi công trình tại Ninh Bình và các tỉnh lân cận.\n\n### Quy Mô Năng Lực Cung Ứng\n- **Trạm 1:** Cụm trạm đôi KCN Khánh Phú, Yên Khánh, Ninh Bình - Công suất 300m³/h.\n- **Trạm 2:** Xã Kim Sơn, Ninh Bình - Công suất 150m³/h.\n- **Đội xe vận chuyển:** 35+ xe bồn chuyên dụng dung tích 10m³ - 12m³.\n- **Đội xe bơm:** Xe bơm cần 37m, 43m, 52m, 56m và hệ thống bơm tĩnh áp lực cao luồn sâu 200m.\n- **Phòng thí nghiệm:** Hợp chuẩn LAS-XD kiểm định nén mẫu R7, R28 và đo độ sụt tận chân công trình.\n\n### Tiêu Chuẩn Hoạt Động Của An Gia Bình\n1. **Chất lượng TCVN:** Cấp phối Mix Design đạt mác thiết kế theo tiêu chuẩn.\n2. **Cân đong chuẩn xác:** Hệ thống cân điện tử tự động sai số dưới 1%.\n3. **Niêm phong kẹp chì:** Đảm bảo không pha nước ngoài trạm.\n4. **Phục vụ 24/7:** Hotline kỹ thuật và điều vận luôn sẵn sàng phục vụ các ca đổ xuyên đêm.",
+    "seoTitle": "Giới Thiệu Trạm Trộn Bê Tông Tươi An Gia Bình Ninh Bình | Uy Tín Hàng Đầu",
+    "seoDescription": "Giới thiệu Công ty Bê Tông An Gia Bình Ninh Bình. Cụm trạm đôi 450m3/h tại KCN Khánh Phú & Kim Sơn, 35 xe bồn, bơm cần 56m, chứng chỉ thí nghiệm LAS.",
+    "seoKeywords": [
+      "bê tông an gia bình",
+      "trạm trộn bê tông ninh bình",
+      "bê tông tươi khánh phú"
+    ],
+    "canonicalUrl": "https://betongangiabinh.vn/trang/gioi-thieu",
+    "isPublished": true,
+    "updatedAt": "2026-09-15"
+  },
+  {
+    "id": "page-bang-gia",
+    "title": "Bảng Báo Giá Bê Tông Tươi & Dịch Vụ Xe Bơm Ninh Bình",
+    "slug": "bang-gia",
+    "menuTitle": "Báo giá",
+    "showInMenu": true,
+    "menuLocation": "both",
+    "menuOrder": 2,
+    "layout": "pricing-table",
+    "summary": "Bảng giá bê tông thương phẩm mác 150 đến 450 và biểu phí ca xe bơm cần, bơm tĩnh mới nhất 2026.",
+    "content": "## Báo Giá Bê Tông Tươi Ninh Bình Mới Nhất 2026\n\nAn Gia Bình kính gửi Quý khách hàng bảng giá tham khảo bê tông tươi (đá 1x2, độ sụt 12±2):\n\n| Mác Bê Tông | Loại Đá | Độ Sụt | Đơn Giá Tham Khảo (VNĐ/m³) |\n| :--- | :--- | :--- | :--- |\n| **Mác 150** | Đá 1x2 | 12±2 | **860.000** |\n| **Mác 200** | Đá 1x2 | 12±2 | **930.000** |\n| **Mác 250** | Đá 1x2 | 12±2 | **990.000** |\n| **Mác 300** | Đá 1x2 | 12±2 | **1.060.000** |\n| **Mác 350** | Đá 1x2 | 12±2 | **1.140.000** |\n| **Mác 400** | Đá 1x2 | 12±2 | **1.230.000** |\n\n*Đơn giá chưa bao gồm VAT và có thể thay đổi tùy cự ly vận chuyển và phụ gia chống thấm B6/B8/B10.*",
+    "seoTitle": "Báo Giá Bê Tông Tươi Ninh Bình 2026 Mới Nhất | Trạm Trộn An Gia Bình",
+    "seoDescription": "Bảng báo giá bê tông thương phẩm mác 200, 250, 300, 350 và giá thuê ca bơm bê tông tại Ninh Bình mới nhất, định lượng đủ khối lượng, đúng mác.",
+    "seoKeywords": [
+      "báo giá bê tông tươi ninh bình",
+      "giá bê tông mác 250",
+      "giá xe bơm bê tông"
+    ],
+    "canonicalUrl": "https://betongangiabinh.vn/trang/bang-gia",
+    "isPublished": true,
+    "updatedAt": "2026-09-10"
+  },
+  {
+    "id": "page-ho-so-nang-luc",
+    "title": "Hồ Sơ Năng Lực Thiết Bị & Trạm Trộn Bê Tông An Gia Bình",
+    "slug": "ho-so-nang-luc",
+    "menuTitle": "Hồ sơ năng lực",
+    "showInMenu": true,
+    "menuLocation": "header",
+    "menuOrder": 3,
+    "layout": "services-grid",
+    "summary": "Hệ thống trạm đôi công nghệ EU, dàn 35+ xe bồn, bơm cần vươn xa 56m và phòng thí nghiệm LAS-XD.",
+    "content": "## Năng Lực Thiết Bị & Công Nghệ Trạm Trộn An Gia Bình\n\nAn Gia Bình đầu tư đồng bộ hệ thống máy móc cơ giới hiện đại bậc nhất khu vực:\n- Cụm trạm đôi điều khiển PLC tự động.\n- Trạm cân điện tử 120 tấn kiểm định định kỳ.\n- Đội hình xe bơm cần 37m, 43m, 52m, 56m Sany / Putzmeister.\n- Phòng nén mẫu thủy lực 2000kN đạt chuẩn LAS-XD.",
+    "seoTitle": "Hồ Sơ Năng Lực & Dàn Thiết Bị Trạm Trộn An Gia Bình Ninh Bình",
+    "seoDescription": "Hồ sơ năng lực Công ty Bê Tông An Gia Bình Ninh Bình: Hệ thống trạm trộn tự động 450m3/h, 35 xe bồn vận chuyển, 5 xe bơm cần, phòng thí nghiệm LAS.",
+    "seoKeywords": [
+      "hồ sơ năng lực bê tông",
+      "xe bơm cần 56m ninh bình",
+      "trạm trộn an gia bình"
+    ],
+    "canonicalUrl": "https://betongangiabinh.vn/trang/ho-so-nang-luc",
+    "isPublished": true,
+    "updatedAt": "2026-09-10"
+  },
+  {
+    "id": "page-chinh-sach-chat-luong",
+    "title": "Chính Sách Chất Lượng & Quy Trình Đúc Mẫu Thí Nghiệm",
+    "slug": "chinh-sach-chat-luong",
+    "menuTitle": "Chính sách chất lượng",
+    "showInMenu": false,
+    "menuLocation": "footer",
+    "menuOrder": 4,
+    "layout": "standard",
+    "summary": "Quy chuẩn kiểm định TCVN 3105 & 3118, lưu mẫu R7, R28 và kiểm định nén mẫu tại phòng thí nghiệm hợp chuẩn LAS-XD.",
+    "content": "## Tiêu Chuẩn Quản Lý Chất Lượng Bê Tông An Gia Bình\n\nChất lượng là nền tảng của mọi công trình xây dựng. Chúng tôi áp dụng quy trình kiểm soát kỹ thuật nghiêm ngặt:\n1. **Vật tư đầu vào tuyển chọn:** Xi măng Vicem Bút Sơn / Tam Điệp, cát vàng hạt to sạch tạp chất, đá dăm 1x2 sàng tuyển rửa sạch.\n2. **Kẹp chì bảo vệ:** Xe bồn được niêm chì trước khi rời trạm để đảm bảo độ sụt và phẩm cấp bê tông.\n3. **Biên bản nghiệm thu minh bạch:** Giao hàng kèm phiếu giao nhận ghi rõ giờ xuất trạm, khối lượng, mác bê tông và độ sụt.\n4. **Đúc mẫu tại hiện trường:** Hỗ trợ đúc mẫu kiểm định R7, R28 theo yêu cầu của tư vấn giám sát.\n\n*Lưu ý: Bảng giá và cấp phối mang tính chất tham khảo tại thời điểm phát hành.*",
+    "seoTitle": "Chính Sách Chất Lượng & Thử Nghiệm Bê Tông An Gia Bình Ninh Bình",
+    "seoDescription": "Chính sách chất lượng bê tông thương phẩm An Gia Bình: Tiêu chuẩn TCVN, đúc mẫu R7 R28, chứng nhận phòng thí nghiệm LAS-XD.",
+    "seoKeywords": [
+      "chất lượng bê tông",
+      "chính sách an gia bình",
+      "thí nghiệm las ninh bình"
+    ],
+    "canonicalUrl": "https://betongangiabinh.vn/trang/chinh-sach-chat-luong",
+    "isPublished": true,
+    "updatedAt": "2026-09-15"
+  },
+  {
+    "id": "page-quy-trinh-san-xuat",
+    "title": "Quy Trình Kiểm Định & Sản Xuất Bê Tông Thương Phẩm An Gia Bình",
+    "slug": "quy-trinh-san-xuat",
+    "menuTitle": "Quy trình sản xuất",
+    "showInMenu": true,
+    "menuLocation": "both",
+    "menuOrder": 5,
+    "layout": "standard",
+    "summary": "Chi tiết 6 bước kiểm định vật liệu đầu vào, định lượng tự động PLC, kiểm tra độ sụt và đúc mẫu R7, R28 theo TCVN.",
+    "content": "## Quy Trình Kiểm Định Và Sản Xuất Bê Tông Tươi Tại Ninh Bình\n\nHệ thống trạm trộn Bê Tông An Gia Bình tuân thủ quy trình kiểm soát chất lượng 6 bước khép kín:\n\n### Bước 1: Kiểm Tra & Tuyển Chọn Nguyên Vật Liệu Đầu Vào\n- **Cát vàng:** Sử dụng cát hạt trung và to, hàm lượng bùn sét < 1.5% theo TCVN 7570:2006.\n- **Đá dăm 1x2:** Đá nghiền sạch, không lẫn tạp chất, cường độ chịu nén đá gốc > 800 kg/cm².\n- **Xi măng:** Xi măng Pooc lăng hỗn hợp PCB40, PC40 Vicem Bút Sơn, Tam Điệp chính hãng.\n- **Phụ gia:** Phụ gia siêu dẻo giảm nước và chống thấm thế hệ mới đạt chuẩn ASTM C494.\n- **Nước trộn:** Nước ngầm qua xử lý lọc đạt tiêu chuẩn TCVN 4506:2012.\n\n### Bước 2: Thiết Kế Cấp Phối Mix Design Số Hóa\nCấp phối bê tông từng mác M150 - M450 được lập trình và lưu trữ trên máy tính trạm trộn.\n\n### Bước 3: Định Lượng Tự Động Bằng Cân Điện Tử\nHệ thống cân loadcell điện tử định lượng tự động sai số dưới 1% cho từng mẻ trộn.\n\n### Bước 4: Kiểm Tra Độ Sụt Tại Trạm & Kẹp Chì Niêm Phong Xe Bồn\nKiểm tra độ sụt trước khi xe bồn rời trạm và kẹp chì niêm phong phễu xả.\n\n### Bước 5: Thử Côn Độ Sụt & Đúc Mẫu Tại Chân Công Trường\nKỹ thuật viên thực hiện thử côn độ sụt theo TCVN 3106:1993 và đúc mẫu nén lập phương 15x15x15 cm.\n\n### Bước 6: Bơm Bê Tông & Hướng Dẫn Bảo Dưỡng Thủy Hóa\nVận hành xe bơm cần vươn xa 37m - 56m an toàn và tư vấn bảo dưỡng dưỡng ẩm chống nứt.",
+    "seoTitle": "Quy Trình Kiểm Định & Sản Xuất Bê Tông Thương Phẩm | An Gia Bình",
+    "seoDescription": "Quy trình 6 bước kiểm định vật liệu, định lượng tự động PLC, thử độ sụt và đúc mẫu nén R7, R28 tại trạm trộn Bê Tông An Gia Bình Ninh Bình.",
+    "seoKeywords": [
+      "quy trình sản xuất bê tông",
+      "kiểm định độ sụt bê tông",
+      "đúc mẫu r7 r28 ninh bình"
+    ],
+    "canonicalUrl": "https://betongangiabinh.vn/quy-trinh-san-xuat",
+    "isPublished": true,
+    "updatedAt": "2026-09-15"
+  },
+  {
+    "id": "page-chinh-sach-thanh-toan",
+    "title": "Chính Sách Thanh Toán & Đối Soát Khối Lượng",
+    "slug": "chinh-sach-thanh-toan",
+    "menuTitle": "Chính sách thanh toán",
+    "showInMenu": false,
+    "menuLocation": "footer",
+    "menuOrder": 6,
+    "layout": "standard",
+    "summary": "Quy định phương thức thanh toán chuyển khoản, tiền mặt, tạm ứng và thủ tục đối soát khối lượng theo phiếu giao nhận.",
+    "content": "## Chính Sách Thanh Toán & Tạm Ứng Bê Tông An Gia Bình\n\n### 1. Phương Thức Thanh Toán\n- **Chuyển khoản ngân hàng:** Tài khoản doanh nghiệp Công ty Cổ phần Thương mại và Dịch vụ An Gia Bình.\n- **Tiền mặt:** Thanh toán trực tiếp tại văn phòng trạm trộn hoặc cho nhân viên phụ trách hợp đồng có giấy giới thiệu.\n\n### 2. Tạm Ứng Và Thanh Quyết Toán\n- Đối với công trình dân dụng: Tạm ứng từ 30% - 50% giá trị dự kiến trước ca đổ, thanh toán phần còn lại sau khi kết thúc ca đổ và ký biên bản xác nhận khối lượng.\n- Đối với dự án công nghiệp, nhà thầu: Thực hiện theo hợp đồng kinh tế và chu kỳ nghiệm thu đối soát hàng tuần hoặc hàng tháng.\n\n*Mọi bảng giá đều mang tính chất tham khảo tại thời điểm hiện tại.*",
+    "seoTitle": "Chính Sách Thanh Toán & Đối Soát Bê Tông An Gia Bình",
+    "seoDescription": "Chính sách thanh toán, tạm ứng và quy trình đối soát khối lượng cung ứng bê tông tươi tại Bê Tông An Gia Bình Ninh Bình.",
+    "seoKeywords": [
+      "thanh toán bê tông",
+      "hợp đồng bê tông tươi ninh bình"
+    ],
+    "canonicalUrl": "https://betongangiabinh.vn/chinh-sach-thanh-toan",
+    "isPublished": true,
+    "updatedAt": "2026-09-15"
+  },
+  {
+    "id": "page-chinh-sach-van-chuyen",
+    "title": "Chính Sách Vận Chuyển & Điều Độ Xe Bồn, Xe Bơm",
+    "slug": "chinh-sach-van-chuyen",
+    "menuTitle": "Chính sách vận chuyển",
+    "showInMenu": false,
+    "menuLocation": "footer",
+    "menuOrder": 7,
+    "layout": "standard",
+    "summary": "Quy định cự ly điều vận xe bồn, thời gian di chuyển, khảo sát mặt bằng và điều kiện an toàn cho xe bơm cần.",
+    "content": "## Quy Định Vận Chuyển & Điều Vận Xe Bồn Bê Tông\n\n### 1. Phạm Vi & Bán Kính Phục Vụ\n- Hệ thống 2 cụm trạm tại KCN Khánh Phú và Xã Kim Sơn phục vụ toàn bộ tỉnh Ninh Bình và các khu vực lân cận.\n- Cự ly vận chuyển tối ưu: Trong bán kính 30km để bảo đảm chất lượng và độ sụt của hỗn hợp bê tông.\n\n### 2. Khảo Sát Hiện Trường & An Toàn Xe Bơm\n- Kỹ thuật viên An Gia Bình tiến hành khảo sát trước đường vào xe bồn, cổng ngõ, dây điện và mặt bằng chân chống xe bơm cần.\n- Đảm bảo an toàn tuyệt đối cho người và phương tiện trong suốt quá trình đổ bê tông.",
+    "seoTitle": "Chính Sách Vận Chuyển & Xe Bơm Bê Tông An Gia Bình Ninh Bình",
+    "seoDescription": "Quy định vận chuyển xe bồn, xe bơm bê tông tươi tại Ninh Bình của Bê Tông An Gia Bình.",
+    "seoKeywords": [
+      "vận chuyển bê tông tươi ninh bình",
+      "xe bơm cần ninh bình"
+    ],
+    "canonicalUrl": "https://betongangiabinh.vn/chinh-sach-van-chuyen",
+    "isPublished": true,
+    "updatedAt": "2026-09-15"
+  },
+  {
+    "id": "page-dieu-khoan",
+    "title": "Điều Khoản Sử Dụng Dịch Vụ & Hợp Đồng Nguyên Tắc",
+    "slug": "dieu-khoan",
+    "menuTitle": "Điều khoản dịch vụ",
+    "showInMenu": false,
+    "menuLocation": "footer",
+    "menuOrder": 8,
+    "layout": "standard",
+    "summary": "Điều khoản cung ứng bê tông thương phẩm, quyền và trách nhiệm của khách hàng và bên cung cấp.",
+    "content": "## Điều Khoản Sử Dụng Dịch Vụ Cung Cấp Bê Tông Thương Phẩm\n\n### 1. Trách Nhiệm Của Bên Bán (An Gia Bình)\n- Cung cấp bê tông đúng mác, loại đá, độ sụt theo hợp đồng đã ký kết.\n- Điều động xe bồn và xe bơm đúng thời gian và địa điểm thỏa thuận.\n- Cung cấp phiếu giao nhận cân điện tử và hỗ trợ đúc mẫu kiểm định tại hiện trường.\n\n### 2. Trách Nhiệm Của Bên Mua\n- Chuẩn bị đường vào thông thoáng, an toàn chịu tải trọng cho xe bồn và xe bơm.\n- Bố trí nhân lực đầm dùi, cán mặt hoàn thiện kịp thời theo tiến độ xả bê tông.\n- Không tự ý pha thêm nước vào xe bồn làm thay đổi tỷ lệ N/X của bê tông.\n\n*Mọi bảng giá trên website đều mang tính chất tham khảo tại thời điểm hiện tại.*",
+    "seoTitle": "Điều Khoản Dịch Vụ Cung Ứng Bê Tông An Gia Bình Ninh Bình",
+    "seoDescription": "Điều khoản dịch vụ và hợp đồng nguyên tắc cung cấp bê tông thương phẩm An Gia Bình Ninh Bình.",
+    "seoKeywords": [
+      "điều khoản dịch vụ bê tông",
+      "hợp đồng cung ứng bê tông"
+    ],
+    "canonicalUrl": "https://betongangiabinh.vn/dieu-khoan",
+    "isPublished": true,
+    "updatedAt": "2026-09-15"
+  },
+  {
+    "id": "page-chinh-sach-bao-mat",
+    "title": "Chính Sách Bảo Mật Thông Tin Khách Hàng",
+    "slug": "chinh-sach-bao-mat",
+    "menuTitle": "Chính sách bảo mật",
+    "showInMenu": false,
+    "menuLocation": "footer",
+    "menuOrder": 9,
+    "layout": "standard",
+    "summary": "Chính sách bảo vệ thông tin liên hệ, khối lượng dự án và thông tin đối tác của Bê Tông An Gia Bình.",
+    "content": "## Chính Sách Bảo Mật Thông Tin Khách Hàng\n\nCông ty Cổ phần Thương mại và Dịch vụ An Gia Bình tôn trọng và bảo vệ quyền riêng tư của mọi khách hàng và đối tác:\n- Thông tin số điện thoại, địa chỉ công trình chỉ sử dụng cho mục đích khảo sát, điều vận xe và chăm sóc sau bán hàng.\n- Không chia sẻ dữ liệu khách hàng cho bất kỳ bên thứ ba nào khi chưa có sự đồng ý.",
+    "seoTitle": "Chính Sách Bảo Mật Thông Tin | Bê Tông An Gia Bình",
+    "seoDescription": "Chính sách bảo mật dữ liệu và thông tin khách hàng của Bê Tông An Gia Bình.",
+    "seoKeywords": [
+      "chính sách bảo mật bê tông an gia bình"
+    ],
+    "canonicalUrl": "https://betongangiabinh.vn/chinh-sach-bao-mat",
+    "isPublished": true,
+    "updatedAt": "2026-09-15"
+  },
+  {
+    "id": "page-lien-he",
+    "title": "Liên Hệ Đặt Bê Tông & Tư Vấn Kỹ Thuật Hiện Trường",
+    "slug": "lien-he",
+    "menuTitle": "Liên hệ",
+    "showInMenu": true,
+    "menuLocation": "both",
+    "menuOrder": 5,
+    "layout": "contact-map",
+    "summary": "Liên hệ trạm trộn An Gia Bình 24/7. Khảo sát công trình, tư vấn mác bê tông và điều phối xe bơm tận nơi.",
+    "content": "## Thông Tin Liên Hệ Công Ty Cổ Phần Thương Mại Và Dịch Vụ An Gia Bình\n\n- **Tên đầy đủ:** CÔNG TY CỔ PHẦN THƯƠNG MẠI VÀ DỊCH VỤ AN GIA BÌNH\n- **Mã số thuế:** 2700870972\n- **Trụ sở & Trạm 1:** KCN Khánh Phú, Huyện Yên Khánh, Tỉnh Ninh Bình.\n- **Trạm 2:** Xã Kim Sơn, Tỉnh Ninh Bình.\n- **Hotline Điều Vận / Báo Giá:** 0988 2662 93\n- **Email:** ketoan.angiabinh@gmail.com\n- **Website:** https://betongangiabinh.vn\n\nĐội ngũ kỹ sư kết cấu sẵn sàng đến trực tiếp hiện trường khảo sát đường vào, đường vươn cần bơm và đo đạc khối lượng miễn phí!",
+    "seoTitle": "Liên Hệ Đặt Bê Tông Tươi Ninh Bình | Hotline 0988 2662 93 An Gia Bình",
+    "seoDescription": "Liên hệ đặt mua bê tông tươi Ninh Bình giá tốt nhất. Khảo sát công trình miễn phí, điều xe bồn và bơm cần nhanh chóng 24/7.",
+    "seoKeywords": [
+      "liên hệ bê tông an gia bình",
+      "đặt bê tông tươi ninh bình",
+      "hotline bê tông"
+    ],
+    "canonicalUrl": "https://betongangiabinh.vn/trang/lien-he",
+    "isPublished": true,
+    "updatedAt": "2026-09-10"
+  }
+]

@@ -1,0 +1,75 @@
+# ==============================================================================
+# ROBOTS.TXT - CÔNG TY CỔ PHẦN BÊ TÔNG AN GIA BÌNH
+# Website: https://betongangiabinh.vn
+# Hotline Kỹ Thuật: 0988 2662 93
+# Sơ Đồ Trang: https://betongangiabinh.vn/sitemap.xml
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Allow: /bang-gia
+Allow: /gioi-thieu
+Allow: /du-an
+Allow: /quy-trinh-san-xuat
+Allow: /ho-so-nang-luc
+Allow: /lien-he
+Allow: /tuyen-dung
+Allow: /dich-vu
+Allow: /linh-vuc-hoat-dong
+Allow: /be-tong-tuoi
+Allow: /be-tong-thuong-pham
+Allow: /bom-be-tong
+Allow: /be-tong-sieu-nhe
+Allow: /be-tong-khi-chung-ap
+Allow: /be-tong-nhua
+Allow: /blog
+Allow: /blog/*
+
+# 1. Hạn chế bot truy cập khu vực Quản trị & Dashboard
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/*
+
+# 2. Hạn chế bot truy cập hệ thống API nội bộ & Webhooks
+Disallow: /api/
+Disallow: /api/*
+
+# 3. Hạn chế thu thập tham số tìm kiếm hoặc xem trước để tránh trùng lặp nội dung (Duplicate Content)
+Disallow: /*?*query=*
+Disallow: /*?*s=*
+Disallow: /*?*preview=*
+Disallow: /*?*draft=*
+
+# 4. Cho phép thu thập các tài nguyên tĩnh phục vụ render giao diện chính xác
+Allow: /assets/
+Allow: /_next/static/
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.webp$
+Allow: /*.svg$
+Allow: /*.woff2$
+Allow: /*.woff$
+Allow: /sitemap.xml
+Allow: /rss.xml
+
+# ==============================================================================
+# CẤU HÌNH DÀNH CHO CÁC CÔNG CỤ TÌM KIẾM CHÍNH (GOOGLEBOT, BINGBOT)
+# ==============================================================================
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Allow: /_next/static/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Allow: /_next/static/
+
+# Sitemap & Host
+Sitemap: https://betongangiabinh.vn/sitemap.xml
+Host: https://betongangiabinh.vn
