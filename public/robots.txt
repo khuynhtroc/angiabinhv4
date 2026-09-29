@@ -7,8 +7,8 @@
 
 User-agent: *
 Allow: /
+Allow: /about
 Allow: /bang-gia
-Allow: /gioi-thieu
 Allow: /du-an
 Allow: /quy-trinh-san-xuat
 Allow: /ho-so-nang-luc
@@ -24,6 +24,27 @@ Allow: /be-tong-khi-chung-ap
 Allow: /be-tong-nhua
 Allow: /blog
 Allow: /blog/*
+
+# AI Search Crawlers (ChatGPT, Claude, Perplexity, Gemini)
+User-agent: GPTBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /admin/
+Disallow: /api/
 
 # 1. Hạn chế bot truy cập khu vực Quản trị & Dashboard
 Disallow: /admin

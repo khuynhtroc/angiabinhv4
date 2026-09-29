@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ShieldCheck, Factory, Truck, CheckCircle2, Award, FileCheck2, ArrowRight } from 'lucide-react';
 
 export default function AboutCompany() {
@@ -11,11 +12,15 @@ export default function AboutCompany() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column: Visual & Facility */}
           <div className="lg:col-span-6 space-y-4">
-            <div className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200">
-              <img
-                src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1000&auto=format&fit=crop&q=80"
+            <div className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200 h-80 sm:h-96">
+              <Image
+                src="https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/doi-ngu-nhan-su-be-tong-an-gia-binh-1.jpg"
                 alt="Trạm trộn bê tông thương phẩm An Gia Bình Ninh Bình"
-                className="w-full h-80 sm:h-96 object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+                loading="lazy"
+                referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-6">
                 <div className="text-white">

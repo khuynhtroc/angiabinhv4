@@ -26,10 +26,10 @@ export default function HomeConstructionNews() {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              Cập Nhật Hàng Ngày • Ninh Bình & Toàn Quốc
+              Cập Nhật Hàng Ngày
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
-              Nguồn Tin Tức &amp; Ý Tưởng Xây Dựng <span className="text-amber-400">(Ninh Bình &amp; Toàn Quốc)</span>
+              Nguồn Tin Tức &amp; Ý Tưởng Xây Dựng
             </h2>
             <p className="mt-2 text-slate-400 text-sm sm:text-base max-w-2xl">
               Tổng hợp 5 thông tin mới nhất về tiêu chuẩn cấp phối bê tông TCVN, kinh nghiệm đổ móng - sàn mái không nứt và giải pháp thi công hạ tầng thực tế.

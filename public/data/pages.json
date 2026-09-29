@@ -9,7 +9,7 @@
     "menuOrder": 0,
     "layout": "hero-content",
     "summary": "Cấu hình và nội dung các khối hiển thị trên trang chủ: Video banner hero, thông số công suất 450m³/h, máy tính số khối bê tông, bảng giá tham khảo và các dự án trọng điểm.",
-    "heroImage": "https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1200&auto=format&fit=crop&q=80",
+    "heroImage": "https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/doi-ngu-nhan-su-be-tong-an-gia-binh-1.jpg",
     "heroCtaText": "Xem Báo Giá Bê Tông",
     "heroCtaLink": "/bang-gia",
     "sections": [
@@ -111,7 +111,7 @@
       "trạm trộn bê tông ninh bình",
       "bê tông tươi khánh phú"
     ],
-    "canonicalUrl": "https://betongangiabinh.vn/trang/gioi-thieu",
+    "canonicalUrl": "https://betongangiabinh.vn/about",
     "isPublished": true,
     "updatedAt": "2026-09-15"
   },
@@ -133,7 +133,7 @@
       "giá bê tông mác 250",
       "giá xe bơm bê tông"
     ],
-    "canonicalUrl": "https://betongangiabinh.vn/trang/bang-gia",
+    "canonicalUrl": "https://betongangiabinh.vn/bang-gia",
     "isPublished": true,
     "updatedAt": "2026-09-10"
   },
@@ -155,7 +155,7 @@
       "xe bơm cần 56m ninh bình",
       "trạm trộn an gia bình"
     ],
-    "canonicalUrl": "https://betongangiabinh.vn/trang/ho-so-nang-luc",
+    "canonicalUrl": "https://betongangiabinh.vn/ho-so-nang-luc",
     "isPublished": true,
     "updatedAt": "2026-09-10"
   },
@@ -177,7 +177,7 @@
       "chính sách an gia bình",
       "thí nghiệm las ninh bình"
     ],
-    "canonicalUrl": "https://betongangiabinh.vn/trang/chinh-sach-chat-luong",
+    "canonicalUrl": "https://betongangiabinh.vn/chinh-sach-chat-luong",
     "isPublished": true,
     "updatedAt": "2026-09-15"
   },
@@ -304,7 +304,7 @@
       "đặt bê tông tươi ninh bình",
       "hotline bê tông"
     ],
-    "canonicalUrl": "https://betongangiabinh.vn/trang/lien-he",
+    "canonicalUrl": "https://betongangiabinh.vn/lien-he",
     "isPublished": true,
     "updatedAt": "2026-09-10"
   }

@@ -18,10 +18,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = getPostBySlugServer(cleanSlug) || getPostBySlugServer(rawSlug);
   if (post) {
     const rawTitle = post.seoTitle || post.title;
-    const finalTitle = rawTitle.includes('An Gia Bình') || rawTitle.includes('Bê Tông')
+    let finalTitle = rawTitle.includes('An Gia Bình') || rawTitle.includes('Bê Tông')
       ? rawTitle
       : `${rawTitle} | Bê Tông An Gia Bình`;
-    const finalDesc = post.seoDescription || post.excerpt || 'Bê tông tươi, bê tông thương phẩm chất lượng cao Ninh Bình.';
+    if (finalTitle.length > 60) {
+      finalTitle = finalTitle.substring(0, 57).trim() + '...';
+    }
+
+    let finalDesc = post.seoDescription || post.excerpt || 'Bê tông tươi, bê tông thương phẩm chất lượng cao Ninh Bình.';
+    if (finalDesc.length > 158) {
+      finalDesc = finalDesc.substring(0, 155).trim() + '...';
+    }
     const canonicalUrl = `https://betongangiabinh.vn/${cleanSlug}.html`;
 
     return {

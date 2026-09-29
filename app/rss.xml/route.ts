@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAllPostsServer } from '@/lib/server-data';
+import { getAllPostsServer, getConfigServer } from '@/lib/server-data';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,14 +13,46 @@ function escapeXml(unsafe: string): string {
     .replace(/'/g, '&apos;');
 }
 
+/**
+ * Ensures safe content inside XML CDATA blocks.
+ * 1. Filters out XML 1.0 invalid control characters (0x00-0x08, 0x0B-0x0C, 0x0E-0x1F)
+ * 2. Escapes any accidental ]]> occurrences so it cannot prematurely close CDATA
+ */
+function safeCdata(content: string): string {
+  if (!content) return '';
+  const clean = content.replace(/[\x00-\x08\x0B-\x0C\x0E-\x1F]/g, '');
+  return clean.replace(/\]\]>/g, ']]]]><![CDATA[>');
+}
+
+/**
+ * Creates a clean, concise excerpt for RSS readers
+ */
+function cleanExcerptText(raw: string, fallback = ''): string {
+  const source = raw || fallback || '';
+  const text = source
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\{\{[^}]*\}\}/g, '')
+    .replace(/\{%[^%]*%\}/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return text.length > 320 ? `${text.substring(0, 317)}...` : text;
+}
+
 export async function GET() {
   const baseUrl = 'https://betongangiabinh.vn';
   const buildDate = new Date().toUTCString();
 
-  // Load all posts from the unified server data source
+  // Load config to dynamically synchronize website logo and favicon
+  const config = getConfigServer();
+  const rawLogo = config.logo || '/logo.png';
+  const logoUrl = rawLogo.startsWith('http') ? rawLogo : `${baseUrl}${rawLogo}`;
+
+  // Load all posts from unified server data source
   const allPosts = getAllPostsServer();
 
-  // Sort posts by date descending so the newest posts always appear first
+  // Sort posts by date descending so newest posts always appear first
   const sortedPosts = [...allPosts].sort((a, b) => {
     const timeA = a.date ? new Date(a.date).getTime() : 0;
     const timeB = b.date ? new Date(b.date).getTime() : 0;
@@ -28,29 +60,33 @@ export async function GET() {
   });
 
   const itemsXml = sortedPosts
+    .filter((post) => {
+      const cleanSlug = (post.slug || post.id || '').replace(/\.html$/, '');
+      return cleanSlug && cleanSlug !== 'bai-viet';
+    })
     .map((post) => {
-      // Canonical article URL: betongangiabinh.vn/bai-viet.html
+      // Canonical article URL: betongangiabinh.vn/[slug].html
       const cleanSlug = (post.slug || post.id || '').replace(/\.html$/, '');
       const postUrl = `${baseUrl}/${cleanSlug}.html`;
       const pubDate = post.date ? new Date(post.date).toUTCString() : buildDate;
-      const cleanExcerpt = post.excerpt || '';
-      const cleanContent = post.content || cleanExcerpt;
+      const cleanExcerpt = cleanExcerptText(post.excerpt, post.content);
+      const cleanContent = post.content || post.excerpt || '';
       const author = post.author || 'Kỹ Sư Bê Tông An Gia Bình';
       const category = post.category || 'Kiến Thức Kỹ Thuật';
-      const imageUrl = post.coverImage || 'https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1200&auto=format&fit=crop&q=80';
+      const imageUrl = post.coverImage || `${baseUrl}/logo.png`;
 
       return `    <item>
-      <title><![CDATA[${post.title}]]></title>
+      <title><![CDATA[${safeCdata(post.title)}]]></title>
       <link>${postUrl}</link>
       <guid isPermaLink="true">${postUrl}</guid>
       <pubDate>${pubDate}</pubDate>
-      <category><![CDATA[${category}]]></category>
-      <dc:creator><![CDATA[${author}]]></dc:creator>
-      <description><![CDATA[${cleanExcerpt}]]></description>
-      <content:encoded><![CDATA[${cleanContent}]]></content:encoded>
+      <category><![CDATA[${safeCdata(category)}]]></category>
+      <dc:creator><![CDATA[${safeCdata(author)}]]></dc:creator>
+      <description><![CDATA[${safeCdata(cleanExcerpt)}]]></description>
+      <content:encoded><![CDATA[${safeCdata(cleanContent)}]]></content:encoded>
       <enclosure url="${escapeXml(imageUrl)}" length="102400" type="image/jpeg" />
       <media:content url="${escapeXml(imageUrl)}" medium="image">
-        <media:title><![CDATA[${post.title}]]></media:title>
+        <media:title><![CDATA[${safeCdata(post.title)}]]></media:title>
       </media:content>
     </item>`;
     })
@@ -75,7 +111,7 @@ export async function GET() {
     <docs>https://www.rssboard.org/rss-specification</docs>
     <generator>An Gia Bình Concrete Next.js Engine</generator>
     <image>
-      <url>https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=400&amp;auto=format&amp;fit=crop&amp;q=80</url>
+      <url>${escapeXml(logoUrl)}</url>
       <title>Bê Tông An Gia Bình</title>
       <link>${baseUrl}</link>
       <width>144</width>

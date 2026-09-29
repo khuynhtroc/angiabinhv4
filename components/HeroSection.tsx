@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { Phone, Calculator, ShieldCheck, Truck, Clock, CheckCircle2, ChevronRight, Award, Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { resolveMediaUrl, handleImageFallback } from '@/lib/utils';
@@ -12,7 +12,18 @@ interface HeroSectionProps {
 export default function HeroSection({ onScrollToCalculator }: HeroSectionProps) {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
+  const [isDesktop, setIsDesktop] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // Only load video on desktop screens (>= 768px) to protect mobile LCP & network
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop, { passive: true });
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -114,46 +125,65 @@ export default function HeroSection({ onScrollToCalculator }: HeroSectionProps) 
           {/* Right Video / Showcase Column */}
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-xl bg-slate-900 group aspect-[16/10] sm:aspect-[4/3] lg:aspect-auto lg:h-96 w-full">
-              <video
-                ref={videoRef}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                poster="https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg"
-                className="w-full h-full object-cover"
-              >
-                <source
-                  src="https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/videos/be-tong-an-gia-binh.webm"
-                  type="video/webm"
-                />
-                <source
-                  src="https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/videos/be-tong-an-gia-binh.MP4"
-                  type="video/mp4"
-                />
-              </video>
+              {/* Desktop View: Full Video (Only mounted if isDesktop) */}
+              {isDesktop ? (
+                <div className="w-full h-full relative">
+                  <video
+                    ref={videoRef}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="none"
+                    poster="https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg"
+                    className="w-full h-full object-cover"
+                  >
+                    <source
+                      src="https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/videos/be-tong-an-gia-binh.webm"
+                      type="video/webm"
+                    />
+                    <source
+                      src="https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/videos/be-tong-an-gia-binh.MP4"
+                      type="video/mp4"
+                    />
+                  </video>
+                </div>
+              ) : (
+                /* Mobile & SSR View: High performance LCP Image */
+                <div className="w-full h-full relative">
+                  <img
+                    src="https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg"
+                    alt="Trạm trộn bê tông tươi An Gia Bình Ninh Bình"
+                    width={600}
+                    height={375}
+                    fetchPriority="high"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-black/20 pointer-events-none" />
 
-              {/* Video Player Action Controls */}
-              <div className="absolute top-3 right-3 flex items-center gap-2 z-20">
-                <button
-                  type="button"
-                  onClick={togglePlay}
-                  className="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition border border-white/20 shadow-xs"
-                  title={isPlaying ? 'Tạm dừng video' : 'Phát video'}
-                >
-                  {isPlaying ? <Pause className="w-4 h-4 sm:w-3.5 sm:h-3.5" /> : <Play className="w-4 h-4 sm:w-3.5 sm:h-3.5 ml-0.5" />}
-                </button>
-                <button
-                  type="button"
-                  onClick={toggleMute}
-                  className="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition border border-white/20 shadow-xs"
-                  title={isMuted ? 'Bật âm thanh' : 'Tắt âm thanh'}
-                >
-                  {isMuted ? <VolumeX className="w-4 h-4 sm:w-3.5 sm:h-3.5" /> : <Volume2 className="w-4 h-4 sm:w-3.5 sm:h-3.5" />}
-                </button>
-              </div>
+              {/* Video Player Action Controls - Desktop only */}
+              {isDesktop && (
+                <div className="flex absolute top-3 right-3 items-center gap-2 z-20">
+                  <button
+                    type="button"
+                    onClick={togglePlay}
+                    className="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition border border-white/20 shadow-xs"
+                    title={isPlaying ? 'Tạm dừng video' : 'Phát video'}
+                  >
+                    {isPlaying ? <Pause className="w-4 h-4 sm:w-3.5 sm:h-3.5" /> : <Play className="w-4 h-4 sm:w-3.5 sm:h-3.5 ml-0.5" />}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={toggleMute}
+                    className="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-sm transition border border-white/20 shadow-xs"
+                    title={isMuted ? 'Bật âm thanh' : 'Tắt âm thanh'}
+                  >
+                    {isMuted ? <VolumeX className="w-4 h-4 sm:w-3.5 sm:h-3.5" /> : <Volume2 className="w-4 h-4 sm:w-3.5 sm:h-3.5" />}
+                  </button>
+                </div>
+              )}
 
               {/* Floating Highlight Card on Video */}
               <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md p-3 sm:p-3.5 rounded-xl border border-slate-200 text-xs space-y-1.5 shadow-lg">

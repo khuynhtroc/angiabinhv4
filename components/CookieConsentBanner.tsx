@@ -26,7 +26,7 @@ export default function CookieConsentBanner() {
         timer = setTimeout(() => {
           setMounted(true);
           setIsVisible(true);
-        }, 800);
+        }, 2500);
       }
     } catch {
       // Storage unavailable or disabled

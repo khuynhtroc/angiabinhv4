@@ -113,7 +113,11 @@ export default function AdminPagesManager({
     setFormSeoDescription(page.seoDescription || page.subtitle || '');
     setFormFocusKeywords(page.focusKeywords || []);
     setFormMetaRobots(page.metaRobots || 'index, follow');
-    setFormCanonicalUrl(page.canonicalUrl || `https://betongangiabinh.vn/${page.slug}`);
+    const pageSlug = page.slug === 'gioi-thieu' ? 'about' : page.slug;
+    const initialCanonical = (page.canonicalUrl || `https://betongangiabinh.vn/${pageSlug}`)
+      .replace('betongangiabinh.vn/trang/', 'betongangiabinh.vn/')
+      .replace('/gioi-thieu', '/about');
+    setFormCanonicalUrl(initialCanonical);
     setActiveEditTab('info');
     setShowEditModal(true);
   };
@@ -192,6 +196,11 @@ export default function AdminPagesManager({
     }
 
     const cleanSlug = formSlug.trim() || formTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const rawCanonical = formCanonicalUrl.trim() || `https://betongangiabinh.vn/${cleanSlug}`;
+    const sanitizedCanonical = rawCanonical
+      .replace('betongangiabinh.vn/trang/', 'betongangiabinh.vn/')
+      .replace('/gioi-thieu', '/about');
+
     const payload: Omit<SitePage, 'id'> = {
       title: formTitle.trim(),
       slug: cleanSlug,
@@ -207,7 +216,7 @@ export default function AdminPagesManager({
       seoDescription: formSeoDescription.trim() || formSubtitle.trim(),
       focusKeywords: formFocusKeywords,
       metaRobots: formMetaRobots,
-      canonicalUrl: formCanonicalUrl.trim() || `https://betongangiabinh.vn/${cleanSlug}`,
+      canonicalUrl: sanitizedCanonical,
       updatedAt: new Date().toISOString().split('T')[0]
     };
 

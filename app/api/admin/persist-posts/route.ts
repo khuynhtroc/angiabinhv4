@@ -4,11 +4,15 @@ import {
   getAllProjectsServer,
   getAllPagesServer,
   getAllCategoriesServer,
+  getConfigServer,
   savePostsServer,
   saveProjectsServer,
   savePagesServer,
   saveCategoriesServer,
+  saveConfigServer,
   saveSinglePostServer,
+  getAdminConfigServer,
+  saveAdminConfigServer,
   deleteSinglePostServer
 } from '@/lib/server-data';
 import fs from 'node:fs';
@@ -32,29 +36,43 @@ if (typeof setInterval !== 'undefined') {
   }, 5 * 60 * 1000);
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const { searchParams } = new URL(req.url);
+    const summary = searchParams.get('summary') === 'true';
+    const singleId = searchParams.get('id') || searchParams.get('slug');
+
     const posts = getAllPostsServer();
+
+    if (singleId) {
+      const cleanId = decodeURIComponent(singleId).replace(/\.html$/, '');
+      const found = posts.find(p => p.id === cleanId || p.slug === cleanId || p.id === singleId || p.slug === singleId);
+      if (found) {
+        return NextResponse.json({ success: true, post: found });
+      }
+      return NextResponse.json({ success: false, error: 'Không tìm thấy bài viết' }, { status: 404 });
+    }
+
     const projects = getAllProjectsServer();
     const pages = getAllPagesServer();
     const categories = getAllCategoriesServer();
+    const jekyllConfig = getConfigServer();
+    const adminConfig = getAdminConfigServer();
 
-    let jekyllConfig = null;
-    const configPath = path.join(process.cwd(), 'public', 'data', 'config.json');
-    if (fs.existsSync(configPath)) {
-      try {
-        jekyllConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
-      } catch {}
-    }
+    // In summary mode (used for high-performance store sync), omit heavy article content
+    const returnedPosts = summary
+      ? posts.map(({ content, ...rest }) => rest)
+      : posts;
 
     return NextResponse.json({
       success: true,
       count: posts.length,
-      posts,
+      posts: returnedPosts,
       projects,
       pages,
       categories,
       jekyllConfig,
+      adminConfig,
       source: 'AI Studio Server Data (public/data/)',
       timestamp: new Date().toISOString()
     });
@@ -85,7 +103,8 @@ export async function POST(req: NextRequest) {
       projects,
       pages,
       categories,
-      jekyllConfig
+      jekyllConfig,
+      adminConfig
     } = isArrayBody ? { posts: body } as any : body;
 
     // Mode: Single post save / update
@@ -282,8 +301,42 @@ export async function POST(req: NextRequest) {
     }
 
     if (jekyllConfig) {
-      const configPath = path.join(process.cwd(), 'public', 'data', 'config.json');
-      fs.writeFileSync(configPath, JSON.stringify(jekyllConfig, null, 2), 'utf-8');
+      const finalConfig = { ...jekyllConfig };
+      // If logo is base64, save to static /logo.png & /images/logo.png
+      if (finalConfig.logo && finalConfig.logo.startsWith('data:image/')) {
+        try {
+          const match = finalConfig.logo.match(/^data:image\/([a-zA-Z0-9\+\.]+);base64,(.+)$/);
+          if (match) {
+            const ext = match[1] === 'svg+xml' ? 'svg' : (match[1] === 'jpeg' ? 'jpg' : 'png');
+            const buffer = Buffer.from(match[2], 'base64');
+            const targetPath = path.join(process.cwd(), 'public', `logo.${ext}`);
+            fs.writeFileSync(targetPath, buffer);
+            const imgDir = path.join(process.cwd(), 'public', 'images');
+            if (!fs.existsSync(imgDir)) fs.mkdirSync(imgDir, { recursive: true });
+            fs.writeFileSync(path.join(imgDir, `logo.${ext}`), buffer);
+            finalConfig.logo = `/logo.${ext}`;
+          }
+        } catch (e) {
+          console.warn('[persist-posts] Failed to extract logo image file:', e);
+        }
+      }
+      // If favicon is base64, save to /favicon.ico
+      if (finalConfig.favicon && finalConfig.favicon.startsWith('data:image/')) {
+        try {
+          const match = finalConfig.favicon.match(/^data:image\/([a-zA-Z0-9\+\.\-]+);base64,(.+)$/);
+          if (match) {
+            const buffer = Buffer.from(match[2], 'base64');
+            fs.writeFileSync(path.join(process.cwd(), 'public', 'favicon.ico'), buffer);
+            finalConfig.favicon = '/favicon.ico';
+          }
+        } catch (e) {
+          console.warn('[persist-posts] Failed to extract favicon file:', e);
+        }
+      }
+      saveConfigServer(finalConfig);
+    }
+    if (adminConfig && typeof adminConfig === 'object') {
+      saveAdminConfigServer(adminConfig);
     }
 
     return NextResponse.json({

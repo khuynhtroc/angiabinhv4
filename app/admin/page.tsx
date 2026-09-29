@@ -20,6 +20,8 @@ import AdminPostOptimizerModal from '@/components/AdminPostOptimizerModal';
 import AdminBulkPostOptimizerModal from '@/components/AdminBulkPostOptimizerModal';
 import AdminAddMediaUrlModal from '@/components/AdminAddMediaUrlModal';
 import AdminManageFoldersModal from '@/components/AdminManageFoldersModal';
+import AdminDesignSection from '@/components/AdminDesignSection';
+import { optimizePostFull, suggestKeywordsAndTags, generateOptimizedMetaDescription } from '@/lib/postOptimizer';
 import {
   Lock, KeyRound, LayoutDashboard, FileText, Building2, Users,
   FolderArchive, Sparkles, RefreshCw, Trash2, Plus, CheckCircle2,
@@ -27,7 +29,7 @@ import {
   Image as ImageIcon, Video as VideoIcon, FileCode, Copy, Check, Upload,
   Globe, FileUp, Zap, Replace, Folder, FolderPlus, Info, Layers, Tag, Palette,
   UploadCloud, Files, Settings, Sliders, CheckSquare, Calendar, Square,
-  CheckCheck, X, Menu as MenuIcon, HardDrive, Filter, BarChart2, Link2, Download, Loader2, AlertTriangle
+  CheckCheck, X, Menu as MenuIcon, HardDrive, Filter, BarChart2, Link2, Download, Loader2, AlertTriangle, Clock, Eraser
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -101,6 +103,7 @@ export default function AdminDashboard() {
     saveAiScheduler,
     mediaFolders,
     saveMediaFolders,
+    saveLeads,
     addMediaFolder,
     updateMediaFolder,
     deleteMediaFolder,
@@ -113,7 +116,7 @@ export default function AdminDashboard() {
   const [loginError, setLoginError] = useState('');
 
   // Tab navigation
-  const [activeTab, setActiveTab] = useState<'analytics' | 'crawler' | 'posts' | 'pages' | 'menus' | 'projects' | 'media' | 'leads' | 'settings'>('analytics');
+  const [activeTab, setActiveTab] = useState<'analytics' | 'crawler' | 'posts' | 'pages' | 'menus' | 'projects' | 'media' | 'leads' | 'design' | 'settings'>('analytics');
 
   // Modals state for new features
   const [optimizingPost, setOptimizingPost] = useState<BlogPost | null>(null);
@@ -335,6 +338,12 @@ export default function AdminDashboard() {
   const [persistProgressText, setPersistProgressText] = useState('');
   const [showVercelDeployGuide, setShowVercelDeployGuide] = useState(false);
   const jsonBackupInputRef = useRef<HTMLInputElement>(null);
+  const [lastSyncedTime, setLastSyncedTime] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('angiabinh_last_sync_time') || '';
+    }
+    return '';
+  });
 
   const handlePersistPostsToSource = async () => {
     if (!posts || posts.length === 0) {
@@ -362,16 +371,30 @@ export default function AdminDashboard() {
           projects,
           pages,
           categories,
-          jekyllConfig
+          jekyllConfig,
+          adminConfig: {
+            menus,
+            mediaFolders,
+            aiSettings,
+            schemaSettings,
+            aiScheduler,
+            integrations,
+            leads
+          }
         }),
       });
       const data = await res.json();
 
       if (data.success) {
+        const nowStr = new Date().toLocaleString('vi-VN');
+        setLastSyncedTime(nowStr);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('angiabinh_last_sync_time', nowStr);
+        }
         try {
           confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
         } catch {}
-        alert(`✅ ĐÃ LƯU THỐNG NHẤT 100% VÀO TỆP MÁY CHỦ AI STUDIO!\n\n- Đã lưu ${posts.length} bài viết trực tiếp vào: public/data/posts.json\n- Đã lưu ${projects.length} dự án vào: public/data/projects.json\n- Đã lưu ${pages.length} trang vào: public/data/pages.json\n- Đã lưu ${categories.length} chuyên mục vào: public/data/categories.json\n\nTệp posts.json trên máy chủ hiện đã được cập nhật hoàn chỉnh. Các bài viết mới nhất hoặc vừa sửa đổi đã được đặt ngay ở đầu tệp!`);
+        alert(`✅ ĐÃ LƯU THỐNG NHẤT 100% VÀO TỆP MÁY CHỦ AI STUDIO!\n\n- Mốc đồng bộ: ${nowStr}\n- Đã lưu ${posts.length} bài viết trực tiếp vào: public/data/posts.json\n- Đã lưu ${projects.length} dự án vào: public/data/projects.json\n- Đã lưu ${pages.length} trang vào: public/data/pages.json\n- Đã lưu ${categories.length} chuyên mục vào: public/data/categories.json\n\nTệp posts.json trên máy chủ hiện đã được cập nhật hoàn chỉnh. Các bài viết mới nhất hoặc vừa sửa đổi đã được đặt ngay ở đầu tệp!`);
       } else {
         alert('Lỗi khi lưu dữ liệu cấu hình: ' + (data.error || 'Vui lòng thử lại sau.'));
       }
@@ -401,10 +424,28 @@ export default function AdminDashboard() {
         if (Array.isArray(data.categories) && data.categories.length > 0) {
           saveCategories(data.categories);
         }
+        if (data.jekyllConfig) {
+          updateJekyllConfig(data.jekyllConfig);
+        }
+        if (data.adminConfig && typeof data.adminConfig === "object") {
+          const ac = data.adminConfig;
+          if (Array.isArray(ac.menus) && ac.menus.length > 0) saveMenus(ac.menus);
+          if (Array.isArray(ac.mediaFolders) && ac.mediaFolders.length > 0) saveMediaFolders(ac.mediaFolders);
+          if (ac.aiSettings) saveAiSettings(ac.aiSettings);
+          if (ac.schemaSettings) saveSchemaSettings(ac.schemaSettings);
+          if (ac.aiScheduler) saveAiScheduler(ac.aiScheduler);
+          if (ac.integrations) updateIntegrations(ac.integrations);
+          if (Array.isArray(ac.leads) && ac.leads.length > 0) saveLeads(ac.leads);
+        }
+        const nowStr = new Date().toLocaleString('vi-VN');
+        setLastSyncedTime(nowStr);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('angiabinh_last_sync_time', nowStr);
+        }
         try {
           confetti({ particleCount: 70, spread: 60, origin: { y: 0.5 } });
         } catch {}
-        alert(`✅ TẢI DỮ LIỆU TỪ AI STUDIO THÀNH CÔNG!\n\nĐã đồng bộ ${data.posts?.length || 0} bài viết, ${data.projects?.length || 0} dự án, ${data.pages?.length || 0} trang từ tệp nguồn máy chủ AI Studio vào trình duyệt.\nDữ liệu hiện tại đã thống nhất hoàn toàn!`);
+        alert(`✅ TẢI DỮ LIỆU TỪ AI STUDIO THÀNH CÔNG!\n\n- Mốc đồng bộ: ${nowStr}\nĐã đồng bộ ${data.posts?.length || 0} bài viết, ${data.projects?.length || 0} dự án, ${data.pages?.length || 0} trang từ tệp nguồn máy chủ AI Studio vào trình duyệt.\nDữ liệu hiện tại đã thống nhất hoàn toàn!`);
       } else {
         alert('Lỗi khi tải dữ liệu từ AI Studio: ' + (data.error || 'Thử lại sau.'));
       }
@@ -727,6 +768,95 @@ export default function AdminDashboard() {
     } finally {
       setIsRewritingPostExcerpt(false);
     }
+  };
+
+  // Auto optimize post content directly inside the edit modal
+  const handleOptimizePostContentInEditor = () => {
+    if (!postContent && !postTitle) {
+      alert('Vui lòng nhập tiêu đề hoặc nội dung trước khi tối ưu.');
+      return;
+    }
+    const tempPost: BlogPost = {
+      id: editingPostId || `post-${Date.now()}`,
+      title: postTitle || 'Bê Tông Ninh Bình An Gia Bình',
+      slug: postSlug || 'bai-viet',
+      category: postCategory,
+      excerpt: postExcerpt,
+      content: postContent,
+      tags: postTags.split(',').map(s => s.trim()).filter(Boolean),
+      focusKeywords: postKeywords.split(',').map(s => s.trim()).filter(Boolean),
+      date: postDate || new Date().toISOString().split('T')[0],
+      coverImage: postImage,
+      readTime: '5 phút',
+      views: 0
+    };
+
+    const result = optimizePostFull(tempPost, {
+      cleanClutter: true,
+      brandAndContact: true,
+      addInternalLinks: true,
+      addTechnicalCtaBox: true,
+      standardizeHeadings: true,
+      optimizeTitle: false,
+      optimizeMetaDescription: !postExcerpt
+    });
+
+    setPostContent(result.content);
+    if (!postExcerpt && result.metaDescription) {
+      setPostExcerpt(result.metaDescription);
+    }
+
+    const messages = [];
+    if (result.competitorContactsReplaced > 0) messages.push(`Đổi ${result.competitorContactsReplaced} thông tin liên hệ của đơn vị khác sang Bê Tông An Gia Bình`);
+    if (result.clutterCleaned > 0) messages.push(`Dọn ${result.clutterCleaned} đoạn rác hoặc ký tự lộn xộn`);
+    if (result.internalLinksAdded > 0) messages.push(`Bổ sung ${result.internalLinksAdded} liên kết nội bộ (Báo giá, Giới thiệu)`);
+    if (result.headingsStandardized > 0) messages.push(`Chuẩn hóa ${result.headingsStandardized} cấu trúc heading H2, H3`);
+
+    alert(`✅ ĐÃ TỐI ƯU NỘI DUNG CHUẨN AN GIA BÌNH:\n\n${messages.length > 0 ? messages.map(m => `• ${m}`).join('\n') : '• Đã quét sạch rác, tối ưu chuẩn thương hiệu và cấu trúc bài viết!'}`);
+  };
+
+  // Auto optimize Excerpt / Meta Description inside edit modal
+  const handleAutoOptimizeExcerptInEditor = () => {
+    if (!postTitle && !postContent) {
+      alert('Vui lòng nhập tiêu đề hoặc nội dung bài viết.');
+      return;
+    }
+    const tempPost: BlogPost = {
+      id: editingPostId || 'temp',
+      title: postTitle,
+      slug: postSlug,
+      category: postCategory,
+      excerpt: postExcerpt,
+      content: postContent,
+      tags: postTags.split(',').map(s => s.trim()).filter(Boolean),
+      focusKeywords: postKeywords.split(',').map(s => s.trim()).filter(Boolean),
+      date: postDate,
+      coverImage: postImage,
+      readTime: '5 phút',
+      views: 0
+    };
+    const newDesc = generateOptimizedMetaDescription(tempPost);
+    setPostExcerpt(newDesc);
+  };
+
+  // Auto suggest keywords and tags inside edit modal
+  const handleAutoSuggestKeywordsAndTagsInEditor = () => {
+    if (!postTitle && !postContent) {
+      alert('Vui lòng nhập tiêu đề hoặc nội dung bài viết để hệ thống gợi ý từ khóa và tags.');
+      return;
+    }
+    const suggestion = suggestKeywordsAndTags(postTitle, postContent);
+    const secondaryList = typeof suggestion.secondaryKeywords === 'string'
+      ? suggestion.secondaryKeywords.split(',').map(s => s.trim()).filter(Boolean)
+      : [];
+    const kwCombined = [suggestion.primaryKeyword, ...secondaryList].filter(Boolean);
+    if (kwCombined.length > 0) {
+      setPostKeywords(kwCombined.join(', '));
+    }
+    if (suggestion.tags.length > 0) {
+      setPostTags(suggestion.tags.join(', '));
+    }
+    alert(`✅ ĐÃ GỢI Ý TỪ KHÓA & TAGS THEO TIÊU ĐỀ:\n\n• Từ khóa chính: ${suggestion.primaryKeyword}\n• Từ khóa phụ: ${secondaryList.join(', ')}\n• Tags: ${suggestion.tags.join(', ')}`);
   };
 
   // Auto suggest prompt based on post title
@@ -1519,6 +1649,12 @@ export default function AdminDashboard() {
           </div>
 
           <div className="flex items-center gap-2.5">
+            {lastSyncedTime && (
+              <span className="hidden xl:inline-flex items-center gap-1.5 text-[11px] text-slate-500 font-medium bg-slate-100 px-2.5 py-1.5 rounded-xl border border-slate-200">
+                <Clock className="w-3.5 h-3.5 text-amber-600" />
+                <span>Đồng bộ: <strong className="text-slate-700 font-mono">{lastSyncedTime}</strong></span>
+              </span>
+            )}
             <button
               onClick={handleSyncFromAiStudio}
               disabled={isPersistingPosts}
@@ -1662,6 +1798,18 @@ export default function AdminDashboard() {
           </button>
 
           <button
+            onClick={() => setActiveTab('design')}
+            className={`px-4 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-2 ${
+              activeTab === 'design'
+                ? 'bg-amber-500 text-slate-950 shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <Palette className="w-4 h-4 text-amber-700" />
+            <span>Giao Diện &amp; Bố Cục</span>
+          </button>
+
+          <button
             onClick={() => setActiveTab('settings')}
             className={`px-4 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-2 ${
               activeTab === 'settings'
@@ -1689,6 +1837,10 @@ export default function AdminDashboard() {
             </span>
           </div>
           <div className="flex items-center gap-3 text-slate-600">
+            <span className="inline-flex items-center gap-1.5 bg-white border border-amber-300 text-amber-950 font-bold px-2.5 py-1 rounded-xl text-[11px] shadow-xs">
+              <Clock className="w-3.5 h-3.5 text-amber-600" />
+              <span>Đồng bộ mới nhất: <span className="text-amber-800 font-mono">{lastSyncedTime || 'Vừa kết nối phiên này'}</span></span>
+            </span>
             <span>Bài viết: <strong className="text-slate-900">{posts.length}</strong> • Dự án: <strong className="text-slate-900">{projects.length}</strong> • Trang: <strong className="text-slate-900">{pages.length}</strong></span>
             <button
               onClick={handleSyncFromAiStudio}
@@ -2160,6 +2312,21 @@ export default function AdminDashboard() {
                     addPost(newPost);
                     if (candidateNews.title) {
                       markNewsRewritten(candidateNews.title);
+                    }
+                    // Persist immediately to AI Studio Server
+                    try {
+                      await fetch('/api/admin/persist-posts', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ posts: [newPost] })
+                      });
+                      const nowStr = new Date().toLocaleString('vi-VN');
+                      setLastSyncedTime(nowStr);
+                      if (typeof window !== 'undefined') {
+                        localStorage.setItem('angiabinh_last_sync_time', nowStr);
+                      }
+                    } catch (persistErr) {
+                      console.error('Error auto-persisting scheduled post:', persistErr);
                     }
                     return newPost;
                   }
@@ -3413,6 +3580,15 @@ export default function AdminDashboard() {
         )}
 
         {/* TAB 7: WEBSITE CONFIGURATION & SEO PARAMETERS */}
+        {activeTab === 'design' && (
+          <AdminDesignSection
+            config={jekyllConfig}
+            onSaveConfig={(updates) => {
+              updateJekyllConfig(updates);
+            }}
+          />
+        )}
+
         {activeTab === 'settings' && (
           <div className="space-y-8">
             {/* Header with save button */}
@@ -4106,19 +4282,39 @@ plugins:
                 </p>
               </div>
 
-              {/* Excerpt with AI Rewrite Button */}
+              {/* Excerpt with AI Rewrite & Auto Optimize Button */}
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="font-bold text-slate-700">Đoạn tóm tắt Excerpt (Meta Description)</label>
-                  <button
-                    type="button"
-                    onClick={handleRewritePostExcerpt}
-                    disabled={isRewritingPostExcerpt}
-                    className="text-[11px] text-amber-700 hover:text-amber-800 font-bold flex items-center gap-1 disabled:opacity-50"
-                  >
-                    <Sparkles className="w-3 h-3" />
-                    <span>{isRewritingPostExcerpt ? 'AI Đang Viết Lại...' : 'Viết lại bằng AI'}</span>
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <label className="font-bold text-slate-700">Đoạn tóm tắt Excerpt (Meta Description)</label>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
+                      postExcerpt.length >= 130 && postExcerpt.length <= 165
+                        ? 'bg-emerald-100 text-emerald-800'
+                        : 'bg-slate-100 text-slate-600'
+                    }`}>
+                      {postExcerpt.length}/160 ký tự {postExcerpt.length >= 130 && postExcerpt.length <= 165 ? '(Chuẩn SEO)' : ''}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={handleAutoOptimizeExcerptInEditor}
+                      className="text-[11px] bg-amber-100 hover:bg-amber-200 text-amber-900 px-2.5 py-1 rounded-lg font-bold flex items-center gap-1 transition cursor-pointer"
+                      title="Tự động tạo đoạn tóm tắt 140-160 ký tự chuẩn SEO chứa từ khóa và thương hiệu Bê Tông An Gia Bình"
+                    >
+                      <Zap className="w-3 h-3 text-amber-700" />
+                      <span>Tự Tối Ưu Excerpt</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleRewritePostExcerpt}
+                      disabled={isRewritingPostExcerpt}
+                      className="text-[11px] text-amber-700 hover:text-amber-800 font-bold flex items-center gap-1 disabled:opacity-50"
+                    >
+                      <Sparkles className="w-3 h-3" />
+                      <span>{isRewritingPostExcerpt ? 'AI Đang Viết Lại...' : 'Viết lại bằng AI'}</span>
+                    </button>
+                  </div>
                 </div>
                 <textarea
                   rows={2}
@@ -4204,6 +4400,16 @@ plugins:
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
+                      onClick={handleOptimizePostContentInEditor}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-xs transition cursor-pointer"
+                      title="Tối ưu nội dung theo thương hiệu Bê tông An Gia Bình: đổi thông tin liên hệ của đơn vị khác, dọn rác, chuẩn hóa heading, chèn internal link"
+                    >
+                      <Building2 className="w-3.5 h-3.5 text-amber-300" />
+                      <span>Tối Ưu Thương Hiệu &amp; Dọn Rác</span>
+                    </button>
+
+                    <button
+                      type="button"
                       onClick={() => {
                         if (!postContent && !postTitle) {
                           alert('Vui lòng nhập tiêu đề hoặc nội dung trước khi tối ưu SEO.');
@@ -4230,7 +4436,7 @@ plugins:
                       title="Mở bảng tối ưu SEO: lồng ghép từ khóa chính/phụ, tự động chèn internal link, nâng cấp tối thiểu 1.000 từ"
                     >
                       <Sparkles className="w-3.5 h-3.5" />
-                      <span>Tối Ưu SEO AI (Từ Khóa, Internal Link &amp; &ge;1000 từ)</span>
+                      <span>Tối Ưu SEO AI (Từ Khóa &amp; &ge;1000 từ)</span>
                     </button>
 
                     <button
@@ -4254,24 +4460,40 @@ plugins:
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-bold text-slate-700 mb-1">Từ khóa SEO</label>
-                  <input
-                    type="text"
-                    value={postKeywords}
-                    onChange={(e) => setPostKeywords(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-300 text-slate-900 p-2.5 rounded-xl text-xs"
-                  />
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="font-bold text-slate-700 text-xs">Từ Khóa &amp; Thẻ Phân Loại (Tags)</span>
+                  <button
+                    type="button"
+                    onClick={handleAutoSuggestKeywordsAndTagsInEditor}
+                    className="text-[11px] bg-violet-100 hover:bg-violet-200 text-violet-900 font-bold px-2.5 py-1 rounded-lg flex items-center gap-1.5 transition cursor-pointer"
+                    title="Phân tích tiêu đề và nội dung để tự động gợi ý từ khóa chính, từ khóa phụ và tags chuẩn Bê Tông An Gia Bình"
+                  >
+                    <Sparkles className="w-3 h-3 text-violet-700" />
+                    <span>Tự Gợi Ý Từ Khóa &amp; Tags</span>
+                  </button>
                 </div>
-                <div>
-                  <label className="block font-bold text-slate-700 mb-1">Tags</label>
-                  <input
-                    type="text"
-                    value={postTags}
-                    onChange={(e) => setPostTags(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-300 text-slate-900 p-2.5 rounded-xl text-xs"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-slate-500 text-[11px] font-semibold mb-1">Từ khóa SEO (chính, phụ cách nhau bằng dấu phẩy)</label>
+                    <input
+                      type="text"
+                      value={postKeywords}
+                      onChange={(e) => setPostKeywords(e.target.value)}
+                      placeholder="bê tông tươi ninh bình, giá bê tông mác 250 ninh bình..."
+                      className="w-full bg-slate-50 border border-slate-300 text-slate-900 p-2.5 rounded-xl text-xs font-medium"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-slate-500 text-[11px] font-semibold mb-1">Tags (thẻ phân loại cách nhau bằng dấu phẩy)</label>
+                    <input
+                      type="text"
+                      value={postTags}
+                      onChange={(e) => setPostTags(e.target.value)}
+                      placeholder="bê tông ninh bình, kỹ thuật thi công, an gia bình..."
+                      className="w-full bg-slate-50 border border-slate-300 text-slate-900 p-2.5 rounded-xl text-xs font-medium"
+                    />
+                  </div>
                 </div>
               </div>
 

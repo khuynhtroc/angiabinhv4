@@ -115,9 +115,12 @@ export default function ProjectsShowcase({ showAll = false, limit }: ProjectsSho
                     <img
                       src={resolveMediaUrl(proj.image, proj.title)}
                       alt={proj.title}
+                      width={400}
+                      height={208}
                       onError={(e) => handleImageFallback(e, proj.title)}
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                       loading="lazy"
+                      decoding="async"
                     />
                     <div className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-xs text-amber-400 text-[10px] font-extrabold px-2.5 py-1 rounded-md uppercase tracking-wider">
                       {proj.category}

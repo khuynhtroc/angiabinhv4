@@ -21,6 +21,7 @@ const PROJECTS_FILE = path.join(DATA_DIR, 'projects.json');
 const PAGES_FILE = path.join(DATA_DIR, 'pages.json');
 const CATEGORIES_FILE = path.join(DATA_DIR, 'categories.json');
 const CONFIG_FILE = path.join(DATA_DIR, 'config.json');
+const ADMIN_CONFIG_FILE = path.join(DATA_DIR, 'admin-settings.json');
 
 function ensureDataDir(): void {
   try {
@@ -295,4 +296,77 @@ export function savePagesServer(pages: SitePage[]): boolean {
 export function saveCategoriesServer(categories: CategoryItem[]): boolean {
   ensureDataDir();
   return writeDataFile(CATEGORIES_FILE, JSON.stringify(categories, null, 2));
+}
+
+/**
+ * Get Jekyll config from server file.
+ */
+export function getConfigServer(): JekyllConfig {
+  ensureDataDir();
+  try {
+    if (fs.existsSync(CONFIG_FILE)) {
+      const raw = fs.readFileSync(CONFIG_FILE, 'utf-8');
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object') {
+        return {
+          ...initialJekyllConfig,
+          ...parsed,
+          logo: parsed.logo || initialJekyllConfig.logo || '/logo.png',
+          favicon: parsed.favicon || initialJekyllConfig.favicon || '/favicon.ico',
+        };
+      }
+    }
+  } catch (err) {
+    console.warn('[server-data] Failed to read CONFIG_FILE:', err);
+  }
+  return initialJekyllConfig;
+}
+
+/**
+ * Save Jekyll config to server file.
+ */
+export function saveConfigServer(config: Partial<JekyllConfig>): boolean {
+  ensureDataDir();
+  try {
+    const current = getConfigServer();
+    const updated: JekyllConfig = {
+      ...current,
+      ...config,
+    };
+    return writeDataFile(CONFIG_FILE, JSON.stringify(updated, null, 2));
+  } catch (err) {
+    console.error('[server-data] Failed to save CONFIG_FILE:', err);
+    return false;
+  }
+}
+
+
+export function getAdminConfigServer(): any {
+  ensureDataDir();
+  try {
+    if (fs.existsSync(ADMIN_CONFIG_FILE)) {
+      const raw = fs.readFileSync(ADMIN_CONFIG_FILE, 'utf-8');
+      return JSON.parse(raw);
+    }
+  } catch (err) {
+    console.warn('[server-data] Failed to read ADMIN_CONFIG_FILE:', err);
+  }
+  return null;
+}
+
+export function saveAdminConfigServer(adminConfig: any): boolean {
+  ensureDataDir();
+  try {
+    if (!adminConfig || typeof adminConfig !== 'object') return false;
+    const current = getAdminConfigServer() || {};
+    const updated = {
+      ...current,
+      ...adminConfig,
+      updatedAt: new Date().toISOString()
+    };
+    return writeDataFile(ADMIN_CONFIG_FILE, JSON.stringify(updated, null, 2));
+  } catch (err) {
+    console.error('[server-data] Failed to save ADMIN_CONFIG_FILE:', err);
+    return false;
+  }
 }

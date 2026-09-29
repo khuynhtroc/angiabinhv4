@@ -25,7 +25,7 @@ export default function HomeBlogSection() {
           <div>
             <span className="text-amber-600 font-extrabold text-xs tracking-wider uppercase bg-amber-50 px-3 py-1 rounded-full inline-flex items-center gap-1.5">
               <TrendingUp className="w-3.5 h-3.5" />
-              Chuyên Mục Kiến Thức & Chuẩn SEO Top Google
+              Chuyên Mục Kiến Thức &amp; Kỹ Thuật Xây Dựng
             </span>
             <h2 className="text-2xl sm:text-4xl font-black text-slate-900 mt-2">
               Kinh Nghiệm & Cẩm Nang Bê Tông Ninh Bình
@@ -56,7 +56,11 @@ export default function HomeBlogSection() {
                   <img
                     src={resolveMediaUrl(post.coverImage)}
                     alt={post.title}
+                    width={400}
+                    height={192}
                     className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute top-3 left-3 bg-amber-500 text-slate-950 text-[10px] font-black px-2.5 py-1 rounded-md uppercase tracking-wider">
                     {post.category}

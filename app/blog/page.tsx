@@ -223,9 +223,12 @@ function BlogListInner() {
             <img
               src={resolveMediaUrl(post.coverImage)}
               alt={post.title}
+              width={400}
+              height={220}
               onError={(e) => handleImageFallback(e, post.title || 'bê tông tươi')}
               className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
               loading="lazy"
+              decoding="async"
             />
             <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none z-10">
               <Link

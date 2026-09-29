@@ -15,10 +15,12 @@ import ServiceDetailView, { SERVICES_DATABASE, SLUG_ALIASES } from '@/components
 import TodaySearchKeywords from '@/components/TodaySearchKeywords';
 import { BlogPost, SitePage } from '@/lib/types';
 import {
-  Calendar, Clock, Tag, ArrowLeft, Phone, Share2, FileCode, Check,
-  Copy, ChevronRight, BookOpen, CheckCircle, Sparkles, HelpCircle,
+  Calendar, Clock, Tag, ArrowLeft, Phone, Share2, Check,
+  ChevronRight, BookOpen, CheckCircle, Sparkles, HelpCircle,
   Mail, MapPin, Layers
 } from 'lucide-react';
+
+import NotFoundRedirect from '@/components/NotFoundRedirect';
 
 interface DynamicPostClientProps {
   postSlug: string;
@@ -31,10 +33,8 @@ export default function DynamicPostClient({
   initialPost,
   initialPage
 }: DynamicPostClientProps) {
-  const { posts, pages } = useAppStore();
+  const { posts, pages, jekyllConfig } = useAppStore();
 
-  const [copiedJekyll, setCopiedJekyll] = useState(false);
-  const [showJekyllSource, setShowJekyllSource] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
 
   // Match by id, slug, or with .html
@@ -188,37 +188,21 @@ export default function DynamicPostClient({
           description="Bài viết bạn đang tìm kiếm không tồn tại hoặc đã được cập nhật đường dẫn mới."
         />
         <Navbar />
-        <div className="max-w-2xl mx-auto py-24 px-4 text-center">
-          <BookOpen className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-          <h1 className="text-2xl font-black text-slate-900">Không tìm thấy bài viết</h1>
-          <p className="text-sm text-slate-500 mt-2 mb-6">
-            Bài viết <span className="font-mono text-xs bg-slate-100 px-2 py-1 rounded">/{rawSlug}</span> có thể đã được đổi đường dẫn hoặc tạm gỡ xuống.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 px-5 py-2.5 rounded-xl font-bold text-xs transition"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Xem tất cả bài viết</span>
-            </Link>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 bg-slate-200 hover:bg-slate-300 text-slate-800 px-5 py-2.5 rounded-xl font-bold text-xs transition"
-            >
-              <span>Về Trang Chủ</span>
-            </Link>
-          </div>
-        </div>
+        <NotFoundRedirect
+          itemType="bài viết"
+          slug={rawSlug}
+          targetUrl="/"
+          targetName="Trang Chủ"
+        />
         <Footer />
       </div>
     );
   }
 
-  // Related posts
+  // Related posts (expanded to 6 to strengthen internal link mesh and prevent orphan pages)
   const relatedPosts = posts
     .filter((p) => p.id !== post.id && (p.category === post.category || p.category))
-    .slice(0, 3);
+    .slice(0, 6);
 
   // Article Title & SEO Title
   const articleTitle = post.title;
@@ -228,28 +212,6 @@ export default function DynamicPostClient({
     : `${seoTitle} | Bê Tông An Gia Bình`;
 
   const canonicalUrl = `https://betongangiabinh.vn/${cleanSlug}.html`;
-
-  // Jekyll markdown generation
-  const jekyllFrontMatter = `---
-layout: post
-title: "${post.title.replace(/"/g, '\\"')}"
-date: ${post.date || new Date().toISOString().split('T')[0]}
-category: "${post.category}"
-tags: [${(post.tags || []).map((t) => `"${t}"`).join(', ')}]
-cover_image: "${post.coverImage}"
-permalink: /${cleanSlug}.html
-author: "${post.author || 'Bê Tông An Gia Bình'}"
-seo_title: "${post.seoTitle || post.title}"
-seo_description: "${post.seoDescription || post.excerpt}"
----
-
-${post.content}`;
-
-  const handleCopyJekyll = () => {
-    navigator.clipboard.writeText(jekyllFrontMatter);
-    setCopiedJekyll(true);
-    setTimeout(() => setCopiedJekyll(false), 2500);
-  };
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 font-sans">
@@ -274,7 +236,7 @@ ${post.content}`;
       <RealtimeAnalyticsTracker />
       <Navbar />
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex-grow w-full">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex-grow w-full">
         {/* Breadcrumb Navigation */}
         <nav className="flex items-center gap-1.5 text-xs text-slate-500 mb-6 flex-wrap" aria-label="Breadcrumb">
           <Link href="/" className="hover:text-amber-600 transition">Trang Chủ</Link>
@@ -342,6 +304,10 @@ ${post.content}`;
             <img
               src={resolveMediaUrl(post.coverImage)}
               alt={post.title}
+              width={1200}
+              height={514}
+              fetchPriority="high"
+              decoding="async"
               className="w-full h-full object-cover"
             />
           </div>
@@ -383,71 +349,26 @@ ${post.content}`;
         {/* Trending Keywords Component */}
         <TodaySearchKeywords />
 
-        {/* Jekyll Source Code Toggle Box */}
-        <div className="mt-8 bg-slate-900 text-slate-200 rounded-2xl p-5 border border-slate-800">
-          <div className="flex items-center justify-between flex-wrap gap-3">
-            <div className="flex items-center gap-2">
-              <FileCode className="w-4 h-4 text-amber-400" />
-              <span className="font-mono text-xs text-amber-400 font-bold">Jekyll / Markdown Static Source</span>
-              <span className="text-[10px] text-slate-400">({cleanSlug}.html)</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setShowJekyllSource(!showJekyllSource)}
-                className="text-xs text-slate-300 hover:text-white underline underline-offset-4"
-              >
-                {showJekyllSource ? 'Ẩn mã nguồn' : 'Xem mã nguồn Jekyll'}
-              </button>
-              <button
-                type="button"
-                onClick={handleCopyJekyll}
-                className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition"
-              >
-                {copiedJekyll ? (
-                  <>
-                    <Check className="w-3.5 h-3.5 text-slate-950" />
-                    <span>Đã sao chép!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-3.5 h-3.5 text-slate-950" />
-                    <span>Sao chép Markdown</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-
-          {showJekyllSource && (
-            <div className="mt-4 pt-4 border-t border-slate-800">
-              <pre className="text-xs font-mono bg-slate-950 p-4 rounded-xl overflow-x-auto text-amber-300 max-h-64">
-                {jekyllFrontMatter}
-              </pre>
-            </div>
-          )}
-        </div>
-
         {/* Concrete Order Call-to-Action Bar */}
         <div className="mt-10 bg-linear-to-br from-slate-900 to-slate-950 text-white p-6 sm:p-8 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
           <div>
             <span className="text-amber-400 font-extrabold uppercase text-xs tracking-wider flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5" />
-              Bê Tông An Gia Bình Ninh Bình
+              {jekyllConfig?.title || "Bê Tông An Gia Bình Ninh Bình"}
             </span>
             <h4 className="text-lg sm:text-xl font-black text-white mt-1">
-              Cần Báo Giá &amp; Khảo Sát Bê Tông Mác 200 - 450?
+              {jekyllConfig?.ctaHeading || "Cần Báo Giá & Khảo Sát Bê Tông Mác 200 - 450?"}
             </h4>
             <p className="text-xs sm:text-sm text-slate-400 mt-1">
-              Trạm 1 KCN Khánh Phú (300m³/h) &amp; Trạm 2 Kim Sơn (150m³/h) sẵn sàng phục vụ 24/7.
+              {jekyllConfig?.ctaSubheading || "Trạm 1 KCN Khánh Phú (300m³/h) & Trạm 2 Kim Sơn (150m³/h) sẵn sàng phục vụ 24/7."}
             </p>
           </div>
           <a
-            href="tel:0988266293"
+            href={jekyllConfig?.ctaButtonLink || "tel:0988266293"}
             className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black px-6 py-3 rounded-xl text-sm flex items-center gap-2 shrink-0 transition shadow-sm"
           >
             <Phone className="w-4 h-4 text-slate-950 animate-pulse" />
-            <span>0988 2662 93</span>
+            <span>{jekyllConfig?.ctaButtonText || "0988 2662 93"}</span>
           </a>
         </div>
 
@@ -461,7 +382,7 @@ ${post.content}`;
                 <ChevronRight className="w-3.5 h-3.5" />
               </Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedPosts.map((r) => (
                 <Link
                   key={r.id}

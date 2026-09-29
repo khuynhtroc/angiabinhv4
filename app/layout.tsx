@@ -26,8 +26,12 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Bê Tông An Gia Bình | Bê Tông Tươi Ninh Bình Uy Tín Số 1',
-  description: 'Công ty TNHH Bê Tông An Gia Bình - Cung cấp bê tông tươi, bê tông thương phẩm, xe bơm cần và bơm tĩnh chất lượng cao tại Ninh Bình và toàn quốc. Hotline: 0988 2662 93',
+  metadataBase: new URL('https://betongangiabinh.vn'),
+  title: 'Bê Tông An Gia Bình | Bê Tông Tươi Ninh Bình Uy Tín',
+  description: 'Trạm trộn bê tông tươi, bê tông thương phẩm An Gia Bình tại Ninh Bình. Đội xe bồn, xe bơm cần 37m-56m, giao đúng mác, đủ khối lượng 24/7. Hotline: 0988 2662 93.',
+  alternates: {
+    canonical: '/',
+  },
   keywords: [
     'bê tông tươi ninh bình',
     'bê tông an gia bình',
@@ -42,11 +46,28 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'vi_VN',
     url: 'https://betongangiabinh.vn',
+    siteName: 'Bê Tông An Gia Bình',
+    images: [
+      {
+        url: 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Trạm Trộn Bê Tông Tươi An Gia Bình Ninh Bình',
+      }
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Bê Tông An Gia Bình - Trạm Trộn Bê Tông Tươi Ninh Bình',
     description: 'Bê tông thương phẩm chất lượng cao, trạm trộn tự động, xe bồn và xe bơm 24/7.',
+    images: ['https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg'],
+  },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/logo.png',
   },
 };
 
@@ -54,10 +75,20 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="vi" className={`scroll-smooth ${plusJakartaSans.variable} ${spaceGrotesk.variable}`}>
       <head>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/logo.png" />
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev" />
+        {/* Preload critical LCP image for mobile */}
+        <link
+          rel="preload"
+          as="image"
+          href="https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg"
+          fetchPriority="high"
+        />
         <link rel="alternate" type="application/rss+xml" title="Bê Tông An Gia Bình RSS Feed" href="/rss.xml" />
         <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
         <script

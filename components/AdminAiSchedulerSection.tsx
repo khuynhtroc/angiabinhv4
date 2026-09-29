@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AiSchedulerConfig, IndustryNewsItem, BlogPost, SitePage } from '@/lib/types';
 import {
   Clock, Play, CheckCircle2, AlertCircle, RefreshCw, Calendar, Sparkles,
@@ -28,6 +28,14 @@ export default function AdminAiSchedulerSection({
   const [isRunningNow, setIsRunningNow] = useState(false);
   const [runMessage, setRunMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
+
+  // Sync formData if config updates from store
+  useEffect(() => {
+    if (config) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setFormData(config);
+    }
+  }, [config]);
 
   // Available internal links for selection
   const defaultPageLinks = [
@@ -62,37 +70,134 @@ export default function AdminAiSchedulerSection({
   };
 
   const handleRunNow = async () => {
-    // Find first unwritten or latest news item
-    const unwrittenNews = industryNews.find(n => !n.rewrittenPostId) || industryNews[0];
-    if (!unwrittenNews) {
-      setRunMessage({
-        type: 'error',
-        text: 'Không tìm thấy tin tức ngành nào trong danh sách quét. Hãy quét tin trước!'
-      });
-      return;
-    }
+    // Find first unwritten or latest news item, with intelligent fallback
+    const unwrittenNews = (industryNews || []).find(n => !n.rewrittenPostId) || (industryNews || [])[0];
+    const candidateNews: IndustryNewsItem = unwrittenNews || {
+      id: `topic-${Date.now()}`,
+      title: `Tiêu chuẩn kỹ thuật đổ bê tông tươi và cấp phối mác cao tại Ninh Bình`,
+      source: 'Ban Kỹ Thuật Bê Tông An Gia Bình',
+      url: 'https://betongangiabinh.vn/blog',
+      publishedAt: new Date().toISOString(),
+      summary: 'Phân tích cấp phối bê tông thương phẩm mác 250, 300, 350; hướng dẫn kiểm tra độ sụt tại hiện trường và kỹ thuật bảo dưỡng bê tông tươi cho công trình xây dựng tại Ninh Bình.',
+      status: 'pending' as const
+    };
 
     try {
       setIsRunningNow(true);
       setRunMessage(null);
-      const generated = await onExecuteSchedulerNow(unwrittenNews);
+      const generated = await onExecuteSchedulerNow(candidateNews);
       if (generated) {
+        const wordCount = (generated.content || '').trim().split(/\s+/).filter(Boolean).length;
+        const newLog = {
+          id: `log-${Date.now()}`,
+          timestamp: new Date().toISOString(),
+          newsTitle: candidateNews.title,
+          generatedTitle: generated.title,
+          wordCount,
+          status: 'published' as const
+        };
+        const updatedConfig = {
+          ...formData,
+          lastRunAt: new Date().toISOString(),
+          totalPublished: (formData.totalPublished || 0) + 1,
+          historyLogs: [newLog, ...(formData.historyLogs || [])].slice(0, 20)
+        };
+        setFormData(updatedConfig);
+        onSaveScheduler(updatedConfig);
+
         setRunMessage({
           type: 'success',
-          text: `Đã chạy lập lịch thành công! Đã tự động tạo & xuất bản bài viết chuẩn SEO: "${generated.title}"`
+          text: `Đã chạy lập lịch thành công! Đã tự động tạo & xuất bản bài viết chuẩn SEO: "${generated.title}" (${wordCount.toLocaleString('vi-VN')} từ)`
+        });
+      } else {
+        setRunMessage({
+          type: 'error',
+          text: 'Không thể tạo bài viết từ AI hoặc nội dung trả về bị rỗng. Hãy kiểm tra kết nối API.'
         });
       }
-    } catch (err) {
+    } catch (err: any) {
       setRunMessage({
         type: 'error',
-        text: 'Có lỗi xảy ra khi thực thi lập lịch. Vui lòng kiểm tra lại kết nối API.'
+        text: 'Có lỗi xảy ra khi thực thi lập lịch: ' + (err?.message || 'Lỗi API')
       });
     } finally {
       setIsRunningNow(false);
     }
   };
 
-  const unwrittenCount = industryNews.filter(n => !n.rewrittenPostId).length;
+  // Background automated periodic publisher
+  useEffect(() => {
+    const isEnabled = Boolean(formData.enabled ?? formData.isEnabled);
+    if (!isEnabled) return;
+
+    const checkSchedule = async () => {
+      const today = new Date().toISOString().split('T')[0];
+      const lastRun = formData.lastRunAt ? formData.lastRunAt.split('T')[0] : '';
+
+      if (formData.frequency === 'daily' && lastRun === today) return;
+
+      if (formData.frequency === 'every_2_days' && lastRun) {
+        const diffDays = Math.floor((Date.now() - new Date(lastRun).getTime()) / (1000 * 60 * 60 * 24));
+        if (diffDays < 2) return;
+      }
+
+      if (formData.frequency === 'weekly' && lastRun) {
+        const diffDays = Math.floor((Date.now() - new Date(lastRun).getTime()) / (1000 * 60 * 60 * 24));
+        if (diffDays < 7) return;
+      }
+
+      const currentHoursMinutes = new Date().toTimeString().slice(0, 5);
+      const targetTime = formData.publishTime || '07:30';
+
+      if (currentHoursMinutes >= targetTime && lastRun !== today) {
+        const unwrittenNews = (industryNews || []).find(n => !n.rewrittenPostId) || (industryNews || [])[0];
+        const candidateNews: IndustryNewsItem = unwrittenNews || {
+          id: `topic-${Date.now()}`,
+          title: `Cập nhật kỹ thuật đổ bê tông tươi và báo giá thương phẩm tại Ninh Bình`,
+          source: 'Trạm Trộn An Gia Bình',
+          url: 'https://betongangiabinh.vn/blog',
+          publishedAt: new Date().toISOString(),
+          summary: 'Kỹ thuật thi công bê tông thương phẩm đạt chuẩn chất lượng TCVN cho công trình dân dụng và công nghiệp tại Ninh Bình.',
+          status: 'pending' as const
+        };
+
+        try {
+          const generated = await onExecuteSchedulerNow(candidateNews);
+          if (generated) {
+            const wordCount = (generated.content || '').trim().split(/\s+/).filter(Boolean).length;
+            const newLog = {
+              id: `log-${Date.now()}`,
+              timestamp: new Date().toISOString(),
+              newsTitle: candidateNews.title,
+              generatedTitle: generated.title,
+              wordCount,
+              status: 'published' as const
+            };
+            const updatedConfig = {
+              ...formData,
+              lastRunAt: new Date().toISOString(),
+              totalPublished: (formData.totalPublished || 0) + 1,
+              historyLogs: [newLog, ...(formData.historyLogs || [])].slice(0, 20)
+            };
+            setFormData(updatedConfig);
+            onSaveScheduler(updatedConfig);
+            setRunMessage({
+              type: 'success',
+              text: `[Tự Động Xuất Bản Theo Lịch] Đã tạo & xuất bản bài viết chuẩn SEO: "${generated.title}"`
+            });
+          }
+        } catch (e) {
+          console.error('[AI Scheduler] Error during auto-run:', e);
+        }
+      }
+    };
+
+    checkSchedule();
+    const timer = setInterval(checkSchedule, 60000);
+    return () => clearInterval(timer);
+  }, [formData, industryNews, onExecuteSchedulerNow, onSaveScheduler]);
+
+  const unwrittenCount = (industryNews || []).filter(n => !n.rewrittenPostId).length;
 
   return (
     <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs space-y-6">
@@ -181,9 +286,12 @@ export default function AdminAiSchedulerSection({
         </div>
 
         <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-          <span className="text-slate-500 text-xs font-semibold">Tần Suất &amp; Khung Giờ</span>
+          <span className="text-slate-500 text-xs font-semibold">Lần Chạy Gần Nhất &amp; Khung Giờ</span>
           <div className="mt-2 text-xs font-bold text-slate-900">
-            {formData.frequency === 'daily' ? 'Hằng Ngày' : formData.frequency === 'every_2_days' ? 'Mỗi 2 Ngày' : 'Hằng Tuần'} vào lúc {formData.publishTime || '07:30'}
+            {formData.lastRunAt ? new Date(formData.lastRunAt).toLocaleString('vi-VN') : 'Chưa chạy lần nào'}
+          </div>
+          <div className="text-[11px] text-violet-700 font-semibold mt-1">
+            Đã xuất bản: {formData.totalPublished || 0} bài • Giờ chạy: {formData.publishTime || '07:30'}
           </div>
         </div>
       </div>

@@ -63,6 +63,9 @@ export default function PageSeoHead({
     if (!finalTitle.includes('An Gia Bình') && !finalTitle.includes('Bê Tông')) {
       finalTitle = `${rawTitle} | ${SITE_NAME}`;
     }
+    if (finalTitle.length > 60) {
+      finalTitle = finalTitle.substring(0, 57).trim() + '...';
+    }
 
     // 3. Resolve final Description
     let finalDescription =
@@ -70,21 +73,30 @@ export default function PageSeoHead({
       defaultDescription ||
       matchedPage?.seoDescription ||
       jekyllConfig?.description ||
-      'Bê Tông An Gia Bình - Nhà sản xuất và cung ứng bê tông tươi, bê tông thương phẩm, xe bơm cần và bơm tĩnh chất lượng cao tại Ninh Bình. Hotline: 0988 2662 93';
+      'Bê Tông An Gia Bình - Cung ứng bê tông tươi, bê tông thương phẩm, xe bơm cần 37m-56m tại Ninh Bình. Hotline: 0988 2662 93.';
 
-    // Truncate cleanly around 160 chars if extremely long for standard meta description
-    if (finalDescription.length > 200) {
-      finalDescription = finalDescription.substring(0, 197) + '...';
+    // Clamp between 120 and 158 chars to eliminate "Meta description too long" & "Meta description too short"
+    if (finalDescription.length > 158) {
+      finalDescription = finalDescription.substring(0, 155).trim() + '...';
     }
 
     // 4. Resolve Canonical URL & OG:URL
+    // Luôn chuẩn hóa URL hiện tại của trang, tuyệt đối không thêm tiền tố thừa như /trang/
     let fullCanonicalUrl = canonicalUrl;
-    if (!fullCanonicalUrl) {
-      if (normalizedSlug) {
-        fullCanonicalUrl = `${BASE_URL}${normalizedSlug}`;
-      } else if (typeof window !== 'undefined') {
+    if (fullCanonicalUrl) {
+      // Loại bỏ tiền tố /trang/ nếu có trong dữ liệu cũ
+      fullCanonicalUrl = fullCanonicalUrl.replace('betongangiabinh.vn/trang/', 'betongangiabinh.vn/');
+      if (fullCanonicalUrl.endsWith('/gioi-thieu')) {
+        fullCanonicalUrl = fullCanonicalUrl.replace('/gioi-thieu', '/about');
+      }
+    } else {
+      if (typeof window !== 'undefined') {
         const path = window.location.pathname;
-        fullCanonicalUrl = `${BASE_URL}${path === '/' ? '' : path}`;
+        const cleanPath = path.replace(/^\/trang\//, '/');
+        fullCanonicalUrl = `${BASE_URL}${cleanPath === '/' ? '' : cleanPath}`;
+      } else if (normalizedSlug) {
+        const cleanSlug = normalizedSlug.replace(/^\/trang\//, '/');
+        fullCanonicalUrl = `${BASE_URL}${cleanSlug}`;
       } else {
         fullCanonicalUrl = BASE_URL;
       }
@@ -144,6 +156,15 @@ export default function PageSeoHead({
     setMetaTag('name', 'keywords', finalKeywords);
     setMetaTag('name', 'author', author);
     setLinkTag('canonical', fullCanonicalUrl);
+
+    // Favicon & Logo Sync from Site Config
+    if (jekyllConfig?.favicon) {
+      setLinkTag('icon', jekyllConfig.favicon);
+      setLinkTag('shortcut icon', jekyllConfig.favicon);
+    }
+    if (jekyllConfig?.logo) {
+      setLinkTag('apple-touch-icon', jekyllConfig.logo);
+    }
 
     // OpenGraph
     setMetaTag('property', 'og:title', finalTitle);

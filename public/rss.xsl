@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" 
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" 
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:media="http://search.yahoo.com/mrss/">
   <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
   <xsl:template match="/">
     <html lang="vi">
@@ -8,6 +12,8 @@
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <title><xsl:value-of select="/rss/channel/title"/> | RSS Feed 2.0</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+        <link rel="shortcut icon" href="/favicon.ico"/>
         <style>
           * { box-sizing: border-box; margin: 0; padding: 0; }
           body {
@@ -18,7 +24,7 @@
             line-height: 1.6;
           }
           .container {
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
             background: #ffffff;
             border-radius: 20px;
@@ -29,8 +35,23 @@
           .header {
             background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
             color: #ffffff;
-            padding: 36px 32px;
+            padding: 32px 28px;
             border-bottom: 4px solid #f59e0b;
+          }
+          .brand-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+          }
+          .site-logo {
+            height: 52px;
+            width: auto;
+            max-width: 140px;
+            object-contain: contain;
+            border-radius: 12px;
+            background: #ffffff;
+            padding: 4px;
           }
           .badge {
             display: inline-block;
@@ -42,23 +63,25 @@
             border-radius: 9999px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
           }
           h1 {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
             margin-bottom: 8px;
+            letter-spacing: -0.02em;
           }
           .desc {
             color: #94a3b8;
-            font-size: 14px;
+            font-size: 13px;
             margin-bottom: 16px;
+            line-height: 1.6;
           }
           .feed-meta {
             font-size: 12px;
             color: #cbd5e1;
             display: flex;
-            gap: 16px;
+            gap: 12px;
             flex-wrap: wrap;
           }
           .feed-meta span {
@@ -66,22 +89,41 @@
             padding: 4px 10px;
             border-radius: 6px;
           }
+          .controls {
+            padding: 16px 28px;
+            background: #f1f5f9;
+            border-bottom: 1px solid #e2e8f0;
+          }
+          .search-box input {
+            width: 100%;
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            font-size: 13px;
+            background: #ffffff;
+            outline: none;
+          }
+          .search-box input:focus {
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+          }
           .items-list {
-            padding: 32px;
+            padding: 28px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
           }
           .item-card {
             border: 1px solid #e2e8f0;
             border-radius: 14px;
             padding: 20px 24px;
             background: #ffffff;
-            transition: border-color 0.2s, transform 0.2s;
+            transition: all 0.2s ease;
           }
           .item-card:hover {
             border-color: #f59e0b;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.08);
+            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.08);
+            transform: translateY(-1px);
           }
           .item-cat {
             display: inline-block;
@@ -98,6 +140,7 @@
             font-size: 17px;
             font-weight: 800;
             margin-bottom: 8px;
+            line-height: 1.4;
           }
           .item-title a {
             color: #0f172a;
@@ -133,7 +176,7 @@
             text-decoration: underline;
           }
           .footer {
-            padding: 20px 32px;
+            padding: 20px 28px;
             background: #f8fafc;
             border-top: 1px solid #e2e8f0;
             font-size: 12px;
@@ -142,6 +185,7 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            gap: 12px;
           }
           .footer a {
             color: #f59e0b;
@@ -153,8 +197,15 @@
       <body>
         <div class="container">
           <div class="header">
-            <div class="badge">Kênh Dữ Liệu RSS 2.0 Chuẩn Hóa</div>
-            <h1><xsl:value-of select="/rss/channel/title"/></h1>
+            <div class="brand-row">
+              <a href="https://betongangiabinh.vn">
+                <img src="/logo.png" alt="Bê Tông An Gia Bình" class="site-logo" />
+              </a>
+              <div>
+                <div class="badge">Kênh Dữ Liệu RSS 2.0 Chuẩn Hóa</div>
+                <h1><xsl:value-of select="/rss/channel/title"/></h1>
+              </div>
+            </div>
             <p class="desc"><xsl:value-of select="/rss/channel/description"/></p>
             <div class="feed-meta">
               <span>Ngôn ngữ: <xsl:value-of select="/rss/channel/language"/></span>
@@ -163,7 +214,13 @@
             </div>
           </div>
 
-          <div class="items-list">
+          <div class="controls">
+            <div class="search-box">
+              <input type="text" id="rssSearch" placeholder="🔍 Nhập từ khóa để lọc nhanh bài viết trong RSS..." oninput="filterRss()" />
+            </div>
+          </div>
+
+          <div class="items-list" id="itemsList">
             <xsl:for-each select="/rss/channel/item">
               <div class="item-card">
                 <xsl:if test="category">
@@ -192,6 +249,18 @@
             </div>
           </div>
         </div>
+
+        <script>
+          function filterRss() {
+            var input = document.getElementById('rssSearch');
+            var filter = input ? input.value.toLowerCase().trim() : '';
+            var cards = document.getElementsByClassName('item-card');
+            for (var i = 0; i &lt; cards.length; i++) {
+              var text = cards[i].innerText.toLowerCase();
+              cards[i].style.display = (!filter || text.indexOf(filter) !== -1) ? '' : 'none';
+            }
+          }
+        </script>
       </body>
     </html>
   </xsl:template>

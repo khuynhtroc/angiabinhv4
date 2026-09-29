@@ -65,10 +65,10 @@ export async function GET() {
     }
   };
 
-  // 1. Core Landing & Company Pages
+  // 1. Core Landing & Company Pages (Standard Canonical URLs)
   addUrl('/', nowIso, 'daily', '1.0', 'page');
+  addUrl('/about', nowIso, 'weekly', '0.85', 'page');
   addUrl('/bang-gia', nowIso, 'daily', '0.95', 'page');
-  addUrl('/gioi-thieu', nowIso, 'weekly', '0.85', 'page');
   addUrl('/du-an', nowIso, 'weekly', '0.85', 'page');
   addUrl('/quy-trinh-san-xuat', nowIso, 'monthly', '0.85', 'page');
   addUrl('/ho-so-nang-luc', nowIso, 'monthly', '0.85', 'page');
@@ -77,10 +77,9 @@ export async function GET() {
   addUrl('/dich-vu', nowIso, 'weekly', '0.85', 'page');
   addUrl('/linh-vuc-hoat-dong', nowIso, 'monthly', '0.80', 'page');
 
-  // 2. Concrete Product & Pump Services
+  // 2. Concrete Product & Pump Services (Canonical URL: /{slug})
   Object.keys(SERVICES_DATABASE).forEach((serviceKey) => {
     addUrl(`/${serviceKey}`, nowIso, 'weekly', '0.90', 'page');
-    addUrl(`/${serviceKey}.html`, nowIso, 'weekly', '0.85', 'page');
   });
 
   addUrl('/be-tong-tuoi', nowIso, 'weekly', '0.90', 'page');
@@ -90,46 +89,48 @@ export async function GET() {
   addUrl('/be-tong-khi-chung-ap', nowIso, 'weekly', '0.80', 'page');
   addUrl('/be-tong-nhua', nowIso, 'weekly', '0.80', 'page');
 
-  // 3. Blog Hub & Category Index Pages
+  // 3. Blog Hub & 3 Unified Categories (Total: exactly 4 unified blog URLs)
+  // https://betongangiabinh.vn/blog
+  // https://betongangiabinh.vn/blog/tin-tuc
+  // https://betongangiabinh.vn/blog/kinh-nghiem
+  // https://betongangiabinh.vn/blog/kien-thuc
   addUrl('/blog', nowIso, 'daily', '0.90', 'cat');
-  const categories = getAllCategoriesServer();
-  categories.forEach((cat) => {
-    addUrl(`/blog/chuyen-muc/${cat.slug}`, nowIso, 'daily', '0.85', 'cat');
-    addUrl(`/blog/${cat.slug}`, nowIso, 'daily', '0.85', 'cat');
-  });
+  addUrl('/blog/tin-tuc', nowIso, 'daily', '0.85', 'cat');
+  addUrl('/blog/kinh-nghiem', nowIso, 'daily', '0.85', 'cat');
+  addUrl('/blog/kien-thuc', nowIso, 'daily', '0.85', 'cat');
 
   // 4. Resolve ALL Blog Posts (Unified Server Storage)
-  // Canonical URL structure requested by user: betongangiabinh.vn/bai-viet.html
+  // Canonical URL structure requested by user: betongangiabinh.vn/[slug].html
   const allPosts = getAllPostsServer();
   allPosts.forEach((post) => {
     const postDate = post.date || nowIso;
     const cleanSlug = (post.slug || post.id || '').replace(/\.html$/, '');
-    if (!cleanSlug) return;
+    if (!cleanSlug || cleanSlug === 'bai-viet') return;
 
     // Single Canonical URL for all articles: https://betongangiabinh.vn/bai-viet.html
     addUrl(`/${cleanSlug}.html`, postDate, 'weekly', '0.85', 'blog');
   });
 
   // 5. Resolve Projects (Unified Server Storage)
+  // Exactly 17 projects matching https://betongangiabinh.vn/du-an
   const allProjects = getAllProjectsServer();
   allProjects.forEach((proj) => {
     const projDate = proj.date || nowIso;
     const slug = proj.slug || proj.id;
     if (slug) {
       addUrl(`/du-an/${slug}`, projDate, 'monthly', '0.75', 'project');
-      addUrl(`/du-an/${slug}.html`, projDate, 'monthly', '0.70', 'project');
     }
   });
 
-  // 6. Dynamic Site Pages (Unified Server Storage)
+  // 6. Dynamic Site Pages (Unified Server Storage - Canonical clean URLs)
   const allPages = getAllPagesServer();
   allPages.forEach((p) => {
     if (p.slug && p.slug !== '/' && !p.slug.startsWith('http')) {
       const cleanSlug = p.slug.replace(/^\//, '').replace(/\.html$/, '');
+      if (cleanSlug === 'gioi-thieu') return; // Redirects to /about (avoid redirect URLs in sitemap)
       const isPolicy = cleanSlug.includes('chinh-sach') || cleanSlug.includes('dieu-khoan');
       const pageType = isPolicy ? 'policy' : 'page';
       addUrl(`/${cleanSlug}`, p.updatedAt || nowIso, 'weekly', '0.80', pageType);
-      addUrl(`/${cleanSlug}.html`, p.updatedAt || nowIso, 'weekly', '0.75', pageType);
     }
   });
 
@@ -140,7 +141,6 @@ export async function GET() {
     <lastmod>${e.lastmod}</lastmod>
     <changefreq>${e.changefreq}</changefreq>
     <priority>${e.priority}</priority>
-    <type>${e.type}</type>
   </url>`;
     })
     .join('\n');

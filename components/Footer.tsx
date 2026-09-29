@@ -57,7 +57,11 @@ export default function Footer() {
                 <img
                   src={jekyllConfig.logo}
                   alt={jekyllConfig.title || 'Bê Tông An Gia Bình'}
+                  width={120}
+                  height={40}
                   className="h-10 w-auto max-w-[120px] rounded-xl object-contain shadow-xs"
+                  loading="lazy"
+                  decoding="async"
                 />
               ) : (
                 <div className="w-10 h-10 rounded-xl bg-amber-500 text-slate-950 font-black flex items-center justify-center text-lg shadow-xs">
@@ -69,7 +73,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Thương hiệu bê tông thương phẩm hàng đầu Ninh Bình. Hệ thống 2 cụm trạm trộn tự động hóa (KCN Khánh Phú 300m³/h & xã Kim Sơn 150m³/h), 35+ xe bồn và dàn xe bơm cần vươn xa 56m, định lượng chuẩn mác, đủ thể tích và đáp ứng tiến độ cho mọi công trình.
+              {jekyllConfig?.footerNotice || "Thương hiệu bê tông thương phẩm hàng đầu Ninh Bình. Hệ thống 2 cụm trạm trộn tự động hóa (KCN Khánh Phú 300m³/h & xã Kim Sơn 150m³/h), 35+ xe bồn và dàn xe bơm cần vươn xa 56m, định lượng chuẩn mác, đủ thể tích và đáp ứng tiến độ cho mọi công trình."}
             </p>
             <div className="pt-2">
               <a
@@ -117,7 +121,7 @@ export default function Footer() {
               <li>
                 <Link href="/bang-gia" className="text-slate-600 hover:text-amber-600 transition flex items-center justify-between font-medium">
                   <span>Báo Giá Bê Tông Tươi Ninh Bình</span>
-                  <span className="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold">2025</span>
+                  <span className="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold">2026</span>
                 </Link>
               </li>
               <li>
@@ -215,7 +219,7 @@ export default function Footer() {
         <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
           <div className="space-y-1">
             <div>
-              © {new Date().getFullYear()} {jekyllConfig?.company_name || 'CÔNG TY CỔ PHẦN THƯƠNG MẠI VÀ DỊCH VỤ AN GIA BÌNH'}. All rights reserved.
+              {jekyllConfig?.footerCopyright || `© ${new Date().getFullYear()} ${jekyllConfig?.company_name || "CÔNG TY CỔ PHẦN THƯƠNG MẠI VÀ DỊCH VỤ AN GIA BÌNH"}. All rights reserved.`}
             </div>
             <div className="text-[11px] text-slate-400">
               Mã số thuế: <strong className="text-slate-600 font-semibold">{jekyllConfig?.tax_id || '2700870972'}</strong> • Đăng ký tại Sở Kế hoạch và Đầu tư tỉnh Ninh Bình

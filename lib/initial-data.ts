@@ -6,8 +6,8 @@ export const initialJekyllConfig: JekyllConfig = {
   tagline: "Chất lượng vững bền - Đồng hành mọi công trình",
   company_name: "CÔNG TY CỔ PHẦN THƯƠNG MẠI VÀ DỊCH VỤ AN GIA BÌNH",
   tax_id: "2700870972",
-  logo: "",
-  favicon: "",
+  logo: "/logo.png",
+  favicon: "/favicon.ico",
   allow_search_engine: true,
   google_verify: "",
   bing_verify: "",
@@ -27,6 +27,25 @@ export const initialJekyllConfig: JekyllConfig = {
   markdown: "kramdown",
   permalink: "/:title.html",
   plugins: ["jekyll-feed", "jekyll-seo-tag", "jekyll-sitemap"],
+  primaryColor: '#f59e0b',
+  secondaryColor: '#0f172a',
+  accentColor: '#d97706',
+  fontFamily: 'sans',
+  layoutWidth: 'wide',
+  headerStyle: 'standard',
+  headerNotice: 'Trạm Trộn Bê Tông Tươi An Gia Bình | Trạm 1: KCN Khánh Phú • Trạm 2: Kim Sơn • 35+ Xe bồn',
+  showHeaderTopBar: true,
+  footerStyle: 'columns',
+  footerNotice: 'Thương hiệu bê tông thương phẩm hàng đầu Ninh Bình. Hệ thống 2 cụm trạm trộn tự động hóa (KCN Khánh Phú 300m³/h & xã Kim Sơn 150m³/h), 35+ xe bồn và dàn xe bơm cần vươn xa 56m.',
+  footerCopyright: '© 2025 - 2026 Bê Tông An Gia Bình Ninh Bình. Bản quyền thuộc về Công ty CP TM & DV An Gia Bình.',
+  sidebarPosition: 'right',
+  sidebarCtaTitle: 'Khảo sát & Báo Giá Bê Tông',
+  sidebarCtaPhone: '0988 2662 93',
+  sidebarCtaDesc: 'Trạm 1 KCN Khánh Phú (300m³/h) & Trạm 2 Xã Kim Sơn (150m³/h) sẵn sàng điều động 35+ xe bồn, xe bơm cần 37m - 56m.',
+  ctaButtonText: 'Gọi 0988 2662 93 Báo Giá 24/7',
+  ctaButtonLink: 'tel:0988266293',
+  ctaHeading: 'Cần Báo Giá & Khảo Sát Bê Tông Mác 200 - 450?',
+  ctaSubheading: 'Trạm 1 KCN Khánh Phú (300m³/h) & Trạm 2 Kim Sơn (150m³/h) sẵn sàng phục vụ 24/7.',
 };
 
 export const initialBlogPosts: BlogPost[] = [
@@ -1043,7 +1062,7 @@ Công ty Cổ phần Thương mại và Dịch vụ An Gia Bình (MST: 270087097
     seoTitle: "Giới Thiệu Trạm Trộn Bê Tông Tươi An Gia Bình Ninh Bình | Uy Tín Hàng Đầu",
     seoDescription: "Giới thiệu Công ty Bê Tông An Gia Bình Ninh Bình. Cụm trạm đôi 450m3/h tại KCN Khánh Phú & Kim Sơn, 35 xe bồn, bơm cần 56m, chứng chỉ thí nghiệm LAS.",
     seoKeywords: ["bê tông an gia bình", "trạm trộn bê tông ninh bình", "bê tông tươi khánh phú"],
-    canonicalUrl: "https://betongangiabinh.vn/trang/gioi-thieu",
+    canonicalUrl: "https://betongangiabinh.vn/about",
     isPublished: true,
     updatedAt: "2026-09-15"
   },
@@ -1074,7 +1093,7 @@ An Gia Bình kính gửi Quý khách hàng bảng giá tham khảo bê tông tư
     seoTitle: "Báo Giá Bê Tông Tươi Ninh Bình 2026 Mới Nhất | Trạm Trộn An Gia Bình",
     seoDescription: "Bảng báo giá bê tông thương phẩm mác 200, 250, 300, 350 và giá thuê ca bơm bê tông tại Ninh Bình mới nhất, định lượng đủ khối lượng, đúng mác.",
     seoKeywords: ["báo giá bê tông tươi ninh bình", "giá bê tông mác 250", "giá xe bơm bê tông"],
-    canonicalUrl: "https://betongangiabinh.vn/trang/bang-gia",
+    canonicalUrl: "https://betongangiabinh.vn/bang-gia",
     isPublished: true,
     updatedAt: "2026-09-10"
   },
@@ -1098,7 +1117,7 @@ An Gia Bình đầu tư đồng bộ hệ thống máy móc cơ giới hiện đ
     seoTitle: "Hồ Sơ Năng Lực & Dàn Thiết Bị Trạm Trộn An Gia Bình Ninh Bình",
     seoDescription: "Hồ sơ năng lực Công ty Bê Tông An Gia Bình Ninh Bình: Hệ thống trạm trộn tự động 450m3/h, 35 xe bồn vận chuyển, 5 xe bơm cần, phòng thí nghiệm LAS.",
     seoKeywords: ["hồ sơ năng lực bê tông", "xe bơm cần 56m ninh bình", "trạm trộn an gia bình"],
-    canonicalUrl: "https://betongangiabinh.vn/trang/ho-so-nang-luc",
+    canonicalUrl: "https://betongangiabinh.vn/ho-so-nang-luc",
     isPublished: true,
     updatedAt: "2026-09-10"
   },
@@ -1124,7 +1143,7 @@ Chất lượng là nền tảng của mọi công trình xây dựng. Chúng t�
     seoTitle: "Chính Sách Chất Lượng & Thử Nghiệm Bê Tông An Gia Bình Ninh Bình",
     seoDescription: "Chính sách chất lượng bê tông thương phẩm An Gia Bình: Tiêu chuẩn TCVN, đúc mẫu R7 R28, chứng nhận phòng thí nghiệm LAS-XD.",
     seoKeywords: ["chất lượng bê tông", "chính sách an gia bình", "thí nghiệm las ninh bình"],
-    canonicalUrl: "https://betongangiabinh.vn/trang/chinh-sach-chat-luong",
+    canonicalUrl: "https://betongangiabinh.vn/chinh-sach-chat-luong",
     isPublished: true,
     updatedAt: "2026-09-15"
   },
@@ -1300,7 +1319,7 @@ Công ty Cổ phần Thương mại và Dịch vụ An Gia Bình tôn trọng v�
     seoTitle: "Liên Hệ Đặt Bê Tông Tươi Ninh Bình | Hotline 0988 2662 93 An Gia Bình",
     seoDescription: "Liên hệ đặt mua bê tông tươi Ninh Bình giá tốt nhất. Khảo sát công trình miễn phí, điều xe bồn và bơm cần nhanh chóng 24/7.",
     seoKeywords: ["liên hệ bê tông an gia bình", "đặt bê tông tươi ninh bình", "hotline bê tông"],
-    canonicalUrl: "https://betongangiabinh.vn/trang/lien-he",
+    canonicalUrl: "https://betongangiabinh.vn/lien-he",
     isPublished: true,
     updatedAt: "2026-09-10"
   }
@@ -1341,9 +1360,9 @@ export const initialSiteMenus: SiteMenu[] = [
     location: "header",
     items: [
       { id: "m-home", label: "Trang Chủ", url: "/", order: 1, isActive: true },
-      { id: "m-about", label: "Về Chúng Tôi", url: "/gioi-thieu", order: 2, isActive: true },
+      { id: "m-about", label: "Về Chúng Tôi", url: "/about", order: 2, isActive: true },
       { id: "m-capacity", label: "Hồ Sơ Năng Lực", url: "/ho-so-nang-luc", order: 3, isActive: true, badge: "LAS-XD" },
-      { id: "m-pricing", label: "Báo Giá Bê Tông", url: "/bang-gia", order: 4, isActive: true, badge: "2025" },
+      { id: "m-pricing", label: "Báo Giá Bê Tông", url: "/bang-gia", order: 4, isActive: true, badge: "2026" },
       { id: "m-projects", label: "Công Trình Tiêu Biểu", url: "/du-an", order: 5, isActive: true },
       { id: "m-blog", label: "Cẩm Nang Kỹ Thuật", url: "/blog", order: 6, isActive: true },
       { id: "m-contact", label: "Liên Hệ 24/7", url: "/lien-he", order: 7, isActive: true }
@@ -1357,7 +1376,7 @@ export const initialSiteMenus: SiteMenu[] = [
       { id: "fs-1", label: "Bê Tông Thương Phẩm Mác 100 - Mác 600", url: "/bang-gia", order: 1, isActive: true },
       { id: "fs-2", label: "Dịch Vụ Xe Bơm Cần 37m - 56m", url: "/bang-gia", order: 2, isActive: true },
       { id: "fs-3", label: "Bơm Tĩnh Đường Hẹp & Tầng Cao", url: "/bang-gia", order: 3, isActive: true },
-      { id: "fs-4", label: "Bê Tông Phụ Gia Đông Kết Nhanh R7", url: "/blog/kien-thuc", order: 4, isActive: true },
+      { id: "fs-4", label: "Bê Tông Phụ Gia Đông Kết Nhanh R7", url: "/blog", order: 4, isActive: true },
       { id: "fs-5", label: "Thí Nghiệm Nén Mẫu Bê Tông LAS", url: "/ho-so-nang-luc", order: 5, isActive: true }
     ]
   },
@@ -1367,9 +1386,9 @@ export const initialSiteMenus: SiteMenu[] = [
     location: "footer-links",
     items: [
       { id: "fl-1", label: "Hồ Sơ Năng Lực Trạm Trộn", url: "/ho-so-nang-luc", order: 1, isActive: true },
-      { id: "fl-2", label: "Quy Trình Kiểm Soát Chất Lượng", url: "/gioi-thieu", order: 2, isActive: true },
-      { id: "fl-3", label: "Chính Sách Giao Hàng & Đổ Bê Tông", url: "/trang/chinh-sach-giao-hang", order: 3, isActive: true },
-      { id: "fl-4", label: "Tuyển Dụng Tài Xế & Kỹ Sư", url: "/trang/tuyen-dung", order: 4, isActive: true },
+      { id: "fl-2", label: "Quy Trình Kiểm Soát Chất Lượng", url: "/about", order: 2, isActive: true },
+      { id: "fl-3", label: "Chính Sách Vận Chuyển", url: "/chinh-sach-van-chuyen", order: 3, isActive: true },
+      { id: "fl-4", label: "Chính Sách Thanh Toán", url: "/chinh-sach-thanh-toan", order: 4, isActive: true },
       { id: "fl-5", label: "Liên Hệ Ban Giám Đốc", url: "/lien-he", order: 5, isActive: true }
     ]
   },

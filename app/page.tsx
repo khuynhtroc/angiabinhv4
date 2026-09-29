@@ -1,20 +1,54 @@
 'use client';
 
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import HeroSection from '@/components/HeroSection';
-import AboutCompany from '@/components/AboutCompany';
-import ConcreteCalculator from '@/components/ConcreteCalculator';
-import PricingTable from '@/components/PricingTable';
-import ProjectsShowcase from '@/components/ProjectsShowcase';
-import CapabilityProfile from '@/components/CapabilityProfile';
-import HomeBlogSection from '@/components/HomeBlogSection';
-import HomeConstructionNews from '@/components/HomeConstructionNews';
-import ChatbotWidget from '@/components/ChatbotWidget';
-import MobileQuickBar from '@/components/MobileQuickBar';
-import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
-import JekyllExportModal from '@/components/JekyllExportModal';
+// Dynamic imports for below-the-fold and interactive widgets to achieve 100/100 Mobile PageSpeed
+const ConcreteCalculator = dynamic(() => import('@/components/ConcreteCalculator'), {
+  ssr: true,
+});
+
+const AboutCompany = dynamic(() => import('@/components/AboutCompany'), {
+  ssr: true,
+});
+
+const PricingTable = dynamic(() => import('@/components/PricingTable'), {
+  ssr: true,
+});
+
+const CapabilityProfile = dynamic(() => import('@/components/CapabilityProfile'), {
+  ssr: true,
+});
+
+const ProjectsShowcase = dynamic(() => import('@/components/ProjectsShowcase'), {
+  ssr: true,
+});
+
+const HomeBlogSection = dynamic(() => import('@/components/HomeBlogSection'), {
+  ssr: true,
+});
+
+const HomeConstructionNews = dynamic(() => import('@/components/HomeConstructionNews'), {
+  ssr: true,
+});
+
+const ChatbotWidget = dynamic(() => import('@/components/ChatbotWidget'), {
+  ssr: false,
+});
+
+const MobileQuickBar = dynamic(() => import('@/components/MobileQuickBar'), {
+  ssr: true,
+});
+
+const RealtimeAnalyticsTracker = dynamic(() => import('@/components/RealtimeAnalyticsTracker'), {
+  ssr: false,
+});
+
+const JekyllExportModal = dynamic(() => import('@/components/JekyllExportModal'), {
+  ssr: false,
+});
 
 export default function HomePage() {
   const [chatOpen, setChatOpen] = useState(false);

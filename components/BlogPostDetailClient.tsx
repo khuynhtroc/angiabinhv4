@@ -14,6 +14,7 @@ import PageSeoHead from '@/components/PageSeoHead';
 import { Calendar, Clock, ArrowLeft, Phone, ChevronRight, BookOpen, Layers } from 'lucide-react';
 import TodaySearchKeywords from '@/components/TodaySearchKeywords';
 import { BlogPost } from '@/lib/types';
+import NotFoundRedirect from '@/components/NotFoundRedirect';
 
 const CATEGORY_MAP: Record<string, string> = {
   'tin-tuc': 'Tin Tức & Thị Trường',
@@ -161,15 +162,12 @@ export default function BlogPostDetailClient({
     return (
       <div className="min-h-screen flex flex-col bg-slate-50">
         <Navbar />
-        <div className="max-w-2xl mx-auto py-24 px-4 text-center">
-          <BookOpen className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-          <h1 className="text-2xl font-black text-slate-900">Không tìm thấy bài viết</h1>
-          <p className="text-sm text-slate-500 mt-2 mb-6">Bài viết này có thể đã được cập nhật hoặc thay đổi đường dẫn.</p>
-          <Link href="/blog" className="inline-flex items-center gap-2 bg-amber-500 text-slate-950 px-5 py-2.5 rounded-xl font-bold text-xs">
-            <ArrowLeft className="w-4 h-4" />
-            <span>Quay lại trang danh sách Blog</span>
-          </Link>
-        </div>
+        <NotFoundRedirect
+          itemType="bài viết"
+          slug={rawSlug}
+          targetUrl="/"
+          targetName="Trang Chủ"
+        />
         <Footer />
       </div>
     );
@@ -205,7 +203,7 @@ export default function BlogPostDetailClient({
 
       {/* Breadcrumb Bar */}
       <div className="bg-white border-b border-slate-200 text-xs py-2.5 px-3 sm:px-4 overflow-hidden">
-        <div className="max-w-4xl mx-auto flex items-center gap-1.5 sm:gap-2 text-slate-500 overflow-x-auto whitespace-nowrap text-[11px] sm:text-xs">
+        <div className="max-w-7xl mx-auto flex items-center gap-1.5 sm:gap-2 text-slate-500 overflow-x-auto whitespace-nowrap text-[11px] sm:text-xs">
           <Link href="/" className="hover:text-slate-900 shrink-0">Trang Chủ</Link>
           <ChevronRight className="w-3 h-3 shrink-0" />
           <Link href="/blog" className="hover:text-slate-900 shrink-0">Kiến Thức &amp; Blog</Link>

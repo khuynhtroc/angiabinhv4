@@ -9,56 +9,70 @@ export default function RealtimeAnalyticsTracker() {
   const { logRealtimeEvent, integrations } = useAppStore();
   const lastPathRef = useRef<string | null>('');
 
-  // 1. Google Analytics 4 Script Injection & Search Console Verification
+  // 1. Google Analytics 4 Script Injection & Search Console Verification (Deferred to browser idle)
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    try {
-      const gaId = integrations?.googleAnalyticsId;
-      if (gaId && gaId.trim() !== '') {
-        const cleanGaId = gaId.trim();
-        // Check if GA script already exists
-        if (!document.getElementById('ga-gtag-script')) {
-          const script = document.createElement('script');
-          script.id = 'ga-gtag-script';
-          script.async = true;
-          script.src = `https://www.googletagmanager.com/gtag/js?id=${cleanGaId}`;
-          document.head.appendChild(script);
+    const loadAnalytics = () => {
+      try {
+        const gaId = integrations?.googleAnalyticsId;
+        if (gaId && gaId.trim() !== '') {
+          const cleanGaId = gaId.trim();
+          // Check if GA script already exists
+          if (!document.getElementById('ga-gtag-script')) {
+            const script = document.createElement('script');
+            script.id = 'ga-gtag-script';
+            script.async = true;
+            script.src = `https://www.googletagmanager.com/gtag/js?id=${cleanGaId}`;
+            document.head.appendChild(script);
 
-          const initScript = document.createElement('script');
-          initScript.id = 'ga-gtag-init';
-          initScript.innerHTML = `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${cleanGaId}', { page_path: window.location.pathname });
-          `;
-          document.head.appendChild(initScript);
-        } else if ((window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
-          (window as unknown as { gtag: (...args: unknown[]) => void }).gtag('config', cleanGaId, { page_path: pathname });
+            const initScript = document.createElement('script');
+            initScript.id = 'ga-gtag-init';
+            initScript.innerHTML = `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${cleanGaId}', { page_path: window.location.pathname });
+            `;
+            document.head.appendChild(initScript);
+          } else if ((window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
+            (window as unknown as { gtag: (...args: unknown[]) => void }).gtag('config', cleanGaId, { page_path: pathname });
+          }
         }
+
+        // Search Console Meta Tag
+        const gscCode = integrations?.searchConsoleTag || integrations?.searchConsoleCode;
+        if (gscCode && gscCode.trim() !== '') {
+          let contentVal = gscCode.trim();
+          // In case user entered the full <meta ... content="..." />
+          const match = contentVal.match(/content=["']([^"']+)["']/i);
+          if (match) {
+            contentVal = match[1];
+          }
+
+          let meta = document.querySelector('meta[name="google-site-verification"]');
+          if (!meta) {
+            meta = document.createElement('meta');
+            meta.setAttribute('name', 'google-site-verification');
+            document.head.appendChild(meta);
+          }
+          meta.setAttribute('content', contentVal);
+        }
+      } catch (e) {
+        console.warn('Google tracking initialization notice:', e);
       }
+    };
 
-      // Search Console Meta Tag
-      const gscCode = integrations?.searchConsoleTag || integrations?.searchConsoleCode;
-      if (gscCode && gscCode.trim() !== '') {
-        let contentVal = gscCode.trim();
-        // In case user entered the full <meta ... content="..." />
-        const match = contentVal.match(/content=["']([^"']+)["']/i);
-        if (match) {
-          contentVal = match[1];
+    if ('requestIdleCallback' in window) {
+      const handle = (window as unknown as { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(loadAnalytics, { timeout: 3000 });
+      return () => {
+        if ('cancelIdleCallback' in window) {
+          (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(handle);
         }
-
-        let meta = document.querySelector('meta[name="google-site-verification"]');
-        if (!meta) {
-          meta = document.createElement('meta');
-          meta.setAttribute('name', 'google-site-verification');
-          document.head.appendChild(meta);
-        }
-        meta.setAttribute('content', contentVal);
-      }
-    } catch (e) {
-      console.warn('Google tracking initialization notice:', e);
+      };
+    } else {
+      const timer = setTimeout(loadAnalytics, 2000);
+      return () => clearTimeout(timer);
     }
   }, [integrations?.googleAnalyticsId, integrations?.searchConsoleTag, integrations?.searchConsoleCode, pathname]);
 

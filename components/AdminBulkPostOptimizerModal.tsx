@@ -5,9 +5,11 @@ import { BlogPost, SitePage } from '@/lib/types';
 import {
   Sparkles, Check, RefreshCw, ShieldCheck, Link2,
   AlertCircle, CheckCircle2, X, CheckSquare, Square, Search, Eye,
-  Sliders, ArrowRight, Zap, RotateCcw, FileText, CheckCheck, Hash, ExternalLink
+  Sliders, ArrowRight, Zap, RotateCcw, FileText, CheckCheck, Hash, ExternalLink,
+  Building2, Eraser
 } from 'lucide-react';
 import { cleanExcerptText } from '@/lib/utils';
+import { optimizePostFull, INTERNAL_LINK_RULES, COMMITMENT_REPLACEMENTS } from '@/lib/postOptimizer';
 
 interface AdminBulkPostOptimizerModalProps {
   initialSelectedPosts: BlogPost[];
@@ -27,54 +29,13 @@ interface PostOptimizationItem {
   optimizedContent: string;
   internalLinksAdded: number;
   commitmentsRemoved: number;
+  competitorContactsReplaced: number;
+  clutterCleaned: number;
   headingsOptimized: boolean;
   seoScore: number;
   wordCount: number;
   error?: string;
 }
-
-// Internal link dictionary for concrete industry
-const INTERNAL_LINK_RULES = [
-  {
-    regex: /(?:báo giá bê tông|giá bê tông tươi|báo giá bê tông tươi|đơn giá bê tông|bảng giá bê tông)(?![^<]*<\/a>)/i,
-    anchor: 'Báo giá bê tông tươi Ninh Bình mới nhất',
-    url: '/bang-gia',
-    title: 'Xem bảng báo giá bê tông tươi Ninh Bình trực tiếp từ trạm trộn'
-  },
-  {
-    regex: /(?:trạm trộn an gia bình|bê tông an gia bình|nhà máy bê tông an gia bình)(?![^<]*<\/a>)/i,
-    anchor: 'Trạm trộn Bê Tông An Gia Bình',
-    url: '/gioi-thieu',
-    title: 'Giới thiệu năng lực trạm trộn bê tông An Gia Bình'
-  },
-  {
-    regex: /(?:quy trình sản xuất|kiểm định chất lượng|thí nghiệm nén mẫu|chuẩn tcvn|tiêu chuẩn tcvn)(?![^<]*<\/a>)/i,
-    anchor: 'quy trình kiểm định chất lượng nén mẫu chuẩn TCVN',
-    url: '/quy-trinh-san-xuat',
-    title: 'Quy trình kiểm soát chất lượng bê tông thương phẩm TCVN'
-  },
-  {
-    regex: /(?:công trình tiêu biểu|dự án đã thi công|dự án tiêu biểu|hồ sơ năng lực dự án)(?![^<]*<\/a>)/i,
-    anchor: 'hồ sơ các dự án tiêu biểu tại Ninh Bình',
-    url: '/du-an',
-    title: 'Xem các dự án công trình Bê Tông An Gia Bình đã cung ứng'
-  },
-  {
-    regex: /(?:liên hệ đặt lịch|tư vấn kỹ thuật|hotline đặt bê tông|tư vấn đổ bê tông)(?![^<]*<\/a>)/i,
-    anchor: 'liên hệ kỹ sư Bê Tông An Gia Bình (0988 2662 93)',
-    url: '/lien-he',
-    title: 'Liên hệ tư vấn và đặt lịch đổ bê tông tươi Ninh Bình 24/7'
-  }
-];
-
-// Subjective commitment phrases to sanitize for Google E-E-A-T
-const COMMITMENT_REPLACEMENTS = [
-  { regex: /cam kết 100%/gi, replacement: 'đáp ứng tiêu chuẩn nghiêm ngặt' },
-  { regex: /cam kết rẻ nhất(?: thị trường)?/gi, replacement: 'tối ưu chi phí cạnh tranh trực tiếp từ trạm trộn' },
-  { regex: /cam kết chất lượng số 1/gi, replacement: 'đảm bảo chất lượng đạt chuẩn TCVN 9340:2012' },
-  { regex: /tuyệt đối không bao giờ nứt/gi, replacement: 'hạn chế tối đa rủi ro nứt co ngót khi bảo dưỡng đúng kỹ thuật' },
-  { regex: /cam kết tốt nhất việt nam/gi, replacement: 'cam kết cung ứng theo đúng mác và cấp phối kỹ thuật' }
-];
 
 export default function AdminBulkPostOptimizerModal({
   initialSelectedPosts,
@@ -94,6 +55,8 @@ export default function AdminBulkPostOptimizerModal({
   // Optimization toggles
   const [optTitle, setOptTitle] = useState(true);
   const [optMetaDescription, setOptMetaDescription] = useState(true);
+  const [optBrandAndContact, setOptBrandAndContact] = useState(true);
+  const [optCleanClutter, setOptCleanClutter] = useState(true);
   const [optInternalLinks, setOptInternalLinks] = useState(true);
   const [optRemoveCommitment, setOptRemoveCommitment] = useState(true);
   const [optStandardizeHeadings, setOptStandardizeHeadings] = useState(true);
@@ -127,6 +90,8 @@ export default function AdminBulkPostOptimizerModal({
       optimizedContent: p.content,
       internalLinksAdded: 0,
       commitmentsRemoved: 0,
+      competitorContactsReplaced: 0,
+      clutterCleaned: 0,
       headingsOptimized: false,
       seoScore: p.focusKeywords && p.focusKeywords.length > 0 ? 80 : 70,
       wordCount: p.content?.split(/\s+/).length || 0
@@ -157,106 +122,41 @@ export default function AdminBulkPostOptimizerModal({
     }
   };
 
-  // Pure in-browser high-speed optimization algorithm
+  // Pure in-browser high-speed optimization algorithm using unified postOptimizer
   const optimizePostLocally = (post: BlogPost): Omit<PostOptimizationItem, 'post' | 'status' | 'selectedToApply'> => {
-    let content = post.content || '';
-    let linksAdded = 0;
-    let commitmentsRemoved = 0;
-    let headingsModified = false;
-
-    // 1. Sanitize subjective commitments if enabled
-    if (optRemoveCommitment) {
-      COMMITMENT_REPLACEMENTS.forEach(({ regex, replacement }) => {
-        if (regex.test(content)) {
-          content = content.replace(regex, replacement);
-          commitmentsRemoved++;
-        }
-      });
-    }
-
-    // 2. Inject Contextual Internal Links naturally if enabled
-    if (optInternalLinks) {
-      INTERNAL_LINK_RULES.forEach(({ regex, anchor, url, title }) => {
-        // Only insert if url is not already in content
-        if (!content.includes(url) && regex.test(content)) {
-          // Replace only the first occurrence to avoid over-optimization
-          content = content.replace(regex, `<a href="${url}" title="${title}" class="text-amber-600 font-semibold hover:underline">${anchor}</a>`);
-          linksAdded++;
-        }
-      });
-    }
-
-    // 3. Standardize Headings if enabled
-    if (optStandardizeHeadings) {
-      // Ensure any bare "# " markdown or raw strong headings are structured
-      if (!content.includes('<h2>') && !content.includes('## ')) {
-        // Automatically promote first strong paragraph or add a structured technical heading
-        headingsModified = true;
+    const res = optimizePostFull(
+      {
+        title: post.title,
+        content: post.content,
+        category: post.category,
+        excerpt: post.excerpt,
+        seoDescription: post.seoDescription,
+        focusKeywords: post.focusKeywords
+      },
+      {
+        sanitizeBrandAndContact: optBrandAndContact,
+        cleanClutterAndSpecialChars: optCleanClutter,
+        standardizeHeadings: optStandardizeHeadings,
+        removeCommitments: optRemoveCommitment,
+        injectInternalLinks: optInternalLinks,
+        injectCtaBox: optTechnicalCtaBox,
+        optimizeTitle: optTitle,
+        optimizeExcerpt: optMetaDescription
       }
-    }
-
-    // 4. Inject Technical Box CTA if enabled and not present
-    if (optTechnicalCtaBox && !content.includes('0988 2662 93') && !content.includes('0988.266.293')) {
-      const ctaBoxHtml = `
-<div class="my-8 p-6 bg-slate-900 text-white rounded-2xl border border-amber-500/40 shadow-lg">
-  <div class="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider mb-2">
-    <span>★ Trạm Trộn Bê Tông An Gia Bình Ninh Bình</span>
-  </div>
-  <h3 class="text-lg font-black text-white mb-2">Cần Tư Vấn Cấp Phối &amp; Báo Giá Tận Chân Công Trình?</h3>
-  <p class="text-xs sm:text-sm text-slate-300 mb-4 leading-relaxed">
-    Chúng tôi cung ứng bê tông tươi đạt chuẩn TCVN từ Mác 150 đến Mác 600, thí nghiệm nén mẫu R7/R28 tại phòng LAS-XD, đội ngũ xe bồn chuyên dụng và bơm cần 37m - 56m phục vụ 24/7 khắp Ninh Bình và vùng lân cận.
-  </p>
-  <div class="flex flex-wrap items-center gap-4">
-    <a href="tel:0988266293" class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs px-5 py-2.5 rounded-xl transition shadow">
-      <span>📞 Hotline Kỹ Thuật: 0988 2662 93</span>
-    </a>
-    <a href="/bang-gia" class="text-xs text-amber-300 font-bold hover:underline">
-      Xem Bảng Báo Giá Chi Tiết &rarr;
-    </a>
-  </div>
-</div>`;
-      content = content + '\n' + ctaBoxHtml;
-    }
-
-    // 5. Generate Optimized Title
-    let title = post.title;
-    if (optTitle) {
-      const cleanTitle = post.title.replace(/\s*\|\s*Bê Tông An Gia Bình.*$/i, '').trim();
-      if (!cleanTitle.toLowerCase().includes('ninh bình') && !cleanTitle.toLowerCase().includes('an gia bình')) {
-        title = `${cleanTitle} Tại Ninh Bình | Bê Tông An Gia Bình`;
-      } else if (!cleanTitle.toLowerCase().includes('an gia bình')) {
-        title = `${cleanTitle} | Bê Tông An Gia Bình`;
-      } else {
-        title = cleanTitle;
-      }
-    }
-
-    // 6. Generate Optimized Meta Description (140-160 chars)
-    let metaDesc = post.seoDescription || post.excerpt || '';
-    if (optMetaDescription) {
-      const plainExcerpt = cleanExcerptText(post.excerpt || post.content || '').slice(0, 100);
-      const kw = post.focusKeywords?.[0] || 'bê tông tươi Ninh Bình';
-      metaDesc = `${plainExcerpt}. Trạm trộn Bê Tông An Gia Bình đạt chuẩn TCVN, nén mẫu LAS-XD, xe bồn xe bơm 24/7 hotline 0988 2662 93.`.slice(0, 160);
-    }
-
-    const wordCount = content.split(/\s+/).length;
-    // Calculate realistic SEO score (92 - 98)
-    let score = 88;
-    if (linksAdded > 0) score += 4;
-    if (metaDesc.length >= 120 && metaDesc.length <= 165) score += 4;
-    if (commitmentsRemoved > 0) score += 2;
-    if (score > 98) score = 98;
+    );
 
     return {
-      optimizedTitle: title,
-      optimizedExcerpt: metaDesc,
-      optimizedMetaDescription: metaDesc,
-      optimizedContent: content,
-      internalLinksAdded: linksAdded,
-      commitmentsRemoved,
-      headingsOptimized: headingsModified,
-      seoScore: score,
-      wordCount
+      optimizedTitle: res.optimizedTitle,
+      optimizedExcerpt: res.optimizedExcerpt,
+      optimizedMetaDescription: res.optimizedMetaDescription,
+      optimizedContent: res.optimizedContent,
+      internalLinksAdded: res.stats.internalLinksAdded,
+      commitmentsRemoved: res.stats.commitmentsRemoved,
+      competitorContactsReplaced: res.stats.competitorContactsReplaced,
+      clutterCleaned: res.stats.clutterCleaned,
+      headingsOptimized: res.stats.headingsStandardized,
+      seoScore: res.seoScore,
+      wordCount: res.wordCount
     };
   };
 
@@ -292,6 +192,8 @@ export default function AdminBulkPostOptimizerModal({
         cur.optimizedContent = result.optimizedContent;
         cur.internalLinksAdded = result.internalLinksAdded;
         cur.commitmentsRemoved = result.commitmentsRemoved;
+        cur.competitorContactsReplaced = result.competitorContactsReplaced;
+        cur.clutterCleaned = result.clutterCleaned;
         cur.headingsOptimized = result.headingsOptimized;
         cur.seoScore = result.seoScore;
         cur.wordCount = result.wordCount;
@@ -352,6 +254,10 @@ export default function AdminBulkPostOptimizerModal({
           cur.optimizedExcerpt = localResult.optimizedExcerpt;
           cur.optimizedMetaDescription = localResult.optimizedMetaDescription;
           cur.optimizedContent = localResult.optimizedContent;
+          cur.internalLinksAdded = localResult.internalLinksAdded;
+          cur.commitmentsRemoved = localResult.commitmentsRemoved;
+          cur.competitorContactsReplaced = localResult.competitorContactsReplaced;
+          cur.clutterCleaned = localResult.clutterCleaned;
           cur.seoScore = localResult.seoScore;
           cur.wordCount = localResult.wordCount;
         }
@@ -504,7 +410,27 @@ export default function AdminBulkPostOptimizerModal({
                     onChange={(e) => setOptMetaDescription(e.target.checked)}
                     className="w-4 h-4 rounded text-amber-600 cursor-pointer"
                   />
-                  <span>Thẻ Meta Description (145-160 ký tự)</span>
+                  <span>Tự động tối ưu Đoạn tóm tắt Excerpt (140-160 ký tự)</span>
+                </label>
+
+                <label className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={optBrandAndContact}
+                    onChange={(e) => setOptBrandAndContact(e.target.checked)}
+                    className="w-4 h-4 rounded text-amber-600 cursor-pointer"
+                  />
+                  <span>Đổi liên hệ lạ sang Bê Tông An Gia Bình</span>
+                </label>
+
+                <label className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={optCleanClutter}
+                    onChange={(e) => setOptCleanClutter(e.target.checked)}
+                    className="w-4 h-4 rounded text-amber-600 cursor-pointer"
+                  />
+                  <span>Lọc bỏ nội dung thừa &amp; ký tự đặc biệt lộn xộn</span>
                 </label>
 
                 <label className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200 cursor-pointer">
@@ -514,7 +440,7 @@ export default function AdminBulkPostOptimizerModal({
                     onChange={(e) => setOptTitle(e.target.checked)}
                     className="w-4 h-4 rounded text-amber-600 cursor-pointer"
                   />
-                  <span>Thẻ Meta Title (Thương hiệu & Địa danh)</span>
+                  <span>Thẻ Meta Title (Thương hiệu &amp; Địa danh)</span>
                 </label>
 
                 <label className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl border border-slate-200 cursor-pointer">
@@ -699,6 +625,18 @@ export default function AdminBulkPostOptimizerModal({
                             <span className="inline-flex items-center gap-1 text-[10px] bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded-full">
                               <ShieldCheck className="w-3 h-3" />
                               Đã lọc {item.commitmentsRemoved} từ cam kết
+                            </span>
+                          )}
+                          {item.competitorContactsReplaced > 0 && (
+                            <span className="inline-flex items-center gap-1 text-[10px] bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded-full">
+                              <Building2 className="w-3 h-3 text-amber-700" />
+                              Đổi {item.competitorContactsReplaced} liên hệ sang An Gia Bình
+                            </span>
+                          )}
+                          {item.clutterCleaned > 0 && (
+                            <span className="inline-flex items-center gap-1 text-[10px] bg-slate-200 text-slate-800 font-bold px-2 py-0.5 rounded-full">
+                              <Eraser className="w-3 h-3 text-slate-700" />
+                              Dọn {item.clutterCleaned} rác &amp; ký tự lỗi
                             </span>
                           )}
                         </div>

@@ -125,6 +125,26 @@ export interface JekyllConfig {
   permalink?: string;
   plugins?: string[];
   theme?: string;
+  // Appearance & UI Theme Customization
+  primaryColor?: string;
+  secondaryColor?: string;
+  accentColor?: string;
+  fontFamily?: 'sans' | 'space' | 'inter' | 'roboto' | 'merriweather';
+  layoutWidth?: 'contained' | 'wide' | 'full';
+  headerStyle?: 'standard' | 'minimal' | 'centered';
+  headerNotice?: string;
+  showHeaderTopBar?: boolean;
+  footerStyle?: 'columns' | 'compact' | 'simple';
+  footerNotice?: string;
+  footerCopyright?: string;
+  sidebarPosition?: 'right' | 'left' | 'none';
+  sidebarCtaTitle?: string;
+  sidebarCtaPhone?: string;
+  sidebarCtaDesc?: string;
+  ctaButtonText?: string;
+  ctaButtonLink?: string;
+  ctaHeading?: string;
+  ctaSubheading?: string;
 }
 
 export interface MediaFile {
@@ -322,6 +342,7 @@ export interface AiSchedulerConfig {
   selectedInternalLinks?: { title: string; url: string }[];
   lastRunAt?: string;
   nextRunAt?: string;
+  totalPublished?: number;
   historyLogs?: {
     id: string;
     timestamp: string;

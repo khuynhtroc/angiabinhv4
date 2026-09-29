@@ -206,13 +206,37 @@
           .footer a:hover {
             text-decoration: underline;
           }
+          .brand-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+          }
+          .site-logo {
+            height: 52px;
+            width: auto;
+            max-width: 140px;
+            object-fit: contain;
+            border-radius: 12px;
+            background: #ffffff;
+            padding: 4px;
+          }
         </style>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+        <link rel="shortcut icon" href="/favicon.ico"/>
       </head>
       <body>
         <div class="container">
           <div class="header">
-            <div class="badge">Google &amp; Search Engine Indexing Protocol</div>
-            <h1>Sơ Đồ Trang Web XML (XML Sitemap)</h1>
+            <div class="brand-row">
+              <a href="https://betongangiabinh.vn">
+                <img src="/logo.png" alt="Bê Tông An Gia Bình" class="site-logo" />
+              </a>
+              <div>
+                <div class="badge">Google &amp; Search Engine Indexing Protocol</div>
+                <h1>Sơ Đồ Trang Web XML (XML Sitemap)</h1>
+              </div>
+            </div>
             <p class="desc">
               Sơ đồ cấu trúc toàn bộ đường dẫn trên website Bê Tông An Gia Bình Ninh Bình, được phân loại mạch lạc theo Trang chính, Dịch vụ cốt lõi, Chuyên mục, Bài viết và Dự án để cả người dùng và bot tìm kiếm (Googlebot, Bingbot) tra cứu tức thì.
             </p>
@@ -267,16 +291,10 @@
                   <xsl:variable name="loc" select="sitemap:loc"/>
                   <xsl:variable name="type">
                     <xsl:choose>
-                      <xsl:when test="sitemap:type = 'blog' or type = 'blog'">blog</xsl:when>
-                      <xsl:when test="sitemap:type = 'cat' or type = 'cat'">cat</xsl:when>
-                      <xsl:when test="sitemap:type = 'project' or type = 'project'">project</xsl:when>
-                      <xsl:when test="sitemap:type = 'policy' or type = 'policy'">policy</xsl:when>
-                      <xsl:when test="sitemap:type = 'page' or type = 'page'">page</xsl:when>
-                      <xsl:when test="contains($loc, '/blog/chuyen-muc/')">cat</xsl:when>
-                      <xsl:when test="contains($loc, '/blog/')">blog</xsl:when>
                       <xsl:when test="contains($loc, '/du-an/')">project</xsl:when>
                       <xsl:when test="contains($loc, 'chinh-sach') or contains($loc, 'dieu-khoan')">policy</xsl:when>
-                      <xsl:when test="contains($loc, '.html') and not(contains($loc, 'be-tong-tuoi.html')) and not(contains($loc, 'be-tong-thuong-pham.html')) and not(contains($loc, 'bom-be-tong.html')) and not(contains($loc, 'be-tong-sieu-nhe.html')) and not(contains($loc, 'be-tong-khi-chung-ap.html')) and not(contains($loc, 'be-tong-nhua.html')) and not(contains($loc, 'bang-gia.html')) and not(contains($loc, 'lien-he.html')) and not(contains($loc, 'ho-so-nang-luc.html')) and not(contains($loc, 'quy-trinh-san-xuat.html')) and not(contains($loc, 'gioi-thieu.html'))">blog</xsl:when>
+                      <xsl:when test="contains($loc, '/blog/tin-tuc') or contains($loc, '/blog/kinh-nghiem') or contains($loc, '/blog/kien-thuc') or contains($loc, '/blog/chuyen-muc') or $loc = 'https://betongangiabinh.vn/blog'">cat</xsl:when>
+                      <xsl:when test="contains($loc, '.html')">blog</xsl:when>
                       <xsl:otherwise>page</xsl:otherwise>
                     </xsl:choose>
                   </xsl:variable>

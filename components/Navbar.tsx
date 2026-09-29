@@ -38,26 +38,28 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all">
       {/* Top Banner Bar */}
-      <div className="bg-slate-100 text-slate-700 text-xs py-1.5 px-3 sm:px-4 border-b border-slate-200 overflow-hidden">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 text-[11px] sm:text-xs">
-          <div className="flex items-center gap-1.5 min-w-0">
-            <ShieldCheck className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-            <span className="text-amber-800 font-bold truncate">
-              Trạm Trộn Bê Tông Tươi An Gia Bình
-            </span>
-            <span className="hidden md:inline text-slate-300">|</span>
-            <span className="hidden md:inline text-slate-600 truncate">
-              Trạm 1: KCN Khánh Phú • Trạm 2: Kim Sơn • 35+ Xe bồn
-            </span>
-          </div>
+      {jekyllConfig?.showHeaderTopBar !== false && (
+        <div className="bg-slate-100 text-slate-700 text-xs py-1.5 px-3 sm:px-4 border-b border-slate-200 overflow-hidden">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 text-[11px] sm:text-xs">
+            <div className="flex items-center gap-1.5 min-w-0">
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+              <span className="text-amber-800 font-bold truncate">
+                {jekyllConfig?.title || "Trạm Trộn Bê Tông Tươi An Gia Bình"}
+              </span>
+              <span className="hidden md:inline text-slate-300">|</span>
+              <span className="hidden md:inline text-slate-600 truncate">
+                {jekyllConfig?.headerNotice || "Trạm 1: KCN Khánh Phú • Trạm 2: Kim Sơn • 35+ Xe bồn"}
+              </span>
+            </div>
 
           <div className="flex items-center gap-2 sm:gap-3 text-xs shrink-0">
             <a
               href="https://www.facebook.com/betongangiabinh/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 font-medium transition"
+              className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 font-medium py-1 px-1.5 rounded transition"
               id="nav-fanpage-link"
+              aria-label="Truy cập Fanpage Facebook Bê Tông An Gia Bình"
             >
               <Facebook className="w-3.5 h-3.5" />
               <span className="hidden xs:inline sm:inline">fb.com/betongangiabinh</span>
@@ -66,8 +68,9 @@ export default function Navbar() {
             <span className="text-slate-300">|</span>
             <Link
               href="/admin"
-              className="inline-flex items-center gap-1 text-slate-600 hover:text-amber-700 font-medium transition"
+              className="inline-flex items-center gap-1 text-slate-600 hover:text-amber-700 font-medium py-1 px-1.5 rounded transition"
               id="nav-admin-link"
+              aria-label="Đăng nhập trang quản trị"
             >
               <Lock className="w-3 h-3" />
               <span>Quản Trị</span>
@@ -75,6 +78,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+      )}
 
       {/* Main Navbar */}
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
@@ -85,7 +89,11 @@ export default function Navbar() {
               <img
                 src={jekyllConfig.logo}
                 alt={jekyllConfig.title || 'Bê Tông An Gia Bình'}
+                width={120}
+                height={44}
                 className="h-9 sm:h-11 w-auto max-w-[100px] sm:max-w-[130px] rounded-lg sm:rounded-xl object-contain shadow-xs group-hover:scale-105 transition shrink-0"
+                loading="eager"
+                decoding="async"
               />
             ) : (
               <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 text-slate-950 font-extrabold flex items-center justify-center text-lg sm:text-xl shadow-md shadow-amber-500/20 group-hover:scale-105 transition shrink-0">

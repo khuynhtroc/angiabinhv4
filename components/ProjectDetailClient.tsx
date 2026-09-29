@@ -11,6 +11,7 @@ import PageSeoHead from '@/components/PageSeoHead';
 import { useAppStore } from '@/lib/store';
 import { resolveMediaUrl, handleImageFallback } from '@/lib/utils';
 import { Project } from '@/lib/types';
+import NotFoundRedirect from '@/components/NotFoundRedirect';
 import {
   Building2, MapPin, Calendar, ChevronRight, Phone, ArrowLeft,
   CheckCircle2, ShieldCheck
@@ -38,15 +39,12 @@ export default function ProjectDetailClient({
     return (
       <div className="min-h-screen flex flex-col bg-slate-50 font-sans">
         <Navbar />
-        <div className="max-w-2xl mx-auto py-24 px-4 text-center">
-          <Building2 className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-          <h1 className="text-2xl font-black text-slate-900">Không tìm thấy dự án</h1>
-          <p className="text-sm text-slate-500 mt-2 mb-6">Dự án này có thể đã được cập nhật hoặc thay đổi đường dẫn.</p>
-          <Link href="/du-an" className="inline-flex items-center gap-2 bg-amber-500 text-slate-950 px-5 py-2.5 rounded-xl font-bold text-xs">
-            <ArrowLeft className="w-4 h-4" />
-            <span>Quay lại trang danh sách Dự Án</span>
-          </Link>
-        </div>
+        <NotFoundRedirect
+          itemType="dự án"
+          slug={cleanSlug}
+          targetUrl="/"
+          targetName="Trang Chủ"
+        />
         <Footer />
       </div>
     );

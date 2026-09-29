@@ -1,8 +1,6 @@
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
-  distDir: process.env.NODE_ENV === 'production' ? '.next' : '.next-dev',
-  output: 'standalone',
   reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true,
@@ -36,6 +34,16 @@ const nextConfig: NextConfig = {
       {
         source: '/gioi-thieu',
         destination: '/about',
+        permanent: true,
+      },
+      {
+        source: '/bai-viet.html',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/bai-viet',
+        destination: '/blog',
         permanent: true,
       },
     ];

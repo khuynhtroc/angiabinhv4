@@ -50,7 +50,7 @@ function getTextFromReactNode(node: React.ReactNode): string {
 }
 
 export default function ArticleContentWithToc({ content }: Props) {
-  const { mediaFiles } = useAppStore();
+  const { mediaFiles, jekyllConfig } = useAppStore();
   const [activeId, setActiveId] = useState<string>('');
   const [showFloatingToc, setShowFloatingToc] = useState(false);
   const [modalTocOpen, setModalTocOpen] = useState(false);
@@ -328,10 +328,10 @@ export default function ArticleContentWithToc({ content }: Props) {
               h1: ({ children }) => {
                 const id = resolveHeadingId(children, 1);
                 return (
-                  <h1 id={id} className="text-2xl sm:text-3xl font-black text-slate-900 mt-8 mb-4 tracking-tight scroll-mt-28 flex items-center gap-2.5 text-left [text-align-last:left]">
+                  <h2 id={id} className="text-xl sm:text-2xl font-black text-slate-900 mt-8 mb-4 tracking-tight scroll-mt-28 flex items-center gap-2.5 text-left [text-align-last:left]">
                     <span className="w-2 h-7 bg-amber-500 rounded-full inline-block shrink-0"></span>
                     <span>{children}</span>
-                  </h1>
+                  </h2>
                 );
               },
               h2: ({ children }) => {
@@ -468,6 +468,7 @@ export default function ArticleContentWithToc({ content }: Props) {
                         alt={alt || 'Bê tông thương phẩm An Gia Bình'}
                         className="w-full h-auto max-h-[550px] object-cover transition duration-300 group-hover:scale-[1.01]"
                         loading="lazy"
+                        decoding="async"
                         onError={(e) => handleImageFallback(e, alt || 'bê tông thương phẩm')}
                       />
                     </div>
@@ -536,18 +537,20 @@ export default function ArticleContentWithToc({ content }: Props) {
           </div>
         </div>
 
-        {/* Quick Hotline Widget (Static CTA) */}
+        {/* Quick Hotline Widget (Configurable CTA) */}
         <div className="bg-amber-50 text-slate-900 p-5 rounded-2xl shadow-2xs border border-amber-200">
           <div className="text-[11px] font-bold uppercase tracking-wider text-amber-800">Tư vấn kỹ thuật 24/7</div>
-          <div className="text-base font-extrabold mt-1 text-slate-900">Khảo sát & Báo Giá Bê Tông</div>
+          <div className="text-base font-extrabold mt-1 text-slate-900">
+            {jekyllConfig?.sidebarCtaTitle || "Khảo sát & Báo Giá Bê Tông"}
+          </div>
           <p className="text-xs text-slate-600 mt-1 mb-4 leading-relaxed">
-            Trạm 1 KCN Khánh Phú (300m³/h) & Trạm 2 Xã Kim Sơn (150m³/h) sẵn sàng điều động 35+ xe bồn, xe bơm cần 37m - 56m.
+            {jekyllConfig?.sidebarCtaDesc || "Trạm 1 KCN Khánh Phú (300m³/h) & Trạm 2 Xã Kim Sơn (150m³/h) sẵn sàng điều động 35+ xe bồn, xe bơm cần 37m - 56m."}
           </p>
           <a
-            href="tel:0988266293"
+            href={`tel:${(jekyllConfig?.sidebarCtaPhone || "0988266293").replace(/\s+/g, "")}`}
             className="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2.5 px-4 rounded-xl text-xs transition shadow-sm"
           >
-            Hotline: 0988 2662 93
+            Hotline: {jekyllConfig?.sidebarCtaPhone || "0988 2662 93"}
           </a>
         </div>
       </aside>

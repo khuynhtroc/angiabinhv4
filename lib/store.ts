@@ -785,6 +785,61 @@ export async function syncStoreWithServer(force = false): Promise<boolean> {
       changed = true;
     }
 
+    // Merge Jekyll Config & Appearance
+    if (data.jekyllConfig && typeof data.jekyllConfig === 'object') {
+      globalStore.jekyllConfig = { ...globalStore.jekyllConfig, ...data.jekyllConfig };
+      safeSetLocalStorage(STORAGE_KEYS.JEKYLL, globalStore.jekyllConfig);
+      idbSet(STORAGE_KEYS.JEKYLL, globalStore.jekyllConfig).catch(() => {});
+      changed = true;
+    }
+
+    // Merge Full Admin Config
+    if (data.adminConfig && typeof data.adminConfig === 'object') {
+      const ac = data.adminConfig;
+      if (Array.isArray(ac.menus) && ac.menus.length > 0) {
+        globalStore.menus = ac.menus;
+        safeSetLocalStorage(STORAGE_KEYS.MENUS, ac.menus);
+        idbSet(STORAGE_KEYS.MENUS, ac.menus).catch(() => {});
+        changed = true;
+      }
+      if (Array.isArray(ac.mediaFolders) && ac.mediaFolders.length > 0) {
+        globalStore.mediaFolders = ac.mediaFolders;
+        safeSetLocalStorage(STORAGE_KEYS.MEDIA_FOLDERS, ac.mediaFolders);
+        idbSet(STORAGE_KEYS.MEDIA_FOLDERS, ac.mediaFolders).catch(() => {});
+        changed = true;
+      }
+      if (ac.aiSettings && typeof ac.aiSettings === 'object') {
+        globalStore.aiSettings = { ...globalStore.aiSettings, ...ac.aiSettings };
+        safeSetLocalStorage(STORAGE_KEYS.AI_SETTINGS, globalStore.aiSettings);
+        idbSet(STORAGE_KEYS.AI_SETTINGS, globalStore.aiSettings).catch(() => {});
+        changed = true;
+      }
+      if (ac.schemaSettings && typeof ac.schemaSettings === 'object') {
+        globalStore.schemaSettings = { ...globalStore.schemaSettings, ...ac.schemaSettings };
+        safeSetLocalStorage(STORAGE_KEYS.SCHEMA, globalStore.schemaSettings);
+        idbSet(STORAGE_KEYS.SCHEMA, globalStore.schemaSettings).catch(() => {});
+        changed = true;
+      }
+      if (ac.aiScheduler && typeof ac.aiScheduler === 'object') {
+        globalStore.aiScheduler = { ...globalStore.aiScheduler, ...ac.aiScheduler };
+        safeSetLocalStorage(STORAGE_KEYS.AI_SCHEDULER, globalStore.aiScheduler);
+        idbSet(STORAGE_KEYS.AI_SCHEDULER, globalStore.aiScheduler).catch(() => {});
+        changed = true;
+      }
+      if (ac.integrations && typeof ac.integrations === 'object') {
+        globalStore.integrations = { ...globalStore.integrations, ...ac.integrations };
+        safeSetLocalStorage(STORAGE_KEYS.INTEGRATIONS, globalStore.integrations);
+        idbSet(STORAGE_KEYS.INTEGRATIONS, globalStore.integrations).catch(() => {});
+        changed = true;
+      }
+      if (Array.isArray(ac.leads) && ac.leads.length > 0) {
+        globalStore.leads = ac.leads;
+        safeSetLocalStorage(STORAGE_KEYS.LEADS, ac.leads);
+        idbSet(STORAGE_KEYS.LEADS, ac.leads).catch(() => {});
+        changed = true;
+      }
+    }
+
     lastSyncTimestamp = Date.now();
     isSyncing = false;
 
@@ -865,6 +920,15 @@ export async function persistToServer(immediate = false): Promise<boolean> {
             pages: globalStore.pages,
             categories: globalStore.categories,
             jekyllConfig: globalStore.jekyllConfig,
+            adminConfig: {
+              menus: globalStore.menus,
+              mediaFolders: globalStore.mediaFolders,
+              aiSettings: globalStore.aiSettings,
+              schemaSettings: globalStore.schemaSettings,
+              aiScheduler: globalStore.aiScheduler,
+              integrations: globalStore.integrations,
+              leads: globalStore.leads,
+            },
           }),
         });
         return chunkSuccess;

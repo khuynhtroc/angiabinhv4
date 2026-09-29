@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import confetti from 'canvas-confetti';
 import { Calculator, Send, CheckCircle2, ShieldAlert, Sparkles, PhoneCall } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
 import { formatNumber } from '@/lib/utils';
@@ -67,13 +66,16 @@ export default function ConcreteCalculator() {
       notes: `Hạng mục: ${structureType} (${length}m x ${width}m x ${depth}m). ${clientNotes}`
     });
 
-    try {
-      confetti({
-        particleCount: 80,
-        spread: 60,
-        origin: { y: 0.7 }
-      });
-    } catch {}
+    import('canvas-confetti')
+      .then((module) => {
+        const confettiFn = module.default || module;
+        confettiFn({
+          particleCount: 80,
+          spread: 60,
+          origin: { y: 0.7 }
+        });
+      })
+      .catch(() => {});
 
     setIsSubmitted(true);
     setTimeout(() => {
