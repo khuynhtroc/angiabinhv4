@@ -376,3 +376,14 @@ export interface MediaFolder {
 }
 
 export type MediaFolderItem = MediaFolder;
+
+export interface TrashItem {
+  id: string;
+  originalId: string;
+  type: 'post' | 'project' | 'page' | 'media' | 'category' | 'lead';
+  title: string;
+  description?: string;
+  data: any;
+  deletedAt: string;
+  expiresAt: string;
+}

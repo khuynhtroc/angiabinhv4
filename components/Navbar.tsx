@@ -322,22 +322,22 @@ export default function Navbar() {
           {/* Desktop Right CTA */}
           <div className="hidden sm:flex items-center gap-3">
             <a
-              href="tel:0988266293"
+              href={`tel:${(jekyllConfig?.phone || '0988 2662 93').replace(/\s+/g, '')}`}
               className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-slate-950 px-4 py-2.5 rounded-xl font-bold text-sm shadow-sm transition hover:shadow-md"
               id="nav-call-hotline"
             >
               <Phone className="w-4 h-4 animate-pulse" />
-              <span>0988 2662 93</span>
+              <span>{jekyllConfig?.phone || '0988 2662 93'}</span>
             </a>
           </div>
 
           {/* Mobile Menu Toggle */}
           <div className="flex xl:hidden items-center gap-2 shrink-0">
             <a
-              href="tel:0988266293"
+              href={`tel:${(jekyllConfig?.phone || '0988 2662 93').replace(/\s+/g, '')}`}
               className="min-h-[44px] min-w-[44px] px-3 py-2 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5 hover:bg-amber-400 active:scale-95 transition shadow-xs"
               id="nav-mobile-call-icon"
-              aria-label="Gọi hotline 0988 2662 93"
+              aria-label={`Gọi hotline ${jekyllConfig?.phone || '0988 2662 93'}`}
             >
               <Phone className="w-4 h-4 animate-pulse" />
               <span className="hidden sm:inline">Gọi Ngay</span>
@@ -528,12 +528,12 @@ export default function Navbar() {
 
           <div className="pt-2 border-t border-slate-100 space-y-2">
             <a
-              href="tel:0988266293"
+              href={`tel:${(jekyllConfig?.phone || '0988 2662 93').replace(/\s+/g, '')}`}
               className="w-full flex items-center justify-center gap-2 bg-amber-500 text-slate-950 font-bold p-3 rounded-xl text-sm"
               id="nav-mobile-call-full"
             >
               <Phone className="w-4 h-4" />
-              <span>Gọi Trực Tiếp: 0988 2662 93 (24/7)</span>
+              <span>Gọi Trực Tiếp: {jekyllConfig?.phone || '0988 2662 93'} (24/7)</span>
             </a>
             <div className="flex items-center justify-between text-xs text-slate-500 pt-2 px-1">
               <a

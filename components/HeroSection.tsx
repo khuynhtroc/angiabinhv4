@@ -4,16 +4,23 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { Phone, Calculator, ShieldCheck, Truck, Clock, CheckCircle2, ChevronRight, Award, Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { resolveMediaUrl, handleImageFallback } from '@/lib/utils';
+import { useAppStore } from '@/lib/store';
 
 interface HeroSectionProps {
   onScrollToCalculator: () => void;
 }
 
 export default function HeroSection({ onScrollToCalculator }: HeroSectionProps) {
+  const { jekyllConfig } = useAppStore();
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [isDesktop, setIsDesktop] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  const phoneDisplay = jekyllConfig?.phone || '0988 2662 93';
+  const phoneCall = phoneDisplay.replace(/\s+/g, '');
+  const brandTitle = jekyllConfig?.title?.replace(/\s*-\s*Ninh\s*Bình/i, '') || 'BÊ TÔNG AN GIA BÌNH';
+  const brandSlogan = jekyllConfig?.slogan || 'NỀN MÓNG VỮNG BỀN';
 
   useEffect(() => {
     // Only load video on desktop screens (>= 768px) to protect mobile LCP & network
@@ -62,9 +69,9 @@ export default function HeroSection({ onScrollToCalculator }: HeroSectionProps) 
 
             {/* Main Headline */}
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-slate-950">
-              BÊ TÔNG AN GIA BÌNH
+              {brandTitle}
               <span className="block text-amber-600 mt-1 sm:mt-2">
-                NỀN MÓNG VỮNG BỀN
+                {brandSlogan}
               </span>
               <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-700 block mt-2">
                 Đồng Hành Mọi Công Trình Trọng Điểm
@@ -73,7 +80,7 @@ export default function HeroSection({ onScrollToCalculator }: HeroSectionProps) 
 
             {/* Subheading */}
             <p className="text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed">
-              Cung ứng bê tông thương phẩm mác 150 – 450, hệ thống 2 cụm trạm trộn tự động tổng công suất 450m³/h (Trạm KCN Khánh Phú 300m³/h & Trạm Xã Kim Sơn 150m³/h), đội xe 35+ xe bồn và dàn xe bơm cần vươn xa 37m - 56m. Đo nén mẫu R7, R28 kiểm định LAS-XD trực tiếp tại hiện trường.
+              {jekyllConfig?.description || 'Cung ứng bê tông thương phẩm mác 150 – 450, hệ thống 2 cụm trạm trộn tự động tổng công suất 450m³/h (Trạm KCN Khánh Phú 300m³/h & Trạm Xã Kim Sơn 150m³/h), đội xe 35+ xe bồn và dàn xe bơm cần vươn xa 37m - 56m. Đo nén mẫu R7, R28 kiểm định LAS-XD trực tiếp tại hiện trường.'}
             </p>
 
             {/* Value bullets without absolute assertions */}
@@ -95,12 +102,12 @@ export default function HeroSection({ onScrollToCalculator }: HeroSectionProps) 
             {/* CTA Action Buttons */}
             <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 pt-4 w-full">
               <a
-                href="tel:0988266293"
+                href={`tel:${phoneCall}`}
                 className="inline-flex items-center justify-center gap-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-5 sm:px-6 py-3.5 rounded-xl text-xs sm:text-sm transition shadow-md shadow-amber-500/20 active:scale-95 text-center"
                 id="hero-call-now"
               >
                 <Phone className="w-4 h-4 animate-pulse shrink-0" />
-                <span>Gọi Báo Giá Tham Khảo: 0988 2662 93</span>
+                <span>Gọi Báo Giá Tham Khảo: {phoneDisplay}</span>
               </a>
 
               <button

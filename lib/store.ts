@@ -19,7 +19,8 @@ import {
   MenuItem,
   SchemaSettings,
   AiSchedulerConfig,
-  MediaFolder
+  MediaFolder,
+  TrashItem
 } from './types';
 import {
   initialBlogPosts,
@@ -59,7 +60,8 @@ const STORAGE_KEYS = {
   MENUS: 'agiabinh_site_menus',
   SCHEMA: 'agiabinh_schema_settings',
   AI_SCHEDULER: 'agiabinh_ai_scheduler',
-  MEDIA_FOLDERS: 'agiabinh_media_folders'
+  MEDIA_FOLDERS: 'agiabinh_media_folders',
+  TRASH: 'agiabinh_trash'
 };
 
 // Global in-memory singleton state shared by all components
@@ -80,6 +82,7 @@ interface StoreState {
   schemaSettings: SchemaSettings;
   aiScheduler: AiSchedulerConfig;
   mediaFolders: MediaFolder[];
+  trash: TrashItem[];
   isAdminAuthenticated: boolean;
 }
 
@@ -100,6 +103,7 @@ const globalStore: StoreState = {
   schemaSettings: initialSchemaSettings,
   aiScheduler: initialAiSchedulerConfig,
   mediaFolders: initialMediaFolders,
+  trash: [],
   isAdminAuthenticated: false
 };
 
@@ -481,7 +485,7 @@ async function hydrateFromIndexedDB() {
   hasIdbHydrated = true;
   try {
     let changed = false;
-    const [idbPosts, idbMedia, idbProjects, idbLeads, idbNews, idbCategories, idbJekyll, idbIntegrations, idbPages, idbAiSettings, idbMenus, idbSchema, idbScheduler, idbFolders] =
+    const [idbPosts, idbMedia, idbProjects, idbLeads, idbNews, idbCategories, idbJekyll, idbIntegrations, idbPages, idbAiSettings, idbMenus, idbSchema, idbScheduler, idbFolders, idbTrash] =
       await Promise.all([
         idbGet<BlogPost[]>(STORAGE_KEYS.POSTS),
         idbGet<MediaFile[]>(STORAGE_KEYS.MEDIA),
@@ -496,7 +500,8 @@ async function hydrateFromIndexedDB() {
         idbGet<SiteMenu[]>(STORAGE_KEYS.MENUS),
         idbGet<SchemaSettings>(STORAGE_KEYS.SCHEMA),
         idbGet<AiSchedulerConfig>(STORAGE_KEYS.AI_SCHEDULER),
-        idbGet<MediaFolder[]>(STORAGE_KEYS.MEDIA_FOLDERS)
+        idbGet<MediaFolder[]>(STORAGE_KEYS.MEDIA_FOLDERS),
+        idbGet<TrashItem[]>(STORAGE_KEYS.TRASH)
       ]);
 
     if (Array.isArray(idbPosts) && idbPosts.length > 0) {
@@ -521,11 +526,19 @@ async function hydrateFromIndexedDB() {
       } catch {}
     }
 
-    if (Array.isArray(idbMedia) && idbMedia.length > 0) {
-      if (idbMedia.length >= globalStore.mediaFiles.length) {
-        globalStore.mediaFiles = idbMedia;
-        changed = true;
-      }
+    if (Array.isArray(idbMedia)) {
+      globalStore.mediaFiles = idbMedia;
+      changed = true;
+    }
+
+    if (Array.isArray(idbTrash)) {
+      const now = Date.now();
+      const valid = idbTrash.filter((item) => {
+        const exp = item.expiresAt ? new Date(item.expiresAt).getTime() : new Date(item.deletedAt).getTime() + 30 * 24 * 60 * 60 * 1000;
+        return exp > now;
+      });
+      globalStore.trash = valid;
+      changed = true;
     }
 
     if (Array.isArray(idbProjects) && idbProjects.length > 0) {
@@ -840,6 +853,43 @@ export async function syncStoreWithServer(force = false): Promise<boolean> {
       }
     }
 
+    // Merge Trash Items first so we know what is currently deleted
+    let currentTrash = globalStore.trash;
+    if (Array.isArray(data.trash)) {
+      const now = Date.now();
+      const valid = data.trash.filter((item: TrashItem) => {
+        const exp = item.expiresAt ? new Date(item.expiresAt).getTime() : new Date(item.deletedAt).getTime() + 30 * 24 * 60 * 60 * 1000;
+        return exp > now;
+      });
+      // Combine client and server trash items
+      const trashMap = new Map<string, TrashItem>();
+      globalStore.trash.forEach((t) => trashMap.set(t.id, t));
+      valid.forEach((t: TrashItem) => trashMap.set(t.id, t));
+      currentTrash = Array.from(trashMap.values());
+      globalStore.trash = currentTrash;
+      safeSetLocalStorage(STORAGE_KEYS.TRASH, currentTrash);
+      idbSet(STORAGE_KEYS.TRASH, currentTrash).catch(() => {});
+      changed = true;
+    }
+
+    const trashOriginalIds = new Set(
+      currentTrash.map((t) => t.originalId).filter(Boolean)
+    );
+
+    // Merge Media Files (excluding any items in Trash)
+    if (Array.isArray(data.media)) {
+      const cleanMedia = data.media.filter(
+        (m: MediaFile) =>
+          !trashOriginalIds.has(m.id) &&
+          !trashOriginalIds.has(m.path || '') &&
+          !trashOriginalIds.has(m.url)
+      );
+      globalStore.mediaFiles = cleanMedia;
+      safeSetLocalStorage(STORAGE_KEYS.MEDIA, cleanMedia);
+      idbSet(STORAGE_KEYS.MEDIA, cleanMedia).catch(() => {});
+      changed = true;
+    }
+
     lastSyncTimestamp = Date.now();
     isSyncing = false;
 
@@ -1090,8 +1140,28 @@ export function useAppStore() {
 
   const deletePost = useCallback(
     async (id: string) => {
+      const deleted = globalStore.posts.find((p) => p.id === id);
       const updated = globalStore.posts.filter((p) => p.id !== id);
+      globalStore.posts = updated;
       savePosts(updated, true);
+
+      if (deleted) {
+        const trashItem: TrashItem = {
+          id: `trash-post-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+          originalId: deleted.id,
+          type: 'post',
+          title: deleted.title,
+          description: deleted.excerpt || '',
+          data: deleted,
+          deletedAt: new Date().toISOString(),
+          expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+        };
+        globalStore.trash = [trashItem, ...globalStore.trash];
+        if (typeof window !== 'undefined') {
+          safeSetLocalStorage(STORAGE_KEYS.TRASH, globalStore.trash);
+          idbSet(STORAGE_KEYS.TRASH, globalStore.trash).catch(() => {});
+        }
+      }
 
       // Direct synchronous server delete to ensure public/data/posts.json is updated on disk
       if (typeof window !== 'undefined') {
@@ -1105,6 +1175,7 @@ export function useAppStore() {
           console.warn('[store] Direct deletePost persist failed:', e);
         }
       }
+      notifyListeners();
     },
     [savePosts]
   );
@@ -1379,6 +1450,30 @@ export function useAppStore() {
           p.category === target.name ? { ...p, category: fallbackCategoryName } : p
         );
         savePosts(modified, true);
+
+        // Move to trash
+        const trashItem: TrashItem = {
+          id: `trash-cat-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+          originalId: target.id,
+          type: 'category',
+          title: target.name,
+          description: target.description || `Chuyên mục: ${target.name}`,
+          data: target,
+          deletedAt: new Date().toISOString(),
+          expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+        };
+        globalStore.trash = [trashItem, ...globalStore.trash];
+        if (typeof window !== 'undefined') {
+          safeSetLocalStorage(STORAGE_KEYS.TRASH, globalStore.trash);
+          idbSet(STORAGE_KEYS.TRASH, globalStore.trash).catch(() => {});
+          try {
+            fetch('/api/admin/persist-posts', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'trash_add', item: trashItem }),
+            }).catch(() => {});
+          } catch {}
+        }
       }
     },
     [saveCategories, savePosts]
@@ -1394,8 +1489,39 @@ export function useAppStore() {
   }, [saveProjects]);
 
   const deleteProject = useCallback((id: string) => {
+    const deleted = globalStore.projects.find((p) => p.id === id);
     const updated = globalStore.projects.filter((p) => p.id !== id);
+    globalStore.projects = updated;
     saveProjects(updated, true);
+
+    if (deleted) {
+      const trashItem: TrashItem = {
+        id: `trash-project-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+        originalId: deleted.id,
+        type: 'project',
+        title: deleted.title,
+        description: deleted.description || '',
+        data: deleted,
+        deletedAt: new Date().toISOString(),
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+      };
+      globalStore.trash = [trashItem, ...globalStore.trash];
+      if (typeof window !== 'undefined') {
+        safeSetLocalStorage(STORAGE_KEYS.TRASH, globalStore.trash);
+        idbSet(STORAGE_KEYS.TRASH, globalStore.trash).catch(() => {});
+      }
+    }
+
+    if (typeof window !== 'undefined') {
+      try {
+        fetch('/api/admin/persist-posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'delete_project', id }),
+        }).catch(() => {});
+      } catch {}
+    }
+    notifyListeners();
   }, [saveProjects]);
 
   const updateProject = useCallback((updatedProj: Project) => {
@@ -1432,6 +1558,13 @@ export function useAppStore() {
       safeSetLocalStorage(STORAGE_KEYS.MEDIA, updated);
       idbSet(STORAGE_KEYS.MEDIA, updated).catch(() => {});
       try {
+        fetch('/api/admin/persist-posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'save_media', media: updated }),
+        }).catch(() => {});
+      } catch {}
+      try {
         window.dispatchEvent(new CustomEvent('agiabinh_store_sync', { detail: { type: 'MEDIA' } }));
       } catch {}
     }
@@ -1440,13 +1573,46 @@ export function useAppStore() {
     return newMedia;
   }, []);
 
-  const deleteMediaFile = useCallback((id: string) => {
-    const updated = globalStore.mediaFiles.filter((m) => m.id !== id);
+  const deleteMediaFile = useCallback(async (id: string, fileData?: MediaFile) => {
+    const deleted = fileData || globalStore.mediaFiles.find((m) => m.id === id || m.path === id || m.url === id || m.name === id);
+    const updated = globalStore.mediaFiles.filter((m) => m.id !== id && m.path !== id && m.url !== id && m.name !== id && (!deleted || m.id !== deleted.id));
     globalStore.mediaFiles = updated;
+
+    if (deleted) {
+      const trashItem: TrashItem = {
+        id: `trash-media-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+        originalId: deleted.id || id,
+        type: 'media',
+        title: deleted.name || 'Tệp Media',
+        description: deleted.path || deleted.url || '',
+        data: deleted,
+        deletedAt: new Date().toISOString(),
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+      };
+      globalStore.trash = [trashItem, ...globalStore.trash.filter((t) => t.originalId !== (deleted.id || id))];
+      if (typeof window !== 'undefined') {
+        safeSetLocalStorage(STORAGE_KEYS.TRASH, globalStore.trash);
+        idbSet(STORAGE_KEYS.TRASH, globalStore.trash).catch(() => {});
+      }
+    }
 
     if (typeof window !== 'undefined') {
       safeSetLocalStorage(STORAGE_KEYS.MEDIA, updated);
       idbSet(STORAGE_KEYS.MEDIA, updated).catch(() => {});
+      try {
+        await fetch('/api/admin/persist-posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'delete_media',
+            id,
+            deletedItem: deleted,
+            media: updated
+          }),
+        });
+      } catch (e) {
+        console.warn('[store] Direct delete_media error:', e);
+      }
       try {
         window.dispatchEvent(new CustomEvent('agiabinh_store_sync', { detail: { type: 'MEDIA' } }));
       } catch {}
@@ -1725,14 +1891,25 @@ export function useAppStore() {
   }, []);
 
   // Jekyll config
-  const updateJekyllConfig = useCallback((config: Partial<JekyllConfig>) => {
+  const updateJekyllConfig = useCallback(async (config: Partial<JekyllConfig>) => {
     const updated = { ...globalStore.jekyllConfig, ...config };
     globalStore.jekyllConfig = updated;
 
     if (typeof window !== 'undefined') {
       safeSetLocalStorage(STORAGE_KEYS.JEKYLL, updated);
       idbSet(STORAGE_KEYS.JEKYLL, updated).catch(() => {});
-      persistToServer(true);
+      try {
+        await fetch('/api/admin/persist-posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'save_config', config: updated }),
+        });
+      } catch (e) {
+        console.warn('[store] Direct save_config error:', e);
+      }
+      try {
+        window.dispatchEvent(new CustomEvent('agiabinh_store_sync', { detail: { type: 'JEKYLL', config: updated } }));
+      } catch {}
     }
 
     notifyListeners();
@@ -1769,8 +1946,29 @@ export function useAppStore() {
   }, [savePages]);
 
   const deletePage = useCallback((id: string) => {
+    const deleted = globalStore.pages.find(p => p.id === id);
     const updated = globalStore.pages.filter(p => p.id !== id);
+    globalStore.pages = updated;
     savePages(updated);
+
+    if (deleted) {
+      const trashItem: TrashItem = {
+        id: `trash-page-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+        originalId: deleted.id,
+        type: 'page',
+        title: deleted.title,
+        description: deleted.slug,
+        data: deleted,
+        deletedAt: new Date().toISOString(),
+        expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+      };
+      globalStore.trash = [trashItem, ...globalStore.trash];
+      if (typeof window !== 'undefined') {
+        safeSetLocalStorage(STORAGE_KEYS.TRASH, globalStore.trash);
+        idbSet(STORAGE_KEYS.TRASH, globalStore.trash).catch(() => {});
+      }
+    }
+    notifyListeners();
   }, [savePages]);
 
   const reorderPages = useCallback((orderedIds: string[]) => {
@@ -2082,6 +2280,137 @@ export function useAppStore() {
     notifyListeners();
   }, []);
 
+  // Trash methods (Auto 30 days cleanup)
+  const restoreFromTrash = useCallback(async (trashId: string) => {
+    const item = globalStore.trash.find((t) => t.id === trashId);
+    if (!item) return false;
+
+    // Restore to appropriate collection
+    if (item.type === 'post' && item.data) {
+      const updated = [item.data, ...globalStore.posts.filter((p) => p.id !== item.data.id)];
+      savePosts(updated, true);
+    } else if (item.type === 'project' && item.data) {
+      const updated = [item.data, ...globalStore.projects.filter((p) => p.id !== item.data.id)];
+      saveProjects(updated, true);
+    } else if (item.type === 'page' && item.data) {
+      const updated = [item.data, ...globalStore.pages.filter((p) => p.id !== item.data.id)];
+      savePages(updated);
+    } else if (item.type === 'media' && item.data) {
+      const updated = [item.data, ...globalStore.mediaFiles.filter((m) => m.id !== item.data.id)];
+      globalStore.mediaFiles = updated;
+      safeSetLocalStorage(STORAGE_KEYS.MEDIA, updated);
+      idbSet(STORAGE_KEYS.MEDIA, updated).catch(() => {});
+      try {
+        fetch('/api/admin/persist-posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'save_media', media: updated }),
+        }).catch(() => {});
+      } catch {}
+    } else if (item.type === 'category' && item.data) {
+      const updated = [...globalStore.categories.filter((c) => c.id !== item.data.id), item.data];
+      saveCategories(updated);
+    } else if (item.type === 'lead' && item.data) {
+      const updated = [item.data, ...globalStore.leads.filter((l) => l.id !== item.data.id)];
+      saveLeads(updated);
+    }
+
+    // Remove from trash
+    const remaining = globalStore.trash.filter((t) => t.id !== trashId);
+    globalStore.trash = remaining;
+    safeSetLocalStorage(STORAGE_KEYS.TRASH, remaining);
+    idbSet(STORAGE_KEYS.TRASH, remaining).catch(() => {});
+
+    if (typeof window !== 'undefined') {
+      try {
+        await fetch('/api/admin/persist-posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'trash_restore', trashId }),
+        });
+      } catch (e) {
+        console.warn('[store] trash_restore error:', e);
+      }
+      try {
+        window.dispatchEvent(new CustomEvent('agiabinh_store_sync', { detail: { type: 'TRASH' } }));
+      } catch {}
+    }
+
+    notifyListeners();
+    return true;
+  }, [savePosts, saveProjects, savePages, saveCategories, saveLeads]);
+
+  const deletePermanentlyFromTrash = useCallback(async (trashId: string) => {
+    const remaining = globalStore.trash.filter((t) => t.id !== trashId);
+    globalStore.trash = remaining;
+    safeSetLocalStorage(STORAGE_KEYS.TRASH, remaining);
+    idbSet(STORAGE_KEYS.TRASH, remaining).catch(() => {});
+
+    if (typeof window !== 'undefined') {
+      try {
+        await fetch('/api/admin/persist-posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'trash_delete', trashId }),
+        });
+      } catch (e) {
+        console.warn('[store] trash_delete error:', e);
+      }
+      try {
+        window.dispatchEvent(new CustomEvent('agiabinh_store_sync', { detail: { type: 'TRASH' } }));
+      } catch {}
+    }
+
+    notifyListeners();
+  }, []);
+
+  const emptyTrash = useCallback(async () => {
+    globalStore.trash = [];
+    safeSetLocalStorage(STORAGE_KEYS.TRASH, []);
+    idbSet(STORAGE_KEYS.TRASH, []).catch(() => {});
+
+    if (typeof window !== 'undefined') {
+      try {
+        await fetch('/api/admin/persist-posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'trash_empty' }),
+        });
+      } catch (e) {
+        console.warn('[store] trash_empty error:', e);
+      }
+      try {
+        window.dispatchEvent(new CustomEvent('agiabinh_store_sync', { detail: { type: 'TRASH' } }));
+      } catch {}
+    }
+
+    notifyListeners();
+  }, []);
+
+  const syncAllToCodebase = useCallback(async () => {
+    if (typeof window === 'undefined') return false;
+    try {
+      const res = await fetch('/api/admin/persist-posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'sync_all_to_code',
+          posts: globalStore.posts,
+          projects: globalStore.projects,
+          pages: globalStore.pages,
+          categories: globalStore.categories,
+          config: globalStore.jekyllConfig,
+          media: globalStore.mediaFiles
+        }),
+      });
+      const data = await res.json();
+      return Boolean(data.success);
+    } catch (e) {
+      console.warn('[store] syncAllToCodebase error:', e);
+      return false;
+    }
+  }, []);
+
   return {
     isHydrated: globalStore.isHydrated,
     posts: globalStore.posts,
@@ -2101,6 +2430,7 @@ export function useAppStore() {
     schemaSettings: globalStore.schemaSettings,
     aiScheduler: globalStore.aiScheduler,
     mediaFolders: globalStore.mediaFolders,
+    trash: globalStore.trash,
     isAdminAuthenticated: globalStore.isAdminAuthenticated,
     savePosts,
     saveProjects,
@@ -2148,6 +2478,10 @@ export function useAppStore() {
     addMediaFile,
     updateMediaFile,
     deleteMediaFile,
+    restoreFromTrash,
+    deletePermanentlyFromTrash,
+    emptyTrash,
+    syncAllToCodebase,
     saveCategories,
     addCategory,
     updateCategory,

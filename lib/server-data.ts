@@ -5,14 +5,17 @@ import {
   Project,
   SitePage,
   CategoryItem,
-  JekyllConfig
+  JekyllConfig,
+  MediaFile,
+  TrashItem
 } from '@/lib/types';
 import {
   initialBlogPosts,
   initialProjects,
   initialPages,
   initialCategories,
-  initialJekyllConfig
+  initialJekyllConfig,
+  initialMediaFiles
 } from '@/lib/initial-data';
 
 const DATA_DIR = path.join(process.cwd(), 'public', 'data');
@@ -22,6 +25,8 @@ const PAGES_FILE = path.join(DATA_DIR, 'pages.json');
 const CATEGORIES_FILE = path.join(DATA_DIR, 'categories.json');
 const CONFIG_FILE = path.join(DATA_DIR, 'config.json');
 const ADMIN_CONFIG_FILE = path.join(DATA_DIR, 'admin-settings.json');
+const MEDIA_FILE = path.join(DATA_DIR, 'media.json');
+const TRASH_FILE = path.join(DATA_DIR, 'trash.json');
 
 function ensureDataDir(): void {
   try {
@@ -269,8 +274,23 @@ export function saveSinglePostServer(targetPost: BlogPost): { success: boolean; 
 export function deleteSinglePostServer(idOrSlug: string): { success: boolean; posts: BlogPost[] } {
   ensureDataDir();
   const currentPosts = getAllPostsServer();
+  const deletedPost = currentPosts.find((p) => p.id === idOrSlug || p.slug === idOrSlug);
   const filtered = currentPosts.filter((p) => p.id !== idOrSlug && p.slug !== idOrSlug);
   const ok = savePostsServer(filtered);
+
+  if (deletedPost) {
+    addToTrashServer({
+      id: `trash-post-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+      originalId: deletedPost.id,
+      type: 'post',
+      title: deletedPost.title,
+      description: deletedPost.excerpt || '',
+      data: deletedPost,
+      deletedAt: new Date().toISOString(),
+      expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+    });
+  }
+
   return { success: ok, posts: filtered };
 }
 
@@ -323,7 +343,7 @@ export function getConfigServer(): JekyllConfig {
 }
 
 /**
- * Save Jekyll config to server file.
+ * Save Jekyll config to server file and synchronize to code / initial-data.
  */
 export function saveConfigServer(config: Partial<JekyllConfig>): boolean {
   ensureDataDir();
@@ -333,13 +353,90 @@ export function saveConfigServer(config: Partial<JekyllConfig>): boolean {
       ...current,
       ...config,
     };
-    return writeDataFile(CONFIG_FILE, JSON.stringify(updated, null, 2));
+
+    // If logo is base64, save to static /logo.png & /images/logo.png
+    if (updated.logo && updated.logo.startsWith('data:image/')) {
+      try {
+        const match = updated.logo.match(/^data:image\/([a-zA-Z0-9\+\.]+);base64,(.+)$/);
+        if (match) {
+          const ext = match[1] === 'svg+xml' ? 'svg' : (match[1] === 'jpeg' ? 'jpg' : 'png');
+          const buffer = Buffer.from(match[2], 'base64');
+          const targetPath = path.join(process.cwd(), 'public', `logo.${ext}`);
+          fs.writeFileSync(targetPath, buffer);
+          const imgDir = path.join(process.cwd(), 'public', 'images');
+          if (!fs.existsSync(imgDir)) fs.mkdirSync(imgDir, { recursive: true });
+          fs.writeFileSync(path.join(imgDir, `logo.${ext}`), buffer);
+          
+          // Also sync to standalone if available
+          const standaloneImg = path.join(process.cwd(), '.next', 'standalone', 'public', `logo.${ext}`);
+          if (fs.existsSync(path.dirname(standaloneImg))) {
+            try { fs.writeFileSync(standaloneImg, buffer); } catch {}
+          }
+          updated.logo = `/logo.${ext}?v=${Date.now()}`;
+        }
+      } catch (e) {
+        console.warn('[server-data] Failed to extract logo image file:', e);
+      }
+    }
+
+    // If favicon is base64, save to /favicon.ico
+    if (updated.favicon && updated.favicon.startsWith('data:image/')) {
+      try {
+        const match = updated.favicon.match(/^data:image\/([a-zA-Z0-9\+\.\-]+);base64,(.+)$/);
+        if (match) {
+          const buffer = Buffer.from(match[2], 'base64');
+          fs.writeFileSync(path.join(process.cwd(), 'public', 'favicon.ico'), buffer);
+          const standaloneFav = path.join(process.cwd(), '.next', 'standalone', 'public', 'favicon.ico');
+          if (fs.existsSync(path.dirname(standaloneFav))) {
+            try { fs.writeFileSync(standaloneFav, buffer); } catch {}
+          }
+          updated.favicon = `/favicon.ico?v=${Date.now()}`;
+        }
+      } catch (e) {
+        console.warn('[server-data] Failed to extract favicon file:', e);
+      }
+    }
+
+    const ok = writeDataFile(CONFIG_FILE, JSON.stringify(updated, null, 2));
+
+    // Also sync values into lib/initial-data.ts so Git diff is visible and SSR reflects changes
+    try {
+      const initialDataPath = path.join(process.cwd(), 'lib', 'initial-data.ts');
+      if (fs.existsSync(initialDataPath)) {
+        let code = fs.readFileSync(initialDataPath, 'utf-8');
+        if (updated.logo) {
+          code = code.replace(/logo:\s*"[^"]*"/, `logo: "${updated.logo.replace(/"/g, '\\"')}"`);
+        }
+        if (updated.favicon) {
+          code = code.replace(/favicon:\s*"[^"]*"/, `favicon: "${updated.favicon.replace(/"/g, '\\"')}"`);
+        }
+        if (updated.phone) {
+          code = code.replace(/phone:\s*"[^"]*"/, `phone: "${updated.phone.replace(/"/g, '\\"')}"`);
+        }
+        if (updated.email) {
+          code = code.replace(/email:\s*"[^"]*"/, `email: "${updated.email.replace(/"/g, '\\"')}"`);
+        }
+        if (updated.title) {
+          code = code.replace(/title:\s*"[^"]*"/, `title: "${updated.title.replace(/"/g, '\\"')}"`);
+        }
+        if (updated.slogan) {
+          code = code.replace(/slogan:\s*"[^"]*"/, `slogan: "${updated.slogan.replace(/"/g, '\\"')}"`);
+        }
+        if (updated.address) {
+          code = code.replace(/address:\s*"[^"]*"/, `address: "${updated.address.replace(/"/g, '\\"')}"`);
+        }
+        fs.writeFileSync(initialDataPath, code, 'utf-8');
+      }
+    } catch (err) {
+      console.warn('[server-data] Note on syncing initial-data.ts:', err);
+    }
+
+    return ok;
   } catch (err) {
     console.error('[server-data] Failed to save CONFIG_FILE:', err);
     return false;
   }
 }
-
 
 export function getAdminConfigServer(): any {
   ensureDataDir();
@@ -369,4 +466,170 @@ export function saveAdminConfigServer(adminConfig: any): boolean {
     console.error('[server-data] Failed to save ADMIN_CONFIG_FILE:', err);
     return false;
   }
+}
+
+/**
+ * =============================================================================
+ * MEDIA MANAGEMENT ON SERVER
+ * =============================================================================
+ */
+export function getAllMediaServer(): MediaFile[] {
+  ensureDataDir();
+  try {
+    if (fs.existsSync(MEDIA_FILE)) {
+      const raw = fs.readFileSync(MEDIA_FILE, 'utf-8');
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        return parsed;
+      }
+    } else {
+      writeDataFile(MEDIA_FILE, JSON.stringify(initialMediaFiles, null, 2));
+      return initialMediaFiles;
+    }
+  } catch (err) {
+    console.warn('[server-data] Failed to read MEDIA_FILE:', err);
+  }
+  return initialMediaFiles;
+}
+
+export function saveMediaServer(media: MediaFile[]): boolean {
+  ensureDataDir();
+  return writeDataFile(MEDIA_FILE, JSON.stringify(media, null, 2));
+}
+
+export function deleteMediaServer(
+  id: string,
+  updatedList?: MediaFile[],
+  fallbackItem?: MediaFile
+): { success: boolean; media: MediaFile[] } {
+  ensureDataDir();
+  const current = getAllMediaServer();
+  const deletedItem =
+    fallbackItem ||
+    current.find((m) => m.id === id || m.path === id || m.url === id || m.name === id);
+
+  const updated =
+    updatedList && Array.isArray(updatedList)
+      ? updatedList
+      : current.filter(
+          (m) =>
+            m.id !== id &&
+            m.path !== id &&
+            m.url !== id &&
+            m.name !== id &&
+            (!deletedItem || m.id !== deletedItem.id)
+        );
+
+  const ok = saveMediaServer(updated);
+
+  if (deletedItem) {
+    // Also move to Trash automatically
+    addToTrashServer({
+      id: `trash-media-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+      originalId: deletedItem.id || id,
+      type: 'media',
+      title: deletedItem.name || 'Tệp Media',
+      description: deletedItem.path || deletedItem.url || '',
+      data: deletedItem,
+      deletedAt: new Date().toISOString(),
+      expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+    });
+  }
+
+  return { success: ok, media: updated };
+}
+
+/**
+ * =============================================================================
+ * TRASH BIN (THÙNG RÁC) SERVER MANAGEMENT
+ * Automatically purges items older than 30 days
+ * =============================================================================
+ */
+export function getAllTrashServer(): TrashItem[] {
+  ensureDataDir();
+  try {
+    if (fs.existsSync(TRASH_FILE)) {
+      const raw = fs.readFileSync(TRASH_FILE, 'utf-8');
+      const parsed: TrashItem[] = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        // Purge expired items (> 30 days)
+        const now = Date.now();
+        const valid = parsed.filter(item => {
+          const exp = item.expiresAt ? new Date(item.expiresAt).getTime() : new Date(item.deletedAt).getTime() + 30 * 24 * 60 * 60 * 1000;
+          return exp > now;
+        });
+        if (valid.length !== parsed.length) {
+          saveTrashServer(valid);
+        }
+        return valid;
+      }
+    } else {
+      writeDataFile(TRASH_FILE, JSON.stringify([], null, 2));
+      return [];
+    }
+  } catch (err) {
+    console.warn('[server-data] Failed to read TRASH_FILE:', err);
+  }
+  return [];
+}
+
+export function saveTrashServer(trash: TrashItem[]): boolean {
+  ensureDataDir();
+  return writeDataFile(TRASH_FILE, JSON.stringify(trash, null, 2));
+}
+
+export function addToTrashServer(item: TrashItem): boolean {
+  const current = getAllTrashServer();
+  const exists = current.findIndex(t => t.id === item.id || (t.originalId === item.originalId && t.type === item.type));
+  if (exists >= 0) {
+    current[exists] = item;
+  } else {
+    current.unshift(item);
+  }
+  return saveTrashServer(current);
+}
+
+export function restoreFromTrashServer(trashId: string): { success: boolean; item?: TrashItem; remainingTrash: TrashItem[] } {
+  const current = getAllTrashServer();
+  const found = current.find(t => t.id === trashId);
+  if (!found) {
+    return { success: false, remainingTrash: current };
+  }
+
+  // Restore based on type
+  if (found.type === 'post' && found.data) {
+    saveSinglePostServer(found.data);
+  } else if (found.type === 'project' && found.data) {
+    const projs = getAllProjectsServer();
+    projs.unshift(found.data);
+    saveProjectsServer(projs);
+  } else if (found.type === 'page' && found.data) {
+    const pages = getAllPagesServer();
+    pages.unshift(found.data);
+    savePagesServer(pages);
+  } else if (found.type === 'media' && found.data) {
+    const media = getAllMediaServer();
+    media.unshift(found.data);
+    saveMediaServer(media);
+  } else if (found.type === 'category' && found.data) {
+    const cats = getAllCategoriesServer();
+    cats.push(found.data);
+    saveCategoriesServer(cats);
+  }
+
+  const remaining = current.filter(t => t.id !== trashId);
+  saveTrashServer(remaining);
+
+  return { success: true, item: found, remainingTrash: remaining };
+}
+
+export function deleteFromTrashPermanentlyServer(trashId: string): { success: boolean; remainingTrash: TrashItem[] } {
+  const current = getAllTrashServer();
+  const remaining = current.filter(t => t.id !== trashId);
+  const ok = saveTrashServer(remaining);
+  return { success: ok, remainingTrash: remaining };
+}
+
+export function emptyTrashServer(): boolean {
+  return saveTrashServer([]);
 }

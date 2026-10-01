@@ -13,7 +13,16 @@ import {
   saveSinglePostServer,
   getAdminConfigServer,
   saveAdminConfigServer,
-  deleteSinglePostServer
+  deleteSinglePostServer,
+  getAllMediaServer,
+  saveMediaServer,
+  deleteMediaServer,
+  getAllTrashServer,
+  saveTrashServer,
+  addToTrashServer,
+  restoreFromTrashServer,
+  deleteFromTrashPermanentlyServer,
+  emptyTrashServer
 } from '@/lib/server-data';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -58,6 +67,8 @@ export async function GET(req: NextRequest) {
     const categories = getAllCategoriesServer();
     const jekyllConfig = getConfigServer();
     const adminConfig = getAdminConfigServer();
+    const media = getAllMediaServer();
+    const trash = getAllTrashServer();
 
     // In summary mode (used for high-performance store sync), omit heavy article content
     const returnedPosts = summary
@@ -73,6 +84,8 @@ export async function GET(req: NextRequest) {
       categories,
       jekyllConfig,
       adminConfig,
+      media,
+      trash,
       source: 'AI Studio Server Data (public/data/)',
       timestamp: new Date().toISOString()
     });
@@ -106,6 +119,142 @@ export async function POST(req: NextRequest) {
       jekyllConfig,
       adminConfig
     } = isArrayBody ? { posts: body } as any : body;
+
+    // Mode: Direct config save
+    if (action === 'save_config' && (body.config || jekyllConfig)) {
+      const targetConfig = body.config || jekyllConfig;
+      const ok = saveConfigServer(targetConfig);
+      if (body.adminConfig) {
+        saveAdminConfigServer(body.adminConfig);
+      }
+      return NextResponse.json({
+        success: ok,
+        action: 'save_config',
+        config: getConfigServer(),
+        message: ok ? 'Đã lưu cấu hình Website & SEO thành công vào máy chủ!' : 'Lỗi khi lưu cấu hình',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Mode: Media file save / sync
+    if (action === 'save_media' && Array.isArray(body.media)) {
+      const ok = saveMediaServer(body.media);
+      return NextResponse.json({
+        success: ok,
+        action: 'save_media',
+        media: getAllMediaServer(),
+        message: 'Đã lưu danh sách tệp media thành công!',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Mode: Media file delete (moves to Trash automatically)
+    if (action === 'delete_media' && (id || body.deletedItem?.id || body.deletedItem?.path)) {
+      const targetId = id || body.deletedItem?.id || body.deletedItem?.path;
+      const targetItem = body.deletedItem;
+      const targetList = Array.isArray(body.media) ? body.media : undefined;
+      const result = deleteMediaServer(targetId, targetList, targetItem);
+      return NextResponse.json({
+        success: result.success,
+        action: 'delete_media',
+        deletedId: targetId,
+        media: result.media,
+        message: 'Đã chuyển tệp media vào thùng rác thành công (có thể khôi phục trong 30 ngày)!',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Mode: Trash Restore
+    if (action === 'trash_restore' && (body.trashId || id)) {
+      const targetId = body.trashId || id;
+      const result = restoreFromTrashServer(targetId);
+      return NextResponse.json({
+        success: result.success,
+        action: 'trash_restore',
+        restoredItem: result.item,
+        remainingTrash: result.remainingTrash,
+        message: result.success ? `Đã khôi phục "${result.item?.title || 'mục'}" thành công!` : 'Không tìm thấy mục trong thùng rác',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Mode: Trash Delete Permanently
+    if (action === 'trash_delete' && (body.trashId || id)) {
+      const targetId = body.trashId || id;
+      const result = deleteFromTrashPermanentlyServer(targetId);
+      return NextResponse.json({
+        success: result.success,
+        action: 'trash_delete',
+        remainingTrash: result.remainingTrash,
+        message: 'Đã xóa vĩnh viễn mục khỏi thùng rác!',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Mode: Trash Empty
+    if (action === 'trash_empty') {
+      const ok = emptyTrashServer();
+      return NextResponse.json({
+        success: ok,
+        action: 'trash_empty',
+        message: 'Đã dọn sạch thùng rác thành công!',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Mode: Trash Add
+    if (action === 'trash_add' && body.item) {
+      const ok = addToTrashServer(body.item);
+      return NextResponse.json({
+        success: ok,
+        action: 'trash_add',
+        item: body.item,
+        message: 'Đã đưa mục vào thùng rác!',
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Mode: Sync All Data To Codebase (Git diff visible)
+    if (action === 'sync_all_to_code') {
+      if (Array.isArray(body.posts)) savePostsServer(body.posts);
+      if (Array.isArray(body.projects)) saveProjectsServer(body.projects);
+      if (Array.isArray(body.pages)) savePagesServer(body.pages);
+      if (Array.isArray(body.categories)) saveCategoriesServer(body.categories);
+      if (body.config || jekyllConfig) saveConfigServer(body.config || jekyllConfig);
+      if (Array.isArray(body.media)) saveMediaServer(body.media);
+
+      // Also sync key site settings to lib/initial-data.ts so Git diff is immediately visible for commit
+      try {
+        const initialDataPath = path.join(process.cwd(), 'lib', 'initial-data.ts');
+        if (fs.existsSync(initialDataPath)) {
+          let code = fs.readFileSync(initialDataPath, 'utf-8');
+          const cfg = getConfigServer();
+          if (cfg.logo) {
+            code = code.replace(/logo:\s*"[^"]*"/, `logo: "${cfg.logo}"`);
+            code = code.replace(/logoUrl:\s*"[^"]*"/, `logoUrl: "${cfg.logo.startsWith('http') ? cfg.logo : `https://www.betongangiabinh.vn${cfg.logo}`}"`);
+          }
+          if (cfg.phone) {
+            code = code.replace(/phone:\s*"[^"]*"/, `phone: "${cfg.phone}"`);
+          }
+          if (cfg.email) {
+            code = code.replace(/email:\s*"[^"]*"/, `email: "${cfg.email}"`);
+          }
+          if (cfg.title) {
+            code = code.replace(/title:\s*"[^"]*"/, `title: "${cfg.title.replace(/"/g, '\\"')}"`);
+          }
+          fs.writeFileSync(initialDataPath, code, 'utf-8');
+        }
+      } catch (err) {
+        console.warn('[sync_all_to_code] Note on initial-data sync:', err);
+      }
+
+      return NextResponse.json({
+        success: true,
+        action: 'sync_all_to_code',
+        message: 'Đã đồng bộ toàn bộ dữ liệu vào mã nguồn dự án thành công! Bạn có thể nhấn Export to GitHub để đẩy bản cập nhật mới nhất.',
+        timestamp: new Date().toISOString()
+      });
+    }
 
     // Mode: Single post save / update
     if (action === 'save_post' && post) {

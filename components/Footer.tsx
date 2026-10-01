@@ -7,6 +7,19 @@ import { Phone, Mail, MapPin, Facebook, ShieldCheck, Clock, Award, ArrowUpRight,
 
 export default function Footer() {
   const { jekyllConfig } = useAppStore();
+
+  const phoneDisplay = jekyllConfig?.phone || '0988 2662 93';
+  const phoneCall = phoneDisplay.replace(/\s+/g, '');
+  const emailDisplay = jekyllConfig?.email || 'ketoan.angiabinh@gmail.com';
+  const brandTitle = jekyllConfig?.title || 'BÊ TÔNG AN GIA BÌNH';
+  const companyLegalName = jekyllConfig?.company_name || 'CÔNG TY CỔ PHẦN THƯƠNG MẠI VÀ DỊCH VỤ AN GIA BÌNH';
+  const logoUrl = jekyllConfig?.logo
+    ? (jekyllConfig.logo.startsWith('http') ? jekyllConfig.logo : `https://www.betongangiabinh.vn${jekyllConfig.logo}`)
+    : 'https://www.betongangiabinh.vn/logo.png';
+  const addressDisplay = jekyllConfig?.address || 'KCN Khánh Phú, phường Đông Hoa Lư, TP. Ninh Bình';
+  const siteUrl = jekyllConfig?.url || 'https://www.betongangiabinh.vn';
+  const descDisplay = jekyllConfig?.footerNotice || jekyllConfig?.description || 'Chuyên cung ứng bê tông tươi, bê tông thương phẩm, xe bơm cần 37m-56m, trạm trộn công nghệ cao tại Ninh Bình.';
+
   return (
     <footer className="bg-slate-100 text-slate-600 pt-16 pb-20 lg:pb-12 border-t border-slate-200">
       {/* Schema.org Structured Data */}
@@ -16,20 +29,20 @@ export default function Footer() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "LocalBusiness",
-            "name": "Bê Tông An Gia Bình",
-            "legalName": "CÔNG TY CỔ PHẦN THƯƠNG MẠI VÀ DỊCH VỤ AN GIA BÌNH",
-            "alternateName": "CÔNG TY CỔ PHẦN THƯƠNG MẠI VÀ DỊCH VỤ AN GIA BÌNH",
-            "taxID": "2700870972",
-            "vatID": "2700870972",
-            "url": "https://www.betongangiabinh.vn",
-            "logo": "https://www.betongangiabinh.vn/logo.png",
+            "name": brandTitle,
+            "legalName": companyLegalName,
+            "alternateName": companyLegalName,
+            "taxID": jekyllConfig?.tax_id || "2700870972",
+            "vatID": jekyllConfig?.tax_id || "2700870972",
+            "url": siteUrl,
+            "logo": logoUrl,
             "image": "https://images.unsplash.com/photo-1589939705384-5185137a7f0f",
-            "description": "Chuyên cung ứng bê tông tươi, bê tông thương phẩm, xe bơm cần 37m-56m, trạm trộn công nghệ cao tại Ninh Bình.",
-            "telephone": "0988266293",
-            "email": "ketoan.angiabinh@gmail.com",
+            "description": descDisplay,
+            "telephone": phoneCall,
+            "email": emailDisplay,
             "address": {
               "@type": "PostalAddress",
-              "streetAddress": "KCN Khánh Phú, phường Đông Hoa Lư",
+              "streetAddress": addressDisplay,
               "addressLocality": "TP. Ninh Bình",
               "addressRegion": "Ninh Bình",
               "postalCode": "430000",
@@ -41,7 +54,7 @@ export default function Footer() {
               "longitude": 105.9752
             },
             "sameAs": [
-              "https://www.facebook.com/betongangiabinh/"
+              jekyllConfig?.facebook_page || "https://www.facebook.com/betongangiabinh/"
             ],
             "priceRange": "$$"
           })
@@ -155,8 +168,8 @@ export default function Footer() {
             </h4>
             <div className="bg-white p-4 rounded-xl border border-amber-200 shadow-2xs">
               <div className="text-xs text-slate-500 font-semibold mb-1">Hotline Kỹ Sư Kinh Doanh:</div>
-              <a href="tel:0988266293" className="text-xl font-extrabold text-amber-600 block hover:underline">
-                0988 2662 93
+              <a href={`tel:${phoneCall}`} className="text-xl font-extrabold text-amber-600 block hover:underline">
+                {phoneDisplay}
               </a>
               <div className="text-[11px] text-slate-500 mt-2 leading-relaxed">
                 Hỗ trợ khảo sát công trình, đo đạc đường vào xe bồn và thử mẫu tại hiện trường miễn phí.
@@ -164,7 +177,7 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-2 text-xs text-slate-600 bg-white p-2.5 rounded-xl border border-slate-200">
               <Mail className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-              <span className="truncate">ketoan.angiabinh@gmail.com</span>
+              <span className="truncate">{emailDisplay}</span>
             </div>
           </div>
         </div>
