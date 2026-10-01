@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAppStore } from '@/lib/store';
 import {
-  Phone, Menu, X, ShieldCheck, Facebook, Lock,
+  Phone, Menu, X, ShieldCheck, Facebook,
   ChevronDown, ChevronRight, HardHat, FileText,
   Building2, Layers, Briefcase, Mail
 } from 'lucide-react';
@@ -65,16 +65,6 @@ export default function Navbar() {
               <span className="hidden xs:inline sm:inline">fb.com/betongangiabinh</span>
               <span className="xs:hidden sm:hidden">Fanpage</span>
             </a>
-            <span className="text-slate-300">|</span>
-            <Link
-              href="/admin"
-              className="inline-flex items-center gap-1 text-slate-600 hover:text-amber-700 font-medium py-1 px-1.5 rounded transition"
-              id="nav-admin-link"
-              aria-label="Đăng nhập trang quản trị"
-            >
-              <Lock className="w-3 h-3" />
-              <span>Quản Trị</span>
-            </Link>
           </div>
         </div>
       </div>
@@ -535,7 +525,7 @@ export default function Navbar() {
               <Phone className="w-4 h-4" />
               <span>Gọi Trực Tiếp: {jekyllConfig?.phone || '0988 2662 93'} (24/7)</span>
             </a>
-            <div className="flex items-center justify-between text-xs text-slate-500 pt-2 px-1">
+            <div className="flex items-center justify-center text-xs text-slate-500 pt-2 px-1">
               <a
                 href="https://www.facebook.com/betongangiabinh/"
                 target="_blank"
@@ -544,9 +534,6 @@ export default function Navbar() {
               >
                 <Facebook className="w-3.5 h-3.5" /> Fanpage Bê Tông An Gia Bình
               </a>
-              <Link href="/admin" onClick={() => setMobileMenuOpen(false)} className="text-slate-600 hover:text-amber-600 flex items-center gap-1">
-                <Lock className="w-3 h-3" /> Trang Quản Trị
-              </Link>
             </div>
           </div>
         </div>

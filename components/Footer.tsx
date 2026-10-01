@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useAppStore } from '@/lib/store';
-import { Phone, Mail, MapPin, Facebook, ShieldCheck, Clock, Award, ArrowUpRight, Lock } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, ShieldCheck, Clock, Award, ArrowUpRight } from 'lucide-react';
 
 export default function Footer() {
   const { jekyllConfig } = useAppStore();
@@ -243,11 +243,6 @@ export default function Footer() {
               <Award className="w-3.5 h-3.5 text-amber-600" />
               Tiêu chuẩn ISO 9001 & TCVN 3105
             </span>
-            <span>•</span>
-            <Link href="/admin" className="hover:text-amber-600 transition flex items-center gap-1 text-slate-500">
-              <Lock className="w-3 h-3" />
-              <span>Quản trị viên</span>
-            </Link>
           </div>
         </div>
       </div>
