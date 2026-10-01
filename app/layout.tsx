@@ -2,6 +2,8 @@ import type {Metadata, Viewport} from 'next';
 import { Plus_Jakarta_Sans, Space_Grotesk } from 'next/font/google';
 import FetchPatch from '@/components/FetchPatch';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -101,6 +103,8 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <FetchPatch />
         {children}
         <CookieConsentBanner />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
