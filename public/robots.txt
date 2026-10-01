@@ -1,8 +1,8 @@
 # ==============================================================================
 # ROBOTS.TXT - CÔNG TY CỔ PHẦN BÊ TÔNG AN GIA BÌNH
-# Website: https://betongangiabinh.vn
+# Website: https://www.betongangiabinh.vn
 # Hotline Kỹ Thuật: 0988 2662 93
-# Sơ Đồ Trang: https://betongangiabinh.vn/sitemap.xml
+# Sơ Đồ Trang: https://www.betongangiabinh.vn/sitemap.xml
 # ==============================================================================
 
 User-agent: *
@@ -92,5 +92,5 @@ Disallow: /api/
 Allow: /_next/static/
 
 # Sitemap & Host
-Sitemap: https://betongangiabinh.vn/sitemap.xml
-Host: https://betongangiabinh.vn
+Sitemap: https://www.betongangiabinh.vn/sitemap.xml
+Host: https://www.betongangiabinh.vn

@@ -41,7 +41,7 @@ function cleanExcerptText(raw: string, fallback = ''): string {
 }
 
 export async function GET() {
-  const baseUrl = 'https://betongangiabinh.vn';
+  const baseUrl = 'https://www.betongangiabinh.vn';
   const buildDate = new Date().toUTCString();
 
   // Load config to dynamically synchronize website logo and favicon

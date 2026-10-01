@@ -21,7 +21,7 @@ export interface PageSeoHeadProps {
 }
 
 const SITE_NAME = 'Bê Tông An Gia Bình';
-const BASE_URL = 'https://betongangiabinh.vn';
+const BASE_URL = 'https://www.betongangiabinh.vn';
 const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1200&auto=format&fit=crop&q=80';
 
 export default function PageSeoHead({

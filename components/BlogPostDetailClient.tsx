@@ -184,7 +184,7 @@ export default function BlogPostDetailClient({
     <div className="min-h-screen flex flex-col bg-slate-50 font-sans">
       <PageSeoHead
         slug={`/blog/${cleanSlug}`}
-        canonicalUrl={`https://betongangiabinh.vn/${post.slug || post.id}.html`}
+        canonicalUrl={`https://www.betongangiabinh.vn/${post.slug || post.id}.html`}
         title={finalTitle}
         description={post.seoDescription || post.excerpt}
         keywords={post.focusKeywords}

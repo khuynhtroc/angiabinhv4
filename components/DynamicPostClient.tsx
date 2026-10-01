@@ -211,7 +211,7 @@ export default function DynamicPostClient({
     ? seoTitle
     : `${seoTitle} | Bê Tông An Gia Bình`;
 
-  const canonicalUrl = `https://betongangiabinh.vn/${cleanSlug}.html`;
+  const canonicalUrl = `https://www.betongangiabinh.vn/${cleanSlug}.html`;
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 font-sans">

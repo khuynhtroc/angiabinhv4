@@ -14,15 +14,15 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 1. Redirect published Cloud Run URL -> https://betongangiabinh.vn
-  // 2. If someone accesses www.betongangiabinh.vn, redirect to https://betongangiabinh.vn
+  // 1. Redirect published Cloud Run URL -> https://www.betongangiabinh.vn
+  // 2. Redirect non-www betongangiabinh.vn -> https://www.betongangiabinh.vn
   const isCloudRunDirect = host.startsWith('b-t-ng-an-gia-b-nh');
-  const isWwwDomain = host === 'www.betongangiabinh.vn';
+  const isNonWww = host === 'betongangiabinh.vn';
 
-  if (isCloudRunDirect || isWwwDomain) {
+  if (isCloudRunDirect || isNonWww) {
     const url = request.nextUrl.clone();
     url.protocol = 'https';
-    url.host = 'betongangiabinh.vn';
+    url.host = 'www.betongangiabinh.vn';
     url.port = '';
     return NextResponse.redirect(url, 301);
   }

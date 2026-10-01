@@ -20,7 +20,7 @@ function escapeXml(unsafe: string): string {
 }
 
 export async function GET() {
-  const baseUrl = 'https://betongangiabinh.vn';
+  const baseUrl = 'https://www.betongangiabinh.vn';
   const nowIso = new Date().toISOString().split('T')[0];
 
   interface SitemapEntry {

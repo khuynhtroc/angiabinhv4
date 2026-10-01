@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (finalDesc.length > 158) {
       finalDesc = finalDesc.substring(0, 155).trim() + '...';
     }
-    const canonicalUrl = `https://betongangiabinh.vn/${cleanSlug}.html`;
+    const canonicalUrl = `https://www.betongangiabinh.vn/${cleanSlug}.html`;
 
     return {
       title: finalTitle,
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (service) {
     const finalTitle = `${service.title} | Bê Tông An Gia Bình Ninh Bình`;
     const finalDesc = service.description;
-    const canonicalUrl = `https://betongangiabinh.vn/${cleanSlug}.html`;
+    const canonicalUrl = `https://www.betongangiabinh.vn/${cleanSlug}.html`;
     return {
       title: finalTitle,
       description: finalDesc,
@@ -83,7 +83,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
       title: finalTitle,
       description: finalDesc,
-      alternates: { canonical: `https://betongangiabinh.vn/${cleanSlug}.html` },
+      alternates: { canonical: `https://www.betongangiabinh.vn/${cleanSlug}.html` },
     };
   }
 

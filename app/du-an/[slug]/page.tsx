@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (project) {
     const finalTitle = `${project.title} | Dự Án Bê Tông An Gia Bình`;
     const finalDesc = project.description || `Dự án ${project.title} tại ${project.location}, cung ứng bê tông thương phẩm chất lượng cao An Gia Bình Ninh Bình.`;
-    const canonicalUrl = `https://betongangiabinh.vn/du-an/${project.slug || project.id}`;
+    const canonicalUrl = `https://www.betongangiabinh.vn/du-an/${project.slug || project.id}`;
 
     return {
       title: finalTitle,

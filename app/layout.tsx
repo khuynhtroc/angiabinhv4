@@ -28,7 +28,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://betongangiabinh.vn'),
+  metadataBase: new URL('https://www.betongangiabinh.vn'),
   title: 'Bê Tông An Gia Bình | Bê Tông Tươi Ninh Bình Uy Tín',
   description: 'Trạm trộn bê tông tươi, bê tông thương phẩm An Gia Bình tại Ninh Bình. Đội xe bồn, xe bơm cần 37m-56m, giao đúng mác, đủ khối lượng 24/7. Hotline: 0988 2662 93.',
   alternates: {
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     description: 'Chuyên cung ứng bê tông thương phẩm mác 150-450, dịch vụ bơm bê tông tiến độ thần tốc, bảo đảm chất lượng kiểm định TCVN tại Ninh Bình.',
     type: 'website',
     locale: 'vi_VN',
-    url: 'https://betongangiabinh.vn',
+    url: 'https://www.betongangiabinh.vn',
     siteName: 'Bê Tông An Gia Bình',
     images: [
       {

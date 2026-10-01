@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const matchedCategory = categories.find((c) => c.slug === cleanSlug || c.id === cleanSlug);
     const catName = matchedCategory?.name || CATEGORY_MAP[cleanSlug] || cleanSlug;
     const catDesc = matchedCategory?.description || `Tổng hợp các bài viết chuyên môn kỹ thuật, tiêu chuẩn chất lượng và bảng giá liên quan đến ${catName} từ đội ngũ kỹ sư Bê Tông An Gia Bình Ninh Bình.`;
-    const canonicalUrl = `https://betongangiabinh.vn/blog/${cleanSlug}`;
+    const canonicalUrl = `https://www.betongangiabinh.vn/blog/${cleanSlug}`;
 
     return {
       title: `${catName} | Chuyên Mục Bê Tông Ninh Bình - An Gia Bình`,
@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ? rawTitle
       : `${rawTitle} | Bê Tông An Gia Bình`;
     const finalDesc = post.seoDescription || post.excerpt;
-    const canonicalUrl = `https://betongangiabinh.vn/${post.slug || post.id}.html`;
+    const canonicalUrl = `https://www.betongangiabinh.vn/${post.slug || post.id}.html`;
 
     return {
       title: finalTitle,
