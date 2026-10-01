@@ -21,6 +21,7 @@ import AdminBulkPostOptimizerModal from '@/components/AdminBulkPostOptimizerModa
 import AdminAddMediaUrlModal from '@/components/AdminAddMediaUrlModal';
 import AdminManageFoldersModal from '@/components/AdminManageFoldersModal';
 import AdminDesignSection from '@/components/AdminDesignSection';
+import AdminTrashSection from '@/components/AdminTrashSection';
 import { optimizePostFull, suggestKeywordsAndTags, generateOptimizedMetaDescription } from '@/lib/postOptimizer';
 import {
   Lock, KeyRound, LayoutDashboard, FileText, Building2, Users,
@@ -109,6 +110,10 @@ export default function AdminDashboard() {
     deleteMediaFolder,
     addMediaFileFromUrl,
     moveMediaFileToFolder,
+    trash,
+    restoreFromTrash,
+    deletePermanentlyFromTrash,
+    emptyTrash,
   } = useAppStore();
 
   // Login form state
@@ -116,7 +121,10 @@ export default function AdminDashboard() {
   const [loginError, setLoginError] = useState('');
 
   // Tab navigation
-  const [activeTab, setActiveTab] = useState<'analytics' | 'crawler' | 'posts' | 'pages' | 'menus' | 'projects' | 'media' | 'leads' | 'design' | 'settings'>('analytics');
+  const [activeTab, setActiveTab] = useState<'analytics' | 'crawler' | 'posts' | 'pages' | 'menus' | 'projects' | 'media' | 'leads' | 'design' | 'settings' | 'trash'>('analytics');
+
+  // Modal to select logo/favicon from media files
+  const [showMediaLogoPickerModal, setShowMediaLogoPickerModal] = useState<'logo' | 'favicon' | null>(null);
 
   // Modals state for new features
   const [optimizingPost, setOptimizingPost] = useState<BlogPost | null>(null);
@@ -978,9 +986,9 @@ export default function AdminDashboard() {
   };
 
   // Save Website Settings & SEO Parameters (Tab 7)
-  const handleSaveSettings = (e?: React.FormEvent) => {
+  const handleSaveSettings = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    updateJekyllConfig({
+    const configToSave = {
       title: siteTitle,
       slogan: siteSlogan,
       tagline: siteSlogan,
@@ -1000,11 +1008,26 @@ export default function AdminDashboard() {
       url: siteUrl,
       baseurl: siteBaseurl,
       facebook_page: siteFacebookPage,
-    });
+    };
+    await updateJekyllConfig(configToSave);
     updateIntegrations({
       googleAnalyticsId: siteGoogleAnalytics,
       searchConsoleTag: siteGoogleVerify || 'google-site-verification=verified',
     });
+
+    // Also trigger direct server save and code sync
+    try {
+      await fetch('/api/admin/persist-posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'sync_all_to_code',
+          config: configToSave,
+          jekyllConfig: configToSave,
+        }),
+      });
+    } catch {}
+
     setSettingsSavedSuccess(true);
     setTimeout(() => setSettingsSavedSuccess(false), 4000);
     try {
@@ -1012,7 +1035,7 @@ export default function AdminDashboard() {
     } catch {
       // ignore
     }
-    alert('Đã lưu cấu hình Website & SEO thành công!');
+    alert('Đã lưu và đồng bộ toàn diện cấu hình Website, Logo & SEO thành công vào toàn bộ hệ thống!');
   };
 
   // Category Handlers
@@ -1819,6 +1842,18 @@ export default function AdminDashboard() {
           >
             <Settings className="w-4 h-4" />
             <span>Cấu Hình Website &amp; SEO</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('trash')}
+            className={`px-4 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-2 ${
+              activeTab === 'trash'
+                ? 'bg-rose-500 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <Trash2 className="w-4 h-4 text-rose-600" />
+            <span>Thùng Rác ({trash.length})</span>
           </button>
         </div>
       </div>
@@ -3475,34 +3510,57 @@ export default function AdminDashboard() {
                       {file.path || file.url}
                     </div>
 
-                    <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+                    <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-1 text-xs">
                       {/* Sửa URL button */}
                       <button
+                        type="button"
                         onClick={() => handleOpenEditMedia(file)}
-                        className="text-[11px] text-slate-700 hover:text-amber-700 flex items-center gap-1 font-bold"
+                        className="text-[11px] text-slate-700 hover:text-amber-700 flex items-center gap-1 font-bold cursor-pointer"
                         title="Sửa đổi URL và thư mục con"
                       >
                         <Edit3 className="w-3 h-3 text-amber-600" />
                         <span>Sửa URL</span>
                       </button>
 
+                      {/* Set as Logo (for images) */}
+                      {file.type === 'image' && (
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            const logoPath = file.path || file.url;
+                            setSiteLogo(logoPath);
+                            await updateJekyllConfig({ logo: logoPath });
+                            alert(`Đã đặt "${file.name}" làm Logo Website thành công! Header & Footer website sẽ sử dụng logo này.`);
+                          }}
+                          className="text-[11px] text-amber-700 hover:text-amber-900 flex items-center gap-0.5 font-bold cursor-pointer"
+                          title="Đặt làm Logo Header & Footer cho website"
+                        >
+                          <Sparkles className="w-3 h-3 text-amber-600" />
+                          <span>Đặt Logo</span>
+                        </button>
+                      )}
+
                       {/* Copy Jekyll Tag */}
                       <button
+                        type="button"
                         onClick={() => handleCopyText(`![${file.name}]({{ site.url }}${file.path || file.url})`, `${file.id}-jekyll`)}
-                        className="text-[11px] text-amber-700 hover:text-amber-900 font-semibold"
+                        className="text-[11px] text-slate-500 hover:text-slate-800 font-semibold cursor-pointer"
                         title="Sao chép cú pháp {{ site.url }}"
                       >
                         {copiedMediaUrl === `${file.id}-jekyll` ? '✓ Đã chép' : 'Mã Jekyll'}
                       </button>
 
+                      {/* Delete to Trash */}
                       <button
-                        onClick={() => {
-                          if (confirm(`Xóa tệp "${file.name}"?`)) {
-                            deleteMediaFile(file.id);
+                        type="button"
+                        onClick={async () => {
+                          if (confirm(`Xác nhận xóa tệp "${file.name}"?\nTệp sẽ được chuyển vào mục Thùng Rác (bạn có thể khôi phục trong vòng 30 ngày).`)) {
+                            await deleteMediaFile(file.id, file);
+                            alert(`Đã chuyển tệp "${file.name}" vào Thùng Rác thành công! Bạn có thể xem và khôi phục tại mục Thùng Rác.`);
                           }
                         }}
-                        className="text-red-500 hover:text-red-700 p-1"
-                        title="Xóa tệp"
+                        className="text-red-500 hover:text-red-700 p-1 cursor-pointer"
+                        title="Chuyển tệp vào Thùng rác"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -3753,6 +3811,15 @@ export default function AdminDashboard() {
                         placeholder="https://... hoặc /images/logo.png"
                         className="flex-1 bg-white border border-slate-300 text-slate-900 p-2.5 rounded-xl text-xs focus:border-amber-500 font-mono"
                       />
+                      <button
+                        type="button"
+                        onClick={() => setShowMediaLogoPickerModal('logo')}
+                        className="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white px-3 py-2.5 rounded-xl font-bold text-xs cursor-pointer shadow-2xs transition shrink-0"
+                        title="Chọn ảnh từ thư viện tệp đã tải lên"
+                      >
+                        <ImageIcon className="w-3.5 h-3.5 text-amber-400" />
+                        <span>Chọn Từ Tệp</span>
+                      </button>
                       <label className="inline-flex items-center gap-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 px-3.5 py-2.5 rounded-xl font-bold text-xs cursor-pointer shadow-2xs transition shrink-0">
                         <Upload className="w-3.5 h-3.5" />
                         <span>Tải Ảnh</span>
@@ -3820,6 +3887,15 @@ export default function AdminDashboard() {
                         placeholder="https://... hoặc /favicon.ico"
                         className="flex-1 bg-white border border-slate-300 text-slate-900 p-2.5 rounded-xl text-xs focus:border-amber-500 font-mono"
                       />
+                      <button
+                        type="button"
+                        onClick={() => setShowMediaLogoPickerModal('favicon')}
+                        className="inline-flex items-center gap-1.5 bg-slate-900 hover:bg-slate-800 text-white px-3 py-2.5 rounded-xl font-bold text-xs cursor-pointer shadow-2xs transition shrink-0"
+                        title="Chọn icon từ thư viện tệp đã tải lên"
+                      >
+                        <ImageIcon className="w-3.5 h-3.5 text-blue-400" />
+                        <span>Chọn Từ Tệp</span>
+                      </button>
                       <label className="inline-flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-white px-3.5 py-2.5 rounded-xl font-bold text-xs cursor-pointer shadow-2xs transition shrink-0">
                         <Upload className="w-3.5 h-3.5" />
                         <span>Tải Icon</span>
@@ -4152,6 +4228,16 @@ plugins:
               onSaveSchemaSettings={saveSchemaSettings}
             />
           </div>
+        )}
+
+        {/* TAB: THÙNG RÁC & BẢO LƯU DỮ LIỆU */}
+        {activeTab === 'trash' && (
+          <AdminTrashSection
+            trash={trash}
+            onRestore={restoreFromTrash}
+            onDeletePermanently={deletePermanentlyFromTrash}
+            onEmptyTrash={emptyTrash}
+          />
         )}
       </main>
 
@@ -5143,6 +5229,91 @@ plugins:
             alert(`Đã nhập thành công ${count} dự án vào hồ sơ năng lực công ty!`);
           }}
         />
+      )}
+
+      {/* 14. Pick Logo/Favicon from Media Files Modal */}
+      {showMediaLogoPickerModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in">
+          <div className="bg-white border border-slate-200 rounded-3xl max-w-4xl w-full max-h-[85vh] overflow-hidden flex flex-col shadow-2xl">
+            <div className="p-5 border-b border-slate-200 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <ImageIcon className="w-5 h-5 text-amber-600" />
+                <h3 className="font-extrabold text-slate-900 text-base">
+                  {showMediaLogoPickerModal === 'logo'
+                    ? 'Chọn Ảnh Làm Logo Website (Header & Footer)'
+                    : 'Chọn Icon Làm Favicon Trình Duyệt'}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowMediaLogoPickerModal(null)}
+                className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-5 overflow-y-auto flex-1 space-y-4">
+              <p className="text-xs text-slate-500">
+                Nhấp vào bất kỳ hình ảnh nào bên dưới để đặt làm{' '}
+                <strong>{showMediaLogoPickerModal === 'logo' ? 'Logo Website' : 'Favicon'}</strong>.
+              </p>
+
+              {mediaFiles.filter(m => m.type === 'image' || !m.type).length === 0 ? (
+                <div className="text-center py-12 text-slate-400 text-xs">
+                  Chưa có hình ảnh nào trong thư viện tệp. Bạn hãy tải ảnh lên ở tab Quản Lý Tệp trước.
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                  {mediaFiles
+                    .filter((m) => m.type === 'image' || !m.type)
+                    .map((m) => {
+                      const imagePath = m.path || m.url;
+                      return (
+                        <button
+                          key={m.id}
+                          type="button"
+                          onClick={async () => {
+                            if (showMediaLogoPickerModal === 'logo') {
+                              setSiteLogo(imagePath);
+                              await updateJekyllConfig({ logo: imagePath });
+                              alert(`Đã đặt "${m.name}" làm Logo Website thành công! Header & Footer website sẽ sử dụng logo này.`);
+                            } else {
+                              setSiteFavicon(imagePath);
+                              await updateJekyllConfig({ favicon: imagePath });
+                              alert(`Đã đặt "${m.name}" làm Favicon thành công!`);
+                            }
+                            setShowMediaLogoPickerModal(null);
+                          }}
+                          className="group text-left border border-slate-200 hover:border-amber-500 rounded-2xl p-2 bg-slate-50/50 hover:bg-amber-50/30 transition flex flex-col justify-between cursor-pointer space-y-2"
+                        >
+                          <div className="h-28 rounded-xl bg-slate-100 overflow-hidden flex items-center justify-center border border-slate-200">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={m.url || m.path}
+                              alt={m.name}
+                              className="w-full h-full object-contain group-hover:scale-105 transition"
+                            />
+                          </div>
+                          <div>
+                            <div className="font-bold text-xs text-slate-800 truncate" title={m.name}>
+                              {m.name}
+                            </div>
+                            <div className="text-[10px] text-amber-700 font-mono truncate">
+                              {imagePath}
+                            </div>
+                          </div>
+                          <div className="w-full text-center py-1 text-[11px] font-bold text-amber-800 bg-amber-100 group-hover:bg-amber-500 group-hover:text-slate-950 rounded-lg transition">
+                            ✓ Chọn tệp này
+                          </div>
+                        </button>
+                      );
+                    })}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

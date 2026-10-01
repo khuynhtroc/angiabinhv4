@@ -25,6 +25,7 @@ export default function AdminTrashSection({
   const [typeFilter, setTypeFilter] = useState<'all' | 'post' | 'project' | 'page' | 'media' | 'category'>('all');
   const [isProcessing, setIsProcessing] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [currentTime] = useState(() => Date.now());
 
   const showToast = (msg: string) => {
     setSuccessMessage(msg);
@@ -57,11 +58,11 @@ export default function AdminTrashSection({
   }, [trash]);
 
   // Helper to calculate days remaining
-  const getDaysRemaining = (item: TrashItem): { days: number; text: string; isExpiringSoon: boolean } => {
+  const getDaysRemaining = (item: TrashItem, now = currentTime): { days: number; text: string; isExpiringSoon: boolean } => {
     const expTime = item.expiresAt
       ? new Date(item.expiresAt).getTime()
       : new Date(item.deletedAt).getTime() + 30 * 24 * 60 * 60 * 1000;
-    const diffMs = expTime - Date.now();
+    const diffMs = expTime - now;
     const days = Math.max(0, Math.ceil(diffMs / (1000 * 60 * 60 * 24)));
 
     if (days <= 0) {
@@ -338,6 +339,7 @@ export default function AdminTrashSection({
                   {/* Media Thumbnail Preview if available */}
                   {mediaUrl && (
                     <div className="w-14 h-14 rounded-xl border border-slate-200 overflow-hidden bg-slate-100 shrink-0">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={mediaUrl}
                         alt={item.title}

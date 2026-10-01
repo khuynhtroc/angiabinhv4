@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Phone, MessageCircle, Bot, Calculator } from 'lucide-react';
+import { useAppStore } from '@/lib/store';
 
 interface MobileQuickBarProps {
   onOpenChat: () => void;
@@ -9,6 +10,11 @@ interface MobileQuickBarProps {
 }
 
 export default function MobileQuickBar({ onOpenChat, onOpenCalculator }: MobileQuickBarProps) {
+  const { jekyllConfig } = useAppStore();
+  const phoneDisplay = jekyllConfig?.phone || '0988 2662 93';
+  const phoneCall = phoneDisplay.replace(/\s+/g, '');
+  const facebookUrl = jekyllConfig?.facebook_page || 'https://www.facebook.com/betongangiabinh/';
+
   const handleCalculator = () => {
     if (onOpenCalculator) {
       onOpenCalculator();
@@ -26,10 +32,10 @@ export default function MobileQuickBar({ onOpenChat, onOpenCalculator }: MobileQ
       <div className="max-w-md mx-auto grid grid-cols-4 gap-2 text-center">
         {/* Call Hotline */}
         <a
-          href="tel:0988266293"
+          href={`tel:${phoneCall}`}
           className="flex flex-col items-center justify-center min-h-[48px] py-1.5 px-1 rounded-xl bg-amber-500 text-slate-950 font-bold active:scale-95 transition shadow-xs"
           id="mobile-quick-call"
-          aria-label="Gọi điện trực tiếp tới hotline 0988 2662 93"
+          aria-label={`Gọi điện trực tiếp tới hotline ${phoneDisplay}`}
         >
           <Phone className="w-4 h-4 mb-0.5 animate-bounce" />
           <span className="text-[11px] leading-tight font-bold">Gọi Điện</span>
@@ -37,7 +43,7 @@ export default function MobileQuickBar({ onOpenChat, onOpenCalculator }: MobileQ
 
         {/* Fanpage / Zalo */}
         <a
-          href="https://www.facebook.com/betongangiabinh/"
+          href={facebookUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-col items-center justify-center min-h-[48px] py-1.5 px-1 rounded-xl bg-blue-600 text-white font-semibold active:scale-95 transition"

@@ -1,0 +1,75 @@
+[
+  {
+    "id": "media-blog-1",
+    "name": "be-tong-thuong-pham-an-gia-binh.jpg",
+    "url": "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1200&auto=format&fit=crop&q=80",
+    "path": "/images/blog/be-tong-thuong-pham-an-gia-binh.jpg",
+    "folder": "/images/blog",
+    "type": "image",
+    "size": "1.4 MB",
+    "uploadedAt": "09/09/2026",
+    "dimensions": "1920x1080"
+  },
+  {
+    "id": "media-1",
+    "name": "tram-tron-be-tong-tuoi-an-gia-binh-khanh-phu.jpg",
+    "url": "https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1200&auto=format&fit=crop&q=80",
+    "path": "/images/tram-tron/tram-tron-be-tong-tuoi-an-gia-binh-khanh-phu.jpg",
+    "folder": "/images/tram-tron",
+    "type": "image",
+    "size": "1.4 MB",
+    "uploadedAt": "08/09/2026",
+    "dimensions": "1920x1080"
+  },
+  {
+    "id": "media-2",
+    "name": "thi-cong-do-be-tong-san-nha-xuong-kcn-tam-diep.jpg",
+    "url": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&auto=format&fit=crop&q=80",
+    "path": "/images/du-an/thi-cong-do-be-tong-san-nha-xuong-kcn-tam-diep.jpg",
+    "folder": "/images/du-an",
+    "type": "image",
+    "size": "2.1 MB",
+    "uploadedAt": "07/09/2026",
+    "dimensions": "2048x1365"
+  },
+  {
+    "id": "media-3",
+    "name": "xe-bom-be-tong-can-52m-an-gia-binh.jpg",
+    "url": "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=1200&auto=format&fit=crop&q=80",
+    "path": "/images/xe-may/xe-bom-be-tong-can-52m-an-gia-binh.jpg",
+    "folder": "/images/xe-may",
+    "type": "image",
+    "size": "1.8 MB",
+    "uploadedAt": "05/09/2026",
+    "dimensions": "1920x1280"
+  },
+  {
+    "id": "media-4",
+    "name": "quy-trinh-thi-nghiem-duc-mau-be-tong-las-xd.jpg",
+    "url": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1200&auto=format&fit=crop&q=80",
+    "path": "/images/ky-thuat/quy-trinh-thi-nghiem-duc-mau-be-tong-las-xd.jpg",
+    "folder": "/images/ky-thuat",
+    "type": "image",
+    "size": "1.2 MB",
+    "uploadedAt": "03/09/2026",
+    "dimensions": "1600x1067"
+  },
+  {
+    "id": "media-5",
+    "name": "video-hoat-dong-tram-tron-va-doan-xe-bon.mp4",
+    "url": "https://assets.mixkit.co/videos/preview/mixkit-heavy-machinery-operating-on-a-construction-site-41584-large.mp4",
+    "type": "video",
+    "size": "8.6 MB",
+    "uploadedAt": "01/09/2026",
+    "dimensions": "1080p HD"
+  },
+  {
+    "id": "media-6",
+    "name": "ho-so-nang-luc-va-chung-chi-iso-an-gia-binh.pdf",
+    "url": "/assets/profile-an-gia-binh-2025.pdf",
+    "type": "document",
+    "size": "4.5 MB",
+    "uploadedAt": "28/08/2026",
+    "dimensions": "28 trang A4"
+  }
+]

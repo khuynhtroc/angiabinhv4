@@ -6,8 +6,11 @@ import { Newspaper, Calendar, ArrowRight, ExternalLink, Sparkles, Building2, Che
 import { IndustryNews } from '@/lib/types';
 
 export default function HomeConstructionNews() {
-  const { industryNews } = useAppStore();
+  const { industryNews, jekyllConfig } = useAppStore();
   const [selectedNews, setSelectedNews] = useState<IndustryNews | null>(null);
+
+  const phoneDisplay = jekyllConfig?.phone || '0988 2662 93';
+  const phoneCall = phoneDisplay.replace(/\s+/g, '');
 
   // Take the 5 latest news items
   const displayNews = (industryNews && industryNews.length > 0)
@@ -38,11 +41,11 @@ export default function HomeConstructionNews() {
 
           <div className="shrink-0">
             <a
-              href="tel:0988266293"
+              href={`tel:${phoneCall}`}
               className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-xl transition shadow-lg text-sm"
             >
               <PhoneCall className="w-4 h-4" />
-              <span>Tư Vấn Kỹ Thuật: 0988 2662 93</span>
+              <span>Tư Vấn Kỹ Thuật: {phoneDisplay}</span>
             </a>
           </div>
         </div>
@@ -212,11 +215,11 @@ export default function HomeConstructionNews() {
               </a>
 
               <a
-                href="tel:0988266293"
+                href={`tel:${phoneCall}`}
                 className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-sm transition"
               >
                 <PhoneCall className="w-4 h-4" />
-                <span>Liên Hệ Trạm Trộn: 0988 2662 93</span>
+                <span>Liên Hệ Trạm Trộn: {phoneDisplay}</span>
               </a>
             </div>
           </div>

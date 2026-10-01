@@ -4,8 +4,12 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ShieldCheck, Factory, Truck, CheckCircle2, Award, FileCheck2, ArrowRight } from 'lucide-react';
+import { useAppStore } from '@/lib/store';
 
 export default function AboutCompany() {
+  const { jekyllConfig } = useAppStore();
+  const phoneDisplay = jekyllConfig?.phone || '0988 2662 93';
+  const phoneCall = phoneDisplay.replace(/\s+/g, '');
   return (
     <section className="py-16 sm:py-24 bg-white" id="about-company-section">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -116,10 +120,10 @@ export default function AboutCompany() {
                 <ArrowRight className="w-4 h-4 text-amber-400" />
               </Link>
               <a
-                href="tel:0988266293"
+                href={`tel:${phoneCall}`}
                 className="inline-flex items-center gap-2 text-xs font-bold text-amber-700 hover:underline"
               >
-                <span>Tư vấn kỹ thuật: 0988 2662 93</span>
+                <span>Tư vấn kỹ thuật: {phoneDisplay}</span>
               </a>
             </div>
           </div>
