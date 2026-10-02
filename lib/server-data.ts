@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { execSync } from 'node:child_process';
 import {
   BlogPost,
   Project,
@@ -229,11 +230,336 @@ function writeDataFile(filePath: string, content: string): boolean {
 }
 
 /**
+ * Synchronize data directly into lib/initial-data.ts TypeScript code
+ * so all admin modifications become permanent source code changes tracked by Git.
+ */
+export function syncDataToInitialCode(
+  section: 'config' | 'posts' | 'projects' | 'pages' | 'categories' | 'media' | 'all' = 'all'
+): boolean {
+  try {
+    const initialDataPath = path.join(process.cwd(), 'lib', 'initial-data.ts');
+    if (!fs.existsSync(initialDataPath)) return false;
+
+    let code = fs.readFileSync(initialDataPath, 'utf-8');
+
+    // 1. Sync Config
+    if (section === 'config' || section === 'all') {
+      const config = getConfigServer();
+      const configJson = JSON.stringify(config, null, 2);
+      const replacement = `export const initialJekyllConfig: JekyllConfig = ${configJson};`;
+      if (/export const initialJekyllConfig: JekyllConfig = [\s\S]*?;\r?\n\r?\nexport const initialBlogPosts/.test(code)) {
+        code = code.replace(
+          /export const initialJekyllConfig: JekyllConfig = [\s\S]*?;\r?\n\r?\nexport const initialBlogPosts/,
+          `${replacement}\n\nexport const initialBlogPosts`
+        );
+      }
+    }
+
+    // 2. Sync Posts (Keep initial-data.ts lightweight with latest 20 posts while posts.json keeps all posts)
+    if (section === 'posts' || section === 'all') {
+      const posts = getAllPostsServer();
+      const postsForCode = (posts.length > 25 ? posts.slice(0, 20) : posts).map((p) => ({
+        ...p,
+        excerpt: p.excerpt || p.title || '',
+        author: p.author || 'Ban Kỹ Thuật An Gia Bình',
+        date: p.date || new Date().toISOString().split('T')[0],
+        category: p.category || 'Tin Tức',
+        tags: Array.isArray(p.tags) && p.tags.length > 0 ? p.tags : ['bê tông', 'ninh bình'],
+        focusKeywords: Array.isArray(p.focusKeywords) && p.focusKeywords.length > 0 ? p.focusKeywords : (Array.isArray(p.tags) && p.tags.length > 0 ? p.tags : ['bê tông ninh bình']),
+        views: typeof p.views === 'number' ? p.views : 100,
+        readTime: p.readTime || '3 phút',
+        coverImage: p.coverImage || '/logo.png',
+        content: p.content || '',
+      }));
+      const postsJson = JSON.stringify(postsForCode, null, 2);
+      const replacement = `export const initialBlogPosts: BlogPost[] = ${postsJson};`;
+      if (/export const initialBlogPosts: BlogPost\[\] = [\s\S]*?;\r?\n\r?\nexport const initialProjects/.test(code)) {
+        code = code.replace(
+          /export const initialBlogPosts: BlogPost\[\] = [\s\S]*?;\r?\n\r?\nexport const initialProjects/,
+          `${replacement}\n\nexport const initialProjects`
+        );
+      }
+    }
+
+    // 3. Sync Projects
+    if (section === 'projects' || section === 'all') {
+      const projects = getAllProjectsServer();
+      const projectsJson = JSON.stringify(projects, null, 2);
+      const replacement = `export const initialProjects: Project[] = ${projectsJson};`;
+      if (/export const initialProjects: Project\[\] = [\s\S]*?;\r?\n\r?\nexport const initialLeads/.test(code)) {
+        code = code.replace(
+          /export const initialProjects: Project\[\] = [\s\S]*?;\r?\n\r?\nexport const initialLeads/,
+          `${replacement}\n\nexport const initialLeads`
+        );
+      }
+    }
+
+    // 4. Sync Categories
+    if (section === 'categories' || section === 'all') {
+      const categories = getAllCategoriesServer();
+      const catJson = JSON.stringify(categories, null, 2);
+      const replacement = `export const initialCategories: CategoryItem[] = ${catJson};`;
+      if (/export const initialCategories: CategoryItem\[\] = [\s\S]*?;\r?\n\r?\nexport const initialPages/.test(code)) {
+        code = code.replace(
+          /export const initialCategories: CategoryItem\[\] = [\s\S]*?;\r?\n\r?\nexport const initialPages/,
+          `${replacement}\n\nexport const initialPages`
+        );
+      }
+    }
+
+    // 5. Sync Pages
+    if (section === 'pages' || section === 'all') {
+      const pages = getAllPagesServer();
+      const pagesJson = JSON.stringify(pages, null, 2);
+      const replacement = `export const initialPages: SitePage[] = ${pagesJson};`;
+      if (/export const initialPages: SitePage\[\] = [\s\S]*?;\r?\n\r?\nexport const initialAiSettings/.test(code)) {
+        code = code.replace(
+          /export const initialPages: SitePage\[\] = [\s\S]*?;\r?\n\r?\nexport const initialAiSettings/,
+          `${replacement}\n\nexport const initialAiSettings`
+        );
+      }
+    }
+
+    // 6. Sync Media
+    if (section === 'media' || section === 'all') {
+      const media = getAllMediaServer();
+      const mediaJson = JSON.stringify(media, null, 2);
+      const replacement = `export const initialMediaFiles = ${mediaJson};`;
+      if (/export const initialMediaFiles = [\s\S]*?;\r?\n\r?\nexport const initialCategories/.test(code)) {
+        code = code.replace(
+          /export const initialMediaFiles = [\s\S]*?;\r?\n\r?\nexport const initialCategories/,
+          `${replacement}\n\nexport const initialCategories`
+        );
+      }
+    }
+
+    fs.writeFileSync(initialDataPath, code, 'utf-8');
+    return true;
+  } catch (err) {
+    console.error('[server-data] Failed to sync data into lib/initial-data.ts:', err);
+    return false;
+  }
+}
+
+/**
+ * Automatically create a Git commit so all changes from the admin panel
+ * produce new git commits ready to push to GitHub.
+ */
+export function commitChangesToGit(commitMessage = 'chore(admin): synchronize changes from admin panel'): {
+  success: boolean;
+  committed: boolean;
+  commitHash?: string;
+  message: string;
+  changedFiles?: string[];
+  remotePushed?: boolean;
+} {
+  try {
+    try {
+      execSync('git config user.name "An Gia Binh Admin"', { stdio: 'pipe' });
+      execSync('git config user.email "admin@betongangiabinh.vn"', { stdio: 'pipe' });
+    } catch {}
+
+    // Stage all modifications across data directory, TypeScript source code, and static assets
+    execSync('git add -A', { stdio: 'pipe' });
+
+    // Check if there are staged changes ready for commit
+    const stagedOutput = execSync('git diff --cached --name-only', { encoding: 'utf-8' }).trim();
+    if (!stagedOutput) {
+      let lastCommit = '';
+      try {
+        lastCommit = execSync('git log -1 --format="%h - %s (%cd)" --date=relative', { encoding: 'utf-8' }).trim();
+      } catch {
+        lastCommit = 'Initial commit';
+      }
+      return {
+        success: true,
+        committed: false,
+        commitHash: lastCommit,
+        message: 'Mã nguồn và tệp dữ liệu đã đồng bộ hoàn toàn với Git, không có thay đổi mới chưa commit.',
+        changedFiles: [],
+      };
+    }
+
+    const changedFiles = stagedOutput.split('\n').map((l) => l.trim()).filter(Boolean);
+    const safeMsg = commitMessage.replace(/"/g, '\\"');
+    execSync(`git commit -m "${safeMsg}"`, { stdio: 'pipe' });
+
+    let newCommit = '';
+    try {
+      newCommit = execSync('git log -1 --format="%h - %s (%cd)" --date=relative', { encoding: 'utf-8' }).trim();
+    } catch {
+      newCommit = 'Commit vừa tạo';
+    }
+
+    // Try auto-pushing to remote origin if configured
+    let remotePushed = false;
+    let pushNotice = '';
+    try {
+      const remotes = execSync('git remote', { encoding: 'utf-8' }).trim();
+      if (remotes.includes('origin')) {
+        execSync('git push origin HEAD', { stdio: 'pipe', timeout: 15000 });
+        remotePushed = true;
+        pushNotice = ' & Đã tự động đẩy (push) thành công lên GitHub!';
+      }
+    } catch (pushErr: any) {
+      console.warn('[server-data] Auto git push notice:', pushErr?.message);
+    }
+
+    return {
+      success: true,
+      committed: true,
+      commitHash: newCommit,
+      remotePushed,
+      message: `Đã tự động tạo commit mới [${newCommit}] trong mã nguồn${pushNotice}`,
+      changedFiles,
+    };
+  } catch (err: any) {
+    console.warn('[server-data] Git commit info:', err?.message);
+    return {
+      success: false,
+      committed: false,
+      message: err?.message || 'Lỗi khi thực hiện git commit',
+    };
+  }
+}
+
+/**
+ * Push all commits to GitHub repository.
+ */
+export function pushToGitHubServer(remoteUrl?: string): {
+  success: boolean;
+  message: string;
+  commitHash?: string;
+  remoteUrl?: string;
+} {
+  try {
+    if (remoteUrl && typeof remoteUrl === 'string' && remoteUrl.trim()) {
+      const trimmedUrl = remoteUrl.trim();
+      try {
+        const remotes = execSync('git remote', { encoding: 'utf-8' }).trim();
+        if (remotes.includes('origin')) {
+          execSync(`git remote set-url origin "${trimmedUrl}"`, { stdio: 'pipe' });
+        } else {
+          execSync(`git remote add origin "${trimmedUrl}"`, { stdio: 'pipe' });
+        }
+      } catch (remErr: any) {
+        return {
+          success: false,
+          message: `Không thể cấu hình Git remote: ${remErr?.message}`,
+        };
+      }
+    }
+
+    // Check if remote origin exists
+    let activeRemote = '';
+    try {
+      activeRemote = execSync('git remote get-url origin', { encoding: 'utf-8' }).trim();
+    } catch {
+      return {
+        success: false,
+        message: 'Chưa có cấu hình Git remote "origin". Vui lòng nhập URL kho GitHub (kèm Personal Access Token nếu là repo riêng tư) hoặc sử dụng tính năng Export to GitHub trên thanh menu của AI Studio.',
+      };
+    }
+
+    // First ensure all pending changes are committed
+    commitChangesToGit('chore(sync): synchronize all website content & settings before GitHub push');
+
+    // Get current branch
+    let branch = 'main';
+    try {
+      branch = execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf-8' }).trim();
+    } catch {}
+
+    // Push to remote
+    execSync(`git push -u origin ${branch}`, { stdio: 'pipe', timeout: 30000 });
+    const lastCommit = execSync('git log -1 --format="%h - %s (%cd)" --date=relative', { encoding: 'utf-8' }).trim();
+
+    return {
+      success: true,
+      message: `Đã đẩy toàn bộ commit mới lên GitHub thành công (nhánh ${branch})! Mã commit: ${lastCommit}`,
+      commitHash: lastCommit,
+      remoteUrl: activeRemote,
+    };
+  } catch (err: any) {
+    const errorDetails = err?.stderr?.toString() || err?.message || 'Lỗi không xác định khi git push';
+    console.error('[server-data] Git push error:', errorDetails);
+    return {
+      success: false,
+      message: `Lỗi khi đẩy lên GitHub: ${errorDetails}. Gợi ý: Hãy kiểm tra URL/Token GitHub hoặc sử dụng menu "Export to GitHub" của AI Studio.`,
+    };
+  }
+}
+
+/**
+ * Retrieve current Git repository branch and latest commit info for display in /admin.
+ */
+export function getGitStatusServer(): {
+  branch: string;
+  lastCommit: string;
+  clean: boolean;
+  uncommittedFiles: string[];
+  totalCommits: number;
+  remoteUrl: string | null;
+  recentCommits: Array<{ hash: string; date: string; message: string }>;
+} {
+  try {
+    const branch = execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf-8' }).trim();
+    const lastCommit = execSync('git log -1 --format="%h - %s (%cd)" --date=relative', { encoding: 'utf-8' }).trim();
+    const statusOutput = execSync('git status --porcelain', { encoding: 'utf-8' }).trim();
+    const uncommittedFiles = statusOutput ? statusOutput.split('\n').map((l) => l.trim()).filter(Boolean) : [];
+
+    let totalCommits = 0;
+    try {
+      totalCommits = parseInt(execSync('git rev-list --count HEAD', { encoding: 'utf-8' }).trim(), 10) || 1;
+    } catch {}
+
+    let remoteUrl: string | null = null;
+    try {
+      remoteUrl = execSync('git remote get-url origin', { encoding: 'utf-8' }).trim();
+    } catch {}
+
+    let recentCommits: Array<{ hash: string; date: string; message: string }> = [];
+    try {
+      const logLines = execSync('git log -5 --format="%h||%cd||%s" --date=short', { encoding: 'utf-8' }).trim().split('\n');
+      recentCommits = logLines.filter(Boolean).map(line => {
+        const [hash, date, ...rest] = line.split('||');
+        return { hash: hash || '', date: date || '', message: rest.join('||') || '' };
+      });
+    } catch {}
+
+    return {
+      branch,
+      lastCommit,
+      clean: uncommittedFiles.length === 0,
+      uncommittedFiles,
+      totalCommits,
+      remoteUrl,
+      recentCommits,
+    };
+  } catch {
+    return {
+      branch: 'main',
+      lastCommit: 'Chưa có thông tin commit',
+      clean: true,
+      uncommittedFiles: [],
+      totalCommits: 1,
+      remoteUrl: null,
+      recentCommits: [],
+    };
+  }
+}
+
+/**
  * Save posts to server file.
  */
 export function savePostsServer(posts: BlogPost[]): boolean {
   ensureDataDir();
-  return writeDataFile(POSTS_FILE, JSON.stringify(posts, null, 2));
+  const ok = writeDataFile(POSTS_FILE, JSON.stringify(posts, null, 2));
+  if (ok) {
+    syncDataToInitialCode('posts');
+    commitChangesToGit(`chore(posts): update ${posts.length} blog posts from admin`);
+  }
+  return ok;
 }
 
 /**
@@ -264,7 +590,11 @@ export function saveSinglePostServer(targetPost: BlogPost): { success: boolean; 
     updatedPosts = [newPostWithDate, ...currentPosts];
   }
 
-  const ok = savePostsServer(updatedPosts);
+  const ok = writeDataFile(POSTS_FILE, JSON.stringify(updatedPosts, null, 2));
+  if (ok) {
+    syncDataToInitialCode('posts');
+    commitChangesToGit(`chore(posts): save article "${targetPost.title.substring(0, 50)}"`);
+  }
   return { success: ok, posts: updatedPosts };
 }
 
@@ -276,7 +606,7 @@ export function deleteSinglePostServer(idOrSlug: string): { success: boolean; po
   const currentPosts = getAllPostsServer();
   const deletedPost = currentPosts.find((p) => p.id === idOrSlug || p.slug === idOrSlug);
   const filtered = currentPosts.filter((p) => p.id !== idOrSlug && p.slug !== idOrSlug);
-  const ok = savePostsServer(filtered);
+  const ok = writeDataFile(POSTS_FILE, JSON.stringify(filtered, null, 2));
 
   if (deletedPost) {
     addToTrashServer({
@@ -291,6 +621,11 @@ export function deleteSinglePostServer(idOrSlug: string): { success: boolean; po
     });
   }
 
+  if (ok) {
+    syncDataToInitialCode('posts');
+    commitChangesToGit(`chore(posts): delete post ${idOrSlug}`);
+  }
+
   return { success: ok, posts: filtered };
 }
 
@@ -299,7 +634,12 @@ export function deleteSinglePostServer(idOrSlug: string): { success: boolean; po
  */
 export function saveProjectsServer(projects: Project[]): boolean {
   ensureDataDir();
-  return writeDataFile(PROJECTS_FILE, JSON.stringify(projects, null, 2));
+  const ok = writeDataFile(PROJECTS_FILE, JSON.stringify(projects, null, 2));
+  if (ok) {
+    syncDataToInitialCode('projects');
+    commitChangesToGit(`chore(projects): update ${projects.length} concrete projects`);
+  }
+  return ok;
 }
 
 /**
@@ -307,7 +647,12 @@ export function saveProjectsServer(projects: Project[]): boolean {
  */
 export function savePagesServer(pages: SitePage[]): boolean {
   ensureDataDir();
-  return writeDataFile(PAGES_FILE, JSON.stringify(pages, null, 2));
+  const ok = writeDataFile(PAGES_FILE, JSON.stringify(pages, null, 2));
+  if (ok) {
+    syncDataToInitialCode('pages');
+    commitChangesToGit(`chore(pages): update ${pages.length} site pages`);
+  }
+  return ok;
 }
 
 /**
@@ -315,7 +660,12 @@ export function savePagesServer(pages: SitePage[]): boolean {
  */
 export function saveCategoriesServer(categories: CategoryItem[]): boolean {
   ensureDataDir();
-  return writeDataFile(CATEGORIES_FILE, JSON.stringify(categories, null, 2));
+  const ok = writeDataFile(CATEGORIES_FILE, JSON.stringify(categories, null, 2));
+  if (ok) {
+    syncDataToInitialCode('categories');
+    commitChangesToGit(`chore(categories): update ${categories.length} blog categories`);
+  }
+  return ok;
 }
 
 /**
@@ -399,37 +749,11 @@ export function saveConfigServer(config: Partial<JekyllConfig>): boolean {
 
     const ok = writeDataFile(CONFIG_FILE, JSON.stringify(updated, null, 2));
 
-    // Also sync values into lib/initial-data.ts so Git diff is visible and SSR reflects changes
-    try {
-      const initialDataPath = path.join(process.cwd(), 'lib', 'initial-data.ts');
-      if (fs.existsSync(initialDataPath)) {
-        let code = fs.readFileSync(initialDataPath, 'utf-8');
-        if (updated.logo) {
-          code = code.replace(/logo:\s*"[^"]*"/, `logo: "${updated.logo.replace(/"/g, '\\"')}"`);
-        }
-        if (updated.favicon) {
-          code = code.replace(/favicon:\s*"[^"]*"/, `favicon: "${updated.favicon.replace(/"/g, '\\"')}"`);
-        }
-        if (updated.phone) {
-          code = code.replace(/phone:\s*"[^"]*"/, `phone: "${updated.phone.replace(/"/g, '\\"')}"`);
-        }
-        if (updated.email) {
-          code = code.replace(/email:\s*"[^"]*"/, `email: "${updated.email.replace(/"/g, '\\"')}"`);
-        }
-        if (updated.title) {
-          code = code.replace(/title:\s*"[^"]*"/, `title: "${updated.title.replace(/"/g, '\\"')}"`);
-        }
-        if (updated.slogan) {
-          code = code.replace(/slogan:\s*"[^"]*"/, `slogan: "${updated.slogan.replace(/"/g, '\\"')}"`);
-        }
-        if (updated.address) {
-          code = code.replace(/address:\s*"[^"]*"/, `address: "${updated.address.replace(/"/g, '\\"')}"`);
-        }
-        fs.writeFileSync(initialDataPath, code, 'utf-8');
-      }
-    } catch (err) {
-      console.warn('[server-data] Note on syncing initial-data.ts:', err);
-    }
+    // Synchronize full config into lib/initial-data.ts TypeScript code
+    syncDataToInitialCode('config');
+
+    // Automatically create a Git commit for settings changes
+    commitChangesToGit(`chore(settings): update website settings, SEO and custom code`);
 
     return ok;
   } catch (err) {
@@ -494,7 +818,12 @@ export function getAllMediaServer(): MediaFile[] {
 
 export function saveMediaServer(media: MediaFile[]): boolean {
   ensureDataDir();
-  return writeDataFile(MEDIA_FILE, JSON.stringify(media, null, 2));
+  const ok = writeDataFile(MEDIA_FILE, JSON.stringify(media, null, 2));
+  if (ok) {
+    syncDataToInitialCode('media');
+    commitChangesToGit(`chore(media): update ${media.length} media assets`);
+  }
+  return ok;
 }
 
 export function deleteMediaServer(

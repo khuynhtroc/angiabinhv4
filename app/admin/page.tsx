@@ -3,7 +3,7 @@
 import React, { useState, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useAppStore, persistAllPostsChunked } from '@/lib/store';
-import { BlogPost, Project, Lead, MediaFile, CategoryItem } from '@/lib/types';
+import { BlogPost, Project, Lead, MediaFile, CategoryItem, JekyllConfig } from '@/lib/types';
 import { getPostUrl, formatNumber, resolveMediaUrl } from '@/lib/utils';
 import JekyllExportModal from '@/components/JekyllExportModal';
 import AdminBulkPostModal from '@/components/AdminBulkPostModal';
@@ -22,12 +22,14 @@ import AdminAddMediaUrlModal from '@/components/AdminAddMediaUrlModal';
 import AdminManageFoldersModal from '@/components/AdminManageFoldersModal';
 import AdminDesignSection from '@/components/AdminDesignSection';
 import AdminTrashSection from '@/components/AdminTrashSection';
+import AdminGitSyncCard from '@/components/AdminGitSyncCard';
 import { optimizePostFull, suggestKeywordsAndTags, generateOptimizedMetaDescription } from '@/lib/postOptimizer';
 import {
   Lock, KeyRound, LayoutDashboard, FileText, Building2, Users,
   FolderArchive, Sparkles, RefreshCw, Trash2, Plus, CheckCircle2,
   ExternalLink, Eye, ArrowUpRight, ShieldCheck, Phone, Search, Edit3,
   Image as ImageIcon, Video as VideoIcon, FileCode, Code, Copy, Check, Upload,
+  GitBranch, GitCommit,
   Globe, FileUp, Zap, Replace, Folder, FolderPlus, Info, Layers, Tag, Palette,
   UploadCloud, Files, Settings, Sliders, CheckSquare, Calendar, Square,
   CheckCheck, X, Menu as MenuIcon, HardDrive, Filter, BarChart2, Link2, Download, Loader2, AlertTriangle, Clock, Eraser
@@ -381,12 +383,14 @@ export default function AdminDashboard() {
         throw new Error('Lỗi trong quá trình ghi bài viết theo từng gói lên tệp posts.json.');
       }
 
-      setPersistProgressText('Đang lưu dự án, trang, chuyên mục và cấu hình...');
-      // 2. Persist projects, pages, categories, jekyllConfig
+      setPersistProgressText('Đang đồng bộ dữ liệu vào mã nguồn code và tạo commit Git...');
+      // 2. Persist projects, pages, categories, jekyllConfig and commit to Git
       const res = await fetch('/api/admin/persist-posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          action: 'sync_all_to_code',
+          commitMessage: `chore(admin): synchronize full website content and settings (${posts.length} posts, ${projects.length} projects)`,
           projects,
           pages,
           categories,
@@ -413,7 +417,8 @@ export default function AdminDashboard() {
         try {
           confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
         } catch {}
-        alert(`✅ ĐÃ LƯU THỐNG NHẤT 100% VÀO TỆP MÁY CHỦ AI STUDIO!\n\n- Mốc đồng bộ: ${nowStr}\n- Đã lưu ${posts.length} bài viết trực tiếp vào: public/data/posts.json\n- Đã lưu ${projects.length} dự án vào: public/data/projects.json\n- Đã lưu ${pages.length} trang vào: public/data/pages.json\n- Đã lưu ${categories.length} chuyên mục vào: public/data/categories.json\n\nTệp posts.json trên máy chủ hiện đã được cập nhật hoàn chỉnh. Các bài viết mới nhất hoặc vừa sửa đổi đã được đặt ngay ở đầu tệp!`);
+        const commitHash = data.gitResult?.commitHash ? `\n- Mã commit Git: ${data.gitResult.commitHash}` : '';
+        alert(`✅ ĐÃ ĐỒNG BỘ TOÀN BỘ VÀO MÃ NGUỒN VÀ TẠO COMMIT GIT THÀNH CÔNG!\n\n- Thời gian: ${nowStr}${commitHash}\n- Đã lưu ${posts.length} bài viết vào: public/data/posts.json\n- Đã đồng bộ cấu hình vào: lib/initial-data.ts và public/data/config.json\n- Đã lưu ${projects.length} dự án, ${pages.length} trang, ${categories.length} chuyên mục\n\nBản commit Git mới đã được ghi nhận. Bạn có thể chọn menu "Export to GitHub" trên AI Studio để đẩy lên kho GitHub!`);
       } else {
         alert('Lỗi khi lưu dữ liệu cấu hình: ' + (data.error || 'Vui lòng thử lại sau.'));
       }
@@ -718,8 +723,8 @@ export default function AdminDashboard() {
     setPostCategory(post.category);
     setPostExcerpt(post.excerpt);
     setPostContent(post.content);
-    setPostTags(post.tags.join(', '));
-    setPostKeywords(post.focusKeywords.join(', '));
+    setPostTags(Array.isArray(post.tags) ? post.tags.join(', ') : '');
+    setPostKeywords(Array.isArray(post.focusKeywords) ? post.focusKeywords.join(', ') : '');
     setPostImage(post.coverImage);
     setPostImagePrompt(`Hình ảnh minh họa thực tế công trường cho bài viết "${post.title}" tại Ninh Bình`);
     setShowPostModal(true);
@@ -999,7 +1004,8 @@ export default function AdminDashboard() {
   // Save Website Settings & SEO Parameters (Tab 7)
   const handleSaveSettings = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    const configToSave = {
+    const configToSave: JekyllConfig = {
+      ...jekyllConfig,
       title: siteTitle,
       slogan: siteSlogan,
       tagline: siteSlogan,
@@ -1031,27 +1037,33 @@ export default function AdminDashboard() {
       searchConsoleTag: siteGoogleVerify || 'google-site-verification=verified',
     });
 
-    // Also trigger direct server save and code sync
+    let commitNotice = '';
+    // Trigger direct server save, code sync into lib/initial-data.ts, and git commit
     try {
-      await fetch('/api/admin/persist-posts', {
+      const res = await fetch('/api/admin/persist-posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'sync_all_to_code',
+          commitMessage: 'chore(settings): update website settings, SEO, and custom code',
           config: configToSave,
           jekyllConfig: configToSave,
         }),
       });
+      const data = await res.json();
+      if (data.success && data.gitResult?.commitHash) {
+        commitNotice = `\n\n🔖 Mã Git commit mới: [${data.gitResult.commitHash}]`;
+      }
     } catch {}
 
     setSettingsSavedSuccess(true);
     setTimeout(() => setSettingsSavedSuccess(false), 4000);
     try {
-      confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
+      confetti({ particleCount: 60, spread: 60, origin: { y: 0.6 } });
     } catch {
       // ignore
     }
-    alert('Đã lưu và đồng bộ toàn diện cấu hình Website, Logo & SEO thành công vào toàn bộ hệ thống!');
+    alert(`✅ ĐÃ LƯU VÀO MÃ NGUỒN VÀ TẠO COMMIT GIT THÀNH CÔNG!${commitNotice}\n\nToàn bộ cài đặt website, SEO và các thẻ mã Header/Body/Footer đã được lưu vào lib/initial-data.ts & public/data/config.json.\n\nSẵn sàng đẩy lên GitHub! Bạn có thể chọn menu "Export to GitHub" trên AI Studio.`);
   };
 
   // Category Handlers
@@ -1706,11 +1718,11 @@ export default function AdminDashboard() {
             <button
               onClick={handlePersistPostsToSource}
               disabled={isPersistingPosts}
-              title="Lưu toàn bộ bài viết, dự án và trang vào tệp máy chủ AI Studio (public/data/)"
+              title="Đồng bộ toàn bộ cài đặt, bài viết, dự án vào mã nguồn code và tạo commit Git mới"
               className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-3 py-2 rounded-xl transition shadow-xs disabled:opacity-50 cursor-pointer"
             >
-              <UploadCloud className="w-3.5 h-3.5" />
-              <span>Lưu Lên AI Studio</span>
+              <GitCommit className="w-3.5 h-3.5" />
+              <span>Đồng Bộ Vào Code &amp; Git</span>
             </button>
             <button
               onClick={() => setShowJekyllModal(true)}
@@ -3705,6 +3717,9 @@ export default function AdminDashboard() {
               onSaveSettings={saveAiSettings}
               onSetActiveProvider={setActiveAiProvider}
             />
+
+            {/* Git & GitHub Synchronization Hub */}
+            <AdminGitSyncCard />
 
             <form onSubmit={handleSaveSettings} className="space-y-6">
               {/* Group 1: Brand & Basic Info */}

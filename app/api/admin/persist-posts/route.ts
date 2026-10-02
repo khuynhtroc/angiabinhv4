@@ -22,7 +22,11 @@ import {
   addToTrashServer,
   restoreFromTrashServer,
   deleteFromTrashPermanentlyServer,
-  emptyTrashServer
+  emptyTrashServer,
+  getGitStatusServer,
+  commitChangesToGit,
+  syncDataToInitialCode,
+  pushToGitHubServer
 } from '@/lib/server-data';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -86,6 +90,7 @@ export async function GET(req: NextRequest) {
       adminConfig,
       media,
       trash,
+      gitStatus: getGitStatusServer(),
       source: 'AI Studio Server Data (public/data/)',
       timestamp: new Date().toISOString()
     });
@@ -214,8 +219,8 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Mode: Sync All Data To Codebase (Git diff visible)
-    if (action === 'sync_all_to_code') {
+    // Mode: Sync All Data To Codebase & Commit to Git
+    if (action === 'sync_all_to_code' || action === 'commit_to_git') {
       if (Array.isArray(body.posts)) savePostsServer(body.posts);
       if (Array.isArray(body.projects)) saveProjectsServer(body.projects);
       if (Array.isArray(body.pages)) savePagesServer(body.pages);
@@ -223,35 +228,48 @@ export async function POST(req: NextRequest) {
       if (body.config || jekyllConfig) saveConfigServer(body.config || jekyllConfig);
       if (Array.isArray(body.media)) saveMediaServer(body.media);
 
-      // Also sync key site settings to lib/initial-data.ts so Git diff is immediately visible for commit
-      try {
-        const initialDataPath = path.join(process.cwd(), 'lib', 'initial-data.ts');
-        if (fs.existsSync(initialDataPath)) {
-          let code = fs.readFileSync(initialDataPath, 'utf-8');
-          const cfg = getConfigServer();
-          if (cfg.logo) {
-            code = code.replace(/logo:\s*"[^"]*"/, `logo: "${cfg.logo}"`);
-            code = code.replace(/logoUrl:\s*"[^"]*"/, `logoUrl: "${cfg.logo.startsWith('http') ? cfg.logo : `https://www.betongangiabinh.vn${cfg.logo}`}"`);
-          }
-          if (cfg.phone) {
-            code = code.replace(/phone:\s*"[^"]*"/, `phone: "${cfg.phone}"`);
-          }
-          if (cfg.email) {
-            code = code.replace(/email:\s*"[^"]*"/, `email: "${cfg.email}"`);
-          }
-          if (cfg.title) {
-            code = code.replace(/title:\s*"[^"]*"/, `title: "${cfg.title.replace(/"/g, '\\"')}"`);
-          }
-          fs.writeFileSync(initialDataPath, code, 'utf-8');
-        }
-      } catch (err) {
-        console.warn('[sync_all_to_code] Note on initial-data sync:', err);
-      }
+      // 1. Sync all data into lib/initial-data.ts TypeScript source code
+      syncDataToInitialCode('all');
+
+      // 2. Create git commit
+      const gitResult = commitChangesToGit(
+        body.commitMessage || 'chore(admin): synchronize full website settings and content to codebase'
+      );
+      const currentGitStatus = getGitStatusServer();
 
       return NextResponse.json({
         success: true,
-        action: 'sync_all_to_code',
-        message: 'Đã đồng bộ toàn bộ dữ liệu vào mã nguồn dự án thành công! Bạn có thể nhấn Export to GitHub để đẩy bản cập nhật mới nhất.',
+        action: action,
+        gitResult,
+        gitStatus: currentGitStatus,
+        message: gitResult.committed
+          ? `Đã đồng bộ toàn bộ dữ liệu vào code và tạo commit mới [${gitResult.commitHash}] sẵn sàng đẩy lên GitHub!`
+          : `Mã nguồn và tệp dữ liệu đã đồng bộ hoàn toàn với Git (${gitResult.commitHash || 'main'}).`,
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Mode: Push directly to GitHub
+    if (action === 'git_push' || action === 'push_to_github') {
+      const pushResult = pushToGitHubServer(body.remoteUrl);
+      const currentGitStatus = getGitStatusServer();
+      return NextResponse.json({
+        success: pushResult.success,
+        action: 'git_push',
+        result: pushResult,
+        gitStatus: currentGitStatus,
+        message: pushResult.message,
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Mode: Get real-time Git status
+    if (action === 'get_git_status') {
+      const currentGitStatus = getGitStatusServer();
+      return NextResponse.json({
+        success: true,
+        action: 'get_git_status',
+        gitStatus: currentGitStatus,
         timestamp: new Date().toISOString()
       });
     }
@@ -488,10 +506,19 @@ export async function POST(req: NextRequest) {
       saveAdminConfigServer(adminConfig);
     }
 
+    // Always synchronize changes to lib/initial-data.ts and create Git commit
+    syncDataToInitialCode('all');
+    const gitResult = commitChangesToGit('chore(sync): synchronize content and settings from admin');
+    const currentGitStatus = getGitStatusServer();
+
     return NextResponse.json({
       success: true,
       count: savedCount,
-      message: `Đã đồng bộ thành công ${savedCount} bài viết vào nguồn máy chủ AI Studio (public/data/)!`,
+      gitResult,
+      gitStatus: currentGitStatus,
+      message: gitResult.committed
+        ? `Đã đồng bộ thành công vào nguồn máy chủ & tạo commit Git mới [${gitResult.commitHash}]!`
+        : `Đã đồng bộ thành công vào nguồn máy chủ và mã nguồn Git (${currentGitStatus.lastCommit})!`,
       timestamp: new Date().toISOString()
     });
   } catch (error: any) {

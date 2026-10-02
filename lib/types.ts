@@ -16,6 +16,7 @@ export interface BlogPost {
   focusKeywords: string[];
   keywords?: string[] | string;
   isPublished?: boolean;
+  featured?: boolean;
   jekyllMarkdown?: string;
   permalink?: string;
   updatedAt?: string;
@@ -159,7 +160,7 @@ export interface MediaFile {
   url: string;
   path?: string; // e.g. "/images/blog/be-tong-thuong-pham-an-gia-binh.jpg"
   folder?: string; // e.g. "/images/blog" or "/images/du-an"
-  type: 'image' | 'video' | 'document';
+  type: 'image' | 'video' | 'document' | string;
   size: string;
   uploadedAt: string;
   dimensions?: string;

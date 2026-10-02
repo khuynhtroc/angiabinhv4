@@ -1,13 +1,5 @@
 [
   {
-    "id": "test-post-1",
-    "title": "Test Post Title",
-    "slug": "test-post-title",
-    "content": "Test content",
-    "category": "tin-tuc",
-    "updatedAt": "2026-10-01T03:33:16.884Z"
-  },
-  {
     "id": "post-1",
     "title": "Bảng Báo Giá Bê Tông Tươi Ninh Bình Mới Nhất 2025 - 2026 | Bê Tông An Gia Bình",
     "slug": "bang-bao-gia-be-tong-tuoi-ninh-binh-moi-nhat",
@@ -22559,7 +22551,8 @@
     "coverImage": "/images/blog/be-tong-thuong-pham-an-gia-binh-1.jpg",
     "seoDescription": "Trước khi bê tông thương phẩm (hay còn gọi là bê tươi) ra đời, bê tông trộn thủ công truyề. Trạm trộn Bê Tông An Gia Bình đạt chuẩn TCVN, cung ứng 24/7 hotli...",
     "seoTitle": "So Sánh Bê Tông Thương Phẩm Và Bê Tông Trộn Thủ Công Tại Ninh Bình | Bê Tông An Gia Bình",
-    "isPublished": true
+    "isPublished": true,
+    "author": "Ban Kỹ Thuật An Gia Bình"
   },
   {
     "title": "bai-viet Tại Ninh Bình | Bê Tông An Gia Bình",

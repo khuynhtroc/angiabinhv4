@@ -152,7 +152,7 @@ function BlogListInner() {
   const filteredPosts = sortedPosts.filter(post => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          post.focusKeywords.some(k => k.toLowerCase().includes(searchTerm.toLowerCase()));
+                          (Array.isArray(post.focusKeywords) && post.focusKeywords.some(k => k.toLowerCase().includes(searchTerm.toLowerCase())));
     const matchesTag = selectedTag === 'Tất Cả' || post.tags.includes(selectedTag);
     const matchesCategory = selectedCategory === 'Tất Cả' || 
                             post.category.toLowerCase().includes(selectedCategory.toLowerCase()) ||
