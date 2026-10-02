@@ -23,7 +23,7 @@ github_username: "${config.github_username || ''}"
 facebook_page: "${config.facebook_page || ''}"
 logo: "${config.logo || '/logo.png'}"
 favicon: "${config.favicon || '/favicon.ico'}"
-
+${config.customHeadCode ? `custom_head_code: >-\n  ${config.customHeadCode.split('\n').join('\n  ')}\n` : ''}${config.customBodyOpenCode ? `custom_body_open_code: >-\n  ${config.customBodyOpenCode.split('\n').join('\n  ')}\n` : ''}${config.customFooterCode ? `custom_footer_code: >-\n  ${config.customFooterCode.split('\n').join('\n  ')}\n` : ''}${config.customCss ? `custom_css: >-\n  ${config.customCss.split('\n').join('\n  ')}\n` : ''}
 # Build settings
 markdown: ${config.markdown || 'kramdown'}
 permalink: "${config.permalink || '/:title.html'}"
@@ -134,8 +134,17 @@ end
     .prose th, .prose td { border: 1px solid #cbd5e1; padding: 0.5rem 0.75rem; }
     .prose th { background-color: #f1f5f9; }
   </style>
+  {% if site.custom_css %}
+  <style>{{ site.custom_css }}</style>
+  {% endif %}
+  {% if site.custom_head_code %}
+  {{ site.custom_head_code }}
+  {% endif %}
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+  {% if site.custom_body_open_code %}
+  {{ site.custom_body_open_code }}
+  {% endif %}
   {% include header.html %}
 
   <main class="flex-grow container mx-auto px-4 py-8 max-w-6xl">
@@ -144,6 +153,9 @@ end
 
   {% include footer.html %}
   {% include mobile-bar.html %}
+  {% if site.custom_footer_code %}
+  {{ site.custom_footer_code }}
+  {% endif %}
 </body>
 </html>`
     );

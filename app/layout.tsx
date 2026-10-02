@@ -2,6 +2,8 @@ import type {Metadata, Viewport} from 'next';
 import { Plus_Jakarta_Sans, Space_Grotesk } from 'next/font/google';
 import FetchPatch from '@/components/FetchPatch';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
+import CustomCodeInjector from '@/components/CustomCodeInjector';
+import { getConfigServer } from '@/lib/server-data';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
@@ -74,8 +76,10 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
+  const config = getConfigServer();
+
   return (
-    <html lang="vi" className={`scroll-smooth ${plusJakartaSans.variable} ${spaceGrotesk.variable}`}>
+    <html lang="vi" className={`scroll-smooth ${plusJakartaSans.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <head>
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="shortcut icon" href="/favicon.ico" />
@@ -98,13 +102,53 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             __html: `(function(){try{var f=window.fetch;var c=f?f.bind(window):null;try{Object.defineProperty(window,'fetch',{get:function(){return c;},set:function(v){c=v;},configurable:true,enumerable:true});}catch(e){try{if(window.Window&&window.Window.prototype){Object.defineProperty(window.Window.prototype,'fetch',{get:function(){return c;},set:function(v){c=v;},configurable:true,enumerable:true});}}catch(e2){}}}catch(e3){}window.addEventListener('error',function(e){if(e&&e.message&&e.message.indexOf('fetch')!==-1&&e.message.indexOf('only a getter')!==-1){e.preventDefault();if(e.stopImmediatePropagation)e.stopImmediatePropagation();return true;}},true);})();`,
           }}
         />
+        {/* Injected Custom CSS from Settings */}
+        {config?.customCss && (
+          <style
+            id="server-custom-css"
+            dangerouslySetInnerHTML={{ __html: config.customCss }}
+          />
+        )}
+        {/* Injected Custom <head> Code (GTM Head, Meta Tags, etc.) */}
+        {config?.customHeadCode && (
+          <script
+            id="server-custom-head-code"
+            dangerouslySetInnerHTML={{
+              __html: `(function(){try{var code=${JSON.stringify(config.customHeadCode)};if(code&&typeof document!=='undefined'){var r=document.createRange();r.selectNode(document.head);var f=r.createContextualFragment(code);document.head.appendChild(f);}}catch(e){console.warn('Head code injection error:',e);}})();`,
+            }}
+          />
+        )}
+        {/* Injected Custom JS */}
+        {config?.customJs && (
+          <script
+            id="server-custom-js"
+            dangerouslySetInnerHTML={{
+              __html: `(function(){try{${config.customJs}}catch(e){console.warn('Custom JS execution error:',e);}})();`,
+            }}
+          />
+        )}
       </head>
       <body className={`${plusJakartaSans.className} antialiased text-slate-900 bg-slate-50 selection:bg-amber-500 selection:text-white min-h-screen`} suppressHydrationWarning>
+        {/* Top of Body: Injected Custom Body Open Code (e.g. GTM noscript, Top announcement) */}
+        {config?.customBodyOpenCode && (
+          <div
+            id="custom-body-open-container"
+            dangerouslySetInnerHTML={{ __html: config.customBodyOpenCode }}
+          />
+        )}
+        <CustomCodeInjector />
         <FetchPatch />
         {children}
         <CookieConsentBanner />
         <Analytics />
         <SpeedInsights />
+        {/* Bottom of Body / Footer: Injected Custom Footer Code (e.g. Zalo Chat, Tawk.to, Tracking) */}
+        {config?.customFooterCode && (
+          <div
+            id="custom-body-footer-container"
+            dangerouslySetInnerHTML={{ __html: config.customFooterCode }}
+          />
+        )}
       </body>
     </html>
   );

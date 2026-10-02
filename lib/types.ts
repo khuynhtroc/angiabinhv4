@@ -145,6 +145,12 @@ export interface JekyllConfig {
   ctaButtonLink?: string;
   ctaHeading?: string;
   ctaSubheading?: string;
+  // Custom Injected Code (Header, Body Open, Body Close / Footer, Custom CSS & JS)
+  customHeadCode?: string;
+  customBodyOpenCode?: string;
+  customFooterCode?: string;
+  customCss?: string;
+  customJs?: string;
 }
 
 export interface MediaFile {

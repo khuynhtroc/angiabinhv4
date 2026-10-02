@@ -27,7 +27,7 @@ import {
   Lock, KeyRound, LayoutDashboard, FileText, Building2, Users,
   FolderArchive, Sparkles, RefreshCw, Trash2, Plus, CheckCircle2,
   ExternalLink, Eye, ArrowUpRight, ShieldCheck, Phone, Search, Edit3,
-  Image as ImageIcon, Video as VideoIcon, FileCode, Copy, Check, Upload,
+  Image as ImageIcon, Video as VideoIcon, FileCode, Code, Copy, Check, Upload,
   Globe, FileUp, Zap, Replace, Folder, FolderPlus, Info, Layers, Tag, Palette,
   UploadCloud, Files, Settings, Sliders, CheckSquare, Calendar, Square,
   CheckCheck, X, Menu as MenuIcon, HardDrive, Filter, BarChart2, Link2, Download, Loader2, AlertTriangle, Clock, Eraser
@@ -158,6 +158,12 @@ export default function AdminDashboard() {
   const [siteUrl, setSiteUrl] = useState(jekyllConfig?.url || 'https://betongangiabinh.vn');
   const [siteBaseurl, setSiteBaseurl] = useState(jekyllConfig?.baseurl || '');
   const [siteFacebookPage, setSiteFacebookPage] = useState(jekyllConfig?.facebook_page || 'https://www.facebook.com/betongangiabinh/');
+  const [siteCustomHeadCode, setSiteCustomHeadCode] = useState(jekyllConfig?.customHeadCode || '');
+  const [siteCustomBodyOpenCode, setSiteCustomBodyOpenCode] = useState(jekyllConfig?.customBodyOpenCode || '');
+  const [siteCustomFooterCode, setSiteCustomFooterCode] = useState(jekyllConfig?.customFooterCode || '');
+  const [siteCustomCss, setSiteCustomCss] = useState(jekyllConfig?.customCss || '');
+  const [siteCustomJs, setSiteCustomJs] = useState(jekyllConfig?.customJs || '');
+  const [activeCodeTab, setActiveCodeTab] = useState<'head' | 'bodyOpen' | 'footer' | 'css' | 'js'>('head');
   const [settingsSavedSuccess, setSettingsSavedSuccess] = useState(false);
 
   // Reload settings helper
@@ -181,6 +187,11 @@ export default function AdminDashboard() {
       setSiteUrl(jekyllConfig.url || '');
       setSiteBaseurl(jekyllConfig.baseurl || '');
       setSiteFacebookPage(jekyllConfig.facebook_page || '');
+      setSiteCustomHeadCode(jekyllConfig.customHeadCode || '');
+      setSiteCustomBodyOpenCode(jekyllConfig.customBodyOpenCode || '');
+      setSiteCustomFooterCode(jekyllConfig.customFooterCode || '');
+      setSiteCustomCss(jekyllConfig.customCss || '');
+      setSiteCustomJs(jekyllConfig.customJs || '');
       alert('Đã khôi phục các thông số từ cấu hình đã lưu!');
     }
   };
@@ -1008,6 +1019,11 @@ export default function AdminDashboard() {
       url: siteUrl,
       baseurl: siteBaseurl,
       facebook_page: siteFacebookPage,
+      customHeadCode: siteCustomHeadCode,
+      customBodyOpenCode: siteCustomBodyOpenCode,
+      customFooterCode: siteCustomFooterCode,
+      customCss: siteCustomCss,
+      customJs: siteCustomJs,
     };
     await updateJekyllConfig(configToSave);
     updateIntegrations({
@@ -4132,7 +4148,466 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              {/* Group 5: Real-time _config.yml Preview */}
+              {/* Group 5: Custom Code Injection (Header, Body Open, Footer / Body Close, Custom CSS & JS) */}
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                  <div>
+                    <h3 className="font-extrabold text-slate-900 text-sm flex items-center gap-2">
+                      <Code className="w-4 h-4 text-amber-600" />
+                      <span>5. Chèn Mã Tùy Biến Vào Các Thẻ Header, Body &amp; Footer (Script / Tracking / CSS / Widgets)</span>
+                    </h3>
+                    <p className="text-[11px] text-slate-500 mt-1">
+                      Chèn mã HTML, JavaScript theo dõi (Google Analytics, GTM, Facebook Pixel), tiện ích Chat trực tuyến (Zalo, Messenger, Tawk.to) hoặc mã CSS riêng. Mã được nhúng trực tiếp và đồng bộ tự động.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 font-bold border border-emerald-200">
+                      Tự động nhúng SSR &amp; CSR
+                    </span>
+                  </div>
+                </div>
+
+                {/* Sub-tabs for switching between code areas */}
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 border-b border-slate-200 text-xs scrollbar-none">
+                  <button
+                    type="button"
+                    onClick={() => setActiveCodeTab('head')}
+                    className={`px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5 whitespace-nowrap ${
+                      activeCodeTab === 'head'
+                        ? 'bg-amber-500 text-slate-950 shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    }`}
+                  >
+                    <span>Thẻ &lt;head&gt;</span>
+                    {siteCustomHeadCode.trim() && (
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" title="Đã có mã chèn" />
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveCodeTab('bodyOpen')}
+                    className={`px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5 whitespace-nowrap ${
+                      activeCodeTab === 'bodyOpen'
+                        ? 'bg-amber-500 text-slate-950 shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    }`}
+                  >
+                    <span>Thẻ &lt;body&gt; Mở</span>
+                    {siteCustomBodyOpenCode.trim() && (
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" title="Đã có mã chèn" />
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveCodeTab('footer')}
+                    className={`px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5 whitespace-nowrap ${
+                      activeCodeTab === 'footer'
+                        ? 'bg-amber-500 text-slate-950 shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    }`}
+                  >
+                    <span>Thẻ &lt;footer&gt; / &lt;/body&gt;</span>
+                    {siteCustomFooterCode.trim() && (
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" title="Đã có mã chèn" />
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveCodeTab('css')}
+                    className={`px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5 whitespace-nowrap ${
+                      activeCodeTab === 'css'
+                        ? 'bg-amber-500 text-slate-950 shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    }`}
+                  >
+                    <span>CSS Tùy Biến</span>
+                    {siteCustomCss.trim() && (
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" title="Đã có CSS tùy biến" />
+                    )}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveCodeTab('js')}
+                    className={`px-3.5 py-2 rounded-xl font-bold transition flex items-center gap-1.5 whitespace-nowrap ${
+                      activeCodeTab === 'js'
+                        ? 'bg-amber-500 text-slate-950 shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    }`}
+                  >
+                    <span>JavaScript Riêng</span>
+                    {siteCustomJs.trim() && (
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" title="Đã có JS tùy biến" />
+                    )}
+                  </button>
+                </div>
+
+                {/* Tab 1: Header Code (<head>) */}
+                {activeCodeTab === 'head' && (
+                  <div className="space-y-3 animate-in fade-in duration-150">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <label className="font-bold text-slate-800 text-xs">
+                            Mã chèn trong thẻ &lt;head&gt; (Header Scripts / Thẻ Meta / CSS nhúng)
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-bold border border-blue-200">
+                            &lt;head&gt; ... &lt;/head&gt;
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 mt-0.5">
+                          Thích hợp cho: Google Tag Manager (phần head), Facebook Pixel, thẻ Meta xác minh (Google Search Console, Bing, TikTok), Google Fonts hoặc thẻ &lt;style&gt;.
+                        </p>
+                      </div>
+
+                      {/* Quick Sample Presets */}
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const sample = `<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${siteGoogleTagManagerId || 'GTM-MXH8TM7H'}');</script>
+<!-- End Google Tag Manager -->`;
+                            setSiteCustomHeadCode(sample);
+                          }}
+                          className="px-2.5 py-1 text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition"
+                          title="Nạp mẫu Google Tag Manager chuẩn"
+                        >
+                          + Mẫu GTM Head
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const sample = `<meta name="google-site-verification" content="google-site-verification-token-example" />
+<meta name="msvalidate.01" content="bing-webmaster-verification-token" />`;
+                            setSiteCustomHeadCode((prev) => (prev ? `${prev}\n${sample}` : sample));
+                          }}
+                          className="px-2.5 py-1 text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition"
+                          title="Nạp thẻ Meta xác minh tìm kiếm"
+                        >
+                          + Mẫu Thẻ Meta
+                        </button>
+                        {siteCustomHeadCode && (
+                          <button
+                            type="button"
+                            onClick={() => setSiteCustomHeadCode('')}
+                            className="px-2 py-1 text-[11px] text-rose-600 hover:bg-rose-50 rounded-lg transition"
+                          >
+                            Xóa trắng
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <textarea
+                        rows={8}
+                        value={siteCustomHeadCode}
+                        onChange={(e) => setSiteCustomHeadCode(e.target.value)}
+                        placeholder={`<!-- Dán mã script hoặc thẻ HTML cần chèn vào <head> tại đây -->\n<script>\n  // Ví dụ mã theo dõi hoặc tiếp thị\n</script>`}
+                        className="w-full bg-slate-950 border border-slate-800 text-amber-300 p-4 rounded-xl font-mono text-xs focus:border-amber-500 focus:outline-hidden leading-relaxed"
+                        spellCheck={false}
+                      />
+                      <div className="absolute bottom-3 right-3 text-[10px] font-mono text-slate-500 bg-slate-900/90 px-2 py-0.5 rounded">
+                        {siteCustomHeadCode.length} ký tự
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Tab 2: Body Open (<body ...>) */}
+                {activeCodeTab === 'bodyOpen' && (
+                  <div className="space-y-3 animate-in fade-in duration-150">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <label className="font-bold text-slate-800 text-xs">
+                            Mã chèn ngay sau thẻ mở &lt;body&gt; (Top of Body / NoScript)
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-bold border border-emerald-200">
+                            &lt;body&gt; [Chèn ở đây] ...
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 mt-0.5">
+                          Thích hợp cho: Google Tag Manager (noscript), Facebook Pixel (noscript), mã thông báo khẩn cấp đầu trang hoặc banner khuyến mại.
+                        </p>
+                      </div>
+
+                      {/* Quick Presets */}
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const sample = `<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${siteGoogleTagManagerId || 'GTM-MXH8TM7H'}"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->`;
+                            setSiteCustomBodyOpenCode(sample);
+                          }}
+                          className="px-2.5 py-1 text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition"
+                          title="Nạp mẫu Google Tag Manager NoScript"
+                        >
+                          + Mẫu GTM NoScript
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const sample = `<div style="background:#f59e0b;color:#0f172a;text-align:center;padding:8px;font-size:12px;font-weight:bold;">
+  📢 Trạm trộn Bê Tông An Gia Bình phục vụ 24/7 toàn tỉnh Ninh Bình - Hotline: 0988 2662 93
+</div>`;
+                            setSiteCustomBodyOpenCode((prev) => (prev ? `${prev}\n${sample}` : sample));
+                          }}
+                          className="px-2.5 py-1 text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition"
+                        >
+                          + Mẫu Banner Thông Báo
+                        </button>
+                        {siteCustomBodyOpenCode && (
+                          <button
+                            type="button"
+                            onClick={() => setSiteCustomBodyOpenCode('')}
+                            className="px-2 py-1 text-[11px] text-rose-600 hover:bg-rose-50 rounded-lg transition"
+                          >
+                            Xóa trắng
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <textarea
+                        rows={7}
+                        value={siteCustomBodyOpenCode}
+                        onChange={(e) => setSiteCustomBodyOpenCode(e.target.value)}
+                        placeholder={`<!-- Dán mã script/noscript cần chèn ngay sau thẻ <body> tại đây -->\n<noscript><iframe src="..."></iframe></noscript>`}
+                        className="w-full bg-slate-950 border border-slate-800 text-amber-300 p-4 rounded-xl font-mono text-xs focus:border-amber-500 focus:outline-hidden leading-relaxed"
+                        spellCheck={false}
+                      />
+                      <div className="absolute bottom-3 right-3 text-[10px] font-mono text-slate-500 bg-slate-900/90 px-2 py-0.5 rounded">
+                        {siteCustomBodyOpenCode.length} ký tự
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Tab 3: Footer Code (</body> / Footer) */}
+                {activeCodeTab === 'footer' && (
+                  <div className="space-y-3 animate-in fade-in duration-150">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <label className="font-bold text-slate-800 text-xs">
+                            Mã chèn trước thẻ đóng &lt;/body&gt; / Footer (Chân trang &amp; Tiện ích Chat)
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-50 text-purple-700 font-bold border border-purple-200">
+                            ... [Chèn ở đây] &lt;/body&gt;
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 mt-0.5">
+                          Thích hợp cho: Widget Zalo Chat, Facebook Messenger, Tawk.to, Subiz, script đếm lượt xem, hotline rung lắc tùy biến hoặc mã chuyển đổi chạy sau khi trang tải xong.
+                        </p>
+                      </div>
+
+                      {/* Quick Presets */}
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const sample = `<!-- Zalo Chat Widget -->
+<div class="zalo-chat-widget" data-oaid="579745863508352884" data-welcome-message="Bê Tông An Gia Bình rất hân hạnh được hỗ trợ quý khách!" data-autopopup="0" data-width="" data-height=""></div>
+<script src="https://sp.zalo.me/plugins/sdk.js"></script>`;
+                            setSiteCustomFooterCode(sample);
+                          }}
+                          className="px-2.5 py-1 text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition"
+                          title="Nạp mẫu Widget Zalo Chat"
+                        >
+                          + Mẫu Zalo Chat
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const sample = `<!-- Tawk.to Live Chat Script -->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/your-property-id/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>`;
+                            setSiteCustomFooterCode(sample);
+                          }}
+                          className="px-2.5 py-1 text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition"
+                        >
+                          + Mẫu Tawk.to Chat
+                        </button>
+                        {siteCustomFooterCode && (
+                          <button
+                            type="button"
+                            onClick={() => setSiteCustomFooterCode('')}
+                            className="px-2 py-1 text-[11px] text-rose-600 hover:bg-rose-50 rounded-lg transition"
+                          >
+                            Xóa trắng
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <textarea
+                        rows={8}
+                        value={siteCustomFooterCode}
+                        onChange={(e) => setSiteCustomFooterCode(e.target.value)}
+                        placeholder={`<!-- Dán mã widget chat hoặc script chạy trước thẻ đóng </body> tại đây -->\n<script>\n  // Tiện ích chat, theo dõi sự kiện chuyển đổi\n</script>`}
+                        className="w-full bg-slate-950 border border-slate-800 text-amber-300 p-4 rounded-xl font-mono text-xs focus:border-amber-500 focus:outline-hidden leading-relaxed"
+                        spellCheck={false}
+                      />
+                      <div className="absolute bottom-3 right-3 text-[10px] font-mono text-slate-500 bg-slate-900/90 px-2 py-0.5 rounded">
+                        {siteCustomFooterCode.length} ký tự
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Tab 4: Custom CSS */}
+                {activeCodeTab === 'css' && (
+                  <div className="space-y-3 animate-in fade-in duration-150">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <label className="font-bold text-slate-800 text-xs">
+                            Mã CSS Tùy Biến (Custom CSS Rules)
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-bold border border-emerald-200">
+                            Không cần thẻ &lt;style&gt;
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 mt-0.5">
+                          Tự động ghi đè hoặc bổ sung style cho website. Nhập trực tiếp các quy tắc CSS mà không cần bọc thẻ &lt;style&gt;&lt;/style&gt;.
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const sample = `/* Tùy biến kiểu dáng nút gọi và hiệu ứng */
+.btn-hotline-glow {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.7);
+  animation: pulse 2s infinite;
+}
+/* Bo góc khối nội dung */
+.article-content img {
+  border-radius: 1rem;
+}`;
+                            setSiteCustomCss((prev) => (prev ? `${prev}\n\n${sample}` : sample));
+                          }}
+                          className="px-2.5 py-1 text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition"
+                        >
+                          + Mẫu CSS Hiệu Ứng
+                        </button>
+                        {siteCustomCss && (
+                          <button
+                            type="button"
+                            onClick={() => setSiteCustomCss('')}
+                            className="px-2 py-1 text-[11px] text-rose-600 hover:bg-rose-50 rounded-lg transition"
+                          >
+                            Xóa trắng
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <textarea
+                        rows={7}
+                        value={siteCustomCss}
+                        onChange={(e) => setSiteCustomCss(e.target.value)}
+                        placeholder={`/* Nhập quy tắc CSS tại đây (không cần thẻ <style>) */\n.header-custom {\n  background-color: #0f172a;\n}`}
+                        className="w-full bg-slate-950 border border-slate-800 text-emerald-300 p-4 rounded-xl font-mono text-xs focus:border-amber-500 focus:outline-hidden leading-relaxed"
+                        spellCheck={false}
+                      />
+                      <div className="absolute bottom-3 right-3 text-[10px] font-mono text-slate-500 bg-slate-900/90 px-2 py-0.5 rounded">
+                        {siteCustomCss.length} ký tự
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Tab 5: Custom JavaScript */}
+                {activeCodeTab === 'js' && (
+                  <div className="space-y-3 animate-in fade-in duration-150">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <label className="font-bold text-slate-800 text-xs">
+                            Mã JavaScript Tùy Biến (Custom JS Logic)
+                          </label>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-50 text-amber-800 font-bold border border-amber-200">
+                            Không cần thẻ &lt;script&gt;
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-500 mt-0.5">
+                          Đoạn mã JavaScript chạy khi tải xong trang web (không cần bọc trong thẻ &lt;script&gt;&lt;/script&gt;).
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const sample = `// Tự động cuộn mượt và theo dõi sự kiện click hotline
+console.log('Bê Tông An Gia Bình initialized');
+document.addEventListener('click', function(e) {
+  if (e.target && e.target.closest('a[href^="tel:"]')) {
+    console.log('Hotline clicked:', e.target.closest('a').getAttribute('href'));
+  }
+});`;
+                            setSiteCustomJs((prev) => (prev ? `${prev}\n\n${sample}` : sample));
+                          }}
+                          className="px-2.5 py-1 text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition"
+                        >
+                          + Mẫu JS Theo Dõi
+                        </button>
+                        {siteCustomJs && (
+                          <button
+                            type="button"
+                            onClick={() => setSiteCustomJs('')}
+                            className="px-2 py-1 text-[11px] text-rose-600 hover:bg-rose-50 rounded-lg transition"
+                          >
+                            Xóa trắng
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <textarea
+                        rows={7}
+                        value={siteCustomJs}
+                        onChange={(e) => setSiteCustomJs(e.target.value)}
+                        placeholder={`// Nhập mã JavaScript chạy sau khi tải trang (không cần thẻ <script>)\nconsole.log('Xin chào từ Bê Tông An Gia Bình');`}
+                        className="w-full bg-slate-950 border border-slate-800 text-amber-300 p-4 rounded-xl font-mono text-xs focus:border-amber-500 focus:outline-hidden leading-relaxed"
+                        spellCheck={false}
+                      />
+                      <div className="absolute bottom-3 right-3 text-[10px] font-mono text-slate-500 bg-slate-900/90 px-2 py-0.5 rounded">
+                        {siteCustomJs.length} ký tự
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Group 6: Real-time _config.yml Preview */}
               <div className="bg-slate-950 text-slate-200 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -4160,7 +4635,7 @@ description: >-
 url: "${siteUrl}"
 baseurl: "${siteBaseurl}"
 facebook_page: "${siteFacebookPage}"
-markdown: kramdown
+${siteCustomHeadCode ? `custom_head_code: >-\n  ${siteCustomHeadCode.split('\n').join('\n  ')}\n` : ''}${siteCustomBodyOpenCode ? `custom_body_open_code: >-\n  ${siteCustomBodyOpenCode.split('\n').join('\n  ')}\n` : ''}${siteCustomFooterCode ? `custom_footer_code: >-\n  ${siteCustomFooterCode.split('\n').join('\n  ')}\n` : ''}markdown: kramdown
 permalink: /:title.html
 plugins:
   - jekyll-feed
@@ -4201,7 +4676,7 @@ description: >-
 url: "${siteUrl}"
 baseurl: "${siteBaseurl}"
 facebook_page: "${siteFacebookPage}"
-markdown: kramdown
+${siteCustomHeadCode ? `custom_head_code: >-\n  ${siteCustomHeadCode.split('\n').join('\n  ')}\n` : ''}${siteCustomBodyOpenCode ? `custom_body_open_code: >-\n  ${siteCustomBodyOpenCode.split('\n').join('\n  ')}\n` : ''}${siteCustomFooterCode ? `custom_footer_code: >-\n  ${siteCustomFooterCode.split('\n').join('\n  ')}\n` : ''}markdown: kramdown
 permalink: /:title.html
 plugins:
   - jekyll-feed

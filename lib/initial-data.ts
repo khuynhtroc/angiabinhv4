@@ -46,6 +46,11 @@ export const initialJekyllConfig: JekyllConfig = {
   ctaButtonLink: 'tel:0988266293',
   ctaHeading: 'Cần Báo Giá & Khảo Sát Bê Tông Mác 200 - 450?',
   ctaSubheading: 'Trạm 1 KCN Khánh Phú (300m³/h) & Trạm 2 Kim Sơn (150m³/h) sẵn sàng phục vụ 24/7.',
+  customHeadCode: '',
+  customBodyOpenCode: '',
+  customFooterCode: '',
+  customCss: '',
+  customJs: '',
 };
 
 export const initialBlogPosts: BlogPost[] = [
