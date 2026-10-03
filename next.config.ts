@@ -5,15 +5,13 @@ const createNextConfig = (phase: string): NextConfig => {
   const isDev = phase === PHASE_DEVELOPMENT_SERVER;
 
   return {
-    distDir: isDev ? '.next-dev' : '.next',
-    output: isDev ? undefined : 'standalone',
     reactStrictMode: true,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: false,
-  },
+    eslint: {
+      ignoreDuringBuilds: true,
+    },
+    typescript: {
+      ignoreBuildErrors: false,
+    },
   // Allow access to remote image placeholder and external CDN images.
   images: {
     remotePatterns: [

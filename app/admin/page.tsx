@@ -365,6 +365,7 @@ export default function AdminDashboard() {
     }
     return '';
   });
+  const [gitStatus, setGitStatus] = useState<any>(null);
 
   const handlePersistPostsToSource = async () => {
     if (!posts || posts.length === 0) {
