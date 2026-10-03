@@ -202,12 +202,7 @@ export function getCategorySlug(categoryName?: string): 'tin-tuc' | 'kinh-nghiem
 }
 
 export function getPostBlogUrl(post: { slug?: string; category?: string; id?: string } | string, category?: string): string {
-  if (typeof post === 'string') {
-    const folder = getCategorySlug(category);
-    return `/blog/${folder}/${post}`;
-  }
-  const folder = getCategorySlug(post.category || category);
-  return `/blog/${folder}/${post.slug || post.id || 'bai-viet'}`;
+  return getPostUrl(post);
 }
 
 export function getCategoryUrl(categoryOrSlug: { slug?: string; id?: string; name?: string } | string): string {

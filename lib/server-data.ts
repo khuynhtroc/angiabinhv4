@@ -72,17 +72,43 @@ export function getPostBySlugServer(rawSlug: string): BlogPost | null {
   const clean = decodeURIComponent(rawSlug).trim().replace(/\.html$/, '');
   const posts = getAllPostsServer();
 
-  return (
-    posts.find(
-      (p) =>
-        p.slug === clean ||
-        p.id === clean ||
-        p.slug === rawSlug ||
-        p.id === rawSlug ||
-        `${p.slug}.html` === rawSlug ||
-        `${p.id}.html` === rawSlug
-    ) || null
+  const exact = posts.find(
+    (p) =>
+      p.slug === clean ||
+      p.id === clean ||
+      p.slug === rawSlug ||
+      p.id === rawSlug ||
+      `${p.slug}.html` === rawSlug ||
+      `${p.id}.html` === rawSlug
   );
+  if (exact) return exact;
+
+  // Handle aliases if slug contained external brand names
+  const aliasClean = clean
+    .replace(/-dufago/gi, '-an-gia-binh')
+    .replace(/-cong-thanh/gi, '-an-gia-binh')
+    .replace(/-me-kong/gi, '-an-gia-binh')
+    .replace(/-mekong/gi, '-an-gia-binh')
+    .replace(/-thang-long/gi, '-an-gia-binh')
+    .replace(/-viet-duc/gi, '-an-gia-binh');
+
+  if (aliasClean !== clean) {
+    const aliasMatch = posts.find(
+      (p) => p.slug === aliasClean || `${p.slug}.html` === aliasClean
+    );
+    if (aliasMatch) return aliasMatch;
+  }
+
+  // Reverse check if slug in database still has -dufago
+  const reverseClean = clean.replace(/-an-gia-binh/gi, '-dufago');
+  if (reverseClean !== clean) {
+    const reverseMatch = posts.find(
+      (p) => p.slug === reverseClean || `${p.slug}.html` === reverseClean
+    );
+    if (reverseMatch) return reverseMatch;
+  }
+
+  return null;
 }
 
 /**
@@ -565,7 +591,7 @@ export function savePostsServer(posts: BlogPost[]): boolean {
 /**
  * Save or update a single post into posts.json immediately on the server.
  */
-export function saveSinglePostServer(targetPost: BlogPost): { success: boolean; posts: BlogPost[] } {
+export function saveSinglePostServer(targetPost: BlogPost): { success: boolean; posts: BlogPost[]; gitResult?: any } {
   ensureDataDir();
   const currentPosts = getAllPostsServer();
   const existingIdx = currentPosts.findIndex(
@@ -591,11 +617,12 @@ export function saveSinglePostServer(targetPost: BlogPost): { success: boolean; 
   }
 
   const ok = writeDataFile(POSTS_FILE, JSON.stringify(updatedPosts, null, 2));
+  let gitResult: any = null;
   if (ok) {
     syncDataToInitialCode('posts');
-    commitChangesToGit(`chore(posts): save article "${targetPost.title.substring(0, 50)}"`);
+    gitResult = commitChangesToGit(`chore(posts): save article "${targetPost.title.substring(0, 50)}"`);
   }
-  return { success: ok, posts: updatedPosts };
+  return { success: ok, posts: updatedPosts, gitResult };
 }
 
 /**

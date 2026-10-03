@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 import { getPostBySlugServer, getAllCategoriesServer } from '@/lib/server-data';
 import BlogPostDetailClient from '@/components/BlogPostDetailClient';
 import CategoryDetailClient from '@/components/CategoryDetailClient';
@@ -101,6 +102,10 @@ export default async function BlogPostCatchAllPage({ params }: PageProps) {
   }
 
   const initialPost = getPostBySlugServer(cleanSlug) || getPostBySlugServer(rawSlug);
+  if (initialPost) {
+    const targetSlug = (initialPost.slug || initialPost.id || cleanSlug).replace(/\.html$/, '');
+    redirect(`/${targetSlug}.html`);
+  }
 
   return <BlogPostDetailClient rawSlug={rawSlug} initialPost={initialPost} />;
 }

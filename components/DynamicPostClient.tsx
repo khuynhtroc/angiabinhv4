@@ -40,6 +40,14 @@ export default function DynamicPostClient({
   // Match by id, slug, or with .html
   const cleanSlug = decodeURIComponent(rawSlug).replace(/\.html$/, '');
 
+  const aliasClean = cleanSlug
+    .replace(/-dufago/gi, '-an-gia-binh')
+    .replace(/-cong-thanh/gi, '-an-gia-binh')
+    .replace(/-me-kong/gi, '-an-gia-binh')
+    .replace(/-mekong/gi, '-an-gia-binh')
+    .replace(/-thang-long/gi, '-an-gia-binh')
+    .replace(/-viet-duc/gi, '-an-gia-binh');
+
   const storePost = posts.find(
     (p) =>
       p.id === cleanSlug ||
@@ -47,7 +55,8 @@ export default function DynamicPostClient({
       p.id === rawSlug ||
       p.slug === rawSlug ||
       `${p.id}.html` === rawSlug ||
-      `${p.slug}.html` === rawSlug
+      `${p.slug}.html` === rawSlug ||
+      (aliasClean !== cleanSlug && (p.slug === aliasClean || `${p.slug}.html` === aliasClean))
   );
   const post = storePost || initialPost || null;
 

@@ -127,6 +127,7 @@ function BlogListInner() {
   const [overrideCategory, setOverrideCategory] = useState<string | null>(null);
   const [chatOpen, setChatOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'carousel' | 'grid'>('carousel');
+  const [sortBy, setSortBy] = useState<'latest' | 'oldest' | 'views' | 'title'>('latest');
 
   const carouselRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -138,15 +139,45 @@ function BlogListInner() {
 
   const allTags = ['Tất Cả', ...Array.from(new Set(posts.flatMap(p => p.tags)))];
 
-  // Sắp xếp bài viết theo thứ tự MỚI NHẤT từ trên xuống dưới
+  // Helper to extract timestamp from post (checks updatedAt, id timestamp, or publish date)
+  const getPostTimestamp = (p: BlogPost): number => {
+    if (p.updatedAt) {
+      const t = new Date(p.updatedAt).getTime();
+      if (!isNaN(t) && t > 0) return t;
+    }
+    const match = (p.id || '').match(/post-(\d{10,13})/);
+    if (match) {
+      const idTime = parseInt(match[1], 10);
+      if (!isNaN(idTime) && idTime > 0) return idTime;
+    }
+    if (p.date) {
+      const t = new Date(p.date).getTime();
+      if (!isNaN(t) && t > 0) return t;
+    }
+    return 0;
+  };
+
+  // Sắp xếp bài viết theo tuỳ chọn (Mặc định: Ngày đăng & thời gian tạo MỚI NHẤT)
   const sortedPosts = [...posts].sort((a, b) => {
-    const timeA = a.date ? new Date(a.date).getTime() : 0;
-    const timeB = b.date ? new Date(b.date).getTime() : 0;
-    if (isNaN(timeA) || isNaN(timeB)) {
+    if (sortBy === 'latest') {
+      const timeA = getPostTimestamp(a);
+      const timeB = getPostTimestamp(b);
+      if (timeB !== timeA) return timeB - timeA;
       return (b.date || '').localeCompare(a.date || '');
     }
-    if (timeB !== timeA) return timeB - timeA;
-    return b.id.localeCompare(a.id);
+    if (sortBy === 'oldest') {
+      const timeA = getPostTimestamp(a);
+      const timeB = getPostTimestamp(b);
+      if (timeA !== timeB) return timeA - timeB;
+      return (a.date || '').localeCompare(b.date || '');
+    }
+    if (sortBy === 'views') {
+      return (b.views || 0) - (a.views || 0);
+    }
+    if (sortBy === 'title') {
+      return (a.title || '').localeCompare(b.title || '', 'vi');
+    }
+    return 0;
   });
 
   const filteredPosts = sortedPosts.filter(post => {
@@ -274,8 +305,8 @@ function BlogListInner() {
         {/* Bottom Metadata & Link */}
         <div className="p-5 pt-0 mt-auto">
           <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <span className="text-[11px] font-mono text-slate-400 bg-slate-50 px-2 py-0.5 rounded truncate max-w-[130px]">
-              /blog/{subfolderSlug}
+            <span className="text-[11px] font-mono text-amber-700 bg-amber-50 px-2 py-0.5 rounded truncate max-w-[160px]" title={subfolderUrl}>
+              {subfolderUrl}
             </span>
 
             <Link
@@ -327,7 +358,7 @@ function BlogListInner() {
       {/* Search & Category Filter Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6">
         <div className="bg-white rounded-2xl shadow-md border border-slate-200 p-4 sm:p-5 flex flex-col gap-4">
-          <div className="flex flex-col sm:flex-row items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-3">
             <div className="relative flex-grow w-full">
               <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
@@ -337,6 +368,25 @@ function BlogListInner() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
               />
+            </div>
+
+            {/* Sort Dropdown */}
+            <div className="flex items-center gap-1.5 shrink-0 w-full sm:w-auto justify-end">
+              <label htmlFor="blog-sort" className="text-xs font-bold text-slate-600 whitespace-nowrap">
+                Sắp xếp:
+              </label>
+              <select
+                id="blog-sort"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 focus:border-amber-500 focus:bg-white shadow-2xs cursor-pointer"
+                title="Tuỳ chọn sắp xếp bài viết theo ngày đăng mới nhất hoặc lượt xem"
+              >
+                <option value="latest">⚡ Mới nhất (Ngày đăng)</option>
+                <option value="oldest">📅 Cũ nhất</option>
+                <option value="views">👁️ Xem nhiều nhất</option>
+                <option value="title">🔤 Tiêu đề (A-Z)</option>
+              </select>
             </div>
 
             {/* Category tabs */}

@@ -139,7 +139,7 @@ export default function AdminDashboard() {
   const [postCategoryFilter, setPostCategoryFilter] = useState('all');
   const [postWordCountFilter, setPostWordCountFilter] = useState<'all' | 'ge1000' | 'mid' | 'low'>('all');
   const [postKeywordFilter, setPostKeywordFilter] = useState<'all' | 'has_keywords' | 'missing_keywords'>('all');
-  const [postSortBy, setPostSortBy] = useState<'date_desc' | 'date_asc' | 'views_desc' | 'words_desc' | 'title_asc'>('date_desc');
+  const [postSortBy, setPostSortBy] = useState<'time_desc' | 'date_desc' | 'date_asc' | 'views_desc' | 'words_desc' | 'title_asc'>('time_desc');
 
   // Site Configuration & SEO Parameters State
   const [siteTitle, setSiteTitle] = useState(jekyllConfig?.title || 'Bê Tông An Gia Bình - Ninh Bình');
@@ -675,7 +675,7 @@ export default function AdminDashboard() {
   const handlePublishAiPost = async () => {
     if (!aiResult || !aiResult.title || !aiResult.content) return;
 
-    await addPost({
+    const newPostData = {
       title: aiResult.title,
       slug: aiResult.slug || `bai-viet-${Date.now()}`,
       excerpt: aiResult.excerpt || 'Bài viết kỹ thuật từ Bê Tông An Gia Bình',
@@ -687,9 +687,28 @@ export default function AdminDashboard() {
       coverImage: aiResult.coverImage || 'https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1000&auto=format&fit=crop&q=80',
       seoTitle: aiResult.seoTitle || aiResult.title,
       seoDescription: aiResult.seoDescription || aiResult.excerpt || '',
-    });
+    };
 
-    alert('✅ Đã đăng và lưu bài viết mới thành công vào tệp posts.json!');
+    const created = await addPost(newPostData);
+
+    try {
+      const res = await fetch('/api/admin/persist-posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'save_post',
+          post: created,
+        }),
+      });
+      const data = await res.json();
+      if (data.gitStatus) {
+        setGitStatus(data.gitStatus);
+      }
+      alert(`✅ ĐÃ ĐĂNG BÀI VIẾT MỚI TỪ AI THÀNH CÔNG!\n\n- Tiêu đề: "${created.title}"\n- Đã lưu vào máy chủ: public/data/posts.json và lib/initial-data.ts\n- Đã tạo Git commit: [${data.gitResult?.commitHash || 'Đồng bộ'}]\n\nDữ liệu mã nguồn đã sẵn sàng đẩy lên GitHub!`);
+    } catch {
+      alert('✅ Đã đăng và lưu bài viết mới thành công vào tệp posts.json!');
+    }
+
     setAiResult(null);
     setCustomSourceTitle('');
     setCustomSourceContent('');
@@ -1597,8 +1616,33 @@ export default function AdminDashboard() {
         return true;
       })
       .sort((a, b) => {
+        if (postSortBy === 'time_desc') {
+          const getPostTime = (p: BlogPost) => {
+            if (p.updatedAt) {
+              const t = new Date(p.updatedAt).getTime();
+              if (!isNaN(t) && t > 0) return t;
+            }
+            const m = (p.id || '').match(/post-(\d{10,13})/);
+            if (m) {
+              const t = parseInt(m[1], 10);
+              if (!isNaN(t) && t > 0) return t;
+            }
+            if (p.date) {
+              const t = new Date(p.date).getTime();
+              if (!isNaN(t) && t > 0) return t;
+            }
+            return 0;
+          };
+          const tA = getPostTime(a);
+          const tB = getPostTime(b);
+          if (tB !== tA) return tB - tA;
+          return (b.date || '').localeCompare(a.date || '');
+        }
         if (postSortBy === 'date_desc') {
-          return new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime();
+          const timeA = new Date(a.date || 0).getTime();
+          const timeB = new Date(b.date || 0).getTime();
+          if (timeB !== timeA) return timeB - timeA;
+          return (b.updatedAt || b.id || '').localeCompare(a.updatedAt || a.id || '');
         }
         if (postSortBy === 'date_asc') {
           return new Date(a.date || 0).getTime() - new Date(b.date || 0).getTime();
@@ -2376,13 +2420,20 @@ export default function AdminDashboard() {
                     if (candidateNews.title) {
                       markNewsRewritten(candidateNews.title);
                     }
-                    // Persist immediately to AI Studio Server
+                    // Persist immediately to AI Studio Server with automatic Git tracking
                     try {
-                      await fetch('/api/admin/persist-posts', {
+                      const res = await fetch('/api/admin/persist-posts', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ posts: [newPost] })
+                        body: JSON.stringify({
+                          action: 'save_post',
+                          post: newPost,
+                        })
                       });
+                      const persistData = await res.json();
+                      if (persistData.gitStatus) {
+                        setGitStatus(persistData.gitStatus);
+                      }
                       const nowStr = new Date().toLocaleString('vi-VN');
                       setLastSyncedTime(nowStr);
                       if (typeof window !== 'undefined') {
@@ -2803,7 +2854,7 @@ export default function AdminDashboard() {
                       </span>
                     </div>
 
-                    {(postSearchTerm || postCategoryFilter !== 'all' || postWordCountFilter !== 'all' || postKeywordFilter !== 'all' || postSortBy !== 'date_desc') && (
+                    {(postSearchTerm || postCategoryFilter !== 'all' || postWordCountFilter !== 'all' || postKeywordFilter !== 'all' || postSortBy !== 'time_desc') && (
                       <button
                         type="button"
                         onClick={() => {
@@ -2811,7 +2862,7 @@ export default function AdminDashboard() {
                           setPostCategoryFilter('all');
                           setPostWordCountFilter('all');
                           setPostKeywordFilter('all');
-                          setPostSortBy('date_desc');
+                          setPostSortBy('time_desc');
                         }}
                         className="text-xs text-amber-700 hover:text-amber-900 font-bold flex items-center gap-1 cursor-pointer"
                       >
@@ -2880,11 +2931,12 @@ export default function AdminDashboard() {
                         onChange={(e) => setPostSortBy(e.target.value as any)}
                         className="w-full py-2 px-3 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:border-amber-500 text-slate-800 font-medium"
                       >
-                        <option value="date_desc">Mới nhất (Ngày đăng)</option>
-                        <option value="date_asc">Cũ nhất (Ngày đăng)</option>
-                        <option value="words_desc">Nhiều từ nhất</option>
-                        <option value="views_desc">Lượt xem nhiều nhất</option>
-                        <option value="title_asc">Tiêu đề (A &rarr; Z)</option>
+                        <option value="time_desc">⚡ Thời gian đăng / tạo mới nhất</option>
+                        <option value="date_desc">📅 Ngày đăng (Mới nhất)</option>
+                        <option value="date_asc">📅 Ngày đăng (Cũ nhất)</option>
+                        <option value="words_desc">📝 Nhiều từ nhất</option>
+                        <option value="views_desc">👁️ Lượt xem nhiều nhất</option>
+                        <option value="title_asc">🔤 Tiêu đề (A &rarr; Z)</option>
                       </select>
                     </div>
                   </div>

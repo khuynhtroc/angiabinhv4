@@ -277,15 +277,18 @@ export async function POST(req: NextRequest) {
     // Mode: Single post save / update
     if (action === 'save_post' && post) {
       const targetPost = post as BlogPost;
-      const { success, posts: updatedPosts } = saveSinglePostServer(targetPost);
+      const { success, posts: updatedPosts, gitResult } = saveSinglePostServer(targetPost);
+      const currentGitStatus = getGitStatusServer();
 
       return NextResponse.json({
         success,
         action: 'save_post',
         post: targetPost,
         totalPosts: updatedPosts.length,
+        gitResult,
+        gitStatus: currentGitStatus,
         message: success
-          ? `Đã lưu thành công bài viết "${targetPost.title}" vào tệp máy chủ public/data/posts.json!`
+          ? `Đã lưu thành công bài viết "${targetPost.title}" vào tệp máy chủ public/data/posts.json & tạo commit Git [${gitResult?.commitHash || 'đồng bộ'}]!`
           : 'Lỗi khi ghi tệp posts.json trên máy chủ',
         timestamp: new Date().toISOString()
       });
@@ -443,7 +446,28 @@ export async function POST(req: NextRequest) {
     let savedCount = 0;
 
     if (posts && Array.isArray(posts)) {
-      const sortedPosts = [...posts].sort((a, b) => {
+      const currentServerPosts = getAllPostsServer();
+      let postsToSave: BlogPost[];
+
+      // If client only sends a small subset (e.g. newly created AI post), safely upsert without wiping existing 900+ posts
+      if (posts.length < 50 && currentServerPosts.length > 50) {
+        const postMap = new Map<string, BlogPost>();
+        posts.forEach((p) => {
+          const key = p.id || p.slug;
+          if (key) postMap.set(key, p);
+        });
+        currentServerPosts.forEach((p) => {
+          const key = p.id || p.slug;
+          if (key && !postMap.has(key)) {
+            postMap.set(key, p);
+          }
+        });
+        postsToSave = Array.from(postMap.values());
+      } else {
+        postsToSave = posts;
+      }
+
+      const sortedPosts = [...postsToSave].sort((a, b) => {
         if (a.updatedAt && b.updatedAt) {
           return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
         }
