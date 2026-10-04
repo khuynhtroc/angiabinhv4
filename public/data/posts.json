@@ -54,14 +54,6 @@
     "updatedAt": "2026-10-03T03:07:16.937Z"
   },
   {
-    "id": "test-post-1",
-    "title": "Test Post Title",
-    "slug": "test-post-title",
-    "content": "Test content",
-    "category": "tin-tuc",
-    "updatedAt": "2026-10-01T03:33:16.884Z"
-  },
-  {
     "id": "post-1",
     "title": "Bảng Báo Giá Bê Tông Tươi Ninh Bình Mới Nhất 2025 - 2026 | Bê Tông An Gia Bình",
     "slug": "bang-bao-gia-be-tong-tuoi-ninh-binh-moi-nhat",

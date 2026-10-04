@@ -137,10 +137,11 @@ function BlogListInner() {
 
   const selectedCategory = overrideCategory !== null ? overrideCategory : (catParam || 'Tất Cả');
 
-  const allTags = ['Tất Cả', ...Array.from(new Set(posts.flatMap(p => p.tags)))];
+  const allTags = ['Tất Cả', ...Array.from(new Set(posts.flatMap(p => Array.isArray(p.tags) ? p.tags.filter(Boolean) : [])))];
 
   // Helper to extract timestamp from post (checks updatedAt, id timestamp, or publish date)
   const getPostTimestamp = (p: BlogPost): number => {
+    if (!p) return 0;
     if (p.updatedAt) {
       const t = new Date(p.updatedAt).getTime();
       if (!isNaN(t) && t > 0) return t;
@@ -158,7 +159,7 @@ function BlogListInner() {
   };
 
   // Sắp xếp bài viết theo tuỳ chọn (Mặc định: Ngày đăng & thời gian tạo MỚI NHẤT)
-  const sortedPosts = [...posts].sort((a, b) => {
+  const sortedPosts = [...posts].filter(Boolean).sort((a, b) => {
     if (sortBy === 'latest') {
       const timeA = getPostTimestamp(a);
       const timeB = getPostTimestamp(b);
@@ -181,17 +182,34 @@ function BlogListInner() {
   });
 
   const filteredPosts = sortedPosts.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          (Array.isArray(post.focusKeywords) && post.focusKeywords.some(k => k.toLowerCase().includes(searchTerm.toLowerCase())));
-    const matchesTag = selectedTag === 'Tất Cả' || post.tags.includes(selectedTag);
+    if (!post) return false;
+    const q = (searchTerm || '').trim().toLowerCase();
+    const title = (post.title || '').toLowerCase();
+    const excerpt = (post.excerpt || '').toLowerCase();
+    const content = (post.content || '').toLowerCase();
+    const keywords = Array.isArray(post.focusKeywords)
+      ? post.focusKeywords.map(k => String(k || '').toLowerCase())
+      : [];
+    const postTags = Array.isArray(post.tags) ? post.tags : [];
+    const postCat = (post.category || '').toLowerCase();
+    const targetCat = (selectedCategory || '').toLowerCase();
+
+    const matchesSearch = !q ||
+                          title.includes(q) ||
+                          excerpt.includes(q) ||
+                          content.includes(q) ||
+                          keywords.some(k => k.includes(q)) ||
+                          postTags.some(t => String(t || '').toLowerCase().includes(q));
+
+    const matchesTag = selectedTag === 'Tất Cả' || postTags.includes(selectedTag);
     const matchesCategory = selectedCategory === 'Tất Cả' || 
-                            post.category.toLowerCase().includes(selectedCategory.toLowerCase()) ||
-                            categories.some(c => (c.slug === selectedCategory || c.name === selectedCategory) && c.name.toLowerCase() === post.category.toLowerCase()) ||
-                            (selectedCategory === 'tin-tuc' && (post.category.toLowerCase().includes('tin tức') || post.category.toLowerCase().includes('thị trường'))) ||
-                            (selectedCategory === 'kinh-nghiem' && (post.category.toLowerCase().includes('kinh nghiệm') || post.category.toLowerCase().includes('kỹ thuật'))) ||
-                            (selectedCategory === 'kien-thuc' && (post.category.toLowerCase().includes('kiến thức') || post.category.toLowerCase().includes('tiêu chuẩn')));
-    return matchesSearch && matchesTag && matchesCategory;
+                            postCat.includes(targetCat) ||
+                            categories.some(c => (c.slug === selectedCategory || c.name === selectedCategory) && (c.name || '').toLowerCase() === postCat) ||
+                            (targetCat === 'tin-tuc' && (postCat.includes('tin tức') || postCat.includes('thị trường') || postCat === 'tin-tuc')) ||
+                            (targetCat === 'kinh-nghiem' && (postCat.includes('kinh nghiệm') || postCat.includes('kỹ thuật') || postCat === 'kinh-nghiem')) ||
+                            (targetCat === 'kien-thuc' && (postCat.includes('kiến thức') || postCat.includes('tiêu chuẩn') || postCat === 'kien-thuc'));
+
+    return Boolean(matchesSearch && matchesTag && matchesCategory);
   });
 
   const updateScrollState = useCallback(() => {
