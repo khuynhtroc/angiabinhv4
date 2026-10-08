@@ -1,5 +1,25 @@
 [
   {
+    "id": "test-auto-sync-1791428593029",
+    "title": "Kiểm Tra Tự Động Đồng Bộ GitHub API - An Gia Bình",
+    "slug": "kiem-tra-tu-dong-dong-bo-github-api-1791428593029",
+    "category": "Kinh Nghiệm",
+    "excerpt": "Bài viết thử nghiệm kiểm tra tính năng tự động đồng bộ lên GitHub và Vercel.",
+    "content": "## Bài viết thử nghiệm kiểm tra đồng bộ\n\nHệ thống tự động đồng bộ qua GitHub REST API hoạt động chính xác.",
+    "date": "2026-10-08",
+    "coverImage": "https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1000",
+    "tags": [
+      "kiem tra",
+      "dong bo"
+    ],
+    "focusKeywords": [
+      "dong bo github"
+    ],
+    "readTime": "3 phút",
+    "views": 1,
+    "updatedAt": "2026-10-08T03:03:13.833Z"
+  },
+  {
     "id": "post-1790996838220-6iwuo",
     "title": "Bê tông tươi ninh bình: Hướng Dẫn Kỹ Thuật Toàn Diện & Phân Tích Thực Tiễn Tại Ninh Bình",
     "slug": "xu-huong-ap-dung-phu-gia-sieu-deo-va-xi-lo-cao-nghien-min-trong-phoi-tron-be-tong-ben-vung-7432",
