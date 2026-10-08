@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getGeminiClient } from "@/lib/gemini";
 
 // Curated high quality concrete construction images with Vietnamese context
-export const CONCRETE_IMAGE_CATALOG = [
+const CONCRETE_IMAGE_CATALOG = [
   {
     id: "tram-tron",
     url: "https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1200&auto=format&fit=crop&q=80",

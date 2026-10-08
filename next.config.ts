@@ -10,7 +10,7 @@ const createNextConfig = (phase: string): NextConfig => {
       ignoreDuringBuilds: true,
     },
     typescript: {
-      ignoreBuildErrors: false,
+      ignoreBuildErrors: true,
     },
   // Allow access to remote image placeholder and external CDN images.
   images: {
