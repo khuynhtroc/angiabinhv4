@@ -256,17 +256,23 @@ function writeDataFile(filePath: string, content: string): boolean {
 }
 
 /**
- * Synchronize data directly into lib/initial-data.ts TypeScript code
- * so all admin modifications become permanent source code changes tracked by Git.
+ * Generate updated lib/initial-data.ts code string for any section.
+ * Returns the full code string so it can be written to disk or committed directly via GitHub API.
  */
-export function syncDataToInitialCode(
-  section: 'config' | 'posts' | 'projects' | 'pages' | 'categories' | 'media' | 'all' = 'all'
-): boolean {
+export function getUpdatedInitialDataCode(
+  section: 'config' | 'posts' | 'projects' | 'pages' | 'categories' | 'media' | 'all' = 'all',
+  existingCode?: string
+): string | null {
   try {
     const initialDataPath = path.join(process.cwd(), 'lib', 'initial-data.ts');
-    if (!fs.existsSync(initialDataPath)) return false;
-
-    let code = fs.readFileSync(initialDataPath, 'utf-8');
+    let code = existingCode;
+    if (!code) {
+      if (fs.existsSync(initialDataPath)) {
+        code = fs.readFileSync(initialDataPath, 'utf-8');
+      } else {
+        return null;
+      }
+    }
 
     // 1. Sync Config
     if (section === 'config' || section === 'all') {
@@ -359,10 +365,28 @@ export function syncDataToInitialCode(
       }
     }
 
-    fs.writeFileSync(initialDataPath, code, 'utf-8');
+    return code;
+  } catch (err) {
+    console.error('[server-data] Failed to generate initial-data code:', err);
+    return null;
+  }
+}
+
+/**
+ * Synchronize data directly into lib/initial-data.ts TypeScript code
+ * so all admin modifications become permanent source code changes tracked by Git.
+ */
+export function syncDataToInitialCode(
+  section: 'config' | 'posts' | 'projects' | 'pages' | 'categories' | 'media' | 'all' = 'all'
+): boolean {
+  try {
+    const initialDataPath = path.join(process.cwd(), 'lib', 'initial-data.ts');
+    const updated = getUpdatedInitialDataCode(section);
+    if (!updated) return false;
+    fs.writeFileSync(initialDataPath, updated, 'utf-8');
     return true;
   } catch (err) {
-    console.error('[server-data] Failed to sync data into lib/initial-data.ts:', err);
+    console.warn('[server-data] Failed to sync data into lib/initial-data.ts:', err);
     return false;
   }
 }

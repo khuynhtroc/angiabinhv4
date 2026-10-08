@@ -26,8 +26,14 @@ import {
   getGitStatusServer,
   commitChangesToGit,
   syncDataToInitialCode,
+  getUpdatedInitialDataCode,
   pushToGitHubServer
 } from '@/lib/server-data';
+import {
+  commitFilesViaGitHubApi,
+  getGitHubStatusViaApi,
+  resolveGitHubToken
+} from '@/lib/github-api';
 import fs from 'node:fs';
 import path from 'node:path';
 import { BlogPost, Project } from '@/lib/types';
@@ -90,7 +96,7 @@ export async function GET(req: NextRequest) {
       adminConfig,
       media,
       trash,
-      gitStatus: getGitStatusServer(),
+      gitStatus: (await getGitHubStatusViaApi()) || getGitStatusServer(),
       source: 'AI Studio Server Data (public/data/)',
       timestamp: new Date().toISOString()
     });
@@ -100,6 +106,27 @@ export async function GET(req: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+async function syncAndCommitToGitHub(
+  files: Array<{ path: string; content: string }>,
+  commitMessage: string,
+  token?: string,
+  remoteUrl?: string
+) {
+  // 1. Attempt GitHub API commit (works on Vercel Serverless & local)
+  try {
+    const apiResult = await commitFilesViaGitHubApi(files, commitMessage, token, remoteUrl);
+    if (apiResult.success) {
+      return apiResult;
+    }
+    console.warn('[route] commitFilesViaGitHubApi notice:', apiResult.message);
+  } catch (err: any) {
+    console.warn('[route] commitFilesViaGitHubApi exception:', err?.message);
+  }
+
+  // 2. Fallback to local git CLI (works in AI Studio / local environment)
+  return commitChangesToGit(commitMessage);
 }
 
 export async function POST(req: NextRequest) {
@@ -132,11 +159,31 @@ export async function POST(req: NextRequest) {
       if (body.adminConfig) {
         saveAdminConfigServer(body.adminConfig);
       }
+
+      // Commit config to GitHub
+      const filesToCommit: Array<{ path: string; content: string }> = [
+        { path: 'public/data/config.json', content: JSON.stringify(targetConfig, null, 2) }
+      ];
+      const initialCode = getUpdatedInitialDataCode('config');
+      if (initialCode) {
+        filesToCommit.push({ path: 'lib/initial-data.ts', content: initialCode });
+      }
+
+      const gitResult = await syncAndCommitToGitHub(
+        filesToCommit,
+        'chore(config): update website and SEO settings from admin',
+        body.token || body.customToken,
+        body.remoteUrl
+      );
+
       return NextResponse.json({
-        success: ok,
+        success: true,
         action: 'save_config',
         config: getConfigServer(),
-        message: ok ? 'Đã lưu cấu hình Website & SEO thành công vào máy chủ!' : 'Lỗi khi lưu cấu hình',
+        gitResult,
+        message: gitResult?.committed
+          ? `Đã lưu cấu hình và đẩy lên GitHub [${gitResult.commitHash}]! Vercel đang cập nhật livesite.`
+          : 'Đã lưu cấu hình Website & SEO thành công!',
         timestamp: new Date().toISOString()
       });
     }
@@ -219,8 +266,8 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Mode: Sync All Data To Codebase & Commit to Git
-    if (action === 'sync_all_to_code' || action === 'commit_to_git') {
+    // Mode: Sync All Data To Codebase & Commit to Git / Push to GitHub
+    if (action === 'sync_all_to_code' || action === 'commit_to_git' || action === 'git_push' || action === 'push_to_github') {
       if (Array.isArray(body.posts)) savePostsServer(body.posts);
       if (Array.isArray(body.projects)) saveProjectsServer(body.projects);
       if (Array.isArray(body.pages)) savePagesServer(body.pages);
@@ -228,44 +275,54 @@ export async function POST(req: NextRequest) {
       if (body.config || jekyllConfig) saveConfigServer(body.config || jekyllConfig);
       if (Array.isArray(body.media)) saveMediaServer(body.media);
 
-      // 1. Sync all data into lib/initial-data.ts TypeScript source code
       syncDataToInitialCode('all');
 
-      // 2. Create git commit
-      const gitResult = commitChangesToGit(
-        body.commitMessage || 'chore(admin): synchronize full website settings and content to codebase'
+      const allPosts = getAllPostsServer();
+      const allProjects = getAllProjectsServer();
+      const allPages = getAllPagesServer();
+      const allCategories = getAllCategoriesServer();
+      const allConfig = getConfigServer();
+      const allMedia = getAllMediaServer();
+
+      const filesToCommit: Array<{ path: string; content: string }> = [
+        { path: 'public/data/posts.json', content: JSON.stringify(allPosts, null, 2) },
+        { path: 'public/data/projects.json', content: JSON.stringify(allProjects, null, 2) },
+        { path: 'public/data/pages.json', content: JSON.stringify(allPages, null, 2) },
+        { path: 'public/data/categories.json', content: JSON.stringify(allCategories, null, 2) },
+        { path: 'public/data/config.json', content: JSON.stringify(allConfig, null, 2) },
+        { path: 'public/data/media.json', content: JSON.stringify(allMedia, null, 2) },
+      ];
+
+      const initialCode = getUpdatedInitialDataCode('all');
+      if (initialCode) {
+        filesToCommit.push({ path: 'lib/initial-data.ts', content: initialCode });
+      }
+
+      const gitResult = await syncAndCommitToGitHub(
+        filesToCommit,
+        body.commitMessage || 'chore(admin): synchronize full website settings and content to GitHub',
+        body.token || body.customToken,
+        body.remoteUrl
       );
-      const currentGitStatus = getGitStatusServer();
+
+      const currentGitStatus = (await getGitHubStatusViaApi(body.token || body.customToken, body.remoteUrl)) || getGitStatusServer();
 
       return NextResponse.json({
-        success: true,
+        success: Boolean(gitResult?.success),
         action: action,
         gitResult,
         gitStatus: currentGitStatus,
-        message: gitResult.committed
-          ? `Đã đồng bộ toàn bộ dữ liệu vào code và tạo commit mới [${gitResult.commitHash}] sẵn sàng đẩy lên GitHub!`
-          : `Mã nguồn và tệp dữ liệu đã đồng bộ hoàn toàn với Git (${gitResult.commitHash || 'main'}).`,
-        timestamp: new Date().toISOString()
-      });
-    }
-
-    // Mode: Push directly to GitHub
-    if (action === 'git_push' || action === 'push_to_github') {
-      const pushResult = pushToGitHubServer(body.remoteUrl);
-      const currentGitStatus = getGitStatusServer();
-      return NextResponse.json({
-        success: pushResult.success,
-        action: 'git_push',
-        result: pushResult,
-        gitStatus: currentGitStatus,
-        message: pushResult.message,
+        message: gitResult?.committed
+          ? `Đã đồng bộ toàn bộ dữ liệu lên GitHub thành công [${gitResult.commitHash}]! Vercel đang tự động build và cập nhật livesite.`
+          : (gitResult?.message || 'Đã đồng bộ dữ liệu.'),
         timestamp: new Date().toISOString()
       });
     }
 
     // Mode: Get real-time Git status
     if (action === 'get_git_status') {
-      const currentGitStatus = getGitStatusServer();
+      const apiStatus = await getGitHubStatusViaApi(body?.token || body?.customToken, body?.remoteUrl);
+      const currentGitStatus = apiStatus || getGitStatusServer();
       return NextResponse.json({
         success: true,
         action: 'get_git_status',
@@ -277,35 +334,70 @@ export async function POST(req: NextRequest) {
     // Mode: Single post save / update
     if (action === 'save_post' && post) {
       const targetPost = post as BlogPost;
-      const { success, posts: updatedPosts, gitResult } = saveSinglePostServer(targetPost);
-      const currentGitStatus = getGitStatusServer();
+      const { posts: updatedPosts } = saveSinglePostServer(targetPost);
+
+      const filesToCommit: Array<{ path: string; content: string }> = [
+        { path: 'public/data/posts.json', content: JSON.stringify(updatedPosts, null, 2) }
+      ];
+      const initialCode = getUpdatedInitialDataCode('posts');
+      if (initialCode) {
+        filesToCommit.push({ path: 'lib/initial-data.ts', content: initialCode });
+      }
+
+      const gitResult = await syncAndCommitToGitHub(
+        filesToCommit,
+        `chore(posts): publish/update article "${targetPost.title.substring(0, 50)}"`,
+        body.token || body.customToken,
+        body.remoteUrl
+      );
+
+      const currentGitStatus = (await getGitHubStatusViaApi(body.token || body.customToken, body.remoteUrl)) || getGitStatusServer();
 
       return NextResponse.json({
-        success,
+        success: true,
         action: 'save_post',
         post: targetPost,
         totalPosts: updatedPosts.length,
         gitResult,
         gitStatus: currentGitStatus,
-        message: success
-          ? `Đã lưu thành công bài viết "${targetPost.title}" vào tệp máy chủ public/data/posts.json & tạo commit Git [${gitResult?.commitHash || 'đồng bộ'}]!`
-          : 'Lỗi khi ghi tệp posts.json trên máy chủ',
+        message: gitResult?.committed
+          ? `Đã lưu bài viết "${targetPost.title}" và đẩy lên GitHub [${gitResult.commitHash}]! Vercel đang tự động build livesite.`
+          : `Đã lưu thành công bài viết "${targetPost.title}"!`,
         timestamp: new Date().toISOString()
       });
     }
 
     // Mode: Single post delete
     if (action === 'delete_post' && id) {
-      const { success, posts: filteredPosts } = deleteSinglePostServer(id);
+      const { posts: filteredPosts } = deleteSinglePostServer(id);
+
+      const filesToCommit: Array<{ path: string; content: string }> = [
+        { path: 'public/data/posts.json', content: JSON.stringify(filteredPosts, null, 2) }
+      ];
+      const initialCode = getUpdatedInitialDataCode('posts');
+      if (initialCode) {
+        filesToCommit.push({ path: 'lib/initial-data.ts', content: initialCode });
+      }
+
+      const gitResult = await syncAndCommitToGitHub(
+        filesToCommit,
+        `chore(posts): delete post ${id} from admin`,
+        body.token || body.customToken,
+        body.remoteUrl
+      );
+
+      const currentGitStatus = (await getGitHubStatusViaApi(body.token || body.customToken, body.remoteUrl)) || getGitStatusServer();
 
       return NextResponse.json({
-        success,
+        success: true,
         action: 'delete_post',
         deletedId: id,
         totalPosts: filteredPosts.length,
-        message: success
-          ? `Đã xóa bài viết khỏi public/data/posts.json thành công!`
-          : 'Lỗi khi cập nhật posts.json trên máy chủ',
+        gitResult,
+        gitStatus: currentGitStatus,
+        message: gitResult?.committed
+          ? `Đã xóa bài viết và cập nhật lên GitHub [${gitResult.commitHash}]!`
+          : `Đã xóa bài viết khỏi danh sách thành công!`,
         timestamp: new Date().toISOString()
       });
     }
@@ -326,12 +418,33 @@ export async function POST(req: NextRequest) {
 
       saveProjectsServer(currentProjects);
 
+      const filesToCommit: Array<{ path: string; content: string }> = [
+        { path: 'public/data/projects.json', content: JSON.stringify(currentProjects, null, 2) }
+      ];
+      const initialCode = getUpdatedInitialDataCode('projects');
+      if (initialCode) {
+        filesToCommit.push({ path: 'lib/initial-data.ts', content: initialCode });
+      }
+
+      const gitResult = await syncAndCommitToGitHub(
+        filesToCommit,
+        `chore(projects): save project "${targetProj.title.substring(0, 50)}"`,
+        body.token || body.customToken,
+        body.remoteUrl
+      );
+
+      const currentGitStatus = (await getGitHubStatusViaApi(body.token || body.customToken, body.remoteUrl)) || getGitStatusServer();
+
       return NextResponse.json({
         success: true,
         action: 'save_project',
         project: targetProj,
         totalProjects: currentProjects.length,
-        message: `Đã lưu thành công dự án "${targetProj.title}" vào tệp máy chủ public/data/projects.json!`,
+        gitResult,
+        gitStatus: currentGitStatus,
+        message: gitResult?.committed
+          ? `Đã lưu dự án "${targetProj.title}" và đẩy lên GitHub [${gitResult.commitHash}]!`
+          : `Đã lưu thành công dự án "${targetProj.title}"!`,
         timestamp: new Date().toISOString()
       });
     }
@@ -342,12 +455,33 @@ export async function POST(req: NextRequest) {
       const filtered = currentProjects.filter((p) => p.id !== id && p.slug !== id);
       saveProjectsServer(filtered);
 
+      const filesToCommit: Array<{ path: string; content: string }> = [
+        { path: 'public/data/projects.json', content: JSON.stringify(filtered, null, 2) }
+      ];
+      const initialCode = getUpdatedInitialDataCode('projects');
+      if (initialCode) {
+        filesToCommit.push({ path: 'lib/initial-data.ts', content: initialCode });
+      }
+
+      const gitResult = await syncAndCommitToGitHub(
+        filesToCommit,
+        `chore(projects): delete project ${id} from admin`,
+        body.token || body.customToken,
+        body.remoteUrl
+      );
+
+      const currentGitStatus = (await getGitHubStatusViaApi(body.token || body.customToken, body.remoteUrl)) || getGitStatusServer();
+
       return NextResponse.json({
         success: true,
         action: 'delete_project',
         deletedId: id,
         totalProjects: filtered.length,
-        message: `Đã xóa dự án khỏi public/data/projects.json thành công!`,
+        gitResult,
+        gitStatus: currentGitStatus,
+        message: gitResult?.committed
+          ? `Đã xóa dự án và cập nhật lên GitHub [${gitResult.commitHash}]!`
+          : `Đã xóa dự án thành công!`,
         timestamp: new Date().toISOString()
       });
     }

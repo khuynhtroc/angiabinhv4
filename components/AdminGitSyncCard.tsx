@@ -389,13 +389,13 @@ export default function AdminGitSyncCard({ onSyncComplete }: AdminGitSyncCardPro
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
           <div className="text-xs text-slate-600">
-            <strong>2 cách đẩy mã nguồn lên GitHub:</strong>
+            <strong>🚀 Cơ chế tự động đồng bộ lên Livesite qua GitHub REST API:</strong>
             <ul className="list-disc pl-5 mt-1 space-y-0.5 text-[11px] text-slate-500">
               <li>
-                <strong>Cách 1 (Nhanh nhất trong AI Studio):</strong> Sau khi nhấn &quot;Đồng Bộ Vào Code &amp; Tạo Commit&quot;, chỉ cần chọn menu <strong>Export to GitHub</strong> ở thanh trên cùng của AI Studio.
+                <strong>Tự động 100%:</strong> Mỗi khi bạn tạo/sửa bài viết hoặc bấm nút đồng bộ, hệ thống gọi trực tiếp GitHub REST API để cập nhật kho <code className="font-mono text-blue-700 bg-blue-50 px-1 py-0.5 rounded">khuynhtroc/angiabinhv4</code> (nhánh main).
               </li>
               <li>
-                <strong>Cách 2 (Đẩy trực tiếp):</strong> Nhấn nút &quot;Đẩy Lên GitHub Ngay&quot; bên cạnh nếu bạn đã điền URL kèm GitHub Personal Access Token.
+                <strong>Vercel tự động xuất bản:</strong> Ngay khi nhận commit mới, Vercel sẽ tự động build và xuất bản bài viết lên <code className="font-mono text-emerald-700 bg-emerald-50 px-1 py-0.5 rounded">betongangiabinh.vn</code> cho khách xem sau 1 - 2 phút.
               </li>
             </ul>
           </div>
