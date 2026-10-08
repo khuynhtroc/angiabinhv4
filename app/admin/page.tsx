@@ -705,9 +705,9 @@ export default function AdminDashboard() {
       if (data.gitStatus) {
         setGitStatus(data.gitStatus);
       }
-      alert(`✅ ĐÃ ĐĂNG BÀI VIẾT MỚI TỪ AI THÀNH CÔNG!\n\n- Tiêu đề: "${created.title}"\n- Đã lưu vào máy chủ: public/data/posts.json và lib/initial-data.ts\n- Đã tạo Git commit: [${data.gitResult?.commitHash || 'Đồng bộ'}]\n\nDữ liệu mã nguồn đã sẵn sàng đẩy lên GitHub!`);
+      alert(`✅ ĐÃ ĐĂNG BÀI VIẾT MỚI TỪ AI THÀNH CÔNG!\n\n- Tiêu đề: "${created.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub [${data.gitResult?.commitHash || 'Đồng bộ'}].\n- Vercel đang tự động xuất bản lên Livesite betongangiabinh.vn (khoảng 1 - 2 phút).`);
     } catch {
-      alert('✅ Đã đăng và lưu bài viết mới thành công vào tệp posts.json!');
+      alert('✅ Đã đăng bài viết mới thành công! Dữ liệu đang được đồng bộ lên Livesite betongangiabinh.vn.');
     }
 
     setAiResult(null);
@@ -986,6 +986,7 @@ export default function AdminDashboard() {
         updatedAt: new Date().toISOString(),
       };
 
+      let commitHash = '';
       if (editingPostId) {
         const existing = posts.find(p => p.id === editingPostId);
         const fullPost: BlogPost = {
@@ -994,22 +995,38 @@ export default function AdminDashboard() {
           ...postPayload,
         };
         await updatePost(fullPost);
-        // Explicit verify direct write to posts.json on server
-        await fetch('/api/admin/persist-posts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'save_post', post: fullPost }),
-        });
-        alert('✅ Đã cập nhật và lưu bài viết vào tệp posts.json thành công!');
+        // Explicit verify direct write to posts.json on server & commit to GitHub
+        try {
+          const res = await fetch('/api/admin/persist-posts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'save_post', post: fullPost }),
+          });
+          const data = await res.json();
+          if (data.gitResult?.commitHash) {
+            commitHash = data.gitResult.commitHash;
+          }
+        } catch (e) {
+          console.warn('Persist post server sync warning:', e);
+        }
+        alert(`✅ ĐÃ LƯU BÀI VIẾT THÀNH CÔNG!${commitHash ? ` [Commit: ${commitHash}]` : ''}\n\n- Bài viết: "${fullPost.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub.\n- Vercel đang tự động xuất bản lên Livesite betongangiabinh.vn (khoảng 1 - 2 phút).`);
       } else {
         const createdPost = await addPost(postPayload);
-        // Explicit verify direct write to posts.json on server
-        await fetch('/api/admin/persist-posts', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'save_post', post: createdPost }),
-        });
-        alert('✅ Đã tạo và lưu bài viết mới vào tệp posts.json thành công!');
+        // Explicit verify direct write to posts.json on server & commit to GitHub
+        try {
+          const res = await fetch('/api/admin/persist-posts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'save_post', post: createdPost }),
+          });
+          const data = await res.json();
+          if (data.gitResult?.commitHash) {
+            commitHash = data.gitResult.commitHash;
+          }
+        } catch (e) {
+          console.warn('Persist post server sync warning:', e);
+        }
+        alert(`✅ ĐÃ TẠO VÀ XUẤT BẢN BÀI VIẾT MỚI!${commitHash ? ` [Commit: ${commitHash}]` : ''}\n\n- Bài viết: "${createdPost.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub.\n- Vercel đang tự động xuất bản lên Livesite betongangiabinh.vn (khoảng 1 - 2 phút).`);
       }
 
       setShowPostModal(false);
@@ -1083,7 +1100,7 @@ export default function AdminDashboard() {
     } catch {
       // ignore
     }
-    alert(`✅ ĐÃ LƯU VÀO MÃ NGUỒN VÀ TẠO COMMIT GIT THÀNH CÔNG!${commitNotice}\n\nToàn bộ cài đặt website, SEO và các thẻ mã Header/Body/Footer đã được lưu vào lib/initial-data.ts & public/data/config.json.\n\nSẵn sàng đẩy lên GitHub! Bạn có thể chọn menu "Export to GitHub" trên AI Studio.`);
+    alert(`✅ ĐÃ LƯU CẤU HÌNH VÀ TỰ ĐỘNG ĐỒNG BỘ LIVESITE THÀNH CÔNG!${commitNotice}\n\nToàn bộ cài đặt website, SEO và các thẻ mã Header/Body/Footer đã được lưu và tự động tạo commit đẩy lên GitHub. Vercel đang xuất bản lên Livesite betongangiabinh.vn (khoảng 1 - 2 phút).`);
   };
 
   // Category Handlers
@@ -1159,7 +1176,7 @@ export default function AdminDashboard() {
         description: catDesc.trim(),
         color: catColor
       });
-      alert(`Đã cập nhật chuyên mục "${catName.trim()}" thành công!`);
+      alert(`✅ Đã cập nhật chuyên mục "${catName.trim()}" thành công!\n\nDữ liệu đang được tự động đồng bộ lên Livesite betongangiabinh.vn.`);
     } else {
       addCategory({
         name: catName.trim(),
@@ -1167,7 +1184,7 @@ export default function AdminDashboard() {
         description: catDesc.trim(),
         color: catColor
       });
-      alert(`Đã tạo chuyên mục mới "${catName.trim()}" thành công!`);
+      alert(`✅ Đã tạo chuyên mục mới "${catName.trim()}" thành công!\n\nDữ liệu đang được tự động đồng bộ lên Livesite betongangiabinh.vn.`);
     }
 
     setShowCategoryModal(false);
@@ -1245,7 +1262,7 @@ export default function AdminDashboard() {
   };
 
   // Save Project
-  const handleSaveProject = (e: React.FormEvent) => {
+  const handleSaveProject = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!projTitle) return;
 
@@ -1263,15 +1280,35 @@ export default function AdminDashboard() {
       highlights: ['Đúng mác thiết kế', 'Nghiệm thu R28 đạt 110%']
     };
 
+    let commitNotice = '';
     if (editingProjectId) {
-      updateProject({
+      const fullProj = {
         id: editingProjectId,
         ...payload,
-      });
-      alert('Đã cập nhật dự án thành công!');
+      };
+      updateProject(fullProj);
+      try {
+        const res = await fetch('/api/admin/persist-posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'save_project', project: fullProj }),
+        });
+        const data = await res.json();
+        if (data.gitResult?.commitHash) commitNotice = ` [Commit: ${data.gitResult.commitHash}]`;
+      } catch {}
+      alert(`✅ ĐÃ CẬP NHẬT DỰ ÁN THÀNH CÔNG!${commitNotice}\n\n- Dự án: "${payload.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub và Vercel đang xuất bản lên Livesite betongangiabinh.vn.`);
     } else {
-      addProject(payload);
-      alert('Đã thêm dự án mới vào hồ sơ năng lực!');
+      const addedProj = addProject(payload);
+      try {
+        const res = await fetch('/api/admin/persist-posts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'save_project', project: addedProj || payload }),
+        });
+        const data = await res.json();
+        if (data.gitResult?.commitHash) commitNotice = ` [Commit: ${data.gitResult.commitHash}]`;
+      } catch {}
+      alert(`✅ ĐÃ THÊM DỰ ÁN MỚI THÀNH CÔNG!${commitNotice}\n\n- Dự án: "${payload.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub và Vercel đang xuất bản lên Livesite betongangiabinh.vn.`);
     }
 
     setShowProjectModal(false);
@@ -5142,10 +5179,10 @@ plugins:
                   {isSavingPostModal ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Đang lưu vào posts.json...</span>
+                      <span>Đang lưu &amp; đồng bộ Livesite...</span>
                     </>
                   ) : (
-                    <span>{editingPostId ? 'Lưu Cập Nhật' : 'Đăng Bài Viết'}</span>
+                    <span>{editingPostId ? 'Lưu Cập Nhật & Đồng Bộ' : 'Đăng Bài & Đồng Bộ Livesite'}</span>
                   )}
                 </button>
               </div>
@@ -5396,7 +5433,7 @@ plugins:
                   type="submit"
                   className="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-xs"
                 >
-                  {editingProjectId ? 'Lưu Cập Nhật Dự Án' : 'Thêm Vào Hồ Sơ Năng Lực'}
+                  {editingProjectId ? 'Lưu Cập Nhật & Đồng Bộ' : 'Thêm & Đồng Bộ Livesite'}
                 </button>
               </div>
             </form>

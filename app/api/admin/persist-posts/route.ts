@@ -664,19 +664,43 @@ export async function POST(req: NextRequest) {
       saveAdminConfigServer(adminConfig);
     }
 
-    // Always synchronize changes to lib/initial-data.ts and create Git commit
-    syncDataToInitialCode('all');
-    const gitResult = commitChangesToGit('chore(sync): synchronize content and settings from admin');
-    const currentGitStatus = getGitStatusServer();
+    // Always synchronize changes to GitHub and lib/initial-data.ts
+    const allPosts = getAllPostsServer();
+    const allProjects = getAllProjectsServer();
+    const allPages = getAllPagesServer();
+    const allCategories = getAllCategoriesServer();
+    const allConfig = getConfigServer();
+    const allMedia = getAllMediaServer();
+
+    const filesToCommit: Array<{ path: string; content: string }> = [
+      { path: 'public/data/posts.json', content: JSON.stringify(allPosts, null, 2) },
+      { path: 'public/data/projects.json', content: JSON.stringify(allProjects, null, 2) },
+      { path: 'public/data/pages.json', content: JSON.stringify(allPages, null, 2) },
+      { path: 'public/data/categories.json', content: JSON.stringify(allCategories, null, 2) },
+      { path: 'public/data/config.json', content: JSON.stringify(allConfig, null, 2) },
+      { path: 'public/data/media.json', content: JSON.stringify(allMedia, null, 2) },
+    ];
+    const initialCode = getUpdatedInitialDataCode('all');
+    if (initialCode) {
+      filesToCommit.push({ path: 'lib/initial-data.ts', content: initialCode });
+    }
+
+    const gitResult = await syncAndCommitToGitHub(
+      filesToCommit,
+      'chore(admin): auto-sync content and settings from admin',
+      body.token || body.customToken,
+      body.remoteUrl
+    );
+    const currentGitStatus = (await getGitHubStatusViaApi(body.token || body.customToken, body.remoteUrl)) || getGitStatusServer();
 
     return NextResponse.json({
       success: true,
       count: savedCount,
       gitResult,
       gitStatus: currentGitStatus,
-      message: gitResult.committed
-        ? `Đã đồng bộ thành công vào nguồn máy chủ & tạo commit Git mới [${gitResult.commitHash}]!`
-        : `Đã đồng bộ thành công vào nguồn máy chủ và mã nguồn Git (${currentGitStatus.lastCommit})!`,
+      message: gitResult?.committed
+        ? `Đã lưu thành công và tự động đồng bộ lên GitHub [${gitResult.commitHash}]! Vercel đang xuất bản livesite.`
+        : `Đã lưu thành công vào hệ thống!`,
       timestamp: new Date().toISOString()
     });
   } catch (error: any) {
