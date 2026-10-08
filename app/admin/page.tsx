@@ -595,6 +595,8 @@ export default function AdminDashboard() {
           sourceUrl: newsItem?.source || 'Báo Xây Dựng',
           rawContent: content,
           customKeywords: customKeywords,
+          aiConfigs: aiSettings,
+          internalLinks: aiScheduler.selectedInternalLinks,
         }),
       });
 
@@ -2435,6 +2437,11 @@ export default function AdminDashboard() {
                       sourceUrl: candidateNews.source || 'Báo Xây Dựng',
                       rawContent: candidateNews.summary || candidateNews.title,
                       customKeywords: [aiScheduler.primaryKeyword, ...(aiScheduler.secondaryKeywords || [])].filter(Boolean).join(', ') || 'bê tông tươi Ninh Bình, trạm trộn An Gia Bình, giá bê tông thương phẩm',
+                      primaryKeyword: aiScheduler.primaryKeyword,
+                      secondaryKeywords: (aiScheduler.secondaryKeywords || []).join(', '),
+                      focusTopic: aiScheduler.topicHeading,
+                      internalLinks: aiScheduler.selectedInternalLinks,
+                      aiConfigs: aiSettings,
                     }),
                   });
                   const data = await res.json();
@@ -2448,7 +2455,7 @@ export default function AdminDashboard() {
                       excerpt: data.excerpt || data.title,
                       content: data.content,
                       date: new Date().toISOString().split('T')[0],
-                      coverImage: '/images/blog/tram-tron-be-tong.webp',
+                      coverImage: data.coverImage || '/images/blog/tram-tron-be-tong.webp',
                       tags: data.tags || ['Bê tông Ninh Bình', 'An Gia Bình'],
                       focusKeywords: data.focusKeywords || [aiScheduler.primaryKeyword, ...(aiScheduler.secondaryKeywords || [])].filter(Boolean),
                       readTime: '6 phút',

@@ -105,9 +105,10 @@ export default function AdminAiSchedulerSection({
         setFormData(updatedConfig);
         onSaveScheduler(updatedConfig);
 
+        const imgCount = (generated.content || '').match(/!\[.*?\]\(.*?\)/g)?.length || 0;
         setRunMessage({
           type: 'success',
-          text: `Đã chạy lập lịch thành công! Đã tự động tạo & xuất bản bài viết chuẩn SEO: "${generated.title}" (${wordCount.toLocaleString('vi-VN')} từ)`
+          text: `Đã chạy lập lịch thành công! Đã tự động tạo & xuất bản bài viết chuẩn SEO: "${generated.title}" (${wordCount.toLocaleString('vi-VN')} từ, kèm ${imgCount} ảnh minh họa & ảnh bìa)`
         });
       } else {
         setRunMessage({

@@ -1,9 +1,151 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getGeminiClient } from "@/lib/gemini";
 
+// Curated high quality concrete construction images with Vietnamese context
+export const CONCRETE_IMAGE_CATALOG = [
+  {
+    id: "tram-tron",
+    url: "https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1200&auto=format&fit=crop&q=80",
+    alt: "Trạm trộn bê tông tươi An Gia Bình công suất lớn tại Ninh Bình",
+    caption: "Toàn cảnh trạm trộn bê tông tự động hóa hiện đại của Bê Tông An Gia Bình tại KCN Khánh Phú và Kim Sơn.",
+    keywords: ["trạm", "trạm trộn", "công suất", "sản xuất", "nhà máy", "báo giá", "giá", "an gia bình", "tổng quan"]
+  },
+  {
+    id: "do-san",
+    url: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&auto=format&fit=crop&q=80",
+    alt: "Thi công đổ bê tông sàn dầm cột công trình Ninh Bình",
+    caption: "Công nhân thi công cào cán, đầm dùi bê tông tươi mặt sàn nhà xưởng và biệt thự đạt chuẩn kỹ thuật TCVN.",
+    keywords: ["sàn", "đổ sàn", "đầm dùi", "mác 250", "nhà phố", "dầm", "cột", "thi công", "quy trình"]
+  },
+  {
+    id: "xe-bon",
+    url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1200&auto=format&fit=crop&q=80",
+    alt: "Đội xe bồn vận chuyển bê tông thương phẩm An Gia Bình",
+    caption: "Đội ngũ hơn 35 xe bồn chuyên dụng vận chuyển bê tông tươi giao tận chân công trình khắp Ninh Bình.",
+    keywords: ["xe bồn", "xe", "vận chuyển", "xe bồn bê tông", "giao hàng", "đội xe", "tiến độ"]
+  },
+  {
+    id: "xe-bom",
+    url: "https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=1200&auto=format&fit=crop&q=80",
+    alt: "Xe bơm cần bê tông tươi vươn cao tại công trình Ninh Bình",
+    caption: "Xe bơm cần 37m - 56m công suất lớn vươn cần đổ bê tông sàn cao tầng nhanh chóng, chuẩn xác.",
+    keywords: ["bơm", "xe bơm", "bơm cần", "bơm tĩnh", "cần 52m", "cần 37m", "áp lực cao", "độ cao"]
+  },
+  {
+    id: "thi-nghiem",
+    url: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=1200&auto=format&fit=crop&q=80",
+    alt: "Kiểm tra độ sụt và đúc mẫu thử nén bê tông tươi",
+    caption: "Cán bộ kỹ thuật đo độ sụt bằng nón côn chuẩn và đúc tổ mẫu lập phương lưu nghiệm thu tại phòng LAS-XD.",
+    keywords: ["độ sụt", "thí nghiệm", "mác", "kiểm định", "mẫu nén", "tcvn", "chất lượng", "mác 300", "tiêu chuẩn"]
+  },
+  {
+    id: "bao-duong",
+    url: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1200&auto=format&fit=crop&q=80",
+    alt: "Bảo dưỡng bề mặt bê tông tươi sau khi đổ",
+    caption: "Quy trình dưỡng hộ ẩm 7 ngày vàng giúp bê tông phát triển tối đa cường độ R28 và ngăn ngừa co ngót nứt nẻ.",
+    keywords: ["bảo dưỡng", "nứt", "tưới nước", "dưỡng hộ", "7 ngày", "chống nứt", "co ngót"]
+  },
+  {
+    id: "chong-tham",
+    url: "https://images.unsplash.com/photo-1574958269340-fa927503f3dd?w=1200&auto=format&fit=crop&q=80",
+    alt: "Thi công bê tông chống thấm móng và tầng hầm",
+    caption: "Ứng dụng bê tông tươi mác cao chống thấm cấp B6, B8 cho các hạng mục móng bè, hố pit và bể nước.",
+    keywords: ["chống thấm", "móng", "tầng hầm", "mác 350", "bể bơi", "hố móng", "b6", "b8"]
+  },
+  {
+    id: "ha-tang",
+    url: "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=1200&auto=format&fit=crop&q=80",
+    alt: "Công trình hạ tầng và nhà xưởng bê tông cốt thép",
+    caption: "Đại công trường hạ tầng khu công nghiệp Khánh Phú và Gián Khẩu sử dụng bê tông An Gia Bình.",
+    keywords: ["hạ tầng", "kcn", "khu công nghiệp", "khánh phú", "gián khẩu", "tam điệp", "nhà xưởng", "dự án"]
+  }
+];
+
+function selectCoverImage(title: string, keywords = ""): { url: string; alt: string; caption: string } {
+  const text = (title + " " + keywords).toLowerCase();
+  for (const item of CONCRETE_IMAGE_CATALOG) {
+    if (item.keywords.some(k => text.includes(k))) {
+      return { url: item.url, alt: item.alt, caption: item.caption };
+    }
+  }
+  // Fallback to primary concrete plant image
+  const def = CONCRETE_IMAGE_CATALOG[0];
+  return { url: def.url, alt: def.alt, caption: def.caption };
+}
+
+function enrichContentWithImages(content: string, title: string, keywords = "", coverUrl = ""): string {
+  // Count existing images
+  const existingMatches = content.match(/!\[.*?\]\(.*?\)/g);
+  if (existingMatches && existingMatches.length >= 2) {
+    return content; // Already has sufficient images
+  }
+
+  // Filter available images avoiding the cover image if possible
+  const candidatePool = CONCRETE_IMAGE_CATALOG.filter(img => img.url !== coverUrl);
+  const imagesToInsert: Array<{ url: string; alt: string; caption: string }> = [];
+
+  // Pick 2-3 distinct images from the pool
+  const text = (title + " " + keywords + " " + content.slice(0, 1000)).toLowerCase();
+  
+  // Sort candidate pool by keyword match relevance
+  const scored = candidatePool.map(img => ({
+    img,
+    score: img.keywords.filter(k => text.includes(k)).length
+  })).sort((a, b) => b.score - a.score);
+
+  imagesToInsert.push(scored[0].img);
+  if (scored.length > 1) imagesToInsert.push(scored[1].img);
+  if (scored.length > 2) imagesToInsert.push(scored[2].img);
+
+  // Find H2 headings to insert images after
+  const lines = content.split('\n');
+  const h2Indices: number[] = [];
+
+  lines.forEach((line, idx) => {
+    if (/^##\s+/.test(line.trim())) {
+      h2Indices.push(idx);
+    }
+  });
+
+  if (h2Indices.length === 0) {
+    // If no H2 found, append an illustration at bottom or middle
+    const mid = Math.floor(lines.length / 2);
+    const img1 = imagesToInsert[0];
+    lines.splice(mid, 0, `\n\n![${img1.alt}](${img1.url})\n*Hình 1: ${img1.caption}*\n\n`);
+    return lines.join('\n');
+  }
+
+  // Insert image after 2nd H2 (or 1st if only one exists)
+  let insertCount = 0;
+  let offset = 0;
+
+  for (let i = 0; i < h2Indices.length && insertCount < imagesToInsert.length; i++) {
+    // Insert at section 2, 3, and 5 (skip section 1 so intro stays clean)
+    if (i === 1 || i === 2 || (i === 4 && imagesToInsert.length >= 3)) {
+      const targetLineIdx = h2Indices[i] + offset + 2; // Insert after heading and intro paragraph
+      const img = imagesToInsert[insertCount];
+      const imageBlock = `\n![${img.alt}](${img.url})\n*Hình ${insertCount + 1}: ${img.caption}*\n`;
+      
+      lines.splice(targetLineIdx, 0, imageBlock);
+      offset++;
+      insertCount++;
+    }
+  }
+
+  // Fallback if not inserted yet
+  if (insertCount === 0 && imagesToInsert.length > 0) {
+    const targetLineIdx = Math.min(lines.length - 1, (h2Indices[0] || 0) + 3);
+    const img = imagesToInsert[0];
+    lines.splice(targetLineIdx, 0, `\n![${img.alt}](${img.url})\n*Hình 1: ${img.caption}*\n`);
+  }
+
+  return lines.join('\n');
+}
+
 export async function POST(req: NextRequest) {
   let mainKeyword = "bê tông tươi ninh bình";
   let sourceTitle = "";
+
   try {
     const body = await req.json().catch(() => ({}));
     sourceTitle = body.sourceTitle || "";
@@ -14,8 +156,10 @@ export async function POST(req: NextRequest) {
     const primaryKeyword = body.primaryKeyword;
     const secondaryKeywords = body.secondaryKeywords;
     const internalLinks = body.internalLinks;
+    const aiConfigs = body.aiConfigs;
+    const apiKey = body.apiKey || aiConfigs?.gemini?.apiKey || process.env.GEMINI_API_KEY;
 
-    const ai = getGeminiClient();
+    const ai = getGeminiClient(apiKey);
 
     mainKeyword = primaryKeyword || (customKeywords ? customKeywords.split(',')[0].trim() : "bê tông tươi ninh bình");
     const subKeywords = secondaryKeywords || "bê tông an gia bình, giá bê tông tươi ninh bình, kỹ thuật đổ bê tông, xe bơm bê tông ninh bình";
@@ -27,9 +171,17 @@ export async function POST(req: NextRequest) {
       ? internalLinks.map((l: { title?: string; text?: string; url: string }) => `- [${l.text || l.title || l.url}](${l.url})`).join('\n')
       : `- [Báo giá bê tông tươi Ninh Bình](/bang-gia)\n- [Giới thiệu Trạm trộn Bê Tông An Gia Bình](/gioi-thieu)\n- [Quy trình kiểm định và sản xuất](/quy-trinh-san-xuat)\n- [Dự án tiêu biểu tại Ninh Bình](/du-an)\n- [Liên hệ đặt lịch đổ bê tông](/lien-he)\n- [Trang chủ Bê Tông An Gia Bình](/)`;
 
+    // Choose relevant cover image
+    const chosenCover = selectCoverImage(sourceTitle || topicHeading, combinedKeywords);
+
+    // Provide image catalog in prompt so Gemini can pick contextual images
+    const imageCatalogForPrompt = CONCRETE_IMAGE_CATALOG.map((img, idx) => 
+      `${idx + 1}. URL: ${img.url} | Chủ đề: ${img.alt} | Chú thích gợi ý: ${img.caption}`
+    ).join('\n');
+
     const prompt = `Bạn là Giám Đốc Nội Dung Chuẩn SEO Cấp Cao (SEO Content Director) kiêm Chuyên Gia Kỹ Thuật Công Trình của CÔNG TY TNHH BÊ TÔNG AN GIA BÌNH tại Ninh Bình (Hotline: 0988 2662 93 - Email: ketoan.angiabinh@gmail.com).
 
-HÃY VIẾT MỘT BÀI VIẾT CHUẨN SEO CHUYÊN SÂU TỐI THIỂU 1.000 TỪ (BẮT BUỘC >= 1000 WORDS) VỚI CÁC THÔNG SỐ SAU:
+HÃY VIẾT MỘT BÀI VIẾT CHUẨN SEO CHUYÊN SÂU TỐI THIỂU 1.000 TỪ (BẮT BUỘC >= 1000 WORDS) KÈM HÌNH ẢNH MINH HỌA VỚI CÁC THÔNG SỐ SAU:
 
 1. THÔNG TIN ĐẦU VÀO:
 - Chủ đề tập trung (Focus Topic): ${topicHeading}
@@ -42,11 +194,19 @@ ${rawContent || "Công nghệ sản xuất bê tông tươi thương phẩm hi�
 - Từ khóa chính (Primary Keyword): "${mainKeyword}" -> Xuất hiện ở Tiêu đề (H1), đoạn mở đầu (100 từ đầu), ít nhất 2 thẻ H2/H3, rải đều trong thân bài (mật độ 1.5% - 2.5%), và đoạn kết luận (Call to action).
 - Từ khóa phụ (Secondary Keywords): ${subKeywords} -> Lồng ghép tự nhiên, mượt mà vào các luận điểm kỹ thuật và ví dụ thực tế.
 
-3. LIÊN KẾT NỘI BỘ (INTERNAL LINKS) BẮT BUỘC PHẢI CHÈN VÀO BÀI VIẾT:
+3. HÌNH ẢNH MINH HỌA BẮT BUỘC TRONG THÂN BÀI VIẾT (MARKDOWN):
+BẮT BUỘC chèn ít nhất 2 đến 3 hình ảnh minh họa chân thực vào các đoạn phù hợp bằng cú pháp Markdown:
+![Chú thích ảnh tiếng Việt](URL_HÌNH_ẢNH)
+*Hình X: Chú thích chi tiết nội dung ảnh liên quan đến công trình Ninh Bình.*
+
+DANH SÁCH ẢNH CHÍNH XÁC ĐƯỢC PHÉP CHỌN DÙNG (DÙNG ĐÚNG URL BÊN DƯỚI, KHÔNG TỰ BỊA URL KHÁC):
+${imageCatalogForPrompt}
+
+4. LIÊN KẾT NỘI BỘ (INTERNAL LINKS) BẮT BUỘC PHẢI CHÈN VÀO BÀI VIẾT:
 Hãy chọn lọc ít nhất 3 đến 5 liên kết từ danh sách dưới đây và chèn tự nhiên vào các đoạn văn phù hợp bằng cú pháp Markdown [Anchor Text](/url):
 ${linksList}
 
-4. YÊU CẦU ĐỘ DÀI VÀ CẤU TRÚC:
+5. YÊU CẦU ĐỘ DÀI VÀ CẤU TRÚC:
 - ĐỘ DÀI: TỐI THIỂU 1.000 TỪ (Nội dung chi tiết, phân tích sâu sắc, không viết vắn tắt hay sáo rỗng).
 - BỐ CỤC BÀI VIẾT:
   + Mở bài cuốn hút nêu bối cảnh xây dựng tại Ninh Bình và tầm quan trọng của chủ đề.
@@ -56,7 +216,7 @@ ${linksList}
   + Chèn khéo léo thương hiệu "Bê Tông An Gia Bình" (2 trạm trộn Khánh Phú & Kim Sơn, đội xe 35+ xe bồn, bơm cần 37m-56m, phòng LAS kiểm định).
   + Kết luận kèm thông tin liên hệ và kêu gọi hành động đặt hàng.
 
-5. ĐỊNH DẠNG ĐẦU RA (JSON THUẦN TÚY):
+6. ĐỊNH DẠNG ĐẦU RA (JSON THUẦN TÚY):
 {
   "title": "Tiêu đề chuẩn SEO chứa từ khóa chính hấp dẫn",
   "slug": "tieu-de-khong-dau-chuan-url-than-thien",
@@ -67,8 +227,8 @@ ${linksList}
   "category": "Kỹ Thuật Thi Công",
   "tags": ["bê tông tươi ninh bình", "bê tông an gia bình", "${mainKeyword}"],
   "readTime": "8 phút",
-  "content": "Toàn bộ bài viết Markdown chi tiết >= 1000 từ có lồng ghép từ khóa chính, từ khóa phụ và các internal links dạng [anchor](/url)",
-  "coverImage": "https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1000&auto=format&fit=crop&q=80"
+  "coverImage": "${chosenCover.url}",
+  "content": "Toàn bộ bài viết Markdown chi tiết >= 1000 từ có lồng ghép từ khóa chính, từ khóa phụ, 2-3 ảnh minh họa ![alt](url) và các internal links dạng [anchor](/url)"
 }`;
 
     if (!ai) {
@@ -81,18 +241,8 @@ ${linksList}
         .replace(/^-+|-+$/g, "");
 
       const fallbackTitle = `${mainKeyword.charAt(0).toUpperCase() + mainKeyword.slice(1)}: Hướng Dẫn Kỹ Thuật Toàn Diện & Phân Tích Thực Tiễn Tại Ninh Bình`;
-      const fallbackPost = {
-        title: fallbackTitle,
-        slug: slug ? `${slug}-${Date.now().toString().slice(-4)}` : `bai-viet-seo-${Date.now()}`,
-        excerpt: `Cẩm nang chuyên sâu về ${mainKeyword} từ kỹ sư Bê Tông An Gia Bình: Tiêu chuẩn TCVN, bảng cấp phối mác 200 - 350, kỹ thuật đổ sàn dầm cột và quy trình bảo dưỡng chuẩn xác.`,
-        seoTitle: `${fallbackTitle} | Bê Tông An Gia Bình`,
-        seoDescription: `Phân tích chuyên sâu về ${mainKeyword} tại Ninh Bình: Cấp phối mác chuẩn, kỹ thuật đầm nén, bảo dưỡng 7 ngày vàng. Xem [báo giá bê tông tươi Ninh Bình](/bang-gia) mới nhất.`,
-        focusKeywords: [mainKeyword, "bê tông an gia bình", "kỹ thuật đổ bê tông", "giá bê tông tươi ninh bình"],
-        category: "Kinh Nghiệm",
-        tags: [mainKeyword, "bê tông an gia bình", "tiêu chuẩn tcvn", "trạm trộn ninh bình", "kỹ thuật thi công"],
-        readTime: "9 phút",
-        coverImage: "https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1000&auto=format&fit=crop&q=80",
-        content: `## 1. Tổng Quan Về ${mainKeyword.toUpperCase()} Trong Công Trình Hiện Đại Tại Ninh Bình
+      
+      const rawFallbackContent = `## 1. Tổng Quan Về ${mainKeyword.toUpperCase()} Trong Công Trình Hiện Đại Tại Ninh Bình
 
 Trong bức tranh phát triển hạ tầng và xây dựng dân dụng bùng nổ tại tỉnh Ninh Bình, nhu cầu sử dụng **${mainKeyword}** đạt chuẩn chất lượng ngày càng trở thành yêu cầu tiên quyết của các chủ đầu tư, kiến trúc sư và nhà thầu xây dựng. Từ các công trình biệt thự, nhà phố tại trung tâm TP. Ninh Bình, TP. Tam Điệp cho đến các khu nhà xưởng trọng điểm tại KCN Khánh Phú, KCN Gián Khẩu, việc ứng dụng bê tông thương phẩm từ trạm trộn chuyên nghiệp đã thay thế hoàn toàn phương pháp trộn thủ công truyền thống.
 
@@ -171,7 +321,22 @@ Công ty TNHH Bê Tông An Gia Bình là đối tác tin cậy của nhiều nh�
 - **Văn phòng & Trạm 1:** KCN Khánh Phú, Phường Đông Hoa Lư, Tỉnh Ninh Bình.
 - **Trạm 2:** Xã Kim Sơn, Tỉnh Ninh Bình.
 - **Trang chủ chính thức:** [Bê Tông An Gia Bình](/)
-`
+`;
+
+      const enrichedContent = enrichContentWithImages(rawFallbackContent, fallbackTitle, combinedKeywords, chosenCover.url);
+
+      const fallbackPost = {
+        title: fallbackTitle,
+        slug: slug ? `${slug}-${Date.now().toString().slice(-4)}` : `bai-viet-seo-${Date.now()}`,
+        excerpt: `Cẩm nang chuyên sâu về ${mainKeyword} từ kỹ sư Bê Tông An Gia Bình: Tiêu chuẩn TCVN, bảng cấp phối mác 200 - 350, kỹ thuật đổ sàn dầm cột và quy trình bảo dưỡng chuẩn xác.`,
+        seoTitle: `${fallbackTitle} | Bê Tông An Gia Bình`,
+        seoDescription: `Phân tích chuyên sâu về ${mainKeyword} tại Ninh Bình: Cấp phối mác chuẩn, kỹ thuật đầm nén, bảo dưỡng 7 ngày vàng. Xem [báo giá bê tông tươi Ninh Bình](/bang-gia) mới nhất.`,
+        focusKeywords: [mainKeyword, "bê tông an gia bình", "kỹ thuật đổ bê tông", "giá bê tông tươi ninh bình"],
+        category: "Kinh Nghiệm",
+        tags: [mainKeyword, "bê tông an gia bình", "tiêu chuẩn tcvn", "trạm trộn ninh bình", "kỹ thuật thi công"],
+        readTime: "9 phút",
+        coverImage: chosenCover.url,
+        content: enrichedContent
       };
 
       return NextResponse.json(fallbackPost);
@@ -190,12 +355,17 @@ Công ty TNHH Bê Tông An Gia Bình là đối tác tin cậy của nhiều nh�
     const cleanJson = text.replace(/^```json\s*/i, "").replace(/\s*```$/, "").trim();
     const parsed = JSON.parse(cleanJson);
 
+    // Ensure cover image and in-body illustration images are present
+    const finalCover = parsed.coverImage || chosenCover.url;
+    parsed.coverImage = finalCover;
+    parsed.content = enrichContentWithImages(parsed.content || "", parsed.title || topicHeading, combinedKeywords, finalCover);
+
     return NextResponse.json(parsed);
 
   } catch (err: unknown) {
     console.error("AI crawl & rewrite error, falling back to deterministic engine:", err);
     
-    // Deterministic fallback so scheduler NEVER breaks
+    // Deterministic fallback with enriched images so scheduler NEVER breaks
     const fallbackTitle = `${mainKeyword.charAt(0).toUpperCase() + mainKeyword.slice(1)}: Hướng Dẫn Kỹ Thuật Toàn Diện & Phân Tích Thực Tiễn Tại Ninh Bình`;
     const slug = (sourceTitle || "cong-nghe-be-tong-an-gia-binh")
       .toLowerCase()
@@ -204,18 +374,9 @@ Công ty TNHH Bê Tông An Gia Bình là đối tác tin cậy của nhiều nh�
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
-    const fallbackPost = {
-      title: fallbackTitle,
-      slug: slug ? `${slug}-${Date.now().toString().slice(-4)}` : `bai-viet-seo-${Date.now()}`,
-      excerpt: `Cẩm nang chuyên sâu về ${mainKeyword} từ kỹ sư Bê Tông An Gia Bình: Tiêu chuẩn TCVN, bảng cấp phối mác 200 - 350, kỹ thuật đổ sàn dầm cột và quy trình bảo dưỡng chuẩn xác.`,
-      seoTitle: `${fallbackTitle} | Bê Tông An Gia Bình`,
-      seoDescription: `Phân tích chuyên sâu về ${mainKeyword} tại Ninh Bình: Cấp phối mác chuẩn, kỹ thuật đầm nén, bảo dưỡng 7 ngày vàng. Xem [báo giá bê tông tươi Ninh Bình](/bang-gia) mới nhất.`,
-      focusKeywords: [mainKeyword, "bê tông an gia bình", "kỹ thuật đổ bê tông", "giá bê tông tươi ninh bình"],
-      category: "Kinh Nghiệm",
-      tags: [mainKeyword, "bê tông an gia bình", "tiêu chuẩn tcvn", "trạm trộn ninh bình", "kỹ thuật thi công"],
-      readTime: "9 phút",
-      coverImage: "https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1000&auto=format&fit=crop&q=80",
-      content: `## 1. Tổng Quan Về ${mainKeyword.toUpperCase()} Trong Công Trình Hiện Đại Tại Ninh Bình
+    const chosenCover = selectCoverImage(fallbackTitle, mainKeyword);
+
+    const rawFallback = `## 1. Tổng Quan Về ${mainKeyword.toUpperCase()} Trong Công Trình Hiện Đại Tại Ninh Bình
 
 Trong bức tranh phát triển hạ tầng và xây dựng dân dụng bùng nổ tại tỉnh Ninh Bình, nhu cầu sử dụng **${mainKeyword}** đạt chuẩn chất lượng ngày càng trở thành yêu cầu tiên quyết của các chủ đầu tư, kiến trúc sư và nhà thầu xây dựng. Từ các công trình biệt thự, nhà phố tại trung tâm TP. Ninh Bình, TP. Tam Điệp cho đến các khu nhà xưởng trọng điểm tại KCN Khánh Phú, KCN Gián Khẩu, việc ứng dụng bê tông thương phẩm từ trạm trộn chuyên nghiệp đã thay thế hoàn toàn phương pháp trộn thủ công truyền thống.
 
@@ -285,7 +446,22 @@ Việc lựa chọn đơn vị cung ứng bê tông uy tín có trạm trộn g�
   </div>
 </div>
 
-Quý khách hàng có nhu cầu khảo sát địa hình, đặt lịch đổ bê tông hoặc điều xe bồn xe bơm, xin vui lòng [liên hệ đặt lịch đổ bê tông](/lien-he) với kỹ sư Bê Tông An Gia Bình qua Hotline **0988 2662 93** để được phục vụ chu đáo nhất!`
+Quý khách hàng có nhu cầu khảo sát địa hình, đặt lịch đổ bê tông hoặc điều xe bồn xe bơm, xin vui lòng [liên hệ đặt lịch đổ bê tông](/lien-he) với kỹ sư Bê Tông An Gia Bình qua Hotline **0988 2662 93** để được phục vụ chu đáo nhất!`;
+
+    const enrichedFallback = enrichContentWithImages(rawFallback, fallbackTitle, mainKeyword, chosenCover.url);
+
+    const fallbackPost = {
+      title: fallbackTitle,
+      slug: slug ? `${slug}-${Date.now().toString().slice(-4)}` : `bai-viet-seo-${Date.now()}`,
+      excerpt: `Cẩm nang chuyên sâu về ${mainKeyword} từ kỹ sư Bê Tông An Gia Bình: Tiêu chuẩn TCVN, bảng cấp phối mác 200 - 350, kỹ thuật đổ sàn dầm cột và quy trình bảo dưỡng chuẩn xác.`,
+      seoTitle: `${fallbackTitle} | Bê Tông An Gia Bình`,
+      seoDescription: `Phân tích chuyên sâu về ${mainKeyword} tại Ninh Bình: Cấp phối mác chuẩn, kỹ thuật đầm nén, bảo dưỡng 7 ngày vàng. Xem [báo giá bê tông tươi Ninh Bình](/bang-gia) mới nhất.`,
+      focusKeywords: [mainKeyword, "bê tông an gia bình", "kỹ thuật đổ bê tông", "giá bê tông tươi ninh bình"],
+      category: "Kinh Nghiệm",
+      tags: [mainKeyword, "bê tông an gia bình", "tiêu chuẩn tcvn", "trạm trộn ninh bình", "kỹ thuật thi công"],
+      readTime: "9 phút",
+      coverImage: chosenCover.url,
+      content: enrichedFallback
     };
 
     return NextResponse.json(fallbackPost);
