@@ -168,10 +168,13 @@ function getRelatedInternalPosts(topic: string, keywords: string, count = 4): Ar
     .sort((a, b) => b.score - a.score)
     .slice(0, count);
 
-    return scored.map(item => ({
-      title: item.p.title,
-      url: `/${item.p.slug}`
-    }));
+    return scored.map(item => {
+      const clean = (item.p.slug || item.p.id || '').replace(/\.html$/, '');
+      return {
+        title: item.p.title,
+        url: `/${clean}.html`
+      };
+    });
   } catch (err) {
     console.warn("Could not get related internal posts:", err);
     return [];
@@ -520,11 +523,14 @@ export async function POST(req: NextRequest) {
     const relatedArticles = getRelatedInternalPosts(topicHeading, combinedKeywords, 4);
     const keyPages = [
       { title: "Báo giá bê tông tươi Ninh Bình mới nhất", url: "/bang-gia" },
+      { title: "Bê tông tươi thương phẩm mác 200 - 400", url: "/be-tong-thuong-pham.html" },
+      { title: "Dịch vụ bơm bê tông tĩnh và cần cao áp", url: "/bom-be-tong.html" },
+      { title: "Bê tông tươi TP Ninh Bình", url: "/be-tong-tuoi-tp-ninh-binh.html" },
+      { title: "Bê tông tươi Tam Điệp", url: "/be-tong-tuoi-tam-diep.html" },
       { title: "Giới thiệu Trạm trộn Bê Tông An Gia Bình", url: "/gioi-thieu" },
       { title: "Quy trình kiểm định và sản xuất chuẩn TCVN", url: "/quy-trinh-san-xuat" },
       { title: "Dự án công trình tiêu biểu tại Ninh Bình", url: "/du-an" },
-      { title: "Liên hệ đặt lịch và điều xe đổ bê tông", url: "/lien-he" },
-      { title: "Trang chủ Bê Tông An Gia Bình", url: "/" }
+      { title: "Liên hệ đặt lịch và điều xe đổ bê tông", url: "/lien-he" }
     ];
 
     const mergedLinks = Array.isArray(internalLinks) && internalLinks.length > 0

@@ -1646,8 +1646,8 @@ export const initialSchemaSettings: SchemaSettings = {
 };
 
 export const initialAiSchedulerConfig: AiSchedulerConfig = {
-  isEnabled: false,
-  enabled: false,
+  isEnabled: true,
+  enabled: true,
   frequencyHours: 8,
   frequency: "3_times_daily",
   publishTime: "06:00",

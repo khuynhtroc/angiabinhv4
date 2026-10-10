@@ -805,6 +805,507 @@ export const SERVICES_DATABASE: Record<string, ServiceDetail> = {
         answer: 'Công trình nên dùng bê tông ninh kết chậm khi: (1) Khối đổ có chiều dày từ 0.8m trở lên (đài móng bè, mố cầu), (2) Khối lượng bê tông lớn đòi hỏi thời gian đổ kéo dài trên 4 - 6 giờ, (3) Khoảng cách vận chuyển từ trạm trộn đến công trường xa hoặc thời tiết mùa hè nắng gắt nhiệt độ cao.'
       }
     ]
+  },
+  // 11. BÊ TÔNG TƯƠI TP NINH BÌNH
+  'be-tong-tuoi-tp-ninh-binh': {
+    title: 'Bê Tông Tươi TP Ninh Bình - Trạm Trộn Cấp Mác 150 - 400 & Xe Bơm 52m',
+    categoryName: 'Địa Bàn Hoạt Động',
+    badge: 'Trung Tâm Tỉnh Lỵ',
+    heroImage: 'https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1200&auto=format&fit=crop&q=80',
+    description: 'Cung cấp bê tông tươi thương phẩm tại toàn bộ 14 phường, xã Thành phố Ninh Bình (Đông Thành, Nam Thành, Phúc Thành, Bích Đào, Vân Giang, Nam Bình, Ninh Khánh, Ninh Phong, KĐT Xuân Thành, KĐT Phúc Sơn). Cự ly vận chuyển chỉ 15 - 25 phút từ Trạm trộn KCN Khánh Phú.',
+    specifications: [
+      { label: 'Cấp mác cung cấp', value: 'M150, M200, M250, M300, M350, M400 chuẩn TCVN' },
+      { label: 'Cự ly trạm trộn', value: '5 - 12 km từ Cụm trạm đôi KCN Khánh Phú' },
+      { label: 'Thời gian giao hàng', value: '15 - 25 phút từ lúc xuất xưởng' },
+      { label: 'Đội xe phục vụ', value: '35+ xe bồn bồn quay 10 - 12m³' },
+      { label: 'Xe bơm cơ giới', value: 'Xe bơm cần 37m - 56m & Bơm tĩnh luồn ngõ 150m' },
+      { label: 'Hotline điều độ', value: '0988 2662 93 (Kỹ sư trực 24/7)' }
+    ],
+    applications: [
+      'Đổ móng bè, dầm sàn, cột biệt thự tân cổ điển KĐT Xuân Thành & Phúc Sơn',
+      'Đổ sàn nhà ống, nhà phố liền kề các tuyến đường Lê Hồng Phong, Trần Hưng Đạo',
+      'Giải pháp bơm tĩnh vượt ngõ hẹp cho các khu phố cổ Vân Giang, Bích Đào',
+      'Đổ sàn showroom, khách sạn, nhà hàng trung tâm thành phố'
+    ],
+    advantages: [
+      'Bê tông luôn tươi nguyên nhờ cự ly vận chuyển siêu ngắn dưới 25 phút',
+      'Đo độ sụt nón côn Abrams và đúc 3 tổ mẫu lưu nghiệm thu trực tiếp',
+      'Kẹp chì niêm phong xe bồn tuyệt đối chống lái xe pha nước làm loãng mác',
+      'Hỗ trợ khảo sát mặt bằng, dây điện và đường ngõ hoàn toàn miễn phí'
+    ],
+    sections: [
+      {
+        title: 'Năng Lực Cung Ứng Bê Tông Tươi Tại Thành Phố Ninh Bình',
+        content: 'Với vị trí chiến lược của Cụm trạm trộn KCN Khánh Phú (công suất 300m³/h) nằm ngay sát cửa ngõ phía Đông Nam TP Ninh Bình, Bê Tông An Gia Bình cam kết điều độ xe bồn liên tục chỉ sau 15 đến 20 phút chạy xe. Đội ngũ kỹ sư hiện trường luôn sẵn sàng khảo sát đường dây điện, độ rộng ngõ và mặt bằng đỗ chân xe bơm cần.',
+        points: [
+          'Phục vụ nhanh chóng các phường: Đông Thành, Nam Thành, Phúc Thành, Bích Đào, Thanh Bình, Vân Giang, Nam Bình, Ninh Khánh, Ninh Phong, Ninh Tiến, Ninh Phúc, Ninh Nhất.',
+          'Hỗ trợ xin cấp phép lưu hành xe bồn ban ngày tại các tuyến phố cấm tải theo quy định.',
+          'Bơm tĩnh chuyên dụng nối ống luồn sâu tới 150m cho các ngõ hẹp chỉ rộng từ 1.8m đến 2.5m.'
+        ]
+      }
+    ],
+    internalLinks: [
+      { title: 'Báo Giá Bê Tông Ninh Bình', href: '/bang-gia', description: 'Bảng giá mác 200 - 350 mới nhất.', badge: 'Báo Giá' },
+      { title: 'Bê Tông Tươi Toàn Diện', href: '/be-tong-tuoi', description: 'Các dòng sản phẩm bê tông thương phẩm.', badge: 'Sản Phẩm' },
+      { title: 'Dịch Vụ Xe Bơm Bê Tông', href: '/bom-be-tong', description: 'Xe bơm cần 37m - 56m và bơm tĩnh.', badge: 'Xe Bơm' },
+      { title: 'Quy Trình Kiểm Định LAS-XD', href: '/quy-trinh-san-xuat', description: 'Tiêu chuẩn nén mẫu R7, R28.', badge: 'Chất Lượng' }
+    ],
+    faqs: [
+      {
+        question: 'Nhà tôi ở phố cổ Vân Giang ngõ chỉ rộng 2m thì xe bê tông có đổ được không?',
+        answer: 'Hoàn toàn đổ được. An Gia Bình sử dụng dàn xe bơm tĩnh áp lực cao đỗ ngoài đường lớn và nối đường ống thép luồn qua ngõ sâu tới 150m, rót bê tông tận chân công trình an toàn và sạch sẽ.'
+      }
+    ]
+  },
+
+  // 12. BÊ TÔNG TƯƠI TAM ĐIỆP
+  'be-tong-tuoi-tam-diep': {
+    title: 'Bê Tông Tươi Tam Điệp - Cung Cấp Mác Chuẩn TCVN & Xe Bơm Vượt Địa Hình Dốc',
+    categoryName: 'Địa Bàn Hoạt Động',
+    badge: 'Đô Thị Phía Tây',
+    heroImage: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?w=1200&auto=format&fit=crop&q=80',
+    description: 'Trạm trộn bê tông tươi cung ứng khắp Thành phố Tam Điệp: Bắc Sơn, Nam Sơn, Trung Sơn, Tây Sơn, Yên Bình, Tân Bình, Quang Sơn, Đông Sơn, KCN Tam Điệp 1 & 2. Cấp phối mác chuẩn TCVN, phụ gia chống nứt phù hợp địa hình đồi dốc.',
+    specifications: [
+      { label: 'Cấp mác cung cấp', value: 'M150, M200, M250, M300, M350, M400' },
+      { label: 'Cự ly trạm trộn', value: '18 - 25 km qua QL1A hoặc đường tránh' },
+      { label: 'Khu công nghiệp', value: 'Phục vụ KCN Tam Điệp 1, KCN Tam Điệp 2' },
+      { label: 'Địa hình phục vụ', value: 'Vượt dốc đồi, đường đèo sườn núi đá vôi' },
+      { label: 'Đội xe cơ giới', value: 'Xe bồn công suất lớn & Bơm cần 43m - 56m' },
+      { label: 'Hotline 24/7', value: '0988 2662 93' }
+    ],
+    applications: [
+      'Đổ móng và sàn nhà xưởng cơ khí, may mặc tại KCN Tam Điệp',
+      'Đổ biệt thự đồi, nhà vườn nghỉ dưỡng tại Quang Sơn, Đông Sơn',
+      'Đổ móng nhà phố kiên cố trên nền đất đồi sét sỏi son',
+      'Đổ đường bê tông đồi, kè chắn đất chống sạt lở'
+    ],
+    advantages: [
+      'Phụ gia duy trì độ sụt ổn định suốt cung đường vận chuyển Tam Điệp',
+      'Xe bơm cần chân nhện bám dốc an toàn trên địa hình đồi cao',
+      'Cung ứng liên tục các ca đổ móng khối lớn 300m³ - 1000m³',
+      'Đầy đủ hóa đơn VAT và chứng chỉ xuất xưởng cho dự án'
+    ],
+    sections: [
+      {
+        title: 'Giải Pháp Thi Công Bê Tông Thương Phẩm Tại Thành Phố Tam Điệp',
+        content: 'Tam Điệp có nền địa chất đồi gạch bazan và đá vôi già rất vững chắc, thuận lợi cho kết cấu móng nông. Tuy nhiên, việc thi công trên các sườn dốc đòi hỏi xe bồn có động cơ khỏe và xe bơm cần có hệ thống chân chống thủy lực vững chãi. Bê Tông An Gia Bình đáp ứng đầy đủ các tiêu chuẩn kỹ thuật an toàn cao nhất.',
+        points: [
+          'Điều độ xe bồn liên tục dọc tuyến Quốc Lộ 1A và đường cao tốc Mai Sơn.',
+          'Cấp phối bê tông đặc thù mác 250, 300 chống co ngót nhiệt khi đổ nắng gió đồi.',
+          'Hỗ trợ đúc mẫu và nén mẫu nghiệm thu theo tiêu chuẩn TCVN 3118:1993.'
+        ]
+      }
+    ],
+    internalLinks: [
+      { title: 'Báo Giá Bê Tông Tam Điệp', href: '/bang-gia', description: 'Đơn giá bê tông tươi và ca bơm Tam Điệp.', badge: 'Báo Giá' },
+      { title: 'Bê Tông Tươi Toàn Diện', href: '/be-tong-tuoi', description: 'Phân loại các mác bê tông xây dựng.', badge: 'Sản Phẩm' },
+      { title: 'Dự Án Tiêu Biểu Ninh Bình', href: '/du-an', description: 'Các công trình đã thi công tại Tam Điệp.', badge: 'Dự Án' }
+    ],
+    faqs: [
+      {
+        question: 'Công trình của tôi ở sườn đồi Quang Sơn thì xe bơm có lên được không?',
+        answer: 'Được. Chúng tôi có dàn xe bơm cần và bơm tĩnh chuyên dụng dẫn động 2 cầu, dễ dàng tiếp cận và đỗ chân an toàn trên các sườn đồi dốc tại Tam Điệp.'
+      }
+    ]
+  },
+
+  // 13. BÊ TÔNG TƯƠI KIM SƠN
+  'be-tong-tuoi-kim-son': {
+    title: 'Bê Tông Tươi Kim Sơn - Cụm Trạm Trộn 150m³/h & Bê Tông Chống Thấm B8 Vùng Nước Lợ',
+    categoryName: 'Địa Bàn Hoạt Động',
+    badge: 'Cụm Trạm Trung Tâm',
+    heroImage: 'https://images.unsplash.com/photo-1574958269340-fa927503f3dd?w=1200&auto=format&fit=crop&q=80',
+    description: 'Nhà máy bê tông An Gia Bình cơ sở Kim Sơn công suất 150m³/h phục vụ toàn bộ 25 xã, thị trấn huyện Kim Sơn (Phát Diệm, Bình Minh, Cồn Thoi, Kim Đông, Kim Trung, Định Hóa, Như Hòa, Quang Thiện, Đồng Hướng). Chuyên giải pháp móng bè trên nền đất yếu và bê tông chống thấm mặn B6 - B10.',
+    specifications: [
+      { label: 'Cụm trạm sản xuất', value: 'Trạm trộn tự động An Gia Bình Xã Kim Sơn' },
+      { label: 'Công suất thiết kế', value: '150 m³/h vận hành điều khiển vi tính' },
+      { label: 'Cự ly vận chuyển', value: 'Chỉ 5 - 15 phút tới trung tâm các xã Kim Sơn' },
+      { label: 'Đặc tính bê tông', value: 'Tích hợp phụ gia chống thấm B6, B8 kháng mặn' },
+      { label: 'Đội xe túc trực', value: '15 xe bồn chuyên dụng bồn 10m³ thường trực' },
+      { label: 'Hotline điều độ', value: '0988 2662 93' }
+    ],
+    applications: [
+      'Đổ móng bè, đài giằng chống lún lệch cho nhà phố trên nền đất trũng Kim Sơn',
+      'Bê tông đổ bể nước ăn ngầm, bể phốt tự hoại chống thấm ngược nước lợ',
+      'Đổ sàn nhà thờ giáo xứ, trường học, bệnh viện, nhà nuôi chim yến',
+      'Bê tông công trình thủy lợi, cống ngăn mặn, đê kè ven biển Kim Đông'
+    ],
+    advantages: [
+      'Khoảng cách siêu gần giúp bê tông tươi nguyên, không lo đông kết dọc đường',
+      'Cấp phối xi măng bền sunfat kháng muối mặn cho vùng ven biển',
+      'Đội ngũ thợ lắp đường ống bơm tĩnh luồn sâu vào các làng nghề truyền thống',
+      'Đo độ sụt nón côn và đúc mẫu nghiệm thu tận chân công trình'
+    ],
+    sections: [
+      {
+        title: 'Giải Pháp Kết Cấu Bê Tông Vùng Đất Trũng Ven Biển Kim Sơn',
+        content: 'Địa chất Kim Sơn có lớp bùn sét phù sa bồi lắng dày và mực nước ngầm nông nhiễm mặn nhẹ. Nếu sử dụng bê tông trộn tay thủ công, chất lượng không đồng đều sẽ gây lún nứt móng và rỉ sét cốt thép chỉ sau vài năm. Trạm trộn Kim Sơn của An Gia Bình ứng dụng cấp phối mác 250 - 300 kết hợp phụ gia chống thấm tinh thể thẩm thấu B8 giúp bảo vệ công trình bền bỉ trăm năm.',
+        points: [
+          'Giao bê tông tận nơi các xã ven biển: Cồn Thoi, Kim Mỹ, Kim Tân, Kim Hải, Kim Trung, Kim Đông.',
+          'Hỗ trợ bơm tĩnh luồn sâu vào các xóm đạo, làng nghề chiếu cói đường ngõ hẹp.',
+          'Cam kết đủ khối lượng, kẹp chì minh bạch, nén mẫu R28 tại phòng LAS-XD.'
+        ]
+      }
+    ],
+    internalLinks: [
+      { title: 'Báo Giá Bê Tông Kim Sơn', href: '/bang-gia', description: 'Đơn giá trực tiếp từ Trạm Kim Sơn.', badge: 'Báo Giá' },
+      { title: 'Bê Tông Chống Thấm B8', href: '/be-tong-tuoi', description: 'Giải pháp chống thấm bể ngầm & móng.', badge: 'Kỹ Thuật' },
+      { title: 'Liên Hệ Điều Xe Bồn Kim Sơn', href: '/lien-he', description: 'Hotline đặt lịch đổ sàn 24/7.', badge: 'Liên Hệ' }
+    ],
+    faqs: [
+      {
+        question: 'Tại Kim Sơn xây nhà 3 tầng nên đổ mác bao nhiêu để không bị lún nứt?',
+        answer: 'Tại Kim Sơn đất yếu, bạn nên đổ mác M250 hoặc M300 cho hệ móng bè dày 35 - 40cm có dầm sườn cao 60 - 70cm, đồng thời tích hợp phụ gia chống thấm B6 để bảo vệ cốt thép khỏi nước ngầm phèn mặn.'
+      }
+    ]
+  },
+
+  // 14. BÊ TÔNG TƯƠI YÊN KHÁNH
+  'be-tong-tuoi-yen-khanh': {
+    title: 'Bê Tông Tươi Yên Khánh - Cung Ứng Siêu Tốc 20 Phút Từ Trạm KCN Khánh Phú',
+    categoryName: 'Địa Bàn Hoạt Động',
+    badge: 'Địa Bàn Trọng Điểm',
+    heroImage: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&auto=format&fit=crop&q=80',
+    description: 'Trạm trộn bê tông tươi phục vụ toàn huyện Yên Khánh: Thị trấn Ninh, Khánh Hòa, Khánh An, Khánh Phú, Khánh Cư, Khánh Hải, Khánh Tiên, Khánh Thiện, Khánh Lợi, Khánh Nhạc, Khánh Hồng, Khánh Mậu, Khánh Hội. Thời gian giao hàng chỉ từ 15 đến 25 phút.',
+    specifications: [
+      { label: 'Cấp mác cung cấp', value: 'M150, M200, M250, M300, M350' },
+      { label: 'Cự ly xuất trạm', value: 'Chỉ 3 - 15 km từ Trạm KCN Khánh Phú' },
+      { label: 'Thời gian có mặt', value: '15 - 20 phút sau khi gọi xe' },
+      { label: 'Cụm công nghiệp', value: 'Phục vụ KCN Khánh Phú, CCN Khánh Nhạc' },
+      { label: 'Xe bơm phục vụ', value: 'Bơm cần 37m - 52m và Bơm tĩnh 120m' },
+      { label: 'Hotline đặt hàng', value: '0988 2662 93' }
+    ],
+    applications: [
+      'Đổ móng và dầm sàn nhà phố dân dụng Thị trấn Ninh & các xã Yên Khánh',
+      'Đổ sàn nhà xưởng may mặc, chế biến nông sản CCN Khánh Nhạc',
+      'Đổ cọc ép bê tông, móng bè cho vùng đất phù sa ven sông Đáy',
+      'Đổ đường giao thông nông thôn mới và kênh mương nội đồng'
+    ],
+    advantages: [
+      'Trạm trộn nằm ngay trên địa bàn huyện (KCN Khánh Phú) nên cước vận chuyển rẻ nhất',
+      'Điều độ xe bồn siêu tốc, không bao giờ bị trễ giờ hoàng đạo của chủ nhà',
+      'Cát vàng sông Lô hạt lớn sàng tuyển sạch bùn sét',
+      'Đo độ sụt nón côn và đúc 3 viên mẫu nén lưu nghiệm thu'
+    ],
+    sections: [
+      {
+        title: 'Lợi Thế Cung Ứng Bê Tông Tươi Tại Huyện Yên Khánh',
+        content: 'Nằm kề bên Trạm trộn trung tâm Khánh Phú công suất 300m³/h, khách hàng tại Yên Khánh luôn nhận được mức đơn giá bê tông tươi ưu đãi nhất tỉnh Ninh Bình do tiết kiệm tối đa cước phí vận chuyển. Đoàn xe bồn và xe bơm cần cơ động qua các tuyến đường ĐT480, ĐT481 nhanh chóng.',
+        points: [
+          'Giao hàng đúng hẹn 100% cho mọi công trình đổ sàn sáng sớm hoặc ca đêm.',
+          'Bê tông đạt chuẩn TCVN 3105:1993 và TCVN 4453:1995.',
+          'Hỗ trợ kỹ thuật đo đạc bóc tách mét khối bê tông miễn phí tại nhà.'
+        ]
+      }
+    ],
+    internalLinks: [
+      { title: 'Báo Giá Bê Tông Yên Khánh', href: '/bang-gia', description: 'Đơn giá mác 250 rẻ nhất Yên Khánh.', badge: 'Báo Giá' },
+      { title: 'Quy Trình Kiểm Định LAS', href: '/quy-trinh-san-xuat', description: 'Nghiệm thu chất lượng mẻ trộn.', badge: 'Chất Lượng' },
+      { title: 'Dự Án Đã Đổ Tại Yên Khánh', href: '/du-an', description: 'Các công trình tiêu biểu huyện Yên Khánh.', badge: 'Dự Án' }
+    ],
+    faqs: [
+      {
+        question: 'Đặt bê tông ở Yên Khánh có được miễn phí ca bơm không?',
+        answer: 'Với các công trình khối lượng từ 50m³ trở lên tại Yên Khánh, Bê Tông An Gia Bình có chính sách chiết khấu giảm giá đặc biệt cho ca xe bơm cần hoặc hỗ trợ tiền ống bơm tĩnh.'
+      }
+    ]
+  },
+
+  // 15. BÊ TÔNG TƯƠI GIA VIỄN
+  'be-tong-tuoi-gia-vien': {
+    title: 'Bê Tông Tươi Gia Viễn - Phục Vụ Thị Trấn Me, KCN Gián Khẩu & Đê Sông Hoàng Long',
+    categoryName: 'Địa Bàn Hoạt Động',
+    badge: 'Phía Bắc Tỉnh',
+    heroImage: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=1200&auto=format&fit=crop&q=80',
+    description: 'Cung cấp bê tông thương phẩm tại Huyện Gia Viễn: Thị trấn Me, Gia Trấn, Gia Tân, Gia Thanh, Gia Xuân, Gia Hòa, Gia Lập, Gia Vượng, Gia Phương, Gia Thắng, Gia Tiến, Gia Trung, CCN Gia Vân, CCN Gia Phú, KCN Gián Khẩu.',
+    specifications: [
+      { label: 'Cấp mác bê tông', value: 'M150, M200, M250, M300, M350, M400' },
+      { label: 'Tuyến đường cơ động', value: 'Quốc Lộ 1A, ĐT477, đường đê sông Hoàng Long' },
+      { label: 'Khu công nghiệp', value: 'KCN Gián Khẩu, CCN Gia Vân, CCN Gia Phú' },
+      { label: 'Đội xe vận chuyển', value: 'Xe bồn 10 - 12m³ vượt đường đê an toàn' },
+      { label: 'Xe bơm bê tông', value: 'Bơm cần 37m - 56m vươn xa' },
+      { label: 'Hotline kỹ thuật', value: '0988 2662 93' }
+    ],
+    applications: [
+      'Đổ sàn nhà xưởng phụ tùng ô tô, may mặc KCN Gián Khẩu',
+      'Đổ móng và sàn nhà dân dụng Thị trấn Me & các xã Gia Viễn',
+      'Đổ kè đê, trạm bơm tiêu úng mùa mưa lũ vùng trũng Gia Viễn',
+      'Đổ công trình văn hóa, đền chùa, khu nghỉ dưỡng du lịch'
+    ],
+    advantages: [
+      'Đội ngũ tài xế thông thuộc đường đê và cầu cống huyện Gia Viễn',
+      'Kiểm soát thời gian vận chuyển dưới 45 phút giữ trọn độ dẻo',
+      'Hỗ trợ xe bơm cần vươn xa vượt qua hành lang đê kè',
+      'Kiểm định chất lượng tại hiện trường có kẹp chì niêm phong'
+    ],
+    sections: [
+      {
+        title: 'Cung Cấp Bê Tông Thương Phẩm Dự Án & Dân Dụng Tại Gia Viễn',
+        content: 'Gia Viễn có các cụm công nghiệp trọng điểm như KCN Gián Khẩu và các khu dân cư trũng dọc lưu vực sông Hoàng Long. Bê Tông An Gia Bình chuyên cung ứng bê tông tươi đạt chuẩn chịu lực cao và phụ gia chống thấm cho các công trình hạ tầng và nhà ở gia đình.',
+        points: [
+          'Cấp phối tối ưu mác 250 - 350 cho nhà xưởng tải nặng.',
+          'Hỗ trợ đúc mẫu nén thí nghiệm LAS-XD bàn giao chủ đầu tư.',
+          'Điều độ xe bồn nhịp nhàng không để ngắt quãng dòng bê tông.'
+        ]
+      }
+    ],
+    internalLinks: [
+      { title: 'Báo Giá Bê Tông Gia Viễn', href: '/bang-gia', description: 'Đơn giá mác bê tông tươi tại Gia Viễn.', badge: 'Báo Giá' },
+      { title: 'Bơm Bê Tông Công Suất Cao', href: '/bom-be-tong', description: 'Dàn xe bơm cần 37m - 56m.', badge: 'Xe Bơm' }
+    ],
+    faqs: [
+      {
+        question: 'Xe bồn bê tông có đi qua được đường đê sông Hoàng Long không?',
+        answer: 'Được. Chúng tôi bố trí các dòng xe bồn tải trọng phù hợp với quy định tải trọng mặt đê Gia Viễn, đảm bảo an toàn đê điều và giao hàng đúng tiến độ.'
+      }
+    ]
+  },
+
+  // 16. BÊ TÔNG TƯƠI NHO QUAN
+  'be-tong-tuoi-nho-quan': {
+    title: 'Bê Tông Tươi Nho Quan - Cung Cấp Mác Cao & Bơm Tĩnh Vượt Địa Hình Đồi Núi',
+    categoryName: 'Địa Bàn Hoạt Động',
+    badge: 'Miền Núi Phía Tây',
+    heroImage: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=1200&auto=format&fit=crop&q=80',
+    description: 'Bê tông thương phẩm tại Huyện Nho Quan: Thị trấn Nho Quan, Đồng Phong, Lạng Phong, Quảng Lạc, Yên Quang, Văn Phú, Gia Thủy, Gia Lâm, Gia Tường, Sơn Lai, Quỳnh Lưu, Phú Long. Bơm tĩnh nối ống luồn sâu thôn xóm đồi dốc.',
+    specifications: [
+      { label: 'Cấp mác cung cấp', value: 'M150, M200, M250, M300, M350' },
+      { label: 'Cung đường phục vụ', value: 'QL12B, ĐT477, đường liên huyện Nho Quan' },
+      { label: 'Đặc thù công trình', value: 'Nhà dân, trang trại, biệt thự sườn đồi, kè đá' },
+      { label: 'Giải pháp ngõ hẹp', value: 'Bơm tĩnh nối ống thép luồn thôn bản 150m' },
+      { label: 'Hotline tư vấn', value: '0988 2662 93' }
+    ],
+    applications: [
+      'Đổ móng và dầm sàn nhà phố Thị trấn Nho Quan, Đồng Phong',
+      'Đổ đường bê tông trang trại, resort sinh thái Cúc Phương',
+      'Đổ móng cột điện cao thế, trạm biến áp trên núi đá',
+      'Đổ kè chắn đất chống sạt lở mùa mưa bão sườn đồi'
+    ],
+    advantages: [
+      'Phụ gia duy trì độ sụt ổn định suốt cung đường dài từ trạm trộn',
+      'Đội ngũ thợ bơm tĩnh dạn dày kinh nghiệm kéo ống sườn đồi',
+      'Cát vàng đá 1x2 tuyển chọn chất lượng cao không lẫn tạp chất',
+      'Đo độ sụt nón côn và nén mẫu R28 nghiệm thu đầy đủ'
+    ],
+    sections: [
+      {
+        title: 'Giải Pháp Đổ Bê Tông Thương Phẩm Địa Hình Đồi Núi Nho Quan',
+        content: 'Cự ly vận chuyển về Nho Quan dài hơn khu vực đồng bằng nên cấp phối bê tông được nghiên cứu tỉ mỉ với phụ gia siêu dẻo kéo dài thời gian ninh kết, giúp bê tông khi đến chân công trình vẫn giữ nguyên độ dẻo và cường độ thiết kế.',
+        points: [
+          'Điều phối xe bồn xuất trạm đúng giờ, chạy thẳng tuyến QL12B.',
+          'Hỗ trợ bơm tĩnh vượt qua các ngõ nhỏ đường làng khúc khuỷu.',
+          'Đảm bảo mác bê tông chuẩn 100%, bảo hành nén mẫu LAS-XD.'
+        ]
+      }
+    ],
+    internalLinks: [
+      { title: 'Báo Giá Bê Tông Nho Quan', href: '/bang-gia', description: 'Bảng giá bê tông tươi tại Nho Quan.', badge: 'Báo Giá' },
+      { title: 'Dịch Vụ Bơm Bê Tông', href: '/bom-be-tong', description: 'Xe bơm cần và bơm kéo tĩnh.', badge: 'Xe Bơm' }
+    ],
+    faqs: [
+      {
+        question: 'Xe bồn chạy từ trạm về Nho Quan có bị khô se mặt bê tông không?',
+        answer: 'Không. Chúng tôi sử dụng phụ gia duy trì độ dẻo công nghệ mới giúp bê tông giữ nguyên độ sụt thiết kế trong suốt 90 - 120 phút trên đường chạy.'
+      }
+    ]
+  },
+
+  // 17. BÊ TÔNG TƯƠI YÊN MÔ
+  'be-tong-tuoi-yen-mo': {
+    title: 'Bê Tông Tươi Yên Mô - Cung Cấp Mác Chuẩn TCVN & Đội Xe Bồn Phục Vụ 24/7',
+    categoryName: 'Địa Bàn Hoạt Động',
+    badge: 'Khu Vực Phía Nam',
+    heroImage: 'https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1200&auto=format&fit=crop&q=80',
+    description: 'Cung cấp bê tông tươi khắp Huyện Yên Mô: Thị trấn Yên Thịnh, Yên Hòa, Yên Từ, Yên Phong, Yên Từ, Mai Sơn, Yên Thái, Yên Lâm, Yên Mạc, Yên Đồng, CCN Mai Sơn. Tiếp giáp 2 cụm trạm Khánh Phú và Kim Sơn nên vận chuyển siêu nhanh.',
+    specifications: [
+      { label: 'Cấp mác cung cấp', value: 'M150, M200, M250, M300, M350' },
+      { label: 'Cự ly xuất trạm', value: '10 - 18 km từ Trạm Kim Sơn hoặc Khánh Phú' },
+      { label: 'Thời gian giao hàng', value: '20 - 30 phút có mặt tại công trình' },
+      { label: 'Khu công nghiệp', value: 'Phục vụ Cụm công nghiệp Mai Sơn' },
+      { label: 'Hotline điều độ', value: '0988 2662 93' }
+    ],
+    applications: [
+      'Đổ móng bè, dầm sàn nhà phố Thị trấn Yên Thịnh & các xã Yên Mô',
+      'Đổ sàn nhà xưởng may, cơ khí tại CCN Mai Sơn',
+      'Đổ móng kiên cố cho nhà ở vùng đất phù sa ven sông Yên Mô',
+      'Đổ đường bê tông giao thông nông thôn mới'
+    ],
+    advantages: [
+      'Nằm ở vị trí trung tâm giữa 2 trạm trộn Khánh Phú và Kim Sơn',
+      'Giá thành cạnh tranh, điều độ xe bồn linh hoạt hai đầu',
+      'Bơm cần vươn cao đổ sàn mái 3-5 tầng dễ dàng',
+      'Kẹp chì niêm phong xe bồn minh bạch 100%'
+    ],
+    sections: [
+      {
+        title: 'Năng Lực Cung Ứng Bê Tông Thương Phẩm Tại Huyện Yên Mô',
+        content: 'Yên Mô có lợi thế đặc biệt khi nằm kẹp giữa 2 cụm trạm trộn tự động của An Gia Bình. Tùy theo vị trí xã của khách hàng, trạm điều khiển sẽ xuất xe bồn từ trạm gần nhất để rút ngắn tối đa thời gian di chuyển và cước phí.',
+        points: [
+          'Xe bồn xuất phát từ Trạm Kim Sơn phục vụ các xã phía Nam: Yên Lâm, Yên Mạc, Yên Đồng.',
+          'Xe bồn xuất phát từ Trạm Khánh Phú phục vụ các xã phía Bắc: Mai Sơn, Yên Hòa, Yên Từ, TT Yên Thịnh.',
+          'Bơm cần 37m - 52m tiếp cận mọi ngõ xóm thuận tiện.'
+        ]
+      }
+    ],
+    internalLinks: [
+      { title: 'Báo Giá Bê Tông Yên Mô', href: '/bang-gia', description: 'Đơn giá mác 250, mác 300 Yên Mô.', badge: 'Báo Giá' },
+      { title: 'Bê Tông Tươi Toàn Diện', href: '/be-tong-tuoi', description: 'Các sản phẩm bê tông thương phẩm.', badge: 'Sản Phẩm' }
+    ],
+    faqs: [
+      {
+        question: 'Tại Yên Mô tôi nên gọi trước bao lâu để có xe đổ móng?',
+        answer: 'Quý khách nên liên hệ trước 1 ngày qua hotline 0988 2662 93 để kỹ sư khảo sát đường đi và giữ giờ vàng đổ sàn chuẩn xác nhất.'
+      }
+    ]
+  },
+
+  // 18. BÊ TÔNG TƯƠI HOA LƯ
+  'be-tong-tuoi-hoa-lu': {
+    title: 'Bê Tông Tươi Hoa Lư - Cung Cấp Chuẩn Mác & Giải Pháp Bảo Vệ Cảnh Quan Di Sản',
+    categoryName: 'Địa Bàn Hoạt Động',
+    badge: 'Cố Đô Di Sản',
+    heroImage: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&auto=format&fit=crop&q=80',
+    description: 'Cung cấp bê tông thương phẩm tại Huyện Hoa Lư: Thị trấn Thiên Tôn, Ninh Thắng, Ninh Hải, Ninh Xuân, Ninh Mỹ, Ninh Giang, Ninh Khang, Ninh Hòa, Ninh An, Ninh Vân. Phục vụ các dự án khách sạn, homestay, biệt thự vùng di sản Tràng An - Tam Cốc.',
+    specifications: [
+      { label: 'Cấp mác bê tông', value: 'M200, M250, M300, M350, M400' },
+      { label: 'Cự ly xuất xưởng', value: 'Chỉ 8 - 15 km từ Trạm KCN Khánh Phú' },
+      { label: 'Thời gian di chuyển', value: '15 - 20 phút chạy xe bồn' },
+      { label: 'Khu du lịch', value: 'Tam Cốc - Bích Động, Tràng An, Làng đá Ninh Vân' },
+      { label: 'Hotline 24/7', value: '0988 2662 93' }
+    ],
+    applications: [
+      'Đổ móng và sàn khu nghỉ dưỡng sinh thái, resort cao cấp Tam Cốc',
+      'Đổ móng nhà phố, homestay phục vụ khách du lịch tại Ninh Thắng, Ninh Hải',
+      'Đổ móng máy cắt xẻ đá nặng tại làng nghề đá mỹ nghệ Ninh Vân',
+      'Bê tông móng bè trên nền đá vôi karst nứt nẻ Hoa Lư'
+    ],
+    advantages: [
+      'Thi công sạch sẽ, che chắn vòi xả không làm bẩn môi trường du lịch di sản',
+      'Xe bơm cần vươn xa không làm ảnh hưởng cây xanh cảnh quan',
+      'Chất lượng mác ổn định, đúc mẫu thí nghiệm nén LAS-XD đầy đủ',
+      'Điều độ xe bồn linh hoạt tránh giờ cao điểm đón khách du lịch'
+    ],
+    sections: [
+      {
+        title: 'Bê Tông Thương Phẩm Đẳng Cấp Cho Khu Du Lịch Hoa Lư',
+        content: 'Hoa Lư là trung tâm du lịch di sản của tỉnh Ninh Bình với mật độ khách sạn, resort sinh thái dày đặc. Bê Tông An Gia Bình cam kết tiêu chuẩn thi công văn minh, chuyên nghiệp, tiếng ồn thấp và bảo vệ tối đa cảnh quan môi trường.',
+        points: [
+          'Đổ sàn bê tông mài bóng trang trí mỹ thuật cho resort, nhà hàng.',
+          'Bơm tĩnh áp lực cao luồn sâu vào các thung lũng đá vôi không có đường xe bồn.',
+          'Mác bê tông 300, 350 chịu lực uốn nén cao cho sàn vượt nhịp lớn.'
+        ]
+      }
+    ],
+    internalLinks: [
+      { title: 'Báo Giá Bê Tông Hoa Lư', href: '/bang-gia', description: 'Đơn giá bê tông tươi giao tại Hoa Lư.', badge: 'Báo Giá' },
+      { title: 'Dự Án Đã Đổ Tại Hoa Lư', href: '/du-an', description: 'Các resort, biệt thự tiêu biểu Hoa Lư.', badge: 'Dự Án' }
+    ],
+    faqs: [
+      {
+        question: 'Khu vực Tam Cốc đường hẹp xe bồn có vào được khu nghỉ dưỡng không?',
+        answer: 'Chúng tôi khảo sát thực tế và dùng xe bơm cần vươn qua hàng rào hoặc xe bơm tĩnh nối ống thép luồn vào tận khuôn viên resort mà không làm hỏng cảnh quan.'
+      }
+    ]
+  },
+
+  // 19. BÊ TÔNG KCN KHÁNH PHÚ
+  'be-tong-kcn-khanh-phu': {
+    title: 'Cung Cấp Bê Tông Tươi KCN Khánh Phú - Trạm Trộn Trực Tiếp 300m³/h Cung Ứng Siêu Tốc',
+    categoryName: 'Dự Án Công Nghiệp',
+    badge: 'Trụ Sở Nhà Máy',
+    heroImage: 'https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1200&auto=format&fit=crop&q=80',
+    description: 'Trụ sở cụm trạm trộn tự động An Gia Bình đặt ngay tại KCN Khánh Phú, Phường Đông Hoa Lư, Tỉnh Ninh Bình. Cung cấp bê tông tươi cho các nhà máy FDI, nhà xưởng công nghiệp nặng, sàn epoxy tải xe container, móng máy rung, cọc khoan nhồi.',
+    specifications: [
+      { label: 'Vị trí trạm trộn', value: 'KCN Khánh Phú, Tỉnh Ninh Bình' },
+      { label: 'Công suất trạm', value: '300 m³/h (2 nồi trộn độc lập)' },
+      { label: 'Thời gian xuất xưởng', value: 'Chỉ 5 - 10 phút đến mọi nhà máy trong KCN' },
+      { label: 'Mác đặc chủng', value: 'M300, M350, M400, M500, Bê tông đông kết sớm R7' },
+      { label: 'Dàn xe phục vụ', value: '25 xe bồn túc trực tại cổng trạm' },
+      { label: 'Hotline dự án', value: '0988 2662 93' }
+    ],
+    applications: [
+      'Đổ móng khối lớn liên tục 500m³ - 2500m³ cho nhà xưởng KCN Khánh Phú',
+      'Đổ sàn nhà xưởng chịu tải xe nâng 10 tấn và xe container',
+      'Đổ móng máy rung công nghiệp, móng lò tôi, móng cẩu trục',
+      'Đổ đường nội bộ KCN, bãi container và hệ thống xử lý nước thải'
+    ],
+    advantages: [
+      'Trạm nằm ngay trong KCN nên thời gian giao hàng gần như tức thì',
+      'Đáp ứng đổ liên tục 24/24 giờ xuyên đêm không ngắt mạch',
+      'Đầy đủ hồ sơ năng lực, chứng chỉ hợp chuẩn hợp quy và CO/CQ',
+      'Hóa đơn VAT và thủ tục pháp lý nghiệm thu minh bạch'
+    ],
+    sections: [
+      {
+        title: 'Năng Lực Cung Ứng Dự Án Trọng Điểm Tại KCN Khánh Phú',
+        content: 'Là đối tác tin cậy của hàng chục nhà máy FDI và tổng thầu xây dựng tại KCN Khánh Phú, Bê Tông An Gia Bình tự hào cung cấp hàng triệu mét khối bê tông thương phẩm đạt chuẩn chất lượng quốc tế.',
+        points: [
+          'Hệ thống cân điện tử tự động hóa Siemens kiểm soát sai số dưới 0.5%.',
+          'Đội ngũ kỹ sư LAS-XD túc trực kiểm định mẫu nén R7, R28 tại hiện trường.',
+          'Dàn xe bơm cần 52m, 56m công suất 180m³/h bơm liên tục ngày đêm.'
+        ]
+      }
+    ],
+    internalLinks: [
+      { title: 'Báo Giá Dự Án KCN', href: '/bang-gia', description: 'Đơn giá chiết khấu cho khối lượng lớn.', badge: 'Báo Giá' },
+      { title: 'Hồ Sơ Năng Lực Trạm Trộn', href: '/ho-so-nang-luc', description: 'Chứng chỉ thiết bị và năng lực cung ứng.', badge: 'Hồ Sơ' },
+      { title: 'Quy Trình Kiểm Định LAS', href: '/quy-trinh-san-xuat', description: 'Quy chuẩn sản xuất TCVN.', badge: 'Kiểm Định' }
+    ],
+    faqs: [
+      {
+        question: 'Dự án trong KCN Khánh Phú có thể đổ bê tông ca đêm 1000m³ được không?',
+        answer: 'Hoàn toàn đáp ứng được. Trạm Khánh Phú của chúng tôi vận hành 2 nồi trộn độc lập 300m³/h cùng hơn 25 xe bồn chuyên dụng, sẵn sàng đổ liên tục 1000m³ - 2500m³ thâu đêm an toàn.'
+      }
+    ]
+  },
+
+  // 20. BÊ TÔNG KCN GIÁN KHẨU
+  'be-tong-kcn-gian-khau': {
+    title: 'Cung Cấp Bê Tông Tươi KCN Gián Khẩu - Phục Vụ Nhà Xưởng Tải Trọng Nặng',
+    categoryName: 'Dự Án Công Nghiệp',
+    badge: 'Khu Công Nghiệp Lớn',
+    heroImage: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=1200&auto=format&fit=crop&q=80',
+    description: 'Cung cấp bê tông thương phẩm chuyên nghiệp cho các nhà máy sản xuất linh kiện điện tử, cơ khí chính xác tại KCN Gián Khẩu (Gia Viễn, Ninh Bình). Đảm bảo mác kỹ thuật M250 - M450, phụ gia tăng cứng, chống mài mòn cho sàn công nghiệp.',
+    specifications: [
+      { label: 'Cấp mác cung cấp', value: 'M250, M300, M350, M400, M450' },
+      { label: 'Cự ly vận chuyển', value: '12 - 15 km qua tuyến QL1A thông thoáng' },
+      { label: 'Thời gian di chuyển', value: '20 - 25 phút xe bồn' },
+      { label: 'Đặc thù công trình', value: 'Sàn không nứt, móng cẩu trục, hào kỹ thuật' },
+      { label: 'Hotline dự án', value: '0988 2662 93' }
+    ],
+    applications: [
+      'Đổ móng và sàn nhà xưởng sản xuất kính, dệt may, cơ khí KCN Gián Khẩu',
+      'Đổ sàn bê tông mác 350 đánh bóng tăng cứng bằng sika chapdur',
+      'Đổ móng máy ép nặng chống rung chấn lan truyền',
+      'Đổ hệ thống cống hộp, bãi đỗ xe tải và trạm cân xe KCN'
+    ],
+    advantages: [
+      'Xe bồn chạy tuyến QL1A đường rộng, bê tông duy trì độ tươi lý tưởng',
+      'Cung ứng liên tục các ca đổ sàn nhịp lớn 500m³ - 1500m³',
+      'Hồ sơ nghiệm thu, chứng nhận chất lượng đầy đủ theo yêu cầu nhà thầu FDI',
+      'Đội ngũ điều độ túc trực 24/7 theo tiến độ công trường'
+    ],
+    sections: [
+      {
+        title: 'Giải Pháp Bê Tông Sàn Công Nghiệp Tại KCN Gián Khẩu',
+        content: 'Các nhà xưởng tại KCN Gián Khẩu có yêu cầu rất cao về độ phẳng mặt sàn, khả năng chịu tải trọng và chống mài mòn. Cấp phối bê tông của An Gia Bình sử dụng cát hạt lớn và phụ gia giảm co ngót, giúp sàn sau khi xoa nền đạt độ bóng láng và độ cứng vượt trội.',
+        points: [
+          'Độ sụt khống chế chuẩn 14±2cm cho bơm cần công suất lớn.',
+          'Tích hợp sợi gia cường chống nứt vi mô cho sàn nhịp lớn.',
+          'Bảo hành chất lượng mẫu nén R28 tại phòng kiểm định LAS-XD.'
+        ]
+      }
+    ],
+    internalLinks: [
+      { title: 'Báo Giá Bê Tông Dự Án', href: '/bang-gia', description: 'Đơn giá chiết khấu cho KCN Gián Khẩu.', badge: 'Báo Giá' },
+      { title: 'Hồ Sơ Năng Lực Trạm Trộn', href: '/ho-so-nang-luc', description: 'Năng lực trạm đôi 450m³/h.', badge: 'Hồ Sơ' }
+    ],
+    faqs: [
+      {
+        question: 'Bê tông đổ sàn nhà xưởng KCN Gián Khẩu có xuất hóa đơn GTGT và chứng chỉ xuất xưởng không?',
+        answer: 'Có đầy đủ 100%. Mọi mẻ bê tông của An Gia Bình đều có phiếu xuất xưởng điện tử, tem kẹp chì, chứng chỉ kiểm định chất lượng và xuất hóa đơn VAT theo đúng hợp đồng.'
+      }
+    ]
   }
 };
 

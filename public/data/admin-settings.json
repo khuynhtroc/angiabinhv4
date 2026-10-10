@@ -1,0 +1,48 @@
+{
+  "aiScheduler": {
+    "isEnabled": true,
+    "enabled": true,
+    "frequency": "3_times_daily",
+    "publishTime": "06:00",
+    "minWordCount": 5000,
+    "publishStatus": "published",
+    "targetCategory": "Kỹ Thuật Thi Công",
+    "primaryKeyword": "bê tông tươi ninh bình",
+    "secondaryKeywords": [
+      "bê tông ngõ hẹp ninh bình",
+      "xử lý đổ bê tông gặp mưa to",
+      "cách kiểm tra độ sụt nón côn",
+      "bê tông chống thấm b8 tầng hầm",
+      "mác bê tông 250 đổ mái nhà phố",
+      "bảng giá bê tông an gia bình",
+      "bơm tĩnh bê tông tươi 150m",
+      "đúc mẫu nén r28 bê tông",
+      "bảo dưỡng bê tông 7 ngày vàng"
+    ],
+    "focusTopics": [
+      "Cẩm nang xử lý đổ bê tông tươi gặp trời mưa to bất chợt và chống nứt co ngót mùa hè tại Ninh Bình",
+      "Giải pháp bơm tĩnh bê tông tươi ngõ hẹp sâu 150m tại TP. Ninh Bình và Tam Điệp",
+      "Hướng dẫn kiểm tra kẹp chì xe bồn, đo độ sụt nón côn và đúc mẫu nén R28 chống gian lận mác",
+      "Kỹ thuật đổ bê tông chống thấm B6 B8 cho bể nước ngầm và tầng hầm chuẩn TCVN",
+      "So sánh chi phí đổ bê tông tươi thương phẩm và trộn tay cho nhà phố 100m2 Ninh Bình"
+    ],
+    "focusTopic": "Giải pháp thi công bê tông tươi kỹ thuật cao, xử lý ngõ hẹp, thời tiết bất lợi và kiểm định mác chuẩn TCVN tại Ninh Bình",
+    "autoInsertInternalLinks": true,
+    "insertInternalLinks": true,
+    "totalPublished": 0,
+    "logs": [
+      {
+        "id": "log-init",
+        "timestamp": "2026-10-10 13:00:00",
+        "postTitle": "Hệ thống AI Auto-Scheduler đã kích hoạt thành công",
+        "wordCount": 5000,
+        "keywordsUsed": [
+          "bê tông tươi ninh bình",
+          "bê tông an gia bình"
+        ],
+        "internalLinksCount": 8,
+        "status": "success"
+      }
+    ]
+  }
+}
