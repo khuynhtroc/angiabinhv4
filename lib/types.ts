@@ -20,6 +20,7 @@ export interface BlogPost {
   jekyllMarkdown?: string;
   permalink?: string;
   updatedAt?: string;
+  aiHeroImagePrompt?: string;
 }
 
 export interface Project {
@@ -335,7 +336,7 @@ export interface AiSchedulerConfig {
   isEnabled: boolean;
   enabled?: boolean;
   frequencyHours?: number; // 4, 8, 12, 24, 48
-  frequency?: 'daily' | 'every_2_days' | 'weekly';
+  frequency?: 'daily' | 'every_2_days' | 'weekly' | '3_times_daily';
   publishTime?: string;
   publishStatus?: 'published' | 'draft';
   targetCategory: string;

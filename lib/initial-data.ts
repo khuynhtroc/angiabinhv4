@@ -1647,34 +1647,43 @@ export const initialSchemaSettings: SchemaSettings = {
 
 export const initialAiSchedulerConfig: AiSchedulerConfig = {
   isEnabled: false,
-  frequencyHours: 24,
+  enabled: false,
+  frequencyHours: 8,
+  frequency: "3_times_daily",
+  publishTime: "06:00",
   publishStatus: "published",
   targetCategory: "Kỹ Thuật Thi Công",
   focusTopics: [
-    "Báo giá bê tông tươi Ninh Bình năm 2025 mới nhất",
-    "Kỹ thuật đổ bê tông móng, dầm, sàn mác 250 và 300 chuẩn TCVN",
-    "Giải pháp thi công bê tông phụ gia đông kết nhanh R7 cho tiến độ gấp",
-    "Quy trình kiểm tra độ sụt, lấy mẫu nén thí nghiệm LAS-XD tại hiện trường",
-    "Bảng so sánh chi phí bê tông tươi thương phẩm và bê tông trộn tay truyền thống"
+    "Cẩm nang xử lý đổ bê tông tươi gặp trời mưa to bất chợt và chống nứt co ngót mùa hè tại Ninh Bình",
+    "Giải pháp bơm tĩnh bê tông tươi ngõ hẹp sâu 150m tại TP. Ninh Bình và Tam Điệp",
+    "Hướng dẫn kiểm tra kẹp chì xe bồn, đo độ sụt nón côn và đúc mẫu nén R28 chống gian lận mác",
+    "Kỹ thuật đổ bê tông chống thấm B6 B8 cho bể nước ngầm và tầng hầm chuẩn TCVN",
+    "So sánh chi phí đổ bê tông tươi thương phẩm và trộn tay cho nhà phố 100m2 Ninh Bình"
   ],
+  focusTopic: "Giải pháp thi công bê tông tươi kỹ thuật cao, xử lý ngõ hẹp, thời tiết bất lợi và kiểm định mác chuẩn TCVN tại Ninh Bình",
   primaryKeyword: "bê tông tươi ninh bình",
   secondaryKeywords: [
-    "báo giá bê tông ninh bình",
-    "trạm trộn an gia bình",
-    "mác bê tông 250 ninh bình",
-    "xe bơm bê tông 52m",
-    "kỹ thuật đổ sàn bê tông"
+    "bê tông ngõ hẹp ninh bình",
+    "xử lý đổ bê tông gặp mưa to",
+    "cách kiểm tra độ sụt nón côn",
+    "bê tông chống thấm b8 tầng hầm",
+    "mác bê tông 250 đổ mái nhà phố",
+    "bảng giá bê tông an gia bình",
+    "bơm tĩnh bê tông tươi 150m",
+    "đúc mẫu nén r28 bê tông",
+    "bảo dưỡng bê tông 7 ngày vàng"
   ],
-  minWordCount: 1000,
+  minWordCount: 5000,
   insertInternalLinks: true,
+  autoInsertInternalLinks: true,
   logs: [
     {
       id: "log-1",
       timestamp: "2026-09-10 08:30:00",
       postTitle: "Kỹ Thuật Thi Công Đổ Bê Tông Tươi Móng Nhà Chuẩn TCVN Tại Ninh Bình",
-      wordCount: 1245,
+      wordCount: 5245,
       keywordsUsed: ["bê tông tươi ninh bình", "mác bê tông 250", "trạm trộn an gia bình"],
-      internalLinksCount: 5,
+      internalLinksCount: 6,
       status: "success"
     }
   ]

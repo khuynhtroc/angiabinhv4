@@ -132,64 +132,89 @@ export default function AdminAiSchedulerSection({
     if (!isEnabled) return;
 
     const checkSchedule = async () => {
-      const today = new Date().toISOString().split('T')[0];
+      const now = new Date();
+      const today = now.toISOString().split('T')[0];
       const lastRun = formData.lastRunAt ? formData.lastRunAt.split('T')[0] : '';
+      const currentHoursMinutes = now.toTimeString().slice(0, 5);
 
-      if (formData.frequency === 'daily' && lastRun === today) return;
-
-      if (formData.frequency === 'every_2_days' && lastRun) {
-        const diffDays = Math.floor((Date.now() - new Date(lastRun).getTime()) / (1000 * 60 * 60 * 24));
-        if (diffDays < 2) return;
-      }
-
-      if (formData.frequency === 'weekly' && lastRun) {
-        const diffDays = Math.floor((Date.now() - new Date(lastRun).getTime()) / (1000 * 60 * 60 * 24));
-        if (diffDays < 7) return;
-      }
-
-      const currentHoursMinutes = new Date().toTimeString().slice(0, 5);
-      const targetTime = formData.publishTime || '07:30';
-
-      if (currentHoursMinutes >= targetTime && lastRun !== today) {
-        const unwrittenNews = (industryNews || []).find(n => !n.rewrittenPostId) || (industryNews || [])[0];
-        const candidateNews: IndustryNewsItem = unwrittenNews || {
-          id: `topic-${Date.now()}`,
-          title: `Cập nhật kỹ thuật đổ bê tông tươi và báo giá thương phẩm tại Ninh Bình`,
-          source: 'Trạm Trộn An Gia Bình',
-          url: 'https://betongangiabinh.vn/blog',
-          publishedAt: new Date().toISOString(),
-          summary: 'Kỹ thuật thi công bê tông thương phẩm đạt chuẩn chất lượng TCVN cho công trình dân dụng và công nghiệp tại Ninh Bình.',
-          status: 'pending' as const
-        };
-
-        try {
-          const generated = await onExecuteSchedulerNow(candidateNews);
-          if (generated) {
-            const wordCount = (generated.content || '').trim().split(/\s+/).filter(Boolean).length;
-            const newLog = {
-              id: `log-${Date.now()}`,
-              timestamp: new Date().toISOString(),
-              newsTitle: candidateNews.title,
-              generatedTitle: generated.title,
-              wordCount,
-              status: 'published' as const
-            };
-            const updatedConfig = {
-              ...formData,
-              lastRunAt: new Date().toISOString(),
-              totalPublished: (formData.totalPublished || 0) + 1,
-              historyLogs: [newLog, ...(formData.historyLogs || [])].slice(0, 20)
-            };
-            setFormData(updatedConfig);
-            onSaveScheduler(updatedConfig);
-            setRunMessage({
-              type: 'success',
-              text: `[Tự Động Xuất Bản Theo Lịch] Đã tạo & xuất bản bài viết chuẩn SEO: "${generated.title}"`
-            });
+      if (formData.frequency === '3_times_daily') {
+        const slots = ['06:00', '12:00', '18:00'];
+        let activeSlot = '';
+        for (const s of slots) {
+          if (currentHoursMinutes >= s) {
+            activeSlot = s;
           }
-        } catch (e) {
-          console.error('[AI Scheduler] Error during auto-run:', e);
         }
+        if (!activeSlot) return; // Before 06:00
+
+        // Check if already executed in this slot today
+        if (lastRun === today && formData.lastRunAt) {
+          const lastRunHM = new Date(formData.lastRunAt).toTimeString().slice(0, 5);
+          let lastSlot = '';
+          for (const s of slots) {
+            if (lastRunHM >= s) {
+              lastSlot = s;
+            }
+          }
+          if (lastSlot === activeSlot) return; // Already published in current slot today
+        }
+      } else if (formData.frequency === 'daily') {
+        const targetTime = formData.publishTime || '06:00';
+        if (currentHoursMinutes < targetTime || lastRun === today) return;
+      } else if (formData.frequency === 'every_2_days') {
+        if (lastRun) {
+          const diffDays = Math.floor((Date.now() - new Date(lastRun).getTime()) / (1000 * 60 * 60 * 24));
+          if (diffDays < 2) return;
+        }
+        const targetTime = formData.publishTime || '06:00';
+        if (currentHoursMinutes < targetTime) return;
+      } else if (formData.frequency === 'weekly') {
+        if (lastRun) {
+          const diffDays = Math.floor((Date.now() - new Date(lastRun).getTime()) / (1000 * 60 * 60 * 24));
+          if (diffDays < 7) return;
+        }
+        const targetTime = formData.publishTime || '06:00';
+        if (currentHoursMinutes < targetTime) return;
+      }
+
+      const unwrittenNews = (industryNews || []).find(n => !n.rewrittenPostId) || (industryNews || [])[0];
+      const candidateNews: IndustryNewsItem = unwrittenNews || {
+        id: `topic-${Date.now()}`,
+        title: `Cập nhật kỹ thuật đổ bê tông tươi và báo giá thương phẩm tại Ninh Bình`,
+        source: 'Trạm Trộn An Gia Bình',
+        url: 'https://betongangiabinh.vn/blog',
+        publishedAt: new Date().toISOString(),
+        summary: 'Kỹ thuật thi công bê tông thương phẩm đạt chuẩn chất lượng TCVN cho công trình dân dụng và công nghiệp tại Ninh Bình.',
+        status: 'pending' as const
+      };
+
+      try {
+        const generated = await onExecuteSchedulerNow(candidateNews);
+        if (generated) {
+          const wordCount = (generated.content || '').trim().split(/\s+/).filter(Boolean).length;
+          const newLog = {
+            id: `log-${Date.now()}`,
+            timestamp: new Date().toISOString(),
+            newsTitle: candidateNews.title,
+            generatedTitle: generated.title,
+            wordCount,
+            status: 'published' as const
+          };
+          const updatedConfig = {
+            ...formData,
+            lastRunAt: new Date().toISOString(),
+            totalPublished: (formData.totalPublished || 0) + 1,
+            historyLogs: [newLog, ...(formData.historyLogs || [])].slice(0, 20)
+          };
+          setFormData(updatedConfig);
+          onSaveScheduler(updatedConfig);
+          setRunMessage({
+            type: 'success',
+            text: `[Tự Động Xuất Bản Theo Lịch] Đã tạo & xuất bản bài viết chuẩn SEO: "${generated.title}" (${wordCount.toLocaleString('vi-VN')} từ)`
+          });
+        }
+      } catch (e) {
+        console.error('[AI Scheduler] Error during auto-run:', e);
       }
     };
 
@@ -207,13 +232,13 @@ export default function AdminAiSchedulerSection({
         <div>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-violet-100 text-violet-900 font-bold text-xs uppercase mb-2">
             <Clock className="w-3.5 h-3.5 text-violet-700" />
-            <span>AI Auto-Scheduler &amp; Content Engine</span>
+            <span>AI Auto-Scheduler &amp; Content Engine (5000+ từ)</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-black text-slate-900">
-            Lập Lịch Tự Động &amp; Xuất Bản Bài Viết Định Kỳ
+            Lập Lịch Tự Động &amp; Xuất Bản Bài Viết Định Kỳ (3 Bài / Ngày)
           </h3>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Tự động lấy tin tức ngành quét được, viết lại thành bài viết chuyên sâu chuẩn SEO tối thiểu 1.000 từ, tự động lồng ghép từ khóa chính/phụ và liên kết nội bộ.
+            Tự động lấy tin tức ngành quét được, viết lại thành bài viết chuyên sâu chuẩn sách trắng kỹ thuật ≥ 5.000 từ, tự động đính kèm ảnh sản phẩm theo mục lục, ảnh đại diện tạo từ AI và liên kết nội bộ.
           </p>
         </div>
 
@@ -227,7 +252,7 @@ export default function AdminAiSchedulerSection({
             {isRunningNow ? (
               <>
                 <RefreshCw className="w-4 h-4 animate-spin" />
-                <span>Đang Phân Tích &amp; Viết Bài (1000+ từ)...</span>
+                <span>Đang Phân Tích &amp; Viết Bài (≥ 5000 từ)...</span>
               </>
             ) : (
               <>
@@ -281,7 +306,7 @@ export default function AdminAiSchedulerSection({
         <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
           <span className="text-slate-500 text-xs font-semibold">Yêu Cầu Độ Dài</span>
           <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-black text-violet-600">≥ {formData.minWordCount || 1000}</span>
+            <span className="text-2xl font-black text-violet-600">≥ {formData.minWordCount || 5000}</span>
             <span className="text-xs text-slate-500">từ / bài viết</span>
           </div>
         </div>
@@ -292,7 +317,7 @@ export default function AdminAiSchedulerSection({
             {formData.lastRunAt ? new Date(formData.lastRunAt).toLocaleString('vi-VN') : 'Chưa chạy lần nào'}
           </div>
           <div className="text-[11px] text-violet-700 font-semibold mt-1">
-            Đã xuất bản: {formData.totalPublished || 0} bài • Giờ chạy: {formData.publishTime || '07:30'}
+            Đã xuất bản: {formData.totalPublished || 0} bài • Khung giờ: {formData.frequency === '3_times_daily' ? '06:00, 12:00, 18:00' : (formData.publishTime || '06:00')}
           </div>
         </div>
       </div>
@@ -315,17 +340,18 @@ export default function AdminAiSchedulerSection({
                   onChange={(e) => handleUpdate({ frequency: e.target.value as any })}
                   className="w-full bg-white border border-slate-300 text-slate-900 p-2.5 rounded-xl font-semibold"
                 >
-                  <option value="daily">Hằng ngày (Mỗi ngày 1 bài)</option>
+                  <option value="3_times_daily">Mỗi ngày 3 bài (06:00, 12:00, 18:00)</option>
+                  <option value="daily">Hằng ngày (Mỗi ngày 1 bài lúc 06:00)</option>
                   <option value="every_2_days">Mỗi 2 ngày (Cách nhật)</option>
                   <option value="weekly">Hằng tuần (Mỗi tuần 1 bài)</option>
                 </select>
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Giờ Xuất Bản (Giờ Vàng)</label>
+                <label className="block font-bold text-slate-700 mb-1">Giờ Khởi Điểm</label>
                 <input
                   type="time"
-                  value={formData.publishTime}
+                  value={formData.publishTime || '06:00'}
                   onChange={(e) => handleUpdate({ publishTime: e.target.value })}
                   className="w-full bg-white border border-slate-300 text-slate-900 p-2.5 rounded-xl font-bold font-mono"
                 >
@@ -352,12 +378,12 @@ export default function AdminAiSchedulerSection({
                 <input
                   type="number"
                   min={1000}
-                  step={100}
-                  value={formData.minWordCount || 1000}
+                  step={500}
+                  value={formData.minWordCount || 5000}
                   onChange={(e) => handleUpdate({ minWordCount: Number(e.target.value) })}
                   className="w-36 bg-white border border-slate-300 text-slate-900 p-2.5 rounded-xl font-bold text-center"
                 />
-                <span className="text-slate-500 font-semibold">từ (Từ 1.000 từ trở lên theo tiêu chuẩn bài viết dài chuyên sâu)</span>
+                <span className="text-slate-500 font-semibold">từ (Đạt chuẩn sách trắng kỹ thuật chuyên sâu ≥ 5.000 từ)</span>
               </div>
             </div>
           </div>
