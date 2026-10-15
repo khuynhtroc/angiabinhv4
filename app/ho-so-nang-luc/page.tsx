@@ -7,7 +7,6 @@ import CapabilityProfile from '@/components/CapabilityProfile';
 import AboutCompany from '@/components/AboutCompany';
 import ChatbotWidget from '@/components/ChatbotWidget';
 import MobileQuickBar from '@/components/MobileQuickBar';
-import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import PageSeoHead from '@/components/PageSeoHead';
 import { Award, ShieldCheck, FileCheck2, Cpu, Factory } from 'lucide-react';
 
@@ -21,7 +20,6 @@ export default function CapabilityPage() {
         defaultTitle="Hồ Sơ Năng Lực Trạm Trộn | Bê Tông An Gia Bình"
         defaultDescription="Hồ sơ năng lực trạm trộn bê tông thương phẩm An Gia Bình: Thiết bị hiện đại, công suất lớn, chứng chỉ chất lượng ISO."
       />
-      <RealtimeAnalyticsTracker />
       <Navbar />
 
       {/* Header Banner */}

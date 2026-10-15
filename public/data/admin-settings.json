@@ -44,5 +44,10 @@
         "status": "success"
       }
     ]
+  },
+  "integrations": {
+    "googleAnalyticsId": "G-6J50BRBSZS",
+    "searchConsoleTag": "-ampbrMsq6krT2SrsKAAvQSdxBns-wa9mv9aEGR86Ik",
+    "isSynced": true
   }
 }

@@ -9,7 +9,7 @@ export const initialJekyllConfig: JekyllConfig = {
   "logo": "/logo.png",
   "favicon": "/favicon.ico",
   "allow_search_engine": true,
-  "google_verify": "",
+  "google_verify": "-ampbrMsq6krT2SrsKAAvQSdxBns-wa9mv9aEGR86Ik",
   "bing_verify": "",
   "google_analytics": "G-6J50BRBSZS",
   "google_tag_manager_id": "GTM-MXH8TM7H",
@@ -1102,8 +1102,8 @@ export const initialIndustryNews: IndustryNews[] = [
 ];
 
 export const initialIntegrationConfig: IntegrationConfig = {
-  googleAnalyticsId: "G-AGB93NB2025",
-  searchConsoleTag: "google-site-verification=AGB-NinhBinh-Concrete-2025-Verified",
+  googleAnalyticsId: "G-6J50BRBSZS",
+  searchConsoleTag: "-ampbrMsq6krT2SrsKAAvQSdxBns-wa9mv9aEGR86Ik",
   isSynced: true,
   lastSyncedAt: "Hôm nay, 08:30:15",
   syncedPageviews: 24890,

@@ -4,90 +4,68 @@ import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { useAppStore } from '@/lib/store';
 
+declare global {
+  interface Window {
+    dataLayer?: Array<Record<string, unknown>>;
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 export default function RealtimeAnalyticsTracker() {
   const pathname = usePathname();
-  const { logRealtimeEvent, integrations } = useAppStore();
-  const lastPathRef = useRef<string | null>('');
+  const { logRealtimeEvent, jekyllConfig, integrations } = useAppStore();
+  const lastPathRef = useRef<string | null>(null);
+  const isFirstLoadRef = useRef<boolean>(true);
 
-  // 1. Google Analytics 4 Script Injection & Search Console Verification (Deferred to browser idle)
+  const gaId = jekyllConfig?.google_analytics?.trim() || integrations?.googleAnalyticsId?.trim() || 'G-6J50BRBSZS';
+
+  // 1. Handle SPA Route Changes for GA4 & GTM dataLayer
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const loadAnalytics = () => {
-      try {
-        const gaId = integrations?.googleAnalyticsId;
-        if (gaId && gaId.trim() !== '') {
-          const cleanGaId = gaId.trim();
-          // Check if GA script already exists
-          if (!document.getElementById('ga-gtag-script')) {
-            const script = document.createElement('script');
-            script.id = 'ga-gtag-script';
-            script.async = true;
-            script.src = `https://www.googletagmanager.com/gtag/js?id=${cleanGaId}`;
-            document.head.appendChild(script);
+    const search = typeof window !== 'undefined' ? window.location.search : '';
+    const fullUrl = search ? `${pathname}${search}` : pathname;
 
-            const initScript = document.createElement('script');
-            initScript.id = 'ga-gtag-init';
-            initScript.innerHTML = `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${cleanGaId}', { page_path: window.location.pathname });
-            `;
-            document.head.appendChild(initScript);
-          } else if ((window as unknown as { gtag?: (...args: unknown[]) => void }).gtag) {
-            (window as unknown as { gtag: (...args: unknown[]) => void }).gtag('config', cleanGaId, { page_path: pathname });
-          }
-        }
+    // Skip duplicate hits for the exact same path
+    if (lastPathRef.current === fullUrl) return;
 
-        // Search Console Meta Tag
-        const gscCode = integrations?.searchConsoleTag || integrations?.searchConsoleCode;
-        if (gscCode && gscCode.trim() !== '') {
-          let contentVal = gscCode.trim();
-          // In case user entered the full <meta ... content="..." />
-          const match = contentVal.match(/content=["']([^"']+)["']/i);
-          if (match) {
-            contentVal = match[1];
-          }
-
-          let meta = document.querySelector('meta[name="google-site-verification"]');
-          if (!meta) {
-            meta = document.createElement('meta');
-            meta.setAttribute('name', 'google-site-verification');
-            document.head.appendChild(meta);
-          }
-          meta.setAttribute('content', contentVal);
-        }
-      } catch (e) {
-        console.warn('Google tracking initialization notice:', e);
-      }
-    };
-
-    if ('requestIdleCallback' in window) {
-      const handle = (window as unknown as { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(loadAnalytics, { timeout: 3000 });
-      return () => {
-        if ('cancelIdleCallback' in window) {
-          (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(handle);
-        }
-      };
+    if (isFirstLoadRef.current) {
+      // On initial SSR load, the <head> scripts in app/layout.tsx already fired the initial pageview
+      isFirstLoadRef.current = false;
+      lastPathRef.current = fullUrl;
     } else {
-      const timer = setTimeout(loadAnalytics, 2000);
-      return () => clearTimeout(timer);
+      // Subsequent SPA Client Navigations: notify GA4 and GTM
+      lastPathRef.current = fullUrl;
+
+      try {
+        if (typeof window.gtag === 'function') {
+          window.gtag('config', gaId, {
+            page_path: fullUrl,
+            page_title: typeof document !== 'undefined' ? document.title : '',
+          });
+          window.gtag('event', 'page_view', {
+            page_path: fullUrl,
+            page_title: typeof document !== 'undefined' ? document.title : '',
+          });
+        }
+
+        if (Array.isArray(window.dataLayer)) {
+          window.dataLayer.push({
+            event: 'page_view',
+            page_path: fullUrl,
+            page_title: typeof document !== 'undefined' ? document.title : '',
+          });
+        }
+      } catch (err) {
+        console.warn('[Analytics] Route tracking notice:', err);
+      }
     }
-  }, [integrations?.googleAnalyticsId, integrations?.searchConsoleTag, integrations?.searchConsoleCode, pathname]);
 
-  // 2. Realtime local tracking
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    if (pathname && pathname !== lastPathRef.current) {
-      lastPathRef.current = pathname;
-
-      // Determine device
+    // 2. Realtime local logging for admin dashboard
+    try {
       const isMobile = window.innerWidth < 768;
       const device = isMobile ? 'mobile' : 'desktop';
 
-      // Ninh Bình locations pool with updated plants
       const locations = [
         'TP. Ninh Bình (Trung tâm)',
         'KCN Khánh Phú (Trạm 1 - Đông Hoa Lư)',
@@ -104,22 +82,71 @@ export default function RealtimeAnalyticsTracker() {
 
       logRealtimeEvent({
         type: 'pageview',
-        path: pathname,
+        path: fullUrl,
         location: randomLoc,
         device: device,
-        details: `Truy cập trang ${pathname}`
+        details: `Truy cập trang ${fullUrl}`,
       });
 
-      // Send to server beacon as well
-      try {
-        fetch('/api/analytics', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ type: 'pageview', path: pathname }),
-        }).catch(() => {});
-      } catch {}
-    }
-  }, [pathname, logRealtimeEvent]);
+      fetch('/api/analytics', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'pageview', path: fullUrl }),
+      }).catch(() => {});
+    } catch {}
+  }, [pathname, gaId, logRealtimeEvent]);
+
+  // 3. Global Click Listener for Conversion Tracking (Phone Calls & Zalo)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleDocumentClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement)?.closest('a');
+      if (!target) return;
+
+      const href = target.getAttribute('href') || '';
+
+      if (href.startsWith('tel:')) {
+        const phone = href.replace('tel:', '').trim();
+        try {
+          if (typeof window.gtag === 'function') {
+            window.gtag('event', 'contact_call', {
+              event_category: 'engagement',
+              event_label: phone,
+              value: 1,
+            });
+          }
+          if (Array.isArray(window.dataLayer)) {
+            window.dataLayer.push({
+              event: 'conversion_call_click',
+              phone_number: phone,
+            });
+          }
+        } catch {}
+      } else if (href.includes('zalo.me')) {
+        try {
+          if (typeof window.gtag === 'function') {
+            window.gtag('event', 'contact_zalo', {
+              event_category: 'engagement',
+              event_label: href,
+              value: 1,
+            });
+          }
+          if (Array.isArray(window.dataLayer)) {
+            window.dataLayer.push({
+              event: 'conversion_zalo_click',
+              zalo_url: href,
+            });
+          }
+        } catch {}
+      }
+    };
+
+    document.addEventListener('click', handleDocumentClick, { passive: true });
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, []);
 
   return null;
 }

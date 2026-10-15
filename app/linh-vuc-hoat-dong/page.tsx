@@ -6,7 +6,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ChatbotWidget from '@/components/ChatbotWidget';
 import MobileQuickBar from '@/components/MobileQuickBar';
-import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import {
   Layers, HardHat, Truck, ShieldCheck, CheckCircle2, ChevronRight, Phone,
   Award, TrendingUp, Sparkles, Clock, Flame, Zap, ArrowRight, Building2
@@ -170,7 +169,6 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
       <Navbar />
-      <RealtimeAnalyticsTracker />
 
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-12">
         {/* Breadcrumb */}

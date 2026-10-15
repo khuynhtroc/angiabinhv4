@@ -7,7 +7,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ChatbotWidget from '@/components/ChatbotWidget';
 import MobileQuickBar from '@/components/MobileQuickBar';
-import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import PageSeoHead from '@/components/PageSeoHead';
 import { useAppStore } from '@/lib/store';
 import { BlogPost } from '@/lib/types';
@@ -352,7 +351,6 @@ function BlogListInner() {
           { name: 'Kiến Thức & Blog', item: '/blog' }
         ]}
       />
-      <RealtimeAnalyticsTracker />
       <Navbar />
 
       {/* Header Banner */}

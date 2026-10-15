@@ -8,7 +8,6 @@ import PricingTable from '@/components/PricingTable';
 import ConcreteCalculator from '@/components/ConcreteCalculator';
 import ChatbotWidget from '@/components/ChatbotWidget';
 import MobileQuickBar from '@/components/MobileQuickBar';
-import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import PageSeoHead from '@/components/PageSeoHead';
 import TodaySearchKeywords from '@/components/TodaySearchKeywords';
 import {
@@ -73,7 +72,6 @@ export default function PricingPage() {
         defaultTitle="Báo giá bê tông tươi tại Ninh Bình - Bê Tông An Gia Bình"
         defaultDescription="Báo giá bê tông tươi tại Ninh Bình mới nhất 2025 - 2026. Bảng tra giá mác 150, 200, 250, 300, 350, giá bơm bê tông cần 56m và phụ gia. Mọi bảng giá đều mang tính chất tham khảo tại thời điểm hiện tại."
       />
-      <RealtimeAnalyticsTracker />
       <Navbar />
 
       {/* Hero Banner */}

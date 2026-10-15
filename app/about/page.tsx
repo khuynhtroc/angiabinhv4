@@ -6,7 +6,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ChatbotWidget from '@/components/ChatbotWidget';
 import MobileQuickBar from '@/components/MobileQuickBar';
-import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import {
   Eye, Target, Award, Handshake, ChevronRight, Phone, ShieldCheck,
   CheckCircle2, Factory, Truck, Users, HeartHandshake, Building2, Quote, ArrowRight
@@ -19,7 +18,6 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
       <Navbar />
-      <RealtimeAnalyticsTracker />
 
       <main className="flex-1 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-12">
         {/* Breadcrumb */}

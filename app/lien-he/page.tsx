@@ -5,7 +5,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ChatbotWidget from '@/components/ChatbotWidget';
 import MobileQuickBar from '@/components/MobileQuickBar';
-import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import { MapPin, Phone, Mail, Clock, Facebook, Send, CheckCircle2 } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
 import PageSeoHead from '@/components/PageSeoHead';
@@ -53,7 +52,6 @@ export default function ContactPage() {
         defaultTitle="Hệ Thống Trạm Trộn & Liên Hệ | Bê Tông An Gia Bình"
         defaultDescription="Hệ thống 2 trạm trộn bê tông tươi tự động tại Ninh Bình: KCN Khánh Phú và Kim Sơn. Liên hệ báo giá và điều phối xe bồn 24/7."
       />
-      <RealtimeAnalyticsTracker />
       <Navbar />
 
       {/* Header Banner - Light Theme */}

@@ -6,7 +6,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ChatbotWidget from '@/components/ChatbotWidget';
 import MobileQuickBar from '@/components/MobileQuickBar';
-import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import PageSeoHead from '@/components/PageSeoHead';
 import {
   ChevronRight, Users, Briefcase, MapPin, DollarSign, Clock,
@@ -101,7 +100,6 @@ export default function RecruitmentPage() {
         defaultDescription="Bê Tông An Gia Bình tuyển dụng kỹ sư vận hành trạm trộn, lái xe bồn bê tông, thợ bơm cần và kỹ thuật viên thí nghiệm tại Ninh Bình."
       />
       <Navbar />
-      <RealtimeAnalyticsTracker />
 
       <main className="flex-1 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-10">
         {/* Breadcrumb */}

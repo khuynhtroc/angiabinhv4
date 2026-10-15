@@ -6,7 +6,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ChatbotWidget from '@/components/ChatbotWidget';
 import MobileQuickBar from '@/components/MobileQuickBar';
-import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import TodaySearchKeywords from '@/components/TodaySearchKeywords';
 import {
   ShieldCheck, CheckCircle2, ChevronRight, Phone, Award,
@@ -104,7 +103,6 @@ export default function ManufacturingProcessPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 font-sans">
-      <RealtimeAnalyticsTracker />
       <Navbar />
 
       {/* Hero Header */}

@@ -6,7 +6,6 @@ import Footer from '@/components/Footer';
 import ProjectsShowcase from '@/components/ProjectsShowcase';
 import ChatbotWidget from '@/components/ChatbotWidget';
 import MobileQuickBar from '@/components/MobileQuickBar';
-import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import PageSeoHead from '@/components/PageSeoHead';
 import { Building2, Layers, Truck, Award } from 'lucide-react';
 
@@ -25,7 +24,6 @@ export default function ProjectsPage() {
           { name: 'Dự Án', item: '/du-an' }
         ]}
       />
-      <RealtimeAnalyticsTracker />
       <Navbar />
 
       {/* Header Banner */}

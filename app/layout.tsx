@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Space_Grotesk } from 'next/font/google';
 import FetchPatch from '@/components/FetchPatch';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
 import CustomCodeInjector from '@/components/CustomCodeInjector';
+import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import { getConfigServer } from '@/lib/server-data';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
@@ -35,6 +36,9 @@ export const metadata: Metadata = {
   description: 'Trạm trộn bê tông tươi, bê tông thương phẩm An Gia Bình tại Ninh Bình. Đội xe bồn, xe bơm cần 37m-56m, giao đúng mác, đủ khối lượng 24/7. Hotline: 0988 2662 93.',
   alternates: {
     canonical: '/',
+  },
+  verification: {
+    google: '-ampbrMsq6krT2SrsKAAvQSdxBns-wa9mv9aEGR86Ik',
   },
   keywords: [
     'bê tông tươi ninh bình',
@@ -77,10 +81,56 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   const config = getConfigServer();
+  const gtmId = (config?.google_tag_manager_id || 'GTM-MXH8TM7H').trim();
+  const gaId = (config?.google_analytics || 'G-6J50BRBSZS').trim();
+  const googleVerify = (config?.google_verify || '-ampbrMsq6krT2SrsKAAvQSdxBns-wa9mv9aEGR86Ik').trim();
 
   return (
     <html lang="vi" className={`scroll-smooth ${plusJakartaSans.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <head>
+        {/* Google Site Verification (Search Console) */}
+        {googleVerify && (
+          <meta name="google-site-verification" content={googleVerify} />
+        )}
+
+        {/* Google Tag Manager (GTM-MXH8TM7H) */}
+        {gtmId && (
+          <script
+            id="google-tag-manager"
+            dangerouslySetInnerHTML={{
+              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${gtmId}');`,
+            }}
+          />
+        )}
+
+        {/* Google Analytics 4 (G-6J50BRBSZS) */}
+        {gaId && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+            />
+            <script
+              id="google-analytics-init"
+              dangerouslySetInnerHTML={{
+                __html: `
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${gaId}', {
+  page_path: typeof window !== 'undefined' ? window.location.pathname : '/',
+  send_page_view: true
+});
+                `,
+              }}
+            />
+          </>
+        )}
+
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/logo.png" />
@@ -129,6 +179,18 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         )}
       </head>
       <body className={`${plusJakartaSans.className} antialiased text-slate-900 bg-slate-50 selection:bg-amber-500 selection:text-white min-h-screen`} suppressHydrationWarning>
+        {/* Google Tag Manager (noscript) */}
+        {gtmId && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            />
+          </noscript>
+        )}
+        <RealtimeAnalyticsTracker />
         {/* Top of Body: Injected Custom Body Open Code (e.g. GTM noscript, Top announcement) */}
         {config?.customBodyOpenCode && (
           <div

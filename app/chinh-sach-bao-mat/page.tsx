@@ -6,7 +6,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ChatbotWidget from '@/components/ChatbotWidget';
 import MobileQuickBar from '@/components/MobileQuickBar';
-import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import TodaySearchKeywords from '@/components/TodaySearchKeywords';
 import { Lock, ChevronRight, ShieldCheck, CheckCircle2, Phone, Database } from 'lucide-react';
 
@@ -15,7 +14,6 @@ export default function PrivacyPolicyPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 font-sans">
-      <RealtimeAnalyticsTracker />
       <Navbar />
 
       <div className="bg-slate-900 text-white py-12 sm:py-16 border-b border-slate-800">
