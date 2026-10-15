@@ -88,15 +88,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="vi" className={`scroll-smooth ${plusJakartaSans.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <head>
-        {/* Google Site Verification (Search Console) */}
-        {googleVerify && (
-          <meta name="google-site-verification" content={googleVerify} />
-        )}
-
-        {/* Google Tag Manager (GTM-MXH8TM7H) */}
+        {/* Google Tag Manager (GTM-MXH8TM7H) - High in head */}
         {gtmId && (
           <script
             id="google-tag-manager"
+            data-cfasync="false"
             dangerouslySetInnerHTML={{
               __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -105,6 +101,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','${gtmId}');`,
             }}
           />
+        )}
+
+        {/* Google Site Verification (Search Console) */}
+        {googleVerify && (
+          <meta name="google-site-verification" content={googleVerify} />
         )}
 
         {/* Google Analytics 4 (G-6J50BRBSZS) */}
@@ -181,14 +182,11 @@ gtag('config', '${gaId}', {
       <body className={`${plusJakartaSans.className} antialiased text-slate-900 bg-slate-50 selection:bg-amber-500 selection:text-white min-h-screen`} suppressHydrationWarning>
         {/* Google Tag Manager (noscript) */}
         {gtmId && (
-          <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
-              height="0"
-              width="0"
-              style={{ display: 'none', visibility: 'hidden' }}
-            />
-          </noscript>
+          <noscript
+            dangerouslySetInnerHTML={{
+              __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
+            }}
+          />
         )}
         <RealtimeAnalyticsTracker />
         {/* Top of Body: Injected Custom Body Open Code (e.g. GTM noscript, Top announcement) */}
