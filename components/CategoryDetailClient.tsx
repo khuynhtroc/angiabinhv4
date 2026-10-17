@@ -8,7 +8,7 @@ import ChatbotWidget from '@/components/ChatbotWidget';
 import MobileQuickBar from '@/components/MobileQuickBar';
 import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import { useAppStore } from '@/lib/store';
-import { getPostUrl, getCategoryUrl, resolveMediaUrl, handleImageFallback } from '@/lib/utils';
+import { getPostUrl, getCategoryUrl, resolveMediaUrl, handleImageFallback, filterPublishedPosts, isPostPublished } from '@/lib/utils';
 import PageSeoHead from '@/components/PageSeoHead';
 import {
   Calendar,
@@ -74,9 +74,10 @@ export default function CategoryDetailClient({ cleanSlug }: CategoryDetailClient
     return `Tổng hợp các bài viết chuyên môn kỹ thuật, tiêu chuẩn chất lượng và bảng giá liên quan đến chuyên mục ${categoryTitle} từ đội ngũ kỹ sư Bê Tông An Gia Bình Ninh Bình.`;
   }, [currentCategory, categoryTitle]);
 
-  // Filter posts belonging to this category
+  // Filter posts belonging to this category (only published articles up to today)
   const categoryPosts = useMemo(() => {
-    return posts.filter((p) => {
+    const published = filterPublishedPosts(posts);
+    return published.filter((p) => {
       const postCatLower = (p.category || '').toLowerCase();
       const targetTitleLower = categoryTitle.toLowerCase();
 

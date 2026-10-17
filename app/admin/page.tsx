@@ -4,7 +4,7 @@ import React, { useState, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useAppStore, persistAllPostsChunked } from '@/lib/store';
 import { BlogPost, Project, Lead, MediaFile, CategoryItem, JekyllConfig } from '@/lib/types';
-import { getPostUrl, formatNumber, resolveMediaUrl } from '@/lib/utils';
+import { getPostUrl, formatNumber, resolveMediaUrl, isPostPublished, getTodayVn } from '@/lib/utils';
 import JekyllExportModal from '@/components/JekyllExportModal';
 import AdminBulkPostModal from '@/components/AdminBulkPostModal';
 import AdminBulkProjectModal from '@/components/AdminBulkProjectModal';
@@ -139,6 +139,7 @@ export default function AdminDashboard() {
   const [postCategoryFilter, setPostCategoryFilter] = useState('all');
   const [postWordCountFilter, setPostWordCountFilter] = useState<'all' | 'ge1000' | 'mid' | 'low'>('all');
   const [postKeywordFilter, setPostKeywordFilter] = useState<'all' | 'has_keywords' | 'missing_keywords'>('all');
+  const [postScheduleFilter, setPostScheduleFilter] = useState<'all' | 'published' | 'scheduled'>('all');
   const [postSortBy, setPostSortBy] = useState<'time_desc' | 'date_desc' | 'date_asc' | 'views_desc' | 'words_desc' | 'title_asc'>('time_desc');
 
   // Site Configuration & SEO Parameters State
@@ -1653,6 +1654,11 @@ export default function AdminDashboard() {
         if (postKeywordFilter === 'has_keywords' && !hasKeywords) return false;
         if (postKeywordFilter === 'missing_keywords' && hasKeywords) return false;
 
+        // Schedule Status Filter (Published vs Scheduled)
+        const isPublished = isPostPublished(post);
+        if (postScheduleFilter === 'published' && !isPublished) return false;
+        if (postScheduleFilter === 'scheduled' && isPublished) return false;
+
         return true;
       })
       .sort((a, b) => {
@@ -1700,7 +1706,7 @@ export default function AdminDashboard() {
         }
         return 0;
       });
-  }, [posts, postSearchTerm, postCategoryFilter, postWordCountFilter, postKeywordFilter, postSortBy]);
+  }, [posts, postSearchTerm, postCategoryFilter, postWordCountFilter, postKeywordFilter, postSortBy, postScheduleFilter]);
 
   // 1. Password Protection Gate (Light Theme)
   if (!isAdminAuthenticated) {
@@ -2899,7 +2905,7 @@ export default function AdminDashboard() {
                       </span>
                     </div>
 
-                    {(postSearchTerm || postCategoryFilter !== 'all' || postWordCountFilter !== 'all' || postKeywordFilter !== 'all' || postSortBy !== 'time_desc') && (
+                    {(postSearchTerm || postCategoryFilter !== 'all' || postWordCountFilter !== 'all' || postKeywordFilter !== 'all' || postScheduleFilter !== 'all' || postSortBy !== 'time_desc') && (
                       <button
                         type="button"
                         onClick={() => {
@@ -2907,6 +2913,7 @@ export default function AdminDashboard() {
                           setPostCategoryFilter('all');
                           setPostWordCountFilter('all');
                           setPostKeywordFilter('all');
+                          setPostScheduleFilter('all');
                           setPostSortBy('time_desc');
                         }}
                         className="text-xs text-amber-700 hover:text-amber-900 font-bold flex items-center gap-1 cursor-pointer"
@@ -2917,7 +2924,7 @@ export default function AdminDashboard() {
                     )}
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2.5 text-xs">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-2.5 text-xs">
                     {/* Search Input */}
                     <div className="relative md:col-span-2">
                       <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -2955,6 +2962,19 @@ export default function AdminDashboard() {
                       </select>
                     </div>
 
+                    {/* Schedule Status Filter */}
+                    <div>
+                      <select
+                        value={postScheduleFilter}
+                        onChange={(e) => setPostScheduleFilter(e.target.value as any)}
+                        className="w-full py-2 px-3 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:border-amber-500 text-slate-800 font-medium"
+                      >
+                        <option value="all">Tất cả trạng thái ({posts.length})</option>
+                        <option value="published">Đã xuất bản ({posts.filter(isPostPublished).length})</option>
+                        <option value="scheduled">Hẹn giờ mở ({posts.filter(p => !isPostPublished(p)).length})</option>
+                      </select>
+                    </div>
+
                     {/* Word Count / SEO Length Filter */}
                     <div>
                       <select
@@ -2962,7 +2982,7 @@ export default function AdminDashboard() {
                         onChange={(e) => setPostWordCountFilter(e.target.value as any)}
                         className="w-full py-2 px-3 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:border-amber-500 text-slate-800 font-medium"
                       >
-                        <option value="all">Độ dài: Tất cả bài viết</option>
+                        <option value="all">Độ dài: Tất cả</option>
                         <option value="ge1000">🔥 Chuẩn SEO (&ge; 1.000 từ)</option>
                         <option value="mid">⚖️ Trung bình (600 - 999 từ)</option>
                         <option value="low">⚠️ Ngắn (&lt; 600 từ)</option>
@@ -2976,12 +2996,12 @@ export default function AdminDashboard() {
                         onChange={(e) => setPostSortBy(e.target.value as any)}
                         className="w-full py-2 px-3 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:border-amber-500 text-slate-800 font-medium"
                       >
-                        <option value="time_desc">⚡ Thời gian đăng / tạo mới nhất</option>
-                        <option value="date_desc">📅 Ngày đăng (Mới nhất)</option>
-                        <option value="date_asc">📅 Ngày đăng (Cũ nhất)</option>
+                        <option value="time_desc">⚡ Mới tạo / sửa</option>
+                        <option value="date_desc">📅 Ngày đăng (Mới)</option>
+                        <option value="date_asc">📅 Ngày đăng (Cũ)</option>
                         <option value="words_desc">📝 Nhiều từ nhất</option>
-                        <option value="views_desc">👁️ Lượt xem nhiều nhất</option>
-                        <option value="title_asc">🔤 Tiêu đề (A &rarr; Z)</option>
+                        <option value="views_desc">👁️ Xem nhiều nhất</option>
+                        <option value="title_asc">🔤 Tiêu đề (A-Z)</option>
                       </select>
                     </div>
                   </div>
@@ -3077,7 +3097,22 @@ export default function AdminDashboard() {
                                 )}
                               </div>
                             </td>
-                            <td className="p-4 text-slate-500 font-mono whitespace-nowrap">{post.date}</td>
+                            <td className="p-4 font-mono whitespace-nowrap">
+                              <div className="flex flex-col gap-1">
+                                <span className="text-slate-600 text-xs font-semibold">{post.date}</span>
+                                {isPostPublished(post) ? (
+                                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 w-fit">
+                                    <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                                    Đã xuất bản
+                                  </span>
+                                ) : (
+                                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-bold bg-sky-50 text-sky-700 border border-sky-200 w-fit" title={`Tự động xuất bản công khai vào 00:00 ngày ${post.date}`}>
+                                    <Clock className="w-3 h-3 text-sky-600" />
+                                    Hẹn giờ mở
+                                  </span>
+                                )}
+                              </div>
+                            </td>
                             <td className="p-4 text-slate-800 font-bold">{formatNumber(post.views)}</td>
                             <td className="p-4 text-right">
                               <div className="flex items-center justify-end gap-1.5">

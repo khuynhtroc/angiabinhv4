@@ -3,15 +3,16 @@
 import React from 'react';
 import Link from 'next/link';
 import { useAppStore } from '@/lib/store';
-import { getPostUrl, formatNumber, resolveMediaUrl, cleanExcerptText } from '@/lib/utils';
+import { getPostUrl, formatNumber, resolveMediaUrl, cleanExcerptText, filterPublishedPosts } from '@/lib/utils';
 import { BookOpen, Calendar, Clock, ArrowRight, TrendingUp, Sparkles } from 'lucide-react';
 
 export default function HomeBlogSection() {
   const { posts } = useAppStore();
 
-  // Sort posts by date descending (newest first)
+  // Filter only published articles (scheduled future posts unlock on their release date)
   const sortedPosts = React.useMemo(() => {
-    return [...posts].sort((a, b) => {
+    const published = filterPublishedPosts(posts);
+    return [...published].sort((a, b) => {
       const timeA = new Date(a.date || '').getTime() || 0;
       const timeB = new Date(b.date || '').getTime() || 0;
       return timeB - timeA;

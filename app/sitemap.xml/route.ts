@@ -99,10 +99,11 @@ export async function GET() {
   addUrl('/blog/kinh-nghiem', nowIso, 'daily', '0.85', 'cat');
   addUrl('/blog/kien-thuc', nowIso, 'daily', '0.85', 'cat');
 
-  // 4. Resolve ALL Blog Posts (Unified Server Storage)
-  // Canonical URL structure requested by user: betongangiabinh.vn/[slug].html
+  // 4. Resolve Published Blog Posts (Unified Server Storage)
+  // Scheduled posts with future dates are automatically unlocked on their exact release date
   const allPosts = getAllPostsServer();
-  allPosts.forEach((post) => {
+  const publishedPosts = allPosts.filter((post) => !post.date || post.date <= nowIso);
+  publishedPosts.forEach((post) => {
     const postDate = post.date || nowIso;
     const cleanSlug = (post.slug || post.id || '').replace(/\.html$/, '');
     if (!cleanSlug || cleanSlug === 'bai-viet') return;

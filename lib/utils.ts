@@ -279,4 +279,48 @@ export function cleanExcerptText(raw?: string, maxLength: number = 180): string 
   return text;
 }
 
+/**
+ * Get current Vietnam date in YYYY-MM-DD format (GMT+7)
+ */
+export function getTodayVn(): string {
+  try {
+    const formatter = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'Asia/Ho_Chi_Minh',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+    return formatter.format(new Date());
+  } catch {
+    return new Date().toISOString().split('T')[0];
+  }
+}
+
+/**
+ * Check if a blog post has reached its scheduled release date (is published)
+ */
+export function isPostPublished(post?: { date?: string } | null): boolean {
+  if (!post || !post.date) return true;
+  const today = getTodayVn();
+  return post.date <= today;
+}
+
+/**
+ * Filter posts to only include those that are currently published (date <= today)
+ */
+export function filterPublishedPosts<T extends { date?: string }>(posts?: T[]): T[] {
+  if (!Array.isArray(posts)) return [];
+  const today = getTodayVn();
+  return posts.filter(p => !p.date || p.date <= today);
+}
+
+/**
+ * Filter posts that are scheduled for future release (date > today)
+ */
+export function filterScheduledPosts<T extends { date?: string }>(posts?: T[]): T[] {
+  if (!Array.isArray(posts)) return [];
+  const today = getTodayVn();
+  return posts.filter(p => p.date && p.date > today);
+}
+
 

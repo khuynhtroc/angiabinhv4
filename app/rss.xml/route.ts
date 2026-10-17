@@ -49,11 +49,13 @@ export async function GET() {
   const rawLogo = config.logo || '/logo.png';
   const logoUrl = rawLogo.startsWith('http') ? rawLogo : `${baseUrl}${rawLogo}`;
 
-  // Load all posts from unified server data source
+  // Load only published posts (scheduled future posts unlock on their release date)
+  const todayIso = new Date().toISOString().split('T')[0];
   const allPosts = getAllPostsServer();
+  const publishedPosts = allPosts.filter((post) => !post.date || post.date <= todayIso);
 
   // Sort posts by date descending so newest posts always appear first
-  const sortedPosts = [...allPosts].sort((a, b) => {
+  const sortedPosts = [...publishedPosts].sort((a, b) => {
     const timeA = a.date ? new Date(a.date).getTime() : 0;
     const timeB = b.date ? new Date(b.date).getTime() : 0;
     return timeB - timeA;

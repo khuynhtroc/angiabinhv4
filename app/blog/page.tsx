@@ -10,7 +10,7 @@ import MobileQuickBar from '@/components/MobileQuickBar';
 import PageSeoHead from '@/components/PageSeoHead';
 import { useAppStore } from '@/lib/store';
 import { BlogPost } from '@/lib/types';
-import { getPostUrl, getCategorySlug, getPostBlogUrl, resolveMediaUrl, handleImageFallback, cleanExcerptText } from '@/lib/utils';
+import { getPostUrl, getCategorySlug, getPostBlogUrl, resolveMediaUrl, handleImageFallback, cleanExcerptText, filterPublishedPosts } from '@/lib/utils';
 import {
   Search,
   Calendar,
@@ -136,7 +136,8 @@ function BlogListInner() {
 
   const selectedCategory = overrideCategory !== null ? overrideCategory : (catParam || 'Tất Cả');
 
-  const allTags = ['Tất Cả', ...Array.from(new Set(posts.flatMap(p => Array.isArray(p.tags) ? p.tags.filter(Boolean) : [])))];
+  const publishedPosts = useMemo(() => filterPublishedPosts(posts), [posts]);
+  const allTags = ['Tất Cả', ...Array.from(new Set(publishedPosts.flatMap(p => Array.isArray(p.tags) ? p.tags.filter(Boolean) : [])))];
 
   // Helper to extract timestamp from post (checks updatedAt, id timestamp, or publish date)
   const getPostTimestamp = (p: BlogPost): number => {
@@ -157,8 +158,8 @@ function BlogListInner() {
     return 0;
   };
 
-  // Sắp xếp bài viết theo tuỳ chọn (Mặc định: Ngày đăng & thời gian tạo MỚI NHẤT)
-  const sortedPosts = [...posts].filter(Boolean).sort((a, b) => {
+  // Sắp xếp bài viết theo tuỳ chọn (Chỉ hiển thị các bài đã xuất bản <= hôm nay; bài lên lịch tương lai tự động mở khóa theo ngày)
+  const sortedPosts = [...publishedPosts].filter(Boolean).sort((a, b) => {
     if (sortBy === 'latest') {
       const timeA = getPostTimestamp(a);
       const timeB = getPostTimestamp(b);

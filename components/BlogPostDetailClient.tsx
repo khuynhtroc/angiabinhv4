@@ -8,7 +8,7 @@ import ChatbotWidget from '@/components/ChatbotWidget';
 import MobileQuickBar from '@/components/MobileQuickBar';
 import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import { useAppStore } from '@/lib/store';
-import { getPostUrl, resolveMediaUrl, handleImageFallback } from '@/lib/utils';
+import { getPostUrl, resolveMediaUrl, handleImageFallback, filterPublishedPosts } from '@/lib/utils';
 import ArticleContentWithToc from '@/components/ArticleContentWithToc';
 import PageSeoHead from '@/components/PageSeoHead';
 import { Calendar, Clock, ArrowLeft, Phone, ChevronRight, BookOpen, Layers } from 'lucide-react';
@@ -60,7 +60,8 @@ export default function BlogPostDetailClient({
   const categoryDesc = matchedCategory?.description || `Tổng hợp các bài viết chuyên sâu về ${categoryTitle.toLowerCase()} từ các kỹ sư trạm trộn và chuyên gia kết cấu Công ty TNHH Bê Tông An Gia Bình Ninh Bình.`;
 
   if (isCategory) {
-    const categoryPosts = posts.filter((p) => {
+    const published = filterPublishedPosts(posts);
+    const categoryPosts = published.filter((p) => {
       const pCat = (p.category || '').toLowerCase();
       if (matchedCategory) {
         if (pCat.includes(matchedCategory.name.toLowerCase()) || matchedCategory.name.toLowerCase().includes(pCat)) {
@@ -173,7 +174,7 @@ export default function BlogPostDetailClient({
     );
   }
 
-  const relatedPosts = posts.filter((p) => p.id !== post.id).slice(0, 3);
+  const relatedPosts = filterPublishedPosts(posts).filter((p) => p.id !== post.id).slice(0, 3);
   const articleTitle = post.title;
   const seoTitle = post.seoTitle || post.title;
   const finalTitle = seoTitle.includes('An Gia Bình') || seoTitle.includes('Bê Tông')

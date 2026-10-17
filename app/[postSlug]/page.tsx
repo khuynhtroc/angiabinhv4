@@ -29,12 +29,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (finalDesc.length > 158) {
       finalDesc = finalDesc.substring(0, 155).trim() + '...';
     }
-    const canonicalUrl = `https://www.betongangiabinh.vn/${cleanSlug}.html`;
+    const todayVn = new Date().toISOString().split('T')[0];
+    const isFuture = Boolean(post.date && post.date > todayVn);
 
     return {
       title: finalTitle,
       description: finalDesc,
       keywords: post.focusKeywords || ['bê tông tươi ninh bình', 'bê tông an gia bình'],
+      robots: isFuture ? { index: false, follow: true } : { index: true, follow: true },
       alternates: {
         canonical: canonicalUrl,
       },
