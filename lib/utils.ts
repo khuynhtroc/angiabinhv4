@@ -223,6 +223,26 @@ export function getCategoryUrl(categoryOrSlug: { slug?: string; id?: string; nam
 export function cleanExcerptText(raw?: string, maxLength: number = 180): string {
   if (!raw || typeof raw !== 'string') return '';
   let text = raw;
+  // Remove crawler metadata like "By Nguyễn Tấn Đạt Published On: Tháng 10 5th, 2025"
+  text = text.replace(/By[A-ZÀ-Ỹa-zà-ỹ\s]+Published On:\s*(?:Tháng|Ngày|\d)[^!\n\r#]*?\b(?:202[0-9]|203[0-9])(?:st|nd|rd|th)?(?:,\s*)?/gi, '');
+
+  text = text.replace(/Published On:[^\n.]*/gi, '');
+
+  // Remove scraped breadcrumbs and crawler CSS
+  text = text.replace(/Breadcrumb NavXT[^\n]*/gi, '');
+  text = text.replace(/\.vnaicontent[^\s]*/gi, '');
+  text = text.replace(/Main content/gi, '');
+
+  // Replace competitor brand names with An Gia Bình
+  text = text.replace(/Công ty TNHH Thiên Trường An|Thiên Trường An/gi, 'An Gia Bình');
+  text = text.replace(/Bê tông Thế giới Nhà|Thế Giới Nhà/gi, 'Bê Tông An Gia Bình');
+  text = text.replace(/Terra Yamaken|Yamaken/gi, 'An Gia Bình');
+  text = text.replace(/Lê Phan/gi, 'An Gia Bình');
+  text = text.replace(/Việt Hàn/gi, 'An Gia Bình');
+  text = text.replace(/Việt Nhật/gi, 'An Gia Bình');
+  text = text.replace(/Ninh Bình Today/gi, 'Bê Tông An Gia Bình');
+  text = text.replace(/Fico PanU|FICO PAN-UNITED/gi, 'Bê Tông An Gia Bình');
+  text = text.replace(/TDC Becamex|Becamex/gi, 'An Gia Bình');
 
   // Remove <style>...</style> and <script>...</script> blocks
   text = text.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
@@ -258,4 +278,5 @@ export function cleanExcerptText(raw?: string, maxLength: number = 180): string 
   }
   return text;
 }
+
 

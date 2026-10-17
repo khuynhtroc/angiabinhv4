@@ -90,7 +90,21 @@ export function getPostBySlugServer(rawSlug: string): BlogPost | null {
     .replace(/-me-kong/gi, '-an-gia-binh')
     .replace(/-mekong/gi, '-an-gia-binh')
     .replace(/-thang-long/gi, '-an-gia-binh')
-    .replace(/-viet-duc/gi, '-an-gia-binh');
+    .replace(/-viet-duc/gi, '-an-gia-binh')
+    .replace(/-thien-truong-an/gi, '-an-gia-binh')
+    .replace(/-the-gioi-nha/gi, '-an-gia-binh')
+    .replace(/-le-phan/gi, '-an-gia-binh')
+    .replace(/-viet-han/gi, '-an-gia-binh')
+    .replace(/-viet-nhat/gi, '-an-gia-binh')
+    .replace(/-hung-vuong-dong-nai/gi, '-an-gia-binh-ninh-binh')
+    .replace(/-hung-vuong/gi, '-an-gia-binh')
+    .replace(/-saigon-rdc/gi, '-an-gia-binh')
+    .replace(/-terra-yamaken/gi, '-an-gia-binh')
+    .replace(/-yamaken/gi, '-an-gia-binh')
+    .replace(/-fico-panu/gi, '-an-gia-binh')
+    .replace(/-fico/gi, '-an-gia-binh')
+    .replace(/-becamex/gi, '-an-gia-binh')
+    .replace(/-ninh-binh-today/gi, '-an-gia-binh');
 
   if (aliasClean !== clean) {
     const aliasMatch = posts.find(
@@ -98,6 +112,7 @@ export function getPostBySlugServer(rawSlug: string): BlogPost | null {
     );
     if (aliasMatch) return aliasMatch;
   }
+
 
   // Reverse check if slug in database still has -dufago
   const reverseClean = clean.replace(/-an-gia-binh/gi, '-dufago');
