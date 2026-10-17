@@ -29,8 +29,24 @@
     "focusTopic": "Giải pháp thi công bê tông tươi kỹ thuật cao, xử lý ngõ hẹp, thời tiết bất lợi và kiểm định mác chuẩn TCVN tại Ninh Bình",
     "autoInsertInternalLinks": true,
     "insertInternalLinks": true,
-    "totalPublished": 0,
+    "totalPublished": 2,
     "logs": [
+      {
+        "id": "log-1792248386016",
+        "timestamp": "2026-10-17T14:46:26.016Z",
+        "newsTitle": "Giải pháp bơm tĩnh bê tông tươi ngõ hẹp sâu 150m tại TP. Ninh Bình và Tam Điệp",
+        "generatedTitle": "Bê Tông Tươi Ninh Bình: Giải Pháp Bơm Tĩnh Ngõ Hẹp Sâu 150m",
+        "wordCount": 4469,
+        "status": "published"
+      },
+      {
+        "id": "log-1792248347656",
+        "timestamp": "2026-10-17T14:45:47.656Z",
+        "newsTitle": "Cẩm nang xử lý đổ bê tông tươi gặp trời mưa to bất chợt và chống nứt co ngót mùa hè tại Ninh Bình",
+        "generatedTitle": "Bê Tông Tươi Ninh Bình: Xử Lý Gặp Mưa To & Chống Nứt Mùa Hè",
+        "wordCount": 4781,
+        "status": "published"
+      },
       {
         "id": "log-init",
         "timestamp": "2026-10-10 13:00:00",
@@ -43,11 +59,13 @@
         "internalLinksCount": 8,
         "status": "success"
       }
-    ]
+    ],
+    "lastRunAt": "2026-10-17T14:46:26.016Z"
   },
   "integrations": {
     "googleAnalyticsId": "G-6J50BRBSZS",
     "searchConsoleTag": "-ampbrMsq6krT2SrsKAAvQSdxBns-wa9mv9aEGR86Ik",
     "isSynced": true
-  }
+  },
+  "updatedAt": "2026-10-17T14:46:26.018Z"
 }

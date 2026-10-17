@@ -38,6 +38,19 @@ app
       })
       .listen(port, () => {
         console.log(`> Next.js Server ready on http://${hostname}:${port}`);
+
+        // Autonomous AI Auto-Scheduler background monitor (checks 06:00, 12:00, 18:00 VN Time)
+        setInterval(async () => {
+          try {
+            const { checkAndRunScheduler } = await import('./lib/scheduler-runner.js').catch(() => import('./lib/scheduler-runner'));
+            const res = await checkAndRunScheduler(false);
+            if (res.success) {
+              console.log(`[AI Auto-Scheduler] ${res.message}`);
+            }
+          } catch {
+            // Non-blocking background catch
+          }
+        }, 60 * 1000);
       });
   })
   .catch((err) => {

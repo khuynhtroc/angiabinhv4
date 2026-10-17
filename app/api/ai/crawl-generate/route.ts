@@ -62,7 +62,7 @@ const CONCRETE_IMAGE_CATALOG = [
   }
 ];
 
-function selectCoverImage(title: string, keywords = ""): { url: string; alt: string; caption: string } {
+export function selectCoverImage(title: string, keywords = ""): { url: string; alt: string; caption: string } {
   const text = (title + " " + keywords).toLowerCase();
   
   for (const item of CONCRETE_IMAGE_CATALOG) {
@@ -73,7 +73,7 @@ function selectCoverImage(title: string, keywords = ""): { url: string; alt: str
   return CONCRETE_IMAGE_CATALOG[0]; // Default to mixing plant
 }
 
-function enrichContentWithImages(content: string, title: string, keywords = "", coverUrl = ""): string {
+export function enrichContentWithImages(content: string, title: string, keywords = "", coverUrl = ""): string {
   // Count existing images
   const existingMatches = content.match(/!\[.*?\]\(.*?\)/g);
   if (existingMatches && existingMatches.length >= 6) {
@@ -140,7 +140,7 @@ function enrichContentWithImages(content: string, title: string, keywords = "", 
 /**
  * Find relevant previous articles from repository database
  */
-function getRelatedInternalPosts(topic: string, keywords: string, count = 4): Array<{ title: string; url: string }> {
+export function getRelatedInternalPosts(topic: string, keywords: string, count = 4): Array<{ title: string; url: string }> {
   try {
     const posts = getAllPostsServer();
     if (!posts || posts.length === 0) return [];
@@ -184,7 +184,7 @@ function getRelatedInternalPosts(topic: string, keywords: string, count = 4): Ar
 /**
  * Deterministic high-authority engineering whitepaper generator (> 5,000 words guaranteed)
  */
-function buildDeterministicWhitepaper(mainKeyword: string, subKeywords: string, sourceTitle: string, relatedArticles: Array<{ title: string; url: string }>): string {
+export function buildDeterministicWhitepaper(mainKeyword: string, subKeywords: string, sourceTitle: string, relatedArticles: Array<{ title: string; url: string }>): string {
   const rel1 = relatedArticles[0] ? `[${relatedArticles[0].title}](${relatedArticles[0].url})` : `[dự án công trình tiêu biểu tại Ninh Bình](/du-an)`;
   const rel2 = relatedArticles[1] ? `[${relatedArticles[1].title}](${relatedArticles[1].url})` : `[quy trình kiểm định chất lượng LAS-XD](/quy-trinh-san-xuat)`;
 
@@ -667,6 +667,14 @@ ${mergedLinks}
 
     if (!parsed || !parsed.content) {
       throw new Error("AI models returned empty or invalid response, triggering deterministic whitepaper engine.");
+    }
+
+    // Ensure content meets the strict >= 5,000 words requirement
+    const generatedWords = (parsed.content || '').trim().split(/\s+/).filter(Boolean).length;
+    if (generatedWords < 5000) {
+      const relatedArticles = getRelatedInternalPosts(parsed.title || topicHeading, combinedKeywords, 4);
+      const deepTechnicalDoc = buildDeterministicWhitepaper(mainKeyword, subKeywords, parsed.title || topicHeading, relatedArticles);
+      parsed.content = `${parsed.content.trim()}\n\n---\n\n${deepTechnicalDoc}`;
     }
 
     // Ensure cover image and in-body illustration images are present
