@@ -18,6 +18,11 @@ import {
   initialJekyllConfig,
   initialMediaFiles
 } from '@/lib/initial-data';
+import postsDataJson from '@/public/data/posts.json';
+import projectsDataJson from '@/public/data/projects.json';
+import pagesDataJson from '@/public/data/pages.json';
+import categoriesDataJson from '@/public/data/categories.json';
+import configDataJson from '@/public/data/config.json';
 
 const DATA_DIR = path.join(process.cwd(), 'public', 'data');
 const POSTS_FILE = path.join(DATA_DIR, 'posts.json');
@@ -52,13 +57,13 @@ export function getAllPostsServer(): BlogPost[] {
       if (Array.isArray(parsed) && parsed.length > 0) {
         return parsed;
       }
-    } else {
-      // Auto-initialize posts.json on first access
-      fs.writeFileSync(POSTS_FILE, JSON.stringify(initialBlogPosts, null, 2), 'utf-8');
-      return initialBlogPosts;
     }
   } catch (err) {
     console.warn('[server-data] Error reading posts.json:', err);
+  }
+
+  if (Array.isArray(postsDataJson) && postsDataJson.length > 0) {
+    return postsDataJson as unknown as BlogPost[];
   }
 
   return initialBlogPosts;
@@ -139,12 +144,13 @@ export function getAllProjectsServer(): Project[] {
       if (Array.isArray(parsed) && parsed.length > 0) {
         return parsed;
       }
-    } else {
-      fs.writeFileSync(PROJECTS_FILE, JSON.stringify(initialProjects, null, 2), 'utf-8');
-      return initialProjects;
     }
   } catch (err) {
     console.warn('[server-data] Error reading projects.json:', err);
+  }
+
+  if (Array.isArray(projectsDataJson) && projectsDataJson.length > 0) {
+    return projectsDataJson as unknown as Project[];
   }
 
   return initialProjects;
@@ -193,10 +199,19 @@ export function getAllPagesServer(): SitePage[] {
           if (key) map.set(key, pg);
         });
       }
-    } else {
-      fs.writeFileSync(PAGES_FILE, JSON.stringify(initialPages, null, 2), 'utf-8');
+    } else if (Array.isArray(pagesDataJson) && pagesDataJson.length > 0) {
+      (pagesDataJson as unknown as SitePage[]).forEach((pg) => {
+        const key = pg.slug || pg.id;
+        if (key) map.set(key, pg);
+      });
     }
   } catch (err) {
+    if (Array.isArray(pagesDataJson) && pagesDataJson.length > 0) {
+      (pagesDataJson as unknown as SitePage[]).forEach((pg) => {
+        const key = pg.slug || pg.id;
+        if (key) map.set(key, pg);
+      });
+    }
     console.warn('[server-data] Error reading pages.json:', err);
   }
 
@@ -241,11 +256,13 @@ export function getAllCategoriesServer(): CategoryItem[] {
       const raw = fs.readFileSync(CATEGORIES_FILE, 'utf-8');
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-    } else {
-      fs.writeFileSync(CATEGORIES_FILE, JSON.stringify(initialCategories, null, 2), 'utf-8');
-      return initialCategories;
     }
   } catch {}
+
+  if (Array.isArray(categoriesDataJson) && categoriesDataJson.length > 0) {
+    return categoriesDataJson as unknown as CategoryItem[];
+  }
+
   return initialCategories;
 }
 
@@ -755,6 +772,17 @@ export function getConfigServer(): JekyllConfig {
   } catch (err) {
     console.warn('[server-data] Failed to read CONFIG_FILE:', err);
   }
+
+  if (configDataJson && typeof configDataJson === 'object') {
+    const parsed = configDataJson as unknown as Partial<JekyllConfig>;
+    return {
+      ...initialJekyllConfig,
+      ...parsed,
+      logo: parsed.logo || initialJekyllConfig.logo || '/logo.png',
+      favicon: parsed.favicon || initialJekyllConfig.favicon || '/favicon.ico',
+    };
+  }
+
   return initialJekyllConfig;
 }
 
