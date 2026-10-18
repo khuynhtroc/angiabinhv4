@@ -74,3 +74,5 @@ const createNextConfig = (phase: string): NextConfig => {
 };
 
 export default createNextConfig;
+
+import('@opennextjs/cloudflare').then(m => m.initOpenNextCloudflareForDev());

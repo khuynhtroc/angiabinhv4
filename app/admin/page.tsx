@@ -708,7 +708,7 @@ export default function AdminDashboard() {
       if (data.gitStatus) {
         setGitStatus(data.gitStatus);
       }
-      alert(`✅ ĐÃ ĐĂNG BÀI VIẾT MỚI TỪ AI THÀNH CÔNG!\n\n- Tiêu đề: "${created.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub [${data.gitResult?.commitHash || 'Đồng bộ'}].\n- Vercel đang tự động xuất bản lên Livesite betongangiabinh.vn (khoảng 1 - 2 phút).`);
+      alert(`✅ ĐÃ ĐĂNG BÀI VIẾT MỚI TỪ AI THÀNH CÔNG!\n\n- Tiêu đề: "${created.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub [${data.gitResult?.commitHash || 'Đồng bộ'}].\n- Cloudflare đang tự động xuất bản lên Livesite betongangiabinh.vn (khoảng 1 - 2 phút).`);
     } catch {
       alert('✅ Đã đăng bài viết mới thành công! Dữ liệu đang được đồng bộ lên Livesite betongangiabinh.vn.');
     }
@@ -1012,7 +1012,7 @@ export default function AdminDashboard() {
         } catch (e) {
           console.warn('Persist post server sync warning:', e);
         }
-        alert(`✅ ĐÃ LƯU BÀI VIẾT THÀNH CÔNG!${commitHash ? ` [Commit: ${commitHash}]` : ''}\n\n- Bài viết: "${fullPost.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub.\n- Vercel đang tự động xuất bản lên Livesite betongangiabinh.vn (khoảng 1 - 2 phút).`);
+        alert(`✅ ĐÃ LƯU BÀI VIẾT THÀNH CÔNG!${commitHash ? ` [Commit: ${commitHash}]` : ''}\n\n- Bài viết: "${fullPost.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub.\n- Cloudflare đang tự động xuất bản lên Livesite betongangiabinh.vn (khoảng 1 - 2 phút).`);
       } else {
         const createdPost = await addPost(postPayload);
         // Explicit verify direct write to posts.json on server & commit to GitHub
@@ -1029,7 +1029,7 @@ export default function AdminDashboard() {
         } catch (e) {
           console.warn('Persist post server sync warning:', e);
         }
-        alert(`✅ ĐÃ TẠO VÀ XUẤT BẢN BÀI VIẾT MỚI!${commitHash ? ` [Commit: ${commitHash}]` : ''}\n\n- Bài viết: "${createdPost.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub.\n- Vercel đang tự động xuất bản lên Livesite betongangiabinh.vn (khoảng 1 - 2 phút).`);
+        alert(`✅ ĐÃ TẠO VÀ XUẤT BẢN BÀI VIẾT MỚI!${commitHash ? ` [Commit: ${commitHash}]` : ''}\n\n- Bài viết: "${createdPost.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub.\n- Cloudflare đang tự động xuất bản lên Livesite betongangiabinh.vn (khoảng 1 - 2 phút).`);
       }
 
       setShowPostModal(false);
@@ -1103,7 +1103,7 @@ export default function AdminDashboard() {
     } catch {
       // ignore
     }
-    alert(`✅ ĐÃ LƯU CẤU HÌNH VÀ TỰ ĐỘNG ĐỒNG BỘ LIVESITE THÀNH CÔNG!${commitNotice}\n\nToàn bộ cài đặt website, SEO và các thẻ mã Header/Body/Footer đã được lưu và tự động tạo commit đẩy lên GitHub. Vercel đang xuất bản lên Livesite betongangiabinh.vn (khoảng 1 - 2 phút).`);
+    alert(`✅ ĐÃ LƯU CẤU HÌNH VÀ TỰ ĐỘNG ĐỒNG BỘ LIVESITE THÀNH CÔNG!${commitNotice}\n\nToàn bộ cài đặt website, SEO và các thẻ mã Header/Body/Footer đã được lưu và tự động tạo commit đẩy lên GitHub. Cloudflare đang xuất bản lên Livesite betongangiabinh.vn (khoảng 1 - 2 phút).`);
   };
 
   // Category Handlers
@@ -1299,7 +1299,7 @@ export default function AdminDashboard() {
         const data = await res.json();
         if (data.gitResult?.commitHash) commitNotice = ` [Commit: ${data.gitResult.commitHash}]`;
       } catch {}
-      alert(`✅ ĐÃ CẬP NHẬT DỰ ÁN THÀNH CÔNG!${commitNotice}\n\n- Dự án: "${payload.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub và Vercel đang xuất bản lên Livesite betongangiabinh.vn.`);
+      alert(`✅ ĐÃ CẬP NHẬT DỰ ÁN THÀNH CÔNG!${commitNotice}\n\n- Dự án: "${payload.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub và Cloudflare đang xuất bản lên Livesite betongangiabinh.vn.`);
     } else {
       const addedProj = addProject(payload);
       try {
@@ -1311,7 +1311,7 @@ export default function AdminDashboard() {
         const data = await res.json();
         if (data.gitResult?.commitHash) commitNotice = ` [Commit: ${data.gitResult.commitHash}]`;
       } catch {}
-      alert(`✅ ĐÃ THÊM DỰ ÁN MỚI THÀNH CÔNG!${commitNotice}\n\n- Dự án: "${payload.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub và Vercel đang xuất bản lên Livesite betongangiabinh.vn.`);
+      alert(`✅ ĐÃ THÊM DỰ ÁN MỚI THÀNH CÔNG!${commitNotice}\n\n- Dự án: "${payload.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub và Cloudflare đang xuất bản lên Livesite betongangiabinh.vn.`);
     }
 
     setShowProjectModal(false);
@@ -2645,7 +2645,7 @@ export default function AdminDashboard() {
                       </span>
                     </div>
                     <p className="text-xs text-slate-600 max-w-2xl leading-relaxed">
-                      Toàn bộ <strong>{posts.length} bài viết</strong> đã được lưu trực tiếp vào file mã nguồn (<code className="bg-white/80 px-1 py-0.5 rounded text-amber-800 font-mono text-[11px]">public/data/posts.json</code>). Để website chính thức <strong className="text-slate-900">betongangiabinh.vn</strong> hiển thị đủ 100%, bạn có thể xem hướng dẫn triển khai lên Vercel hoặc tải file Backup nạp nhanh.
+                      Toàn bộ <strong>{posts.length} bài viết</strong> đã được lưu trực tiếp vào file mã nguồn (<code className="bg-white/80 px-1 py-0.5 rounded text-amber-800 font-mono text-[11px]">public/data/posts.json</code>). Để website chính thức <strong className="text-slate-900">betongangiabinh.vn</strong> hiển thị đủ 100%, hệ thống tự động đồng bộ qua GitHub và Cloudflare (không giới hạn băng thông).
                     </p>
                   </div>
 
@@ -2653,11 +2653,11 @@ export default function AdminDashboard() {
                     <button
                       type="button"
                       onClick={() => setShowVercelDeployGuide(true)}
-                      className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white font-bold px-3.5 py-2.5 rounded-xl text-xs transition shadow-2xs cursor-pointer"
-                      title="Xem hướng dẫn đồng bộ dữ liệu sang tên miền betongangiabinh.vn (Vercel)"
+                      className="inline-flex items-center gap-1.5 bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold px-3.5 py-2.5 rounded-xl text-xs transition shadow-2xs cursor-pointer"
+                      title="Xem hướng dẫn đồng bộ dữ liệu sang tên miền betongangiabinh.vn qua Cloudflare"
                     >
-                      <Globe className="w-4 h-4 text-blue-200" />
-                      <span>Hướng Dẫn Cập Nhật Web (.vn)</span>
+                      <Globe className="w-4 h-4 text-slate-950" />
+                      <span>Hướng Dẫn Kết Nối Cloudflare (.vn)</span>
                     </button>
 
                     <button
@@ -2700,7 +2700,7 @@ export default function AdminDashboard() {
                   </div>
                 </div>
 
-                {/* MODAL: HƯỚNG DẪN ĐỒNG BỘ BETONGANGIABINH.VN TRÊN VERCEL */}
+                {/* MODAL: HƯỚNG DẪN KẾT NỐI BETONGANGIABINH.VN QUA CLOUDFLARE */}
                 {showVercelDeployGuide && (
                   <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs animate-in fade-in duration-200">
                     <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 max-w-2xl w-full p-6 space-y-5 max-h-[90vh] overflow-y-auto">
@@ -2711,11 +2711,11 @@ export default function AdminDashboard() {
                               <Globe className="w-5 h-5" />
                             </span>
                             <h3 className="text-lg font-black text-slate-900">
-                              Hướng Dẫn Cập Nhật Dữ Liệu Lên Tên Miền betongangiabinh.vn
+                              Hướng Dẫn Kết Nối Tên Miền betongangiabinh.vn Sang Cloudflare
                             </h3>
                           </div>
                           <p className="text-xs text-slate-500">
-                            Nguyên nhân và giải pháp khắc phục triệt để tình trạng lệch dữ liệu giữa AI Studio và Vercel
+                            Bỏ qua Vercel (bị giới hạn 402 Limit) và chuyển sang Cloudflare Pages/Workers hoàn toàn miễn phí &amp; không giới hạn băng thông
                           </p>
                         </div>
                         <button
@@ -2731,53 +2731,59 @@ export default function AdminDashboard() {
                       <div className="bg-amber-50 border border-amber-200 rounded-xl p-3.5 text-xs text-amber-950 space-y-1.5">
                         <div className="font-bold flex items-center gap-1.5 text-amber-900">
                           <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
-                          <span>Tại sao web betongangiabinh.vn chưa tự hiện 940 bài viết?</span>
+                          <span>Tại sao tên miền betongangiabinh.vn bị báo lỗi Payment Required / Limit trên Vercel?</span>
                         </div>
                         <p className="leading-relaxed text-slate-700">
-                          Website <code className="font-mono font-bold text-slate-900">betongangiabinh.vn</code> đang được lưu trữ trên nền tảng đám mây <strong>Vercel</strong> và hiện đang chạy bản phát hành cũ (ngày 16/09/2026, lúc đó chỉ có 6 bài mẫu). 
-                          Trong khi đó, Google AI Studio là môi trường lập trình độc lập (đã lưu sẵn toàn bộ <strong>{posts.length} bài viết</strong> trong tệp <code className="font-mono bg-white px-1 py-0.5 rounded border border-amber-300">public/data/posts.json</code>).
+                          Gói miễn phí của Vercel giới hạn 100 lần triển khai/ngày và băng thông. Khi admin lưu bài viết thường xuyên, hệ thống chạm ngưỡng giới hạn của Vercel. 
+                          Trong khi đó, <strong>Cloudflare</strong> cung cấp băng thông không giới hạn, máy chủ CDN đặt tại Việt Nam (Hà Nội, TP.HCM) và chống tấn công DDoS tự động.
                         </p>
                       </div>
 
-                      {/* 2 Lựa chọn khắc phục */}
+                      {/* Các bước kết nối Cloudflare */}
                       <div className="space-y-4 text-xs">
-                        {/* Cách 1: Nhanh 10 giây */}
+                        {/* Bước 1 */}
                         <div className="border border-emerald-200 bg-emerald-50/50 rounded-xl p-4 space-y-2">
                           <div className="flex items-center justify-between">
                             <span className="font-black text-emerald-900 text-sm flex items-center gap-1.5">
                               <span className="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs">1</span>
-                              Cách 1: Xem Ngay Trên Trình Duyệt Của Bạn (Chỉ Mất 10 Giây)
+                              Bước 1: Tạo dự án Cloudflare Pages từ GitHub
                             </span>
                             <span className="bg-emerald-200 text-emerald-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full">
-                              TỨC THÌ
+                              CHỈ 1 PHÚT
                             </span>
                           </div>
                           <ol className="list-decimal list-inside space-y-1.5 text-slate-700 pl-1 leading-relaxed">
-                            <li>Nhấn nút <strong>&quot;Tải Backup (.json)&quot;</strong> ở trên để tải file chứa toàn bộ {posts.length} bài viết về máy tính của bạn.</li>
-                            <li>Mở tab trình duyệt mới, vào trang quản trị: <a href="https://betongangiabinh.vn/admin" target="_blank" rel="noreferrer" className="text-blue-600 font-bold underline">https://betongangiabinh.vn/admin</a></li>
-                            <li>Nhấn nút <strong>&quot;Khôi Phục (.json)&quot;</strong> và chọn file JSON vừa tải về.</li>
-                            <li><strong>Xong!</strong> Trình duyệt của bạn trên betongangiabinh.vn sẽ lập tức hiển thị đủ toàn bộ {posts.length} bài viết mà không cần chờ Vercel.</li>
+                            <li>Truy cập <a href="https://dash.cloudflare.com" target="_blank" rel="noreferrer" className="text-blue-600 font-bold underline">dash.cloudflare.com</a> và đăng nhập tài khoản Cloudflare của bạn.</li>
+                            <li>Vào mục <strong>Workers &amp; Pages</strong> &rarr; Chọn <strong>Create application</strong> &rarr; Tab <strong>Pages</strong> &rarr; Nhấn <strong>Connect to Git</strong>.</li>
+                            <li>Chọn kho lưu trữ GitHub: <code className="font-mono bg-white px-1.5 py-0.5 rounded border border-emerald-300 font-bold text-emerald-800">khuynhtroc/angiabinhv4</code> &rarr; Nhánh: <strong>main</strong>.</li>
+                            <li>Cấu hình Build:
+                              <ul className="list-disc list-inside pl-4 mt-1 space-y-1 text-slate-600">
+                                <li>Framework preset: <strong>Next.js</strong></li>
+                                <li>Build command: <code className="bg-white px-1 font-mono text-emerald-900">npx opennextjs-cloudflare build</code> (hoặc <code className="bg-white px-1 font-mono text-emerald-900">npm run build</code>)</li>
+                                <li>Build output directory: <code className="bg-white px-1 font-mono text-emerald-900">.open-next/assets</code></li>
+                              </ul>
+                            </li>
+                            <li>Nhấn <strong>Save and Deploy</strong>. Cloudflare sẽ tự động build và cấp cho bạn 1 đường link <code className="font-mono text-emerald-700">xxx.pages.dev</code> hoạt động vĩnh viễn.</li>
                           </ol>
                         </div>
 
-                        {/* Cách 2: Triệt để cho toàn bộ khách hàng */}
+                        {/* Bước 2 */}
                         <div className="border border-blue-200 bg-blue-50/50 rounded-xl p-4 space-y-2">
                           <div className="flex items-center justify-between">
                             <span className="font-black text-blue-900 text-sm flex items-center gap-1.5">
                               <span className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs">2</span>
-                              Cách 2: Cập Nhật Vĩnh Viễn Cho Mọi Khách Hàng &amp; Google SEO
+                              Bước 2: Gắn Tên Miền betongangiabinh.vn Vào Cloudflare Pages
                             </span>
                             <span className="bg-blue-200 text-blue-950 text-[10px] font-extrabold px-2 py-0.5 rounded-full">
-                              TOÀN DIỆN
+                              KÍCH HOẠT
                             </span>
                           </div>
-                          <p className="text-slate-700 leading-relaxed">
-                            Vì file <code className="font-mono bg-white px-1 py-0.5 rounded border border-blue-200">public/data/posts.json</code> đã chứa đủ {posts.length} bài viết, bạn chỉ cần triển khai bản mới này lên Vercel:
-                          </p>
-                          <ul className="list-disc list-inside space-y-1.5 text-slate-700 pl-1 leading-relaxed">
-                            <li><strong>Nếu bạn kết nối với GitHub:</strong> Vào menu trên của AI Studio, chọn <strong>Export to GitHub</strong>. Vercel sẽ tự động phát hiện mã nguồn mới và hoàn tất cập nhật sau 1-2 phút.</li>
-                            <li><strong>Nếu bạn dùng Vercel CLI hoặc Deploy thủ công:</strong> Tải mã nguồn về (Export ZIP), chạy lệnh <code className="font-mono bg-white px-1.5 py-0.5 rounded border border-blue-200">vercel --prod</code> hoặc đẩy commit mới lên nhánh chính.</li>
-                          </ul>
+                          <ol className="list-decimal list-inside space-y-1.5 text-slate-700 pl-1 leading-relaxed">
+                            <li>Tại trang dự án Pages vừa tạo, bấm tab <strong>Custom domains</strong> &rarr; Nhấn <strong>Set up a custom domain</strong>.</li>
+                            <li>Nhập: <code className="font-mono font-bold text-blue-900">betongangiabinh.vn</code> (và <code className="font-mono font-bold text-blue-900">www.betongangiabinh.vn</code>) &rarr; Nhấn <strong>Continue</strong>.</li>
+                            <li>Vì tên miền của bạn đã ở sẵn trên Cloudflare DNS, Cloudflare sẽ tự động chuyển hướng bản ghi DNS sang Pages chỉ bằng 1 nút bấm (không còn trỏ về Vercel nữa).</li>
+                            <li><strong>Xong!</strong> Trang web <strong className="text-blue-950">betongangiabinh.vn</strong> sẽ lập tức mở khóa, hoạt động mượt mà và không bao giờ bị giới hạn băng thông.</li>
+                          </ol>
                         </div>
                       </div>
 

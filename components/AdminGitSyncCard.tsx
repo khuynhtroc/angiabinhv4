@@ -207,7 +207,7 @@ export default function AdminGitSyncCard({ onSyncComplete }: AdminGitSyncCardPro
               </span>
             </div>
             <p className="text-xs text-slate-500 mt-0.5">
-              Kết nối trực tiếp qua GitHub REST API. Bạn chỉ cần nhấn nút <strong>Lưu</strong>, hệ thống tự động đẩy lên GitHub và Vercel tự động xuất bản lên website!
+              Kết nối trực tiếp qua GitHub REST API. Bạn chỉ cần nhấn nút <strong>Lưu</strong>, hệ thống tự động đẩy lên GitHub và Cloudflare tự động xuất bản lên website!
             </p>
           </div>
         </div>
@@ -246,8 +246,8 @@ export default function AdminGitSyncCard({ onSyncComplete }: AdminGitSyncCardPro
                 Đẩy trực tiếp vào repo <code className="text-teal-700 font-mono text-[11px]">khuynhtroc/angiabinhv4</code>.
               </div>
               <div className="bg-white/90 p-2.5 rounded-xl border border-blue-200/60 shadow-2xs">
-                <span className="font-bold text-blue-800 block mb-0.5">3. Vercel Tự Động Build</span>
-                Livesite <span className="text-blue-700 font-semibold">betongangiabinh.vn</span> cập nhật sau 1-2 phút!
+                <span className="font-bold text-blue-800 block mb-0.5">3. Cloudflare Tự Động Build</span>
+                Livesite <span className="text-blue-700 font-semibold">betongangiabinh.vn</span> cập nhật sau 1-2 phút (không giới hạn băng thông)!
               </div>
             </div>
           </div>

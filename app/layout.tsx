@@ -5,8 +5,6 @@ import CookieConsentBanner from '@/components/CookieConsentBanner';
 import CustomCodeInjector from '@/components/CustomCodeInjector';
 import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import { getConfigServer } from '@/lib/server-data';
-import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -200,8 +198,6 @@ gtag('config', '${gaId}', {
         <FetchPatch />
         {children}
         <CookieConsentBanner />
-        <Analytics />
-        <SpeedInsights />
         {/* Bottom of Body / Footer: Injected Custom Footer Code (e.g. Zalo Chat, Tawk.to, Tracking) */}
         {config?.customFooterCode && (
           <div
