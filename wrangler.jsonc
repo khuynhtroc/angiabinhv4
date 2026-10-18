@@ -11,6 +11,16 @@
 		"directory": ".open-next/assets",
 		"binding": "ASSETS"
 	},
+	"routes": [
+		{
+			"pattern": "betongangiabinh.vn",
+			"custom_domain": true
+		},
+		{
+			"pattern": "www.betongangiabinh.vn",
+			"custom_domain": true
+		}
+	],
 	"services": [
 		{
 			// Self-reference service binding, the service name must match the worker name
