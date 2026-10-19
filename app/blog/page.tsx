@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback, Suspense } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import Navbar from '@/components/Navbar';
@@ -137,7 +137,7 @@ function BlogListInner() {
   const selectedCategory = overrideCategory !== null ? overrideCategory : (catParam || 'Tất Cả');
 
   const publishedPosts = useMemo(() => filterPublishedPosts(posts), [posts]);
-  const allTags = ['Tất Cả', ...Array.from(new Set(publishedPosts.flatMap(p => Array.isArray(p.tags) ? p.tags.filter(Boolean) : [])))];
+  const allTags: string[] = ['Tất Cả', ...Array.from(new Set(publishedPosts.flatMap((p: BlogPost) => Array.isArray(p.tags) ? (p.tags.filter(Boolean) as string[]) : [])))];
 
   // Helper to extract timestamp from post (checks updatedAt, id timestamp, or publish date)
   const getPostTimestamp = (p: BlogPost): number => {
