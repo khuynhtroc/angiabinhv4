@@ -31,6 +31,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
     const todayVn = new Date().toISOString().split('T')[0];
     const isFuture = Boolean(post.date && post.date > todayVn);
+    const canonicalUrl = `https://www.betongangiabinh.vn/${post.slug || cleanSlug}.html`;
 
     return {
       title: finalTitle,

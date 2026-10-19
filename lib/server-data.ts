@@ -636,10 +636,19 @@ export function getGitStatusServer(): {
  */
 export function savePostsServer(posts: BlogPost[]): boolean {
   ensureDataDir();
-  const ok = writeDataFile(POSTS_FILE, JSON.stringify(posts, null, 2));
+  const current = getAllPostsServer();
+  let listToSave = posts;
+  if (current.length > 100 && posts.length < 50) {
+    console.warn(`[server-data] Refusing to overwrite ${current.length} posts with only ${posts.length} posts! Merging instead.`);
+    const map = new Map<string, BlogPost>();
+    current.forEach(p => map.set(p.slug || p.id, p));
+    posts.forEach(p => map.set(p.slug || p.id, p));
+    listToSave = Array.from(map.values());
+  }
+  const ok = writeDataFile(POSTS_FILE, JSON.stringify(listToSave, null, 2));
   if (ok) {
     syncDataToInitialCode('posts');
-    commitChangesToGit(`chore(posts): update ${posts.length} blog posts from admin`);
+    commitChangesToGit(`chore(posts): update ${listToSave.length} blog posts from admin`);
   }
   return ok;
 }
