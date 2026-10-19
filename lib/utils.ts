@@ -13,19 +13,29 @@ export function formatNumber(num: number | string): string {
 }
 
 export function getPostUrl(idOrPost: { id?: string; slug?: string; permalink?: string } | string, slug?: string): string {
+  let raw = '';
   if (typeof idOrPost === 'string') {
-    const raw = slug || idOrPost;
-    const clean = raw.replace(/^\//, '').replace(/\.html$/, '');
-    return `/${clean}.html`;
+    raw = slug || idOrPost;
+  } else if (idOrPost.slug) {
+    raw = idOrPost.slug;
+  } else if (idOrPost.permalink) {
+    raw = idOrPost.permalink;
+  } else if (idOrPost.id) {
+    raw = idOrPost.id;
+  } else {
+    raw = 'post-1';
   }
-  if (idOrPost.permalink && idOrPost.permalink.trim()) {
-    const p = idOrPost.permalink.trim();
-    if (p.startsWith('http://') || p.startsWith('https://')) return p;
-    const cleanP = p.replace(/^\//, '').replace(/\.html$/, '');
-    return `/${cleanP}.html`;
-  }
-  const raw = idOrPost.slug || idOrPost.id || 'post-1';
-  const clean = raw.replace(/^\//, '').replace(/\.html$/, '');
+
+  if (raw.startsWith('http://') || raw.startsWith('https://')) return raw;
+
+  const clean = raw
+    .trim()
+    .replace(/^\/?(blog\/)?/, '')
+    .replace(/\/+\.html$/, '')
+    .replace(/\.html$/, '')
+    .replace(/\/+$/, '')
+    .trim();
+
   return `/${clean}.html`;
 }
 

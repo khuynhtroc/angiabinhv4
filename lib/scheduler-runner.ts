@@ -188,12 +188,13 @@ Trả về đúng định dạng JSON:
   const fullRawContent = `${baseContent}${whitepaperContent}`;
   const enrichedContent = enrichContentWithImages(fullRawContent, finalTitle, combinedKeywords, chosenCover.url);
   const finalWordCount = enrichedContent.trim().split(/\s+/).filter(Boolean).length;
+  const fullSlug = `${finalSlug}-${Date.now().toString().slice(-4)}`;
 
   const newBlogPost: BlogPost = {
     id: `post-${Date.now()}`,
     title: finalTitle,
-    slug: `${finalSlug}-${Date.now().toString().slice(-4)}`,
-    permalink: `/blog/${finalSlug}/`,
+    slug: fullSlug,
+    permalink: `/${fullSlug}.html`,
     category: generatedPost?.category || 'Kỹ Thuật Thi Công',
     excerpt: generatedPost?.excerpt || `Cẩm nang kỹ thuật chuyên sâu về ${primaryKeyword} từ kỹ sư Bê Tông An Gia Bình: Tiêu chuẩn TCVN, bảng cấp phối mác, kiểm định nón sụt và bảo dưỡng chuẩn xác.`,
     content: enrichedContent,

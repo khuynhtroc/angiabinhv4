@@ -197,7 +197,7 @@ export default function BlogPostDetailClient({
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 font-sans">
       <PageSeoHead
-        slug={`/blog/${cleanSlug}`}
+        slug={`/${post.slug || post.id}.html`}
         canonicalUrl={`https://www.betongangiabinh.vn/${post.slug || post.id}.html`}
         title={finalTitle}
         description={post.seoDescription || post.excerpt}
@@ -209,7 +209,7 @@ export default function BlogPostDetailClient({
         breadcrumbs={[
           { name: 'Trang Chủ', item: '/' },
           { name: 'Kiến Thức & Blog', item: '/blog' },
-          { name: post.title, item: `/blog/${cleanSlug}` }
+          { name: post.title, item: `/${post.slug || post.id}.html` }
         ]}
       />
       <RealtimeAnalyticsTracker />

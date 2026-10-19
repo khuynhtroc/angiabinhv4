@@ -2456,7 +2456,7 @@ export default function AdminDashboard() {
                       id: `post-${Date.now()}`,
                       title: data.title,
                       slug: data.slug || data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-                      permalink: `/blog/${data.slug || 'tin-tuc-be-tong'}/`,
+                      permalink: `/${data.slug || 'tin-tuc-be-tong'}.html`,
                       category: data.category || 'Bê Tông Tươi',
                       excerpt: data.excerpt || data.title,
                       content: data.content,
