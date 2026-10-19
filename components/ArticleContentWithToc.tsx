@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
+import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { List, ListOrdered, ChevronRight, ChevronDown, Hash, BookOpen, ArrowUp, X } from 'lucide-react';
+import { List, ListOrdered, ChevronRight, ChevronDown, Hash, BookOpen, ArrowUp, X, Sparkles, Phone } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
 import { resolveMediaUrl, handleImageFallback } from '@/lib/utils';
 
@@ -59,6 +60,7 @@ export default function ArticleContentWithToc({ content }: Props) {
 
   // 1. Normalize markdown content:
   // - Strip Jekyll frontmatter (--- ... ---)
+  // - Strip raw HTML CTA blocks that might leak into text
   // - Convert HTML headings (<h1>..<h4>) to Markdown headings (##)
   // - Normalize Jekyll image liquid tags {{ site.url }}
   const processedContent = useMemo(() => {
@@ -67,6 +69,16 @@ export default function ArticleContentWithToc({ content }: Props) {
 
     // Strip YAML frontmatter at start if present
     cleaned = cleaned.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '');
+
+    // Strip any raw HTML <div> CTA blocks that might leak as unrendered text
+    cleaned = cleaned.replace(/<div class=["']my-8 p-6 bg-slate-900[\s\S]*?<\/div>\s*<\/div>/gi, '');
+    cleaned = cleaned.replace(/<div class=["']flex items-center gap-2 text-amber-400[\s\S]*?<\/div>\s*<\/div>/gi, '');
+    cleaned = cleaned.replace(/<div class=["'][^"']*["']>[\s\S]*?<\/div>/gi, (m) => {
+      if (m.includes('Hotline') || m.includes('Trạm Trộn') || m.includes('Cần Tư Vấn') || m.includes('An Gia Bình')) {
+        return '';
+      }
+      return m;
+    });
 
     // Transform Jekyll Liquid tags
     cleaned = cleaned
@@ -389,38 +401,41 @@ export default function ArticleContentWithToc({ content }: Props) {
                 </blockquote>
               ),
               table: ({ children }) => (
-                <div className="my-6 overflow-x-auto rounded-xl border border-slate-200 shadow-xs max-w-full">
-                  <div className="sm:hidden bg-slate-100/90 px-3 py-1.5 text-[11px] text-slate-600 border-b border-slate-200 flex items-center justify-between font-medium">
-                    <span>Bảng dữ liệu kỹ thuật</span>
-                    <span className="text-amber-700 font-semibold">Vuốt ngang để xem ➔</span>
+                <div className="my-8 overflow-x-auto rounded-2xl border border-slate-200/90 shadow-sm max-w-full bg-white">
+                  <div className="bg-slate-50 px-4 py-2 text-xs text-slate-700 border-b border-slate-200 flex items-center justify-between font-bold">
+                    <span className="flex items-center gap-1.5 text-slate-900">
+                      <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+                      Bảng thông số kỹ thuật &amp; cấp phối
+                    </span>
+                    <span className="text-amber-800 text-[11px] font-semibold sm:hidden">Vuốt ngang ➔</span>
                   </div>
-                  <table className="min-w-[560px] sm:min-w-full divide-y divide-slate-200 text-xs sm:text-sm">
+                  <table className="min-w-full divide-y divide-slate-200 text-xs sm:text-sm text-left border-collapse">
                     {children}
                   </table>
                 </div>
               ),
               thead: ({ children }) => (
-                <thead className="bg-slate-100 text-slate-900 font-bold text-left">
+                <thead className="bg-slate-100 text-slate-900 font-bold border-b-2 border-slate-300">
                   {children}
                 </thead>
               ),
               tbody: ({ children }) => (
-                <tbody className="divide-y divide-slate-100 bg-white">
+                <tbody className="divide-y divide-slate-200 bg-white">
                   {children}
                 </tbody>
               ),
               tr: ({ children }) => (
-                <tr className="hover:bg-amber-50/40 transition">
+                <tr className="hover:bg-amber-50/50 transition-colors even:bg-slate-50/40">
                   {children}
                 </tr>
               ),
               th: ({ children }) => (
-                <th className="px-3.5 sm:px-4 py-2.5 sm:py-3 font-bold text-slate-900 whitespace-nowrap text-xs sm:text-sm">
+                <th className="px-4 py-3 font-bold text-slate-900 whitespace-nowrap text-xs sm:text-sm border-r border-slate-200 last:border-r-0 bg-slate-100/80">
                   {children}
                 </th>
               ),
               td: ({ children }) => (
-                <td className="px-3.5 sm:px-4 py-2.5 sm:py-3 text-slate-700 text-xs sm:text-sm leading-relaxed align-top">
+                <td className="px-4 py-3 text-slate-700 text-xs sm:text-sm leading-relaxed align-top border-r border-slate-200 last:border-r-0">
                   {children}
                 </td>
               ),
@@ -484,6 +499,39 @@ export default function ArticleContentWithToc({ content }: Props) {
           >
             {processedContent}
           </ReactMarkdown>
+
+          {/* Prominent High-Converting Call To Action Box (Rendered natively in React) */}
+          <div className="my-10 p-6 sm:p-8 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white rounded-3xl border border-amber-500/40 shadow-xl relative overflow-hidden not-prose">
+            <div className="absolute top-0 right-0 -mt-10 -mr-10 w-44 h-44 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="relative z-10">
+              <div className="inline-flex items-center gap-2 bg-amber-500/20 text-amber-400 font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-full border border-amber-500/30 mb-3">
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                <span>Trạm Trộn Bê Tông An Gia Bình Ninh Bình</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-black text-white mb-2.5 tracking-tight">
+                Cần Tư Vấn Cấp Phối &amp; Báo Giá Tận Chân Công Trình?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-300 mb-6 leading-relaxed max-w-2xl">
+                Chúng tôi cung ứng bê tông tươi đạt chuẩn TCVN từ Mác 150 đến Mác 600, thí nghiệm nén mẫu R7/R28 tại phòng LAS-XD, đội xe bồn chuyên dụng 35+ xe và xe bơm cần 37m - 56m, bơm tĩnh phục vụ 24/7 khắp Ninh Bình và vùng lân cận.
+              </p>
+              <div className="flex flex-wrap items-center gap-3">
+                <a
+                  href="tel:0988266293"
+                  className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm px-6 py-3 rounded-2xl transition shadow-lg hover:scale-105 active:scale-95"
+                >
+                  <Phone className="w-4 h-4" />
+                  <span>Hotline Kỹ Thuật: 0988 2662 93</span>
+                </a>
+                <Link
+                  href="/bang-gia"
+                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold text-sm px-5 py-3 rounded-2xl border border-white/20 transition hover:border-amber-400/60"
+                >
+                  <span>Xem Bảng Báo Giá Chi Tiết</span>
+                  <ChevronRight className="w-4 h-4 text-amber-400" />
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
