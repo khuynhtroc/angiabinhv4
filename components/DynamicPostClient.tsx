@@ -38,7 +38,13 @@ export default function DynamicPostClient({
   const [chatOpen, setChatOpen] = useState(false);
 
   // Match by id, slug, or with .html
-  const cleanSlug = decodeURIComponent(rawSlug).replace(/\.html$/, '');
+  const cleanSlug = decodeURIComponent(rawSlug || '')
+    .trim()
+    .replace(/^\/?(blog\/)?/, '')
+    .replace(/\/+\.html$/, '')
+    .replace(/\.html$/, '')
+    .replace(/\/+$/, '');
+  const cleanNoSuffix = cleanSlug.replace(/-\d{3,6}$/, '');
 
   const aliasClean = cleanSlug
     .replace(/-dufago/gi, '-an-gia-binh')
@@ -48,16 +54,23 @@ export default function DynamicPostClient({
     .replace(/-thang-long/gi, '-an-gia-binh')
     .replace(/-viet-duc/gi, '-an-gia-binh');
 
-  const storePost = posts.find(
-    (p) =>
-      p.id === cleanSlug ||
-      p.slug === cleanSlug ||
-      p.id === rawSlug ||
+  const storePost = posts.find((p) => {
+    const pSlug = (p.slug || '').replace(/\.html$/, '');
+    const pId = (p.id || '').replace(/\.html$/, '');
+    const pSlugNoSuffix = pSlug.replace(/-\d{3,6}$/, '');
+    return (
+      pSlug === cleanSlug ||
+      pId === cleanSlug ||
+      pSlugNoSuffix === cleanSlug ||
+      pSlug === cleanNoSuffix ||
+      pSlugNoSuffix === cleanNoSuffix ||
       p.slug === rawSlug ||
+      p.id === rawSlug ||
       `${p.id}.html` === rawSlug ||
       `${p.slug}.html` === rawSlug ||
       (aliasClean !== cleanSlug && (p.slug === aliasClean || `${p.slug}.html` === aliasClean))
-  );
+    );
+  });
   const post = storePost || initialPost || null;
 
   // If not a blog post, check if it matches a custom SitePage created in Admin

@@ -30,8 +30,9 @@ function isCategorySlug(slug: string): boolean {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug: slugSegments } = await params;
   const segments = Array.isArray(slugSegments) ? slugSegments : [slugSegments];
-  const rawSlug = segments[segments.length - 1] || '';
-  const cleanSlug = decodeURIComponent(rawSlug).replace(/\.html$/, '');
+  const validSegments = segments.filter(s => s && s !== '.html' && s !== 'html');
+  const rawSlug = validSegments[validSegments.length - 1] || segments[segments.length - 1] || '';
+  const cleanSlug = decodeURIComponent(rawSlug).replace(/\/+\.html$/, '').replace(/\.html$/, '').replace(/\/+$/, '');
 
   // 1. Check if category
   if (isCategorySlug(cleanSlug)) {
@@ -94,8 +95,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function BlogPostCatchAllPage({ params }: PageProps) {
   const { slug: slugSegments } = await params;
   const segments = Array.isArray(slugSegments) ? slugSegments : [slugSegments];
-  const rawSlug = segments[segments.length - 1] || '';
-  const cleanSlug = decodeURIComponent(rawSlug).replace(/\.html$/, '');
+  const validSegments = segments.filter(s => s && s !== '.html' && s !== 'html');
+  const rawSlug = validSegments[validSegments.length - 1] || segments[segments.length - 1] || '';
+  const cleanSlug = decodeURIComponent(rawSlug).replace(/\/+\.html$/, '').replace(/\.html$/, '').replace(/\/+$/, '');
 
   if (isCategorySlug(cleanSlug)) {
     return <CategoryDetailClient cleanSlug={cleanSlug} />;

@@ -34,18 +34,31 @@ export default function BlogPostDetailClient({
   const { posts, categories } = useAppStore();
   const [chatOpen, setChatOpen] = useState(false);
 
-  const cleanSlug = (rawSlug || '').replace(/\.html$/, '');
+  const cleanSlug = decodeURIComponent(rawSlug || '')
+    .trim()
+    .replace(/^\/?(blog\/)?/, '')
+    .replace(/\/+\.html$/, '')
+    .replace(/\.html$/, '')
+    .replace(/\/+$/, '');
+  const cleanNoSuffix = cleanSlug.replace(/-\d{3,6}$/, '');
 
   // 1. Check if an article post matches first
-  const storePost = posts.find(
-    (p) =>
-      p.slug === cleanSlug ||
-      p.id === cleanSlug ||
+  const storePost = posts.find((p) => {
+    const pSlug = (p.slug || '').replace(/\.html$/, '');
+    const pId = (p.id || '').replace(/\.html$/, '');
+    const pSlugNoSuffix = pSlug.replace(/-\d{3,6}$/, '');
+    return (
+      pSlug === cleanSlug ||
+      pId === cleanSlug ||
+      pSlugNoSuffix === cleanSlug ||
+      pSlug === cleanNoSuffix ||
+      pSlugNoSuffix === cleanNoSuffix ||
       p.slug === rawSlug ||
       p.id === rawSlug ||
       `${p.id}.html` === rawSlug ||
       `${p.slug}.html` === rawSlug
-  );
+    );
+  });
   const post = storePost || initialPost || null;
 
   // 2. Category page check if no specific post matched

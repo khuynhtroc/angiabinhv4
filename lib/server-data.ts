@@ -74,9 +74,20 @@ export function getAllPostsServer(): BlogPost[] {
  */
 export function getPostBySlugServer(rawSlug: string): BlogPost | null {
   if (!rawSlug) return null;
-  const clean = decodeURIComponent(rawSlug).trim().replace(/\.html$/, '');
+  // Deep clean rawSlug:
+  // - Remove leading /, /blog/, blog/
+  // - Remove trailing /, .html, /.html
+  const clean = decodeURIComponent(rawSlug)
+    .trim()
+    .replace(/^\/?(blog\/)?/, '')
+    .replace(/\/+\.html$/, '')
+    .replace(/\.html$/, '')
+    .replace(/\/+$/, '');
+
+  if (!clean) return null;
   const posts = getAllPostsServer();
 
+  // 1. Exact match
   const exact = posts.find(
     (p) =>
       p.slug === clean ||
@@ -84,11 +95,36 @@ export function getPostBySlugServer(rawSlug: string): BlogPost | null {
       p.slug === rawSlug ||
       p.id === rawSlug ||
       `${p.slug}.html` === rawSlug ||
-      `${p.id}.html` === rawSlug
+      `${p.id}.html` === rawSlug ||
+      `${p.slug}.html` === clean ||
+      p.slug === `${clean}.html`
   );
   if (exact) return exact;
 
-  // Handle aliases if slug contained external brand names
+  // 2. Suffix match (e.g. user enters "slug" and post has "slug-5281", or vice versa)
+  const cleanNoSuffix = clean.replace(/-\d{3,6}$/, '');
+  const suffixMatch = posts.find((p) => {
+    const pSlug = (p.slug || '').replace(/\.html$/, '');
+    const pSlugNoSuffix = pSlug.replace(/-\d{3,6}$/, '');
+    return (
+      pSlug === clean ||
+      pSlugNoSuffix === clean ||
+      pSlug === cleanNoSuffix ||
+      pSlugNoSuffix === cleanNoSuffix
+    );
+  });
+  if (suffixMatch) return suffixMatch;
+
+  // 3. Partial / loose prefix match for long slugs (> 15 chars)
+  if (cleanNoSuffix.length >= 15) {
+    const looseMatch = posts.find((p) => {
+      const pSlug = (p.slug || '').replace(/\.html$/, '').replace(/-\d{3,6}$/, '');
+      return pSlug.startsWith(cleanNoSuffix) || cleanNoSuffix.startsWith(pSlug);
+    });
+    if (looseMatch) return looseMatch;
+  }
+
+  // 4. Handle aliases if slug contained external brand names
   const aliasClean = clean
     .replace(/-dufago/gi, '-an-gia-binh')
     .replace(/-cong-thanh/gi, '-an-gia-binh')
@@ -112,12 +148,19 @@ export function getPostBySlugServer(rawSlug: string): BlogPost | null {
     .replace(/-ninh-binh-today/gi, '-an-gia-binh');
 
   if (aliasClean !== clean) {
-    const aliasMatch = posts.find(
-      (p) => p.slug === aliasClean || `${p.slug}.html` === aliasClean
-    );
+    const aliasMatch = posts.find((p) => {
+      const pSlug = (p.slug || '').replace(/\.html$/, '');
+      const pSlugNoSuffix = pSlug.replace(/-\d{3,6}$/, '');
+      const aliasNoSuffix = aliasClean.replace(/-\d{3,6}$/, '');
+      return (
+        pSlug === aliasClean ||
+        pSlug === aliasNoSuffix ||
+        pSlugNoSuffix === aliasClean ||
+        pSlugNoSuffix === aliasNoSuffix
+      );
+    });
     if (aliasMatch) return aliasMatch;
   }
-
 
   // Reverse check if slug in database still has -dufago
   const reverseClean = clean.replace(/-an-gia-binh/gi, '-dufago');

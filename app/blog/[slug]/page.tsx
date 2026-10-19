@@ -29,7 +29,12 @@ function isCategorySlug(slug: string): boolean {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug: rawSlug } = await params;
-  const cleanSlug = decodeURIComponent(rawSlug || '').replace(/\.html$/, '');
+  const cleanSlug = decodeURIComponent(rawSlug || '')
+    .trim()
+    .replace(/^\/?(blog\/)?/, '')
+    .replace(/\/+\.html$/, '')
+    .replace(/\.html$/, '')
+    .replace(/\/+$/, '');
 
   // 1. Check if category
   if (isCategorySlug(cleanSlug)) {
@@ -92,7 +97,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function BlogPostDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const cleanSlug = decodeURIComponent(slug || '').replace(/\.html$/, '');
+  const cleanSlug = decodeURIComponent(slug || '')
+    .trim()
+    .replace(/^\/?(blog\/)?/, '')
+    .replace(/\/+\.html$/, '')
+    .replace(/\.html$/, '')
+    .replace(/\/+$/, '');
 
   // If this is a category route (/blog/tin-tuc, /blog/kinh-nghiem, /blog/kien-thuc), render category view
   if (isCategorySlug(cleanSlug)) {
