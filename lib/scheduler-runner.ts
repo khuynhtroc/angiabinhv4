@@ -14,6 +14,7 @@ import {
   getRelatedInternalPosts,
   buildDeterministicWhitepaper
 } from '@/app/api/ai/crawl-generate/route';
+import { autoSubmitPostUrlServer } from '@/lib/google-indexing';
 
 export interface SchedulerExecutionResult {
   success: boolean;
@@ -208,6 +209,14 @@ Trả về đúng định dạng JSON:
 
   // Save new post to public/data/posts.json
   saveSinglePostServer(newBlogPost);
+
+  // Auto-submit URL to Google Indexing API & IndexNow
+  try {
+    const postCanonicalUrl = `https://www.betongangiabinh.vn/${fullSlug}.html`;
+    await autoSubmitPostUrlServer(postCanonicalUrl);
+  } catch (idxErr) {
+    console.warn('[scheduler-runner] Auto-submit to Google Indexing failed:', idxErr);
+  }
 
   // Update admin settings log
   const newLog = {

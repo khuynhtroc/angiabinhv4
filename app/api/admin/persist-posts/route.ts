@@ -37,6 +37,7 @@ import {
 import fs from 'node:fs';
 import path from 'node:path';
 import { BlogPost, Project } from '@/lib/types';
+import { autoSubmitPostUrlServer } from '@/lib/google-indexing';
 
 export const dynamic = 'force-dynamic';
 
@@ -335,6 +336,13 @@ export async function POST(req: NextRequest) {
     if (action === 'save_post' && post) {
       const targetPost = post as BlogPost;
       const { posts: updatedPosts } = saveSinglePostServer(targetPost);
+
+      // Auto submit canonical URL to Google Indexing API & IndexNow in background
+      try {
+        await autoSubmitPostUrlServer(targetPost.slug || targetPost.id);
+      } catch (idxErr) {
+        console.warn('[Google Indexing] Auto submit on save_post warning:', idxErr);
+      }
 
       const filesToCommit: Array<{ path: string; content: string }> = [
         { path: 'public/data/posts.json', content: JSON.stringify(updatedPosts, null, 2) }

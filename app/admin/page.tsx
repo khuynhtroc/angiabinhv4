@@ -22,8 +22,9 @@ import AdminAddMediaUrlModal from '@/components/AdminAddMediaUrlModal';
 import AdminManageFoldersModal from '@/components/AdminManageFoldersModal';
 import AdminDesignSection from '@/components/AdminDesignSection';
 import AdminTrashSection from '@/components/AdminTrashSection';
-import AdminGitSyncCard from '@/components/AdminGitSyncCard';
 import { optimizePostFull, suggestKeywordsAndTags, generateOptimizedMetaDescription } from '@/lib/postOptimizer';
+import AdminGoogleIndexingCard from '@/components/AdminGoogleIndexingCard';
+import { submitPostUrlToGoogleClient, submitBulkUrlsClient } from '@/lib/google-indexing-client';
 import {
   Lock, KeyRound, LayoutDashboard, FileText, Building2, Users,
   FolderArchive, Sparkles, RefreshCw, Trash2, Plus, CheckCircle2,
@@ -694,6 +695,7 @@ export default function AdminDashboard() {
     };
 
     const created = await addPost(newPostData);
+    submitPostUrlToGoogleClient(created.slug || created.id).catch(err => console.warn('[Auto Submit Google Indexing] Error:', err));
 
     try {
       const res = await fetch('/api/admin/persist-posts', {
@@ -998,6 +1000,7 @@ export default function AdminDashboard() {
           ...postPayload,
         };
         await updatePost(fullPost);
+        submitPostUrlToGoogleClient(fullPost.slug || fullPost.id).catch(err => console.warn('[Auto Submit Google Indexing] Error:', err));
         // Explicit verify direct write to posts.json on server & commit to GitHub
         try {
           const res = await fetch('/api/admin/persist-posts', {
@@ -1015,6 +1018,7 @@ export default function AdminDashboard() {
         alert(`✅ ĐÃ LƯU BÀI VIẾT THÀNH CÔNG!${commitHash ? ` [Commit: ${commitHash}]` : ''}\n\n- Bài viết: "${fullPost.title}"\n- Trạng thái: Đã tự động tạo commit đẩy lên GitHub.\n- Cloudflare đang tự động xuất bản lên Livesite betongangiabinh.vn (khoảng 1 - 2 phút).`);
       } else {
         const createdPost = await addPost(postPayload);
+        submitPostUrlToGoogleClient(createdPost.slug || createdPost.id).catch(err => console.warn('[Auto Submit Google Indexing] Error:', err));
         // Explicit verify direct write to posts.json on server & commit to GitHub
         try {
           const res = await fetch('/api/admin/persist-posts', {
@@ -1404,9 +1408,10 @@ export default function AdminDashboard() {
       return;
     }
 
+    const importedSlug = mdParsedPreview.slug || `bai-viet-${Date.now()}`;
     await addPost({
       title: mdParsedPreview.title,
-      slug: mdParsedPreview.slug || `bai-viet-${Date.now()}`,
+      slug: importedSlug,
       excerpt: mdParsedPreview.excerpt || mdParsedPreview.title,
       content: mdParsedPreview.content,
       category: mdParsedPreview.category || 'Kỹ Thuật Thi Công',
@@ -1415,6 +1420,7 @@ export default function AdminDashboard() {
       readTime: mdParsedPreview.readTime || '5 phút',
       coverImage: mdParsedPreview.coverImage || 'https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1000&auto=format&fit=crop&q=80',
     });
+    submitPostUrlToGoogleClient(importedSlug).catch(err => console.warn('[Auto Submit Google Indexing] Error:', err));
 
     alert('✅ Đã nhập và lưu bài viết từ file .md thành công vào tệp posts.json!');
     setShowMdImportModal(false);
@@ -2049,6 +2055,9 @@ export default function AdminDashboard() {
               </div>
             </div>
 
+            {/* Google Indexing API & IndexNow Auto Push Card */}
+            <AdminGoogleIndexingCard />
+
             {/* Google Analytics & Search Console Integration Card */}
             <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 space-y-6 shadow-sm">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-5">
@@ -2468,6 +2477,7 @@ export default function AdminDashboard() {
                       views: 0,
                     };
                     addPost(newPost);
+                    submitPostUrlToGoogleClient(newPost.slug || newPost.id).catch(err => console.warn('[Auto Submit Google Indexing] Error:', err));
                     if (candidateNews.title) {
                       markNewsRewritten(candidateNews.title);
                     }
@@ -2607,6 +2617,29 @@ export default function AdminDashboard() {
                       >
                         <Calendar className="w-3.5 h-3.5 text-blue-600" />
                         <span>Đổi Ngày Đăng ({selectedPostIds.length})</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          const selectedPosts = posts.filter(p => selectedPostIds.includes(p.id));
+                          const urls = selectedPosts.map(p => {
+                            const clean = (p.slug || p.id).replace(/^\/?(blog\/)?/, '').replace(/\/+\.html$/, '').replace(/\.html$/, '');
+                            return `https://www.betongangiabinh.vn/${clean}.html`;
+                          });
+                          if (!confirm(`Bạn có chắc chắn muốn submit ${urls.length} bài viết đã chọn lên Google Indexing & IndexNow ngay bây giờ?`)) return;
+                          const res = await submitBulkUrlsClient(urls);
+                          if (res.success) {
+                            alert(`⚡ ĐÃ GỬI ${urls.length} BÀI VIẾT LÊN GOOGLE INDEXING!\n\n- Thành công: ${res.summary?.success || 0}\n- Thất bại: ${res.summary?.failed || 0}\n- Bỏ qua: ${res.summary?.skipped || 0}\n\nXem chi tiết tại Tab "Phân Tích & Đồng Bộ Google".`);
+                          } else {
+                            alert(`⚠️ Lỗi submit hàng loạt: ${res.message}`);
+                          }
+                        }}
+                        className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold px-3.5 py-2 rounded-xl transition shadow-xs cursor-pointer"
+                        title="Submit ngay các bài viết đã chọn lên Google Indexing API"
+                      >
+                        <Zap className="w-3.5 h-3.5" />
+                        <span>Push Index Google ({selectedPostIds.length})</span>
                       </button>
 
                       <button
@@ -3146,6 +3179,24 @@ export default function AdminDashboard() {
                                 >
                                   <Eye className="w-3.5 h-3.5" />
                                 </Link>
+                                <button
+                                  type="button"
+                                  onClick={async () => {
+                                    const slug = post.slug || post.id;
+                                    const clean = slug.replace(/^\/?(blog\/)?/, '').replace(/\/+\.html$/, '').replace(/\.html$/, '');
+                                    const canonical = `https://www.betongangiabinh.vn/${clean}.html`;
+                                    const res = await submitPostUrlToGoogleClient(canonical);
+                                    if (res.success) {
+                                      alert(`⚡ ĐÃ GỬI TỚI GOOGLE INDEXING THÀNH CÔNG!\n\n- URL: ${canonical}\n- Trạng thái Google: ${res.results?.google?.status || 'OK'} (${res.results?.google?.httpStatus || 200})\n- Thông báo: ${res.results?.google?.message || 'Đã gửi thành công'}`);
+                                    } else {
+                                      alert(`⚠️ Không thể gửi Index: ${res.message || 'Lỗi kiểm tra cấu hình'}`);
+                                    }
+                                  }}
+                                  className="p-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 transition cursor-pointer"
+                                  title="Submit nhanh URL bài viết này lên Google Indexing API"
+                                >
+                                  <Zap className="w-3.5 h-3.5" />
+                                </button>
                                 <button
                                   onClick={async () => {
                                     if (confirm(`Xóa bài viết "${post.title}"?`)) {

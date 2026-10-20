@@ -12,6 +12,7 @@ export interface BlogPost {
   views: number;
   readTime: string;
   seoTitle?: string;
+  metaTitle?: string;
   seoDescription?: string;
   focusKeywords: string[];
   keywords?: string[] | string;
@@ -168,6 +169,17 @@ export interface MediaFile {
   dataUrl?: string;
 }
 
+export interface IndexingLogItem {
+  id: string;
+  url: string;
+  type: 'URL_UPDATED' | 'URL_DELETED';
+  engine: 'google' | 'indexnow' | 'both';
+  timestamp: string;
+  status: 'success' | 'error' | 'skipped';
+  httpStatus?: number;
+  message?: string;
+}
+
 export interface IntegrationConfig {
   googleAnalyticsId: string;
   searchConsoleTag: string;
@@ -184,6 +196,15 @@ export interface IntegrationConfig {
   realtimeVisitors?: number;
   engagementRate?: number;
   googleServiceAccountJson?: string;
+  googleServiceAccountEmail?: string;
+  googlePrivateKey?: string;
+  googleIndexingEnabled?: boolean;
+  autoSubmitNewPosts?: boolean;
+  indexNowKey?: string;
+  indexNowEnabled?: boolean;
+  indexingLogs?: IndexingLogItem[];
+  lastIndexedAt?: string;
+  totalIndexedSubmitted?: number;
   gaPropertyId?: string;
   verifiedDomain?: string;
   tagStatus?: 'active' | 'pending' | 'unverified';
