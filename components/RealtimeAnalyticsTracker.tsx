@@ -22,6 +22,8 @@ export default function RealtimeAnalyticsTracker() {
   // 1. Handle SPA Route Changes for GA4 & GTM dataLayer
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    const h = window.location.hostname || '';
+    if (h && h.indexOf('betongangiabinh.vn') === -1 && h !== 'localhost' && h.indexOf('workers.dev') === -1) return;
 
     const search = typeof window !== 'undefined' ? window.location.search : '';
     const fullUrl = search ? `${pathname}${search}` : pathname;
@@ -99,6 +101,8 @@ export default function RealtimeAnalyticsTracker() {
   // 3. Global Click Listener for Conversion Tracking (Phone Calls & Zalo)
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    const h = window.location.hostname || '';
+    if (h && h.indexOf('betongangiabinh.vn') === -1 && h !== 'localhost' && h.indexOf('workers.dev') === -1) return;
 
     const handleDocumentClick = (e: MouseEvent) => {
       const target = (e.target as HTMLElement)?.closest('a');
