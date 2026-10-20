@@ -65,7 +65,36 @@
   "integrations": {
     "googleAnalyticsId": "G-6J50BRBSZS",
     "searchConsoleTag": "-ampbrMsq6krT2SrsKAAvQSdxBns-wa9mv9aEGR86Ik",
-    "isSynced": true
+    "isSynced": true,
+    "indexingLogs": [
+      {
+        "id": "idx-1792520220570-9g3k1",
+        "timestamp": "2026-10-20T18:17:00.571Z",
+        "url": "https://www.betongangiabinh.vn/blog/tin-tuc/nhung-bong-hong-thep-tren-cung-duong-cao-toc-tac-dong-den-gia-thanh-xay-dung-loi-khuyen-tu-ky-su-be-tong-2221.html",
+        "type": "URL_UPDATED",
+        "engine": "google",
+        "status": "skipped",
+        "message": "Chờ cấu hình Google Service Account JSON trong Quản trị."
+      }
+    ],
+    "lastIndexedAt": "2026-10-20T18:17:00.571Z",
+    "totalIndexedSubmitted": 0
   },
-  "updatedAt": "2026-10-17T14:46:26.018Z"
+  "updatedAt": "2026-10-20T18:17:00.575Z",
+  "socialListening": {
+    "lastRunAt": "2026-10-20T18:17:00.574Z",
+    "autoPublishedCount": 1,
+    "logs": [
+      {
+        "id": "news-log-1792520220574",
+        "timestamp": "2026-10-20T18:17:00.574Z",
+        "trendTitle": "Những \"bông hồng thép\" trên cung đường cao tốc",
+        "generatedTitle": "Những \"bông hồng thép\" trên cung đường cao tốc: Tác Động Đến Giá Thành Xây Dựng & Lời Khuyên Từ Kỹ Sư Bê Tông",
+        "permalink": "/blog/tin-tuc/nhung-bong-hong-thep-tren-cung-duong-cao-toc-tac-dong-den-gia-thanh-xay-dung-loi-khuyen-tu-ky-su-be-tong-2221.html",
+        "wordCount": 1263,
+        "trendScore": 81,
+        "status": "published"
+      }
+    ]
+  }
 }

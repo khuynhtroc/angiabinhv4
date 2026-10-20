@@ -146,7 +146,51 @@ export default async function BlogPostCatchAllPage({ params }: PageProps) {
     const rawPostSlug = validSegments[1];
     const cleanPostSlug = decodeURIComponent(rawPostSlug).replace(/\/+\.html$/, '').replace(/\.html$/, '');
     const initialPost = getPostBySlugServer(cleanPostSlug) || getPostBySlugServer(rawPostSlug);
-    return <BlogPostDetailClient rawSlug={rawPostSlug} initialPost={initialPost} />;
+
+    // Server-side rendered NewsArticle JSON-LD for Google News & Top Stories
+    let newsJsonLd: any = null;
+    if (initialPost) {
+      const canonicalUrl = `https://www.betongangiabinh.vn/blog/tin-tuc/${initialPost.slug || cleanPostSlug}.html`;
+      newsJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'NewsArticle',
+        headline: initialPost.seoTitle || initialPost.title,
+        description: initialPost.seoDescription || initialPost.excerpt,
+        image: [initialPost.coverImage || 'https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1200&auto=format&fit=crop&q=80'],
+        datePublished: initialPost.date ? `${initialPost.date}T06:00:00+07:00` : new Date().toISOString(),
+        dateModified: initialPost.updatedAt || (initialPost.date ? `${initialPost.date}T06:00:00+07:00` : new Date().toISOString()),
+        articleSection: 'Tin Tức & Thị Trường',
+        author: {
+          '@type': 'Person',
+          name: initialPost.author || 'Kỹ Sư Bê Tông An Gia Bình',
+          url: 'https://www.betongangiabinh.vn'
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'Bê Tông An Gia Bình',
+          logo: {
+            '@type': 'ImageObject',
+            url: 'https://www.betongangiabinh.vn/images/logo.png'
+          }
+        },
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': canonicalUrl
+        }
+      };
+    }
+
+    return (
+      <>
+        {newsJsonLd && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(newsJsonLd) }}
+          />
+        )}
+        <BlogPostDetailClient rawSlug={rawPostSlug} initialPost={initialPost} />
+      </>
+    );
   }
 
   const rawSlug = validSegments[validSegments.length - 1] || segments[segments.length - 1] || '';

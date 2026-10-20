@@ -16,6 +16,7 @@ import AdminAiConfigSection from '@/components/AdminAiConfigSection';
 import AdminMenuManager from '@/components/AdminMenuManager';
 import AdminSchemaSettingsSection from '@/components/AdminSchemaSettingsSection';
 import AdminAiSchedulerSection from '@/components/AdminAiSchedulerSection';
+import AdminSocialListeningSection from '@/components/AdminSocialListeningSection';
 import AdminPostOptimizerModal from '@/components/AdminPostOptimizerModal';
 import AdminBulkPostOptimizerModal from '@/components/AdminBulkPostOptimizerModal';
 import AdminAddMediaUrlModal from '@/components/AdminAddMediaUrlModal';
@@ -26,7 +27,7 @@ import { optimizePostFull, suggestKeywordsAndTags, generateOptimizedMetaDescript
 import AdminGoogleIndexingCard from '@/components/AdminGoogleIndexingCard';
 import { submitPostUrlToGoogleClient, submitBulkUrlsClient } from '@/lib/google-indexing-client';
 import {
-  Lock, KeyRound, LayoutDashboard, FileText, Building2, Users,
+  Radio, Lock, KeyRound, LayoutDashboard, FileText, Building2, Users,
   FolderArchive, Sparkles, RefreshCw, Trash2, Plus, CheckCircle2,
   ExternalLink, Eye, ArrowUpRight, ShieldCheck, Phone, Search, Edit3,
   Image as ImageIcon, Video as VideoIcon, FileCode, Code, Copy, Check, Upload,
@@ -124,7 +125,7 @@ export default function AdminDashboard() {
   const [loginError, setLoginError] = useState('');
 
   // Tab navigation
-  const [activeTab, setActiveTab] = useState<'analytics' | 'crawler' | 'posts' | 'pages' | 'menus' | 'projects' | 'media' | 'leads' | 'design' | 'settings' | 'trash'>('analytics');
+  const [activeTab, setActiveTab] = useState<'analytics' | 'social-listening' | 'crawler' | 'posts' | 'pages' | 'menus' | 'projects' | 'media' | 'leads' | 'design' | 'settings' | 'trash'>('analytics');
 
   // Modal to select logo/favicon from media files
   const [showMediaLogoPickerModal, setShowMediaLogoPickerModal] = useState<'logo' | 'favicon' | null>(null);
@@ -1861,6 +1862,18 @@ export default function AdminDashboard() {
           </button>
 
           <button
+            onClick={() => setActiveTab('social-listening')}
+            className={`px-4 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-2 ${
+              activeTab === 'social-listening'
+                ? 'bg-amber-500 text-slate-950 shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <Radio className="w-4 h-4 text-rose-500 animate-pulse" />
+            <span>Social Listening &amp; Tin Nóng 24h</span>
+          </button>
+
+          <button
             onClick={() => setActiveTab('crawler')}
             className={`px-4 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-2 ${
               activeTab === 'crawler'
@@ -2234,6 +2247,23 @@ export default function AdminDashboard() {
               </div>
             </div>
           </div>
+        )}
+
+        {/* TAB: SOCIAL LISTENING & REALTIME TRENDS */}
+        {activeTab === 'social-listening' && (
+          <AdminSocialListeningSection
+            onPostPublished={(newPost) => {
+              addPost(newPost);
+              const nowStr = new Date().toLocaleString('vi-VN');
+              setLastSyncedTime(nowStr);
+              if (typeof window !== 'undefined') {
+                localStorage.setItem('angiabinh_last_sync_time', nowStr);
+              }
+            }}
+            onSubmitGoogleIndex={async (url) => {
+              await submitPostUrlToGoogleClient(url);
+            }}
+          />
         )}
 
         {/* TAB 2: AI CRAWLER & REWRITE */}
