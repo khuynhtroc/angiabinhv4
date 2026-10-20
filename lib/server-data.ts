@@ -88,16 +88,30 @@ export function getPostBySlugServer(rawSlug: string): BlogPost | null {
   const posts = getAllPostsServer();
 
   // 1. Exact match
+  const coreClean = clean.replace(/^tin-tuc\//, '');
+
+  // 1. Exact match
   const exact = posts.find(
     (p) =>
       p.slug === clean ||
+      p.slug === coreClean ||
       p.id === clean ||
+      p.id === coreClean ||
       p.slug === rawSlug ||
       p.id === rawSlug ||
       `${p.slug}.html` === rawSlug ||
       `${p.id}.html` === rawSlug ||
       `${p.slug}.html` === clean ||
-      p.slug === `${clean}.html`
+      `${p.slug}.html` === coreClean ||
+      p.slug === `${clean}.html` ||
+      p.slug === `${coreClean}.html` ||
+      (p.permalink && (
+        p.permalink === rawSlug ||
+        p.permalink === clean ||
+        p.permalink === `/${clean}.html` ||
+        p.permalink === `/blog/${clean}.html` ||
+        p.permalink.endsWith(`/${coreClean}.html`)
+      ))
   );
   if (exact) return exact;
 

@@ -194,22 +194,27 @@ export default function BlogPostDetailClient({
     ? seoTitle
     : `${seoTitle} | Bê Tông An Gia Bình`;
 
+  const isNews = post.category === 'Tin Tức & Thị Trường' || post.category === 'tin-tuc' || Boolean(post.isTrendingNews) || Boolean(post.permalink?.includes('/blog/tin-tuc/'));
+  const postPath = isNews ? `/blog/tin-tuc/${post.slug || post.id}.html` : `/${post.slug || post.id}.html`;
+  const postCanonical = `https://www.betongangiabinh.vn${postPath}`;
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 font-sans">
       <PageSeoHead
-        slug={`/${post.slug || post.id}.html`}
-        canonicalUrl={`https://www.betongangiabinh.vn/${post.slug || post.id}.html`}
+        slug={postPath}
+        canonicalUrl={postCanonical}
         title={finalTitle}
         description={post.seoDescription || post.excerpt}
         keywords={post.focusKeywords}
         image={post.coverImage}
-        type="article"
+        type={isNews ? 'NewsArticle' : 'article'}
+        category={post.category}
         author={post.author || 'Kỹ Sư Bê Tông An Gia Bình'}
         publishedTime={post.date}
         breadcrumbs={[
           { name: 'Trang Chủ', item: '/' },
-          { name: 'Kiến Thức & Blog', item: '/blog' },
-          { name: post.title, item: `/${post.slug || post.id}.html` }
+          { name: isNews ? 'Tin Tức & Thị Trường' : 'Kiến Thức & Blog', item: isNews ? '/blog/tin-tuc' : '/blog' },
+          { name: post.title, item: postPath }
         ]}
       />
       <RealtimeAnalyticsTracker />
@@ -220,7 +225,9 @@ export default function BlogPostDetailClient({
         <div className="max-w-7xl mx-auto flex items-center gap-1.5 sm:gap-2 text-slate-500 overflow-x-auto whitespace-nowrap text-[11px] sm:text-xs">
           <Link href="/" className="hover:text-slate-900 shrink-0">Trang Chủ</Link>
           <ChevronRight className="w-3 h-3 shrink-0" />
-          <Link href="/blog" className="hover:text-slate-900 shrink-0">Kiến Thức &amp; Blog</Link>
+          <Link href={isNews ? "/blog/tin-tuc" : "/blog"} className="hover:text-slate-900 shrink-0">
+            {isNews ? 'Tin Tức & Thị Trường' : 'Kiến Thức & Blog'}
+          </Link>
           <ChevronRight className="w-3 h-3 shrink-0" />
           <span className="text-slate-900 font-medium truncate max-w-[180px] sm:max-w-none">{post.title}</span>
         </div>

@@ -22,6 +22,10 @@ export interface BlogPost {
   permalink?: string;
   updatedAt?: string;
   aiHeroImagePrompt?: string;
+  isTrendingNews?: boolean;
+  sourceUrl?: string;
+  trendScore?: number;
+  newsType?: string;
 }
 
 export interface Project {

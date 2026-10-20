@@ -12,16 +12,37 @@ export function formatNumber(num: number | string): string {
   return parts.join(',');
 }
 
-export function getPostUrl(idOrPost: { id?: string; slug?: string; permalink?: string } | string, slug?: string): string {
+export function getPostUrl(idOrPost: { id?: string; slug?: string; permalink?: string; category?: string; isTrendingNews?: boolean } | string, slug?: string): string {
   let raw = '';
+  let isNews = false;
+
   if (typeof idOrPost === 'string') {
     raw = slug || idOrPost;
-  } else if (idOrPost.slug) {
-    raw = idOrPost.slug;
-  } else if (idOrPost.permalink) {
-    raw = idOrPost.permalink;
-  } else if (idOrPost.id) {
-    raw = idOrPost.id;
+    if (raw.includes('tin-tuc/') || raw.includes('/tin-tuc/')) {
+      isNews = true;
+    }
+  } else if (idOrPost) {
+    const cat = (idOrPost.category || '').toLowerCase();
+    if (
+      cat === 'tin-tuc' ||
+      cat === 'tin tức & thị trường' ||
+      cat.includes('tin tức') ||
+      idOrPost.isTrendingNews ||
+      idOrPost.permalink?.includes('/blog/tin-tuc/') ||
+      (idOrPost.slug && idOrPost.slug.startsWith('tin-tuc/'))
+    ) {
+      isNews = true;
+    }
+
+    if (idOrPost.slug) {
+      raw = idOrPost.slug;
+    } else if (idOrPost.permalink) {
+      raw = idOrPost.permalink;
+    } else if (idOrPost.id) {
+      raw = idOrPost.id;
+    } else {
+      raw = 'post-1';
+    }
   } else {
     raw = 'post-1';
   }
@@ -31,10 +52,15 @@ export function getPostUrl(idOrPost: { id?: string; slug?: string; permalink?: s
   const clean = raw
     .trim()
     .replace(/^\/?(blog\/)?/, '')
+    .replace(/^tin-tuc\//, '')
     .replace(/\/+\.html$/, '')
     .replace(/\.html$/, '')
     .replace(/\/+$/, '')
     .trim();
+
+  if (isNews) {
+    return `/blog/tin-tuc/${clean}.html`;
+  }
 
   return `/${clean}.html`;
 }

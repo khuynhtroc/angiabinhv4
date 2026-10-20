@@ -12,7 +12,7 @@ export interface PageSeoHeadProps {
   keywords?: string | string[];
   image?: string;
   canonicalUrl?: string;
-  type?: 'website' | 'article';
+  type?: 'website' | 'article' | 'NewsArticle' | 'newsarticle';
   author?: string;
   category?: string;
   publishedTime?: string;
@@ -208,11 +208,12 @@ export default function PageSeoHead({
 
       const schemaData: any[] = [];
 
-      // Article Schema if article
-      if (type === 'article') {
+      // Article Schema if article or NewsArticle
+      if (type === 'article' || type === 'NewsArticle' || type === 'newsarticle') {
+        const isNewsSchema = type === 'NewsArticle' || type === 'newsarticle' || category === 'Tin Tức & Thị Trường' || category === 'tin-tuc' || Boolean(category && category.toLowerCase().includes('tin tức'));
         schemaData.push({
           '@context': 'https://schema.org',
-          '@type': 'Article',
+          '@type': isNewsSchema ? 'NewsArticle' : 'Article',
           headline: finalTitle,
           description: finalDescription,
           image: [finalImage],

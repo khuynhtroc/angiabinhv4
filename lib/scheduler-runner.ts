@@ -259,3 +259,54 @@ Trả về đúng định dạng JSON:
     source: sourceUsed
   };
 }
+
+import { getRealtimeTrends } from '@/lib/social-listening';
+import { generateTrendingNewsArticle } from '@/lib/trending-news-writer';
+
+/**
+ * Autonomous Social Listening Auto-Pilot Runner
+ * Scans Vietnamese trending news in 4 - 24 hours, selects top unwritten trend >= minTrendScore,
+ * generates and publishes 1.500 - 2.500 words NewsArticle to /blog/tin-tuc/[slug].html,
+ * submits to Google Indexing API, and commits to Git.
+ */
+export async function checkAndRunSocialListeningAutoPilot(force = false): Promise<any> {
+  const adminConfig = getAdminConfigServer();
+  const socialConfig = adminConfig?.socialListening || {};
+
+  const isEnabled = Boolean(socialConfig?.autoPilotEnabled ?? true);
+  if (!isEnabled && !force) {
+    return {
+      success: false,
+      message: 'Chế độ Social Listening Auto-Pilot đang TẮT.'
+    };
+  }
+
+  const now = new Date();
+  const intervalHours = Number(socialConfig.checkIntervalHours) || 4;
+  const lastRunAt = socialConfig.lastRunAt;
+
+  if (!force && lastRunAt) {
+    const elapsedHours = (now.getTime() - new Date(lastRunAt).getTime()) / (1000 * 60 * 60);
+    if (elapsedHours < intervalHours) {
+      return {
+        success: false,
+        message: `Auto-Pilot vừa quét ${elapsedHours.toFixed(1)}h trước (chu kỳ quét: ${intervalHours}h). Chưa đến lần quét tiếp theo.`
+      };
+    }
+  }
+
+  const existingPosts = getAllPostsServer();
+  const trends = await getRealtimeTrends(existingPosts);
+  const minScore = Number(socialConfig.minTrendScore) || 65;
+
+  const candidate = trends.find(t => !t.hasBeenWritten && t.trendScore >= minScore);
+  if (!candidate) {
+    return {
+      success: false,
+      message: `Đã quét ${trends.length} xu hướng thời sự 24h, hiện chưa có chủ đề mới nào đạt ngưỡng điểm >= ${minScore} để xuất bản tự động.`
+    };
+  }
+
+  const result = await generateTrendingNewsArticle(candidate);
+  return result;
+}

@@ -67,9 +67,9 @@ export async function GET() {
       return cleanSlug && cleanSlug !== 'bai-viet';
     })
     .map((post) => {
-      // Canonical article URL: betongangiabinh.vn/[slug].html
       const cleanSlug = (post.slug || post.id || '').replace(/\.html$/, '');
-      const postUrl = `${baseUrl}/${cleanSlug}.html`;
+      const isNews = post.category === 'Tin Tức & Thị Trường' || post.category === 'tin-tuc' || Boolean(post.isTrendingNews) || Boolean(post.permalink?.includes('/blog/tin-tuc/'));
+      const postUrl = isNews ? `${baseUrl}/blog/tin-tuc/${cleanSlug}.html` : `${baseUrl}/${cleanSlug}.html`;
       const pubDate = post.date ? new Date(post.date).toUTCString() : buildDate;
       const cleanExcerpt = cleanExcerptText(post.excerpt, post.content);
       const cleanContent = post.content || post.excerpt || '';

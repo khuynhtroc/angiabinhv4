@@ -233,25 +233,28 @@ export default function DynamicPostClient({
     ? seoTitle
     : `${seoTitle} | Bê Tông An Gia Bình`;
 
-  const canonicalUrl = `https://www.betongangiabinh.vn/${cleanSlug}.html`;
+  const isNews = post.category === 'Tin Tức & Thị Trường' || post.category === 'tin-tuc' || Boolean(post.isTrendingNews) || Boolean(post.permalink?.includes('/blog/tin-tuc/'));
+  const postPath = isNews ? `/blog/tin-tuc/${cleanSlug}.html` : `/${cleanSlug}.html`;
+  const canonicalUrl = `https://www.betongangiabinh.vn${postPath}`;
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 font-sans">
       <PageSeoHead
-        slug={`/${cleanSlug}.html`}
+        slug={postPath}
+        canonicalUrl={canonicalUrl}
         title={finalTitle}
         description={post.seoDescription || post.excerpt}
         image={post.coverImage}
-        type="article"
+        type={isNews ? 'NewsArticle' : 'article'}
         publishedTime={post.date}
         author={post.author || 'Kỹ Sư Bê Tông An Gia Bình'}
         category={post.category}
         keywords={post.focusKeywords || ['bê tông tươi ninh bình', 'bê tông an gia bình']}
         breadcrumbs={[
           { name: 'Trang Chủ', item: '/' },
-          { name: 'Tin Tức & Kỹ Thuật', item: '/blog' },
-          { name: post.category || 'Bài Viết', item: `/blog` },
-          { name: post.title, item: `/${cleanSlug}.html` }
+          { name: isNews ? 'Tin Tức & Thị Trường' : 'Kiến Thức & Kỹ Thuật', item: isNews ? '/blog/tin-tuc' : '/blog' },
+          { name: post.category || 'Bài Viết', item: isNews ? '/blog/tin-tuc' : '/blog' },
+          { name: post.title, item: postPath }
         ]}
       />
 
@@ -263,7 +266,9 @@ export default function DynamicPostClient({
         <nav className="flex items-center gap-1.5 text-xs text-slate-500 mb-6 flex-wrap" aria-label="Breadcrumb">
           <Link href="/" className="hover:text-amber-600 transition">Trang Chủ</Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
-          <Link href="/blog" className="hover:text-amber-600 transition">Tin Tức &amp; Kỹ Thuật</Link>
+          <Link href={isNews ? "/blog/tin-tuc" : "/blog"} className="hover:text-amber-600 transition">
+            {isNews ? 'Tin Tức & Thị Trường' : 'Kiến Thức & Kỹ Thuật'}
+          </Link>
           <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
           <span className="text-amber-700 font-semibold">{post.category}</span>
           <ChevronRight className="w-3.5 h-3.5 text-slate-300" />

@@ -108,8 +108,12 @@ export async function GET() {
     const cleanSlug = (post.slug || post.id || '').replace(/\.html$/, '');
     if (!cleanSlug || cleanSlug === 'bai-viet') return;
 
-    // Single Canonical URL for all articles: https://betongangiabinh.vn/bai-viet.html
-    addUrl(`/${cleanSlug}.html`, postDate, 'weekly', '0.85', 'blog');
+    const isNews = post.category === 'Tin Tức & Thị Trường' || post.category === 'tin-tuc' || Boolean(post.isTrendingNews) || Boolean(post.permalink?.includes('/blog/tin-tuc/'));
+    if (isNews) {
+      addUrl(`/blog/tin-tuc/${cleanSlug}.html`, postDate, 'daily', '0.90', 'blog');
+    } else {
+      addUrl(`/${cleanSlug}.html`, postDate, 'weekly', '0.85', 'blog');
+    }
   });
 
   // 5. Resolve Projects (Unified Server Storage)

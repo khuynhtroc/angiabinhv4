@@ -60,21 +60,27 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // 2. Check if single post
   const post = getPostBySlugServer(cleanSlug) || getPostBySlugServer(rawSlug);
   if (post) {
+    const isNews = post.category === 'Tin Tức & Thị Trường' || post.category === 'tin-tuc' || post.isTrendingNews || post.permalink?.includes('/blog/tin-tuc/');
+    const canonicalUrl = isNews
+      ? `https://www.betongangiabinh.vn/blog/tin-tuc/${post.slug || post.id}.html`
+      : `https://www.betongangiabinh.vn/${post.slug || post.id}.html`;
+
     const rawTitle = post.seoTitle || post.title;
-    const finalTitle = rawTitle.includes('An Gia Bình') || rawTitle.includes('Bê Tông')
+    let finalTitle = rawTitle.includes('An Gia Bình') || rawTitle.includes('Bê Tông')
       ? rawTitle
       : `${rawTitle} | Bê Tông An Gia Bình`;
-    const finalDesc = post.seoDescription || post.excerpt;
-    const canonicalUrl = `https://www.betongangiabinh.vn/${post.slug || post.id}.html`;
+    if (finalTitle.length > 60) {
+      finalTitle = finalTitle.substring(0, 57).trim() + '...';
+    }
 
     return {
       title: finalTitle,
-      description: finalDesc,
+      description: post.seoDescription || post.excerpt,
       keywords: post.focusKeywords,
       alternates: { canonical: canonicalUrl },
       openGraph: {
         title: finalTitle,
-        description: finalDesc,
+        description: post.seoDescription || post.excerpt,
         url: canonicalUrl,
         type: 'article',
         publishedTime: post.date,
@@ -83,7 +89,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       twitter: {
         card: 'summary_large_image',
         title: finalTitle,
-        description: finalDesc,
+        description: post.seoDescription || post.excerpt,
         images: post.coverImage ? [post.coverImage] : undefined,
       }
     };
@@ -111,8 +117,14 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
 
   const initialPost = getPostBySlugServer(cleanSlug) || getPostBySlugServer(slug);
   if (initialPost) {
-    const targetSlug = (initialPost.slug || initialPost.id || cleanSlug).replace(/\.html$/, '');
-    redirect(`/${targetSlug}.html`);
+    const isNews = initialPost.category === 'Tin Tức & Thị Trường' || initialPost.category === 'tin-tuc' || initialPost.isTrendingNews || initialPost.permalink?.includes('/blog/tin-tuc/');
+    if (isNews) {
+      const targetSlug = (initialPost.slug || initialPost.id || cleanSlug).replace(/\.html$/, '');
+      redirect(`/blog/tin-tuc/${targetSlug}.html`);
+    } else {
+      const targetSlug = (initialPost.slug || initialPost.id || cleanSlug).replace(/\.html$/, '');
+      redirect(`/${targetSlug}.html`);
+    }
   }
 
   return <BlogPostDetailClient rawSlug={slug} initialPost={initialPost} />;
