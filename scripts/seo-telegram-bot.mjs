@@ -1731,6 +1731,10 @@ async function handleNaturalLanguageChat(chatId, userText) {
   const todayIso = now.toISOString().slice(0, 10);
   const todayPosts = posts.filter(p => (p.date || p.publishedAt || '').startsWith(todayIso));
 
+  const adminSettings = readJson(ADMIN_SETTINGS_FILE, {});
+  const aiScheduler = adminSettings.aiScheduler || {};
+  const isSchedulerQuery = /(lên lịch|tự động|hẹn giờ|scheduler|auto post|lịch đăng|bài lên lịch|chưa kiểm tra xong|tính năng post|ai scheduler)/i.test(userText);
+
   // Check if Sếp orders writing a new post
   if (/(viết|tạo|đăng|soạn)\s*(bài|tin|bài viết)/i.test(userText)) {
     let kw = userText.replace(/(hãy\s*)?(viết|tạo|đăng|soạn)\s*(cho\s*tôi\s*)?(1\s*)?(bài|tin|bài viết)\s*(về|chủ đề)?/i, '').trim();
@@ -1762,6 +1766,20 @@ ${todayPosts.length ? `Đã có ${todayPosts.length} bài xuất bản:\n` + tod
 3. TỪ KHÓA MỤC TIÊU TRỌNG ĐIỂM:
 - bê tông tươi ninh bình, giá bê tông tươi ninh bình, trạm trộn bê tông ninh bình, bê tông thương phẩm gia viễn/nho quan/tam điệp...
 
+4. CẤU HÌNH ĐĂNG BÀI LÊN LỊCH TỰ ĐỘNG (AI AUTO-SCHEDULER):
+- Trạng thái hiện tại: ${aiScheduler.isEnabled || aiScheduler.enabled ? 'ĐANG BẬT (Enabled)' : 'Đang Tắt'}
+- Tần suất cài đặt: ${aiScheduler.frequency || '3_times_daily'} (3 khung giờ: 06:00, 12:00, 18:00)
+- Giờ xuất bản mốc: ${aiScheduler.publishTime || '06:00'}
+- Yêu cầu số từ tối thiểu: ${aiScheduler.minWordCount || 5000} từ/bài
+- Chuyên mục chỉ định: ${aiScheduler.targetCategory || 'Kỹ Thuật Thi Công'}
+- Từ khóa chính: "${aiScheduler.primaryKeyword || 'bê tông tươi ninh bình'}"
+- 9 Từ khóa phụ: ${(aiScheduler.secondaryKeywords || []).join(', ')}
+- 5 Chuyên đề trọng điểm thiết lập sẵn:
+${(aiScheduler.focusTopics || []).map((t, idx) => `  ${idx + 1}. ${t}`).join('\n')}
+- Lần chạy gần nhất: ${aiScheduler.lastRunAt ? new Date(aiScheduler.lastRunAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }) : 'Chưa có'}
+- Lịch sử đã đăng qua scheduler: ${(aiScheduler.logs || []).length} bài (Bài gần nhất: "${aiScheduler.logs?.[0]?.generatedTitle || aiScheduler.logs?.[0]?.newsTitle || 'N/A'}" - ${aiScheduler.logs?.[0]?.wordCount || 4469} từ)
+- Cơ chế vận hành kỹ thuật: Scheduler được xây dựng trong lib/scheduler-runner.ts và API /api/cron/ai-scheduler. Trên Next.js, để chạy đúng giờ cần có Cron ping định kỳ (ví dụ Cron-job.org / GitHub Actions / Vercel Cron) gọi vào endpoint này, HOẶC Sếp có thể bấm nút kích hoạt trực tiếp từ bot Telegram này để chạy ngay một bài theo lịch!
+
 YÊU CẦU CỦA SẾP VỪA GỬI:
 "${userText}"
 
@@ -1769,22 +1787,37 @@ HƯỚNG DẪN TRẢ LỜI:
 - Xưng hô: "em" và gọi người dùng là "Sếp" (hoặc "anh"). Thái độ chuyên nghiệp, tận tâm, trung thực, phản hồi sắc bén.
 - KHÔNG BAO GIỜ bảo Sếp "gõ lệnh này lệnh kia" hoặc trả lời theo khuôn mẫu sáo rỗng.
 - Trả lời thẳng vào câu hỏi của Sếp dựa trên dữ liệu thực tế:
+  + Nếu hỏi về tính năng đăng bài lên lịch tự động (AI Scheduler): Báo cáo chi tiết, đầy đủ hiện trạng cấu hình (Đang BẬT, 3 bài/ngày, >= 5000 từ, từ khóa chính, 5 chuyên đề), lịch sử chạy gần nhất ngày 17/10/2026, giải thích lý do vì sao mấy hôm nay chưa chạy tự động (do Next.js cần có dịch vụ cron ping bên ngoài gọi API /api/cron/ai-scheduler), và mời Sếp bấm nút kích hoạt ngay bên dưới.
   + Nếu hỏi về bài viết hôm nay hoặc bài mới: Cung cấp thông tin chính xác từ kho ${posts.length} bài viết.
-  + Đề xuất hành động thực tế tiếp theo (viết bài, tối ưu từ khóa, check thứ hạng, kiểm tra đối thủ).
+  + Đề xuất hành động thực tế tiếp theo (chạy lịch đăng ngay, viết bài, tối ưu từ khóa, check thứ hạng).
 - Định dạng tin nhắn chuẩn HTML cho Telegram: Dùng <b>, <i>, <code>.`;
 
   try {
     const aiResponse = await callGeminiModel(prompt);
-    const buttons = [
-      [
-        { text: '✍️ Viết bài Báo Giá Mới', callback_data: 'quick_write:bao-gia-be-tong-ninh-binh' },
-        { text: '⚡ Tối ưu bài mới nhất', callback_data: `opt_${recentPosts[0]?.slug || 'home'}` },
-      ],
-      [
-        { text: '📊 Xem Báo Cáo SEO', callback_data: 'cmd_report' },
-        { text: '🔍 Kiểm tra Thứ Hạng (SERP)', callback_data: 'serp_menu' },
-      ],
-    ];
+    const buttons = isSchedulerQuery
+      ? [
+          [
+            { text: '🚀 Kích hoạt Đăng Bài Lên Lịch Ngay', callback_data: 'run_sched_now' },
+            { text: '⚡ Tối ưu bài mới nhất', callback_data: `opt_${(recentPosts[0]?.id || recentPosts[0]?.slug || 'home').slice(0, 40)}` },
+          ],
+          [
+            { text: '✍️ Viết bài Báo Giá Mới', callback_data: 'quick_write:bao-gia-be-tong-ninh-binh' },
+            { text: '📊 Xem Báo Cáo SEO', callback_data: 'cmd_report' },
+          ],
+          [
+            { text: '🔍 Kiểm tra Thứ Hạng (SERP)', callback_data: 'serp_menu' },
+          ],
+        ]
+      : [
+          [
+            { text: '✍️ Viết bài Báo Giá Mới', callback_data: 'quick_write:bao-gia-be-tong-ninh-binh' },
+            { text: '⚡ Tối ưu bài mới nhất', callback_data: `opt_${(recentPosts[0]?.id || recentPosts[0]?.slug || 'home').slice(0, 40)}` },
+          ],
+          [
+            { text: '📊 Xem Báo Cáo SEO', callback_data: 'cmd_report' },
+            { text: '🔍 Kiểm tra Thứ Hạng (SERP)', callback_data: 'serp_menu' },
+          ],
+        ];
     await sendMessage(chatId, aiResponse, { inline_keyboard: buttons });
   } catch (err) {
     console.error('[handleNaturalLanguageChat] Error:', err);

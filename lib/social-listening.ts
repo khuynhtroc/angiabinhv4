@@ -115,6 +115,42 @@ interface CategoryAngleResult {
 function analyzeCategoryAndAngle(title: string, snippet: string): CategoryAngleResult {
   const text = `${title} ${snippet}`.toLowerCase();
 
+  // Negative keyword filtering: Exclude pure sports, entertainment, celebrity gossip, and lottery
+  const isExcluded =
+    text.includes('bóng đá') ||
+    text.includes('câu lạc bộ bóng đá') ||
+    text.includes('đội tuyển bóng đá') ||
+    text.includes('ngoại hạng anh') ||
+    text.includes('champions league') ||
+    text.includes('marseille') ||
+    text.includes('sporting') ||
+    text.includes('kết quả trận') ||
+    text.includes('trực tiếp bóng đá') ||
+    text.includes('bong da 24h') ||
+    text.includes('showbiz') ||
+    text.includes('ca sĩ') ||
+    text.includes('diễn viên') ||
+    text.includes('hoa hậu') ||
+    text.includes('phim rạp') ||
+    text.includes('bài bạc') ||
+    text.includes('xổ số') ||
+    text.includes('lô đề') ||
+    text.includes('game') ||
+    text.includes('esport') ||
+    text.includes('lol ') ||
+    text.includes('lien minh') ||
+    text.includes('pubg') ||
+    text.includes('fifa') ||
+
+  if (isExcluded && !text.includes('sân vận động') && !text.includes('nhà thi đấu') && !text.includes('công trình')) {
+    return {
+      category: 'Thời Sự Thị Trường',
+      concreteAngle: 'Chủ đề giải trí/thể thao ngoài phạm vi xây dựng.',
+      relevanceScore: 0,
+      focusKeywords: []
+    };
+  }
+
   // 1. Vật liệu xây dựng & giá cả (highest direct relevance)
   if (
     text.includes('thép') ||
