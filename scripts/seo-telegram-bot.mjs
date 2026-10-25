@@ -65,18 +65,27 @@ async function callGeminiModel(prompt, systemInstruction = '', jsonMode = false)
       const config = {};
       if (systemInstruction) config.systemInstruction = systemInstruction;
       if (jsonMode) config.responseMimeType = 'application/json';
-      const res = await ai.models.generateContent({
+
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error(`Timeout model ${model} sau 15s`)), 15000)
+      );
+
+      const generatePromise = ai.models.generateContent({
         model,
         contents: prompt,
         config,
       });
-      if (res.text) return res.text;
+
+      const res = await Promise.race([generatePromise, timeoutPromise]);
+      if (res?.text) return res.text;
     } catch (err) {
       console.warn(`[Gemini] ${model} fallback:`, err.message);
     }
   }
   // Direct REST API fallback
   try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
     const restRes = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`,
       {
@@ -86,8 +95,10 @@ async function callGeminiModel(prompt, systemInstruction = '', jsonMode = false)
           contents: [{ parts: [{ text: prompt }] }],
           ...(systemInstruction ? { system_instruction: { parts: [{ text: systemInstruction }] } } : {}),
         }),
+        signal: controller.signal,
       }
     );
+    clearTimeout(timeout);
     const restData = await restRes.json();
     const text = restData.candidates?.[0]?.content?.parts?.[0]?.text;
     if (text) return text;
@@ -136,24 +147,55 @@ async function tgCall(method, body = {}) {
   return res.json();
 }
 
+function truncateUtf8(str, maxBytes = 60) {
+  if (!str) return '';
+  const buf = Buffer.from(String(str), 'utf8');
+  if (buf.length <= maxBytes) return str;
+  return buf.subarray(0, maxBytes).toString('utf8').replace(/\uFFFD$/, '');
+}
+
+function sanitizeReplyMarkup(markup) {
+  if (!markup || !markup.inline_keyboard) return markup;
+  const sanitized = markup.inline_keyboard.map((row) =>
+    row.map((btn) => {
+      if (btn.callback_data && Buffer.byteLength(btn.callback_data, 'utf8') > 60) {
+        return { ...btn, callback_data: truncateUtf8(btn.callback_data, 60) };
+      }
+      return btn;
+    })
+  );
+  return { inline_keyboard: sanitized };
+}
+
 async function sendMessage(chatId, text, replyMarkup = undefined) {
   const MAX_LEN = 3900;
+  const safeMarkup = replyMarkup ? sanitizeReplyMarkup(replyMarkup) : undefined;
   if (text.length <= MAX_LEN) {
-    const res = await tgCall('sendMessage', {
+    let res = await tgCall('sendMessage', {
       chat_id: chatId,
       text,
       parse_mode: 'HTML',
       disable_web_page_preview: true,
-      ...(replyMarkup ? { reply_markup: replyMarkup } : {}),
+      ...(safeMarkup ? { reply_markup: safeMarkup } : {}),
     });
     if (!res.ok) {
-      // Fallback plain text if HTML tag mismatch
-      return tgCall('sendMessage', {
+      console.warn('[sendMessage] HTML send failed:', res.description, '- retrying with plain text');
+      // Attempt 2: Plain text with safe markup
+      res = await tgCall('sendMessage', {
         chat_id: chatId,
         text: text.replace(/<[^>]+>/g, ''),
         disable_web_page_preview: true,
-        ...(replyMarkup ? { reply_markup: replyMarkup } : {}),
+        ...(safeMarkup ? { reply_markup: safeMarkup } : {}),
       });
+      // Attempt 3: If still failed (e.g. markup rejected), send pure text without reply_markup
+      if (!res.ok) {
+        console.warn('[sendMessage] Plain text send failed:', res.description, '- retrying without reply_markup');
+        res = await tgCall('sendMessage', {
+          chat_id: chatId,
+          text: text.replace(/<[^>]+>/g, ''),
+          disable_web_page_preview: true,
+        });
+      }
     }
     return res;
   }
