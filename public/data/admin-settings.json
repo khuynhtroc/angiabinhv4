@@ -78,7 +78,9 @@
       }
     ],
     "lastIndexedAt": "2026-10-20T18:17:00.571Z",
-    "totalIndexedSubmitted": 0
+    "totalIndexedSubmitted": 0,
+    "googleIndexingEnabled": true,
+    "autoSubmitNewPosts": true
   },
   "updatedAt": "2026-10-20T18:17:00.575Z",
   "socialListening": {
