@@ -1390,6 +1390,99 @@ async function runAntigravityCli(chatId, instruction) {
   });
 }
 
+async function handleSingleOptimize(chatId, slug) {
+  await sendMessage(chatId, `⚡ <i>Đang tối ưu hóa chuyên sâu bài viết <code>${escHtml(slug)}</code> và đồng bộ GitHub + Google Indexing...</i>`);
+  try {
+    const r = await optimizeSinglePostBySlug(slug);
+    if (r.ok) {
+      await sendMessage(
+        chatId,
+        `✅ <b>ĐÃ TỐI ƯU XONG BÀI VIẾT!</b>\n` +
+          `📌 <b>${escHtml(r.title)}</b>\n` +
+          `📝 Độ dài: <b>${r.oldWords} ➔ ${r.newWords} từ</b> (+FAQ +Internal Links)\n` +
+          `🔗 URL: ${escHtml(r.canonicalUrl)}\n` +
+          `🔄 GitHub Commit: <code>${escHtml(r.gitSync?.commitHash || 'Đã lưu local')}</code>\n` +
+          `📡 Google Indexing: ${r.indexRes?.ok ? '✅ Thành công' : escHtml(r.indexRes?.message || '')}`
+      );
+    } else {
+      await sendMessage(chatId, `❌ ${escHtml(r.message)}`);
+    }
+  } catch (e) {
+    await sendMessage(chatId, `❌ Lỗi khi tối ưu: ${escHtml(e.message)}`);
+  }
+}
+
+async function writeSinglePostByKeyword(chatId, kw) {
+  try {
+    const res = await writeNewSeoPost(kw);
+    if (res.ok) {
+      await sendMessage(
+        chatId,
+        `🎉 <b>ĐÃ XUẤT BẢN BÀI VIẾT MỚI!</b>\n` +
+          `📌 <b>${escHtml(res.post.title)}</b>\n` +
+          `📝 Độ dài: <b>${res.words} từ</b> (Chuẩn SEO chuyên sâu)\n` +
+          `🔗 URL: ${escHtml(res.canonicalUrl)}\n` +
+          `🔄 GitHub Commit: <code>${escHtml(res.gitSync?.commitHash || 'Local')}</code>\n` +
+          `📡 Google Indexing: ${res.indexRes?.ok ? '✅ Đã nộp URL lên Google' : escHtml(res.indexRes?.message || '')}`
+      );
+    } else {
+      await sendMessage(chatId, `❌ Không thể tạo bài viết: ${escHtml(res.message)}`);
+    }
+  } catch (e) {
+    await sendMessage(chatId, `❌ Lỗi khi xuất bản: ${escHtml(e.message)}`);
+  }
+}
+
+async function handleRunSchedulerNow(chatId) {
+  await sendMessage(chatId, '⚡ <i>Đang kiểm tra cấu hình AI Auto-Scheduler và bắt đầu tiến trình đăng bài theo lịch...</i>');
+  const adminSettings = readJson(ADMIN_SETTINGS_FILE, {});
+  const scheduler = adminSettings.aiScheduler || {};
+  const focusTopics = scheduler.focusTopics || [
+    'Giải pháp thi công bê tông tươi kỹ thuật cao, xử lý ngõ hẹp, thời tiết bất lợi tại Ninh Bình'
+  ];
+  const logs = scheduler.logs || [];
+  
+  // Pick topic via round-robin based on logs count
+  const topicIdx = logs.length % focusTopics.length;
+  const selectedTopic = focusTopics[topicIdx];
+
+  try {
+    const res = await writeNewSeoPost(selectedTopic);
+    if (res.ok) {
+      const nowIso = new Date().toISOString();
+      const newLog = {
+        id: `sched-log-${Date.now()}`,
+        timestamp: nowIso,
+        newsTitle: selectedTopic,
+        generatedTitle: res.post.title,
+        wordCount: res.words,
+        status: 'published'
+      };
+      
+      if (!adminSettings.aiScheduler) adminSettings.aiScheduler = {};
+      adminSettings.aiScheduler.logs = [newLog, ...(adminSettings.aiScheduler.logs || [])].slice(0, 50);
+      adminSettings.aiScheduler.lastRunAt = nowIso;
+      adminSettings.aiScheduler.totalPublished = (adminSettings.aiScheduler.totalPublished || 0) + 1;
+      writeJson(ADMIN_SETTINGS_FILE, adminSettings);
+
+      await sendMessage(
+        chatId,
+        `🎉 <b>KÍCH HOẠT THÀNH CÔNG BÀI ĐĂNG THEO LỊCH (AI SCHEDULER)!</b>\n\n` +
+          `📌 Tiêu đề: <b>${escHtml(res.post.title)}</b>\n` +
+          `📚 Chuyên đề lên lịch: <i>${escHtml(selectedTopic)}</i>\n` +
+          `📝 Dung lượng: <b>${res.words} từ</b> (Chuẩn SEO chuyên sâu)\n` +
+          `🔗 Link bài viết: ${escHtml(res.canonicalUrl)}\n` +
+          `📡 Google Indexing API: ${res.indexRes?.ok ? '✅ Đã nộp URL lên Google' : 'Local saved'}\n` +
+          `🔄 Trạng thái Scheduler: Đã ghi nhận mốc chạy vào nhật ký hệ thống (${nowIso.slice(0, 16)}).`
+      );
+    } else {
+      await sendMessage(chatId, `❌ Lỗi khi chạy Scheduler: ${escHtml(res.message)}`);
+    }
+  } catch (err) {
+    await sendMessage(chatId, `❌ Lỗi thực thi Scheduler: ${escHtml(err.message)}`);
+  }
+}
+
 // ============================================================================
 // 11. BOT POLLING LOOP & INTERACTIVE COMMAND ROUTER
 // ============================================================================
@@ -1465,6 +1558,17 @@ async function processUpdate(update) {
           `🎉 <b>ĐÃ XUẤT BẢN BÀI VIẾT MỚI!</b>\n📌 <b>${escHtml(res.post.title)}</b>\n🔗 ${escHtml(res.canonicalUrl)}\n📝 Độ dài: <b>${res.words} từ</b>`
         );
       }
+    } else if (data.startsWith('quick_write:')) {
+      const kw = data.slice('quick_write:'.length);
+      await sendMessage(chatId, `✍️ Đang viết bài SEO theo từ khóa nhanh: <b>"${escHtml(kw)}"</b>...`);
+      await writeSinglePostByKeyword(chatId, kw);
+    } else if (data === 'cmd_report' || data === 'run_report') {
+      await buildAndSendDailyReport(chatId);
+    } else if (data === 'run_sched_now') {
+      await handleRunSchedulerNow(chatId);
+    } else if (data.startsWith('opt_')) {
+      const targetSlug = data.slice('opt_'.length);
+      await handleSingleOptimize(chatId, targetSlug);
     }
     return;
   }
