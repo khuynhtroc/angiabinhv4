@@ -84,9 +84,19 @@
   },
   "updatedAt": "2026-10-20T18:17:00.575Z",
   "socialListening": {
-    "lastRunAt": "2026-10-20T18:17:00.574Z",
-    "autoPublishedCount": 1,
+    "lastRunAt": "2026-10-25T23:43:51.010Z",
+    "autoPublishedCount": 2,
     "logs": [
+      {
+        "id": "news-log-1792971831010",
+        "timestamp": "2026-10-25T23:43:51.010Z",
+        "trendTitle": "dự báo thời tiết hà nội",
+        "generatedTitle": "Dự báo thời tiết Hà Nội & Miền Bắc: Kỹ thuật đổ bê tông mùa nghịch",
+        "permalink": "/blog/tin-tuc/du-bao-thoi-tiet-ha-noi-ky-thuat-do-be-tong-ninh-binh-0922.html",
+        "wordCount": 1270,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1792520220574",
         "timestamp": "2026-10-20T18:17:00.574Z",
