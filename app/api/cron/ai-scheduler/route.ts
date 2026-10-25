@@ -3,33 +3,86 @@ import { checkAndRunScheduler, checkAndRunSocialListeningAutoPilot } from '@/lib
 
 export const dynamic = 'force-dynamic';
 
+const DEFAULT_OWNER = 'khuynhtroc';
+const DEFAULT_REPO = 'angiabinhv4';
+
+async function dispatchGithubWorkflow(eventType: string, payload: any) {
+  const token = (process.env.GITHUB_TOKEN || process.env.GITHUB_PAT || '').trim().replace(/^['"]|['"]$/g, '');
+  const owner = (process.env.GITHUB_OWNER || DEFAULT_OWNER).trim();
+  const repo = (process.env.GITHUB_REPO || DEFAULT_REPO).trim();
+
+  const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/dispatches`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'User-Agent': 'BeTongAnGiaBinh-CronJobOrg',
+      Accept: 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      event_type: eventType,
+      client_payload: payload,
+    }),
+  });
+
+  return { ok: res.ok, status: res.status };
+}
+
 export async function GET(req: NextRequest) {
+  const startTime = Date.now();
   try {
     const { searchParams } = new URL(req.url);
+    const sync = searchParams.get('sync') === 'true';
     const force = searchParams.get('force') === 'true';
     const mode = searchParams.get('mode') || 'all';
 
-    const results: Record<string, any> = {};
-
-    if (mode === 'all' || mode === 'whitepaper') {
-      results.whitepaper = await checkAndRunScheduler(force);
+    // 1. Chế độ đồng bộ (chỉ chạy khi có cờ ?sync=true)
+    if (sync) {
+      const results: Record<string, any> = {};
+      if (mode === 'all' || mode === 'whitepaper') {
+        results.whitepaper = await checkAndRunScheduler(force);
+      }
+      if (mode === 'all' || mode === 'social' || mode === 'social-listening') {
+        results.socialListening = await checkAndRunSocialListeningAutoPilot(force);
+      }
+      return NextResponse.json({
+        success: true,
+        mode,
+        sync: true,
+        duration_ms: Date.now() - startTime,
+        results,
+      });
     }
 
-    if (mode === 'all' || mode === 'social' || mode === 'social-listening') {
-      results.socialListening = await checkAndRunSocialListeningAutoPilot(force);
-    }
+    // 2. Chế độ Mặc định cho cron-job.org: Dispatch GitHub Actions Cloud Runner
+    // Trả về HTTP 200 OK ngay trong vòng 500ms để cron-job.org KHÔNG BAO GIỜ bị timeout 30s
+    const eventType = mode === 'social' || mode === 'social-listening' ? 'social_listen' : 'cron_publish';
+    const dispatch = await dispatchGithubWorkflow(eventType, {
+      source: 'cron-job.org',
+      mode,
+      force,
+      triggered_at: new Date().toISOString(),
+      requested_url: req.url,
+    });
 
     return NextResponse.json({
       success: true,
-      mode,
-      results
+      message: 'AI Auto-Writer task successfully triggered and queued on GitHub Actions Cloud Runners!',
+      service: 'Be Tong An Gia Binh Autonomous Intelligence Engine',
+      source: 'cron-job.org',
+      status: dispatch.ok ? 'dispatched_successfully' : 'dispatch_failed',
+      github_status: dispatch.status,
+      target_domain: 'https://www.betongangiabinh.vn',
+      duration_ms: Date.now() - startTime,
+      timestamp: new Date().toISOString(),
     });
   } catch (err: any) {
     console.error('[API /api/cron/ai-scheduler GET] Error:', err);
     return NextResponse.json(
       {
         success: false,
-        message: 'Lỗi khi thực thi AI Cron Scheduler: ' + (err?.message || 'Internal Error')
+        message: 'Lỗi khi thực thi AI Cron Scheduler: ' + (err?.message || 'Internal Error'),
+        duration_ms: Date.now() - startTime,
       },
       { status: 500 }
     );
@@ -37,41 +90,5 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  try {
-    let force = false;
-    let mode = 'all';
-
-    try {
-      const body = await req.json();
-      force = Boolean(body?.force);
-      if (body?.mode) mode = body.mode;
-    } catch {
-      // ignore empty body
-    }
-
-    const results: Record<string, any> = {};
-
-    if (mode === 'all' || mode === 'whitepaper') {
-      results.whitepaper = await checkAndRunScheduler(force);
-    }
-
-    if (mode === 'all' || mode === 'social' || mode === 'social-listening') {
-      results.socialListening = await checkAndRunSocialListeningAutoPilot(force);
-    }
-
-    return NextResponse.json({
-      success: true,
-      mode,
-      results
-    });
-  } catch (err: any) {
-    console.error('[API /api/cron/ai-scheduler POST] Error:', err);
-    return NextResponse.json(
-      {
-        success: false,
-        message: 'Lỗi khi thực thi AI Cron Scheduler: ' + (err?.message || 'Internal Error')
-      },
-      { status: 500 }
-    );
-  }
+  return GET(req);
 }

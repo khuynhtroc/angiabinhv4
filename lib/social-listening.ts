@@ -140,7 +140,7 @@ function analyzeCategoryAndAngle(title: string, snippet: string): CategoryAngleR
     text.includes('lol ') ||
     text.includes('lien minh') ||
     text.includes('pubg') ||
-    text.includes('fifa') ||
+    text.includes('fifa');
 
   if (isExcluded && !text.includes('sân vận động') && !text.includes('nhà thi đấu') && !text.includes('công trình')) {
     return {

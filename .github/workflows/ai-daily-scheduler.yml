@@ -5,12 +5,18 @@ on:
     # Chạy 3 lần mỗi ngày vào 06:00, 12:00, 18:00 giờ Việt Nam (UTC+7)
     # Tương ứng UTC: 23:00 (hôm trước), 05:00, 11:00 UTC
     - cron: '0 23,5,11 * * *'
+  repository_dispatch:
+    types: [cron_publish, social_listen, ai_scheduler, auto_write]
   workflow_dispatch: # Cho phép Admin kích hoạt thủ công trên GitHub bất cứ lúc nào
+
+permissions:
+  contents: write
 
 jobs:
   auto-publish:
     name: Quét Tin Tức & Tự Động Xuất Bản Chuẩn SEO
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout Code Repository
         uses: actions/checkout@v4
@@ -26,6 +32,11 @@ jobs:
 
       - name: Cài đặt Dependencies
         run: npm ci
+
+      - name: Cấu hình Git Identity
+        run: |
+          git config --global user.name "Be Tong An Gia Binh Bot"
+          git config --global user.email "bot@betongangiabinh.vn"
 
       - name: Chạy Auto-Pilot Social Listening & Auto Post
         env:
