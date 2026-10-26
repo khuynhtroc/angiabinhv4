@@ -59,7 +59,7 @@ const ai = GEMINI_API_KEY
 
 async function callGeminiModel(prompt, systemInstruction = '', jsonMode = false) {
   if (!ai) throw new Error('Chưa cấu hình GEMINI_API_KEY');
-  const models = ['gemini-3-flash-preview', 'gemini-flash-latest', 'gemma-4-26b-a4b-it', 'gemini-3.8-flash'];
+  const models = ['gemini-3.5-flash-lite', 'gemini-flash-lite-latest', 'gemini-3.1-flash-lite', 'gemini-3.5-flash'];
   for (const model of models) {
     try {
       const config = {};
@@ -67,7 +67,7 @@ async function callGeminiModel(prompt, systemInstruction = '', jsonMode = false)
       if (jsonMode) config.responseMimeType = 'application/json';
 
       const timeoutPromise = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error(`Timeout model ${model} sau 15s`)), 15000)
+        setTimeout(() => reject(new Error(`Timeout model ${model} sau 8s`)), 8000)
       );
 
       const generatePromise = ai.models.generateContent({
@@ -79,15 +79,15 @@ async function callGeminiModel(prompt, systemInstruction = '', jsonMode = false)
       const res = await Promise.race([generatePromise, timeoutPromise]);
       if (res?.text) return res.text;
     } catch (err) {
-      console.warn(`[Gemini] ${model} fallback:`, err.message);
+      console.warn(`[Gemini] ${model} fallback:`, err.message?.slice(0, 80));
     }
   }
   // Direct REST API fallback
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 15000);
+    const timeout = setTimeout(() => controller.abort(), 8000);
     const restRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent?key=${GEMINI_API_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -103,7 +103,7 @@ async function callGeminiModel(prompt, systemInstruction = '', jsonMode = false)
     const text = restData.candidates?.[0]?.content?.parts?.[0]?.text;
     if (text) return text;
   } catch (restErr) {
-    console.warn('[Gemini REST fallback error]', restErr.message);
+    console.warn('[Gemini REST fallback error]', restErr.message?.slice(0, 80));
   }
   throw new Error('Không thể gọi Gemini API');
 }
@@ -541,7 +541,7 @@ async function submitUrlToGoogleIndexing(url) {
   }
   try {
     const res = await fetch(
-      'https://indexing.googleapis.com/v1/urlNotifications:publish',
+      'https://indexing.googleapis.com/v3/urlNotifications:publish',
       {
         method: 'POST',
         headers: {
@@ -551,7 +551,13 @@ async function submitUrlToGoogleIndexing(url) {
         body: JSON.stringify({ url, type: 'URL_UPDATED' }),
       }
     );
-    const data = await res.json();
+    const text = await res.text();
+    let data = {};
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = { error: { message: `HTTP ${res.status}: ${text.slice(0, 80)}` } };
+    }
     return {
       ok: res.ok,
       status: res.status,
@@ -1865,12 +1871,23 @@ async function startBot() {
   }
 
   // Schedule automatic daily report at 08:00 AM Vietnam time
+  let lastDailyReportDate = '';
   setInterval(async () => {
-    const nowVn = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }));
-    if (nowVn.getHours() === 8 && nowVn.getMinutes() === 0) {
-      await buildAndSendDailyReport(AUTHORIZED_CHAT_ID);
+    try {
+      const nowVn = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' }));
+      const todayStr = nowVn.toISOString().slice(0, 10);
+      const hour = nowVn.getHours();
+      const minute = nowVn.getMinutes();
+
+      if (hour === 8 && minute >= 0 && minute <= 5 && lastDailyReportDate !== todayStr) {
+        lastDailyReportDate = todayStr;
+        console.log(`[Daily Schedule] Đang tự động gửi báo cáo SEO 08:00 AM (${todayStr}) cho betongangiabinh.vn...`);
+        await buildAndSendDailyReport(AUTHORIZED_CHAT_ID);
+      }
+    } catch (e) {
+      console.error('[Daily Schedule Error]:', e.message);
     }
-  }, 60 * 1000);
+  }, 30 * 1000);
 
   // Long-polling loop
   while (true) {
