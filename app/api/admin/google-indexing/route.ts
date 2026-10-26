@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import fs from 'node:fs';
+import path from 'node:path';
 import {
   getActiveIndexingCredentials,
   submitUrlToGoogleIndexing,
@@ -76,7 +78,16 @@ export async function POST(req: NextRequest) {
       }
 
       if (indexNowKey !== undefined) {
-        updatedIntegrations.indexNowKey = indexNowKey.trim();
+        const cleanKey = indexNowKey.trim();
+        updatedIntegrations.indexNowKey = cleanKey;
+        if (cleanKey && /^[a-zA-Z0-9_-]+$/.test(cleanKey)) {
+          try {
+            const keyFilePath = path.join(process.cwd(), 'public', `${cleanKey}.txt`);
+            fs.writeFileSync(keyFilePath, cleanKey, 'utf-8');
+          } catch (writeErr) {
+            console.warn('[Google Indexing] Could not write IndexNow verification file:', writeErr);
+          }
+        }
       }
 
       if (indexNowEnabled !== undefined) {

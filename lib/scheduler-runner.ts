@@ -15,6 +15,7 @@ import {
   buildDeterministicWhitepaper
 } from '@/app/api/ai/crawl-generate/route';
 import { autoSubmitPostUrlServer } from '@/lib/google-indexing';
+import { schedulePublishedPostAutoShare } from '@/lib/social/schedule-auto-share';
 
 export interface SchedulerExecutionResult {
   success: boolean;
@@ -216,6 +217,13 @@ Trả về đúng định dạng JSON:
     await autoSubmitPostUrlServer(postCanonicalUrl);
   } catch (idxErr) {
     console.warn('[scheduler-runner] Auto-submit to Google Indexing failed:', idxErr);
+  }
+
+  // Auto-share to enabled Social Channels (Facebook, X, Pinterest, Threads, etc.)
+  try {
+    await schedulePublishedPostAutoShare(newBlogPost as any, 'AI Auto-Scheduler');
+  } catch (shareErr) {
+    console.warn('[scheduler-runner] Auto-share to social channels failed:', shareErr);
   }
 
   // Update admin settings log

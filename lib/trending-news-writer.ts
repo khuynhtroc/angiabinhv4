@@ -9,6 +9,7 @@ import {
   getUpdatedInitialDataCode
 } from '@/lib/server-data';
 import { autoSubmitPostUrlServer } from '@/lib/google-indexing';
+import { schedulePublishedPostAutoShare } from '@/lib/social/schedule-auto-share';
 import { commitFilesViaGitHubApi } from '@/lib/github-api';
 
 // Curated high quality news imagery with construction context
@@ -289,6 +290,13 @@ YÊU CẦU BẮT BUỘC VỀ NỘI DUNG VÀ ĐỘ DÀI:
     await autoSubmitPostUrlServer(canonicalUrl);
   } catch (idxErr) {
     console.warn('[TrendingNewsWriter] Auto submit Google Indexing note:', idxErr);
+  }
+
+  // 2b. Auto-share to 25+ enabled social channels
+  try {
+    await schedulePublishedPostAutoShare(newPost, 'Trending News Writer');
+  } catch (shareErr) {
+    console.warn('[TrendingNewsWriter] Auto social share note:', shareErr);
   }
 
   // 3. Update Admin Settings Log

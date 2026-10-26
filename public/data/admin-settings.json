@@ -80,7 +80,9 @@
     "lastIndexedAt": "2026-10-20T18:17:00.571Z",
     "totalIndexedSubmitted": 0,
     "googleIndexingEnabled": true,
-    "autoSubmitNewPosts": true
+    "autoSubmitNewPosts": true,
+    "indexNowKey": "68f6a9788d4444ff94d4ee1bf5df05e0",
+    "indexNowEnabled": true
   },
   "updatedAt": "2026-10-20T18:17:00.575Z",
   "socialListening": {

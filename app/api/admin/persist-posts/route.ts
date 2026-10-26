@@ -38,6 +38,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { BlogPost, Project } from '@/lib/types';
 import { autoSubmitPostUrlServer } from '@/lib/google-indexing';
+import { schedulePublishedPostAutoShare } from '@/lib/social/schedule-auto-share';
 
 export const dynamic = 'force-dynamic';
 
@@ -342,6 +343,15 @@ export async function POST(req: NextRequest) {
         await autoSubmitPostUrlServer(targetPost.slug || targetPost.id);
       } catch (idxErr) {
         console.warn('[Google Indexing] Auto submit on save_post warning:', idxErr);
+      }
+
+      // Auto share to enabled social channels if post is published
+      if (targetPost.isPublished !== false) {
+        try {
+          await schedulePublishedPostAutoShare(targetPost, 'Admin Post Save');
+        } catch (shareErr) {
+          console.warn('[Social AutoShare] Auto share on save_post warning:', shareErr);
+        }
       }
 
       const filesToCommit: Array<{ path: string; content: string }> = [

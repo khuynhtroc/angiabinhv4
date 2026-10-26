@@ -7,6 +7,7 @@ import { useAppStore } from '@/lib/store';
  * CustomCodeInjector
  * Injects and manages custom Header (<head>), Body (open), Footer (close),
  * Custom CSS, and Custom JS from the website configuration dynamically.
+ * Synchronized with server-side rendering in app/layout.tsx to avoid duplication.
  */
 export default function CustomCodeInjector() {
   const { jekyllConfig } = useAppStore();
@@ -17,6 +18,7 @@ export default function CustomCodeInjector() {
     css?: string;
     js?: string;
   }>({});
+  const isFirstMountRef = useRef(true);
 
   // 1. Dynamic Custom CSS Injection
   useEffect(() => {
@@ -24,16 +26,23 @@ export default function CustomCodeInjector() {
     if (css === lastInjectedRef.current.css) return;
     lastInjectedRef.current.css = css;
 
+    const serverStyle = document.getElementById('server-custom-css') as HTMLStyleElement | null;
     let styleEl = document.getElementById('dynamic-custom-site-css') as HTMLStyleElement | null;
+
     if (css) {
-      if (!styleEl) {
-        styleEl = document.createElement('style');
-        styleEl.id = 'dynamic-custom-site-css';
-        document.head.appendChild(styleEl);
+      if (serverStyle) {
+        serverStyle.textContent = css;
+      } else {
+        if (!styleEl) {
+          styleEl = document.createElement('style');
+          styleEl.id = 'dynamic-custom-site-css';
+          document.head.appendChild(styleEl);
+        }
+        styleEl.textContent = css;
       }
-      styleEl.textContent = css;
-    } else if (styleEl) {
-      styleEl.remove();
+    } else {
+      if (serverStyle) serverStyle.textContent = '';
+      if (styleEl) styleEl.remove();
     }
   }, [jekyllConfig?.customCss]);
 
@@ -41,8 +50,14 @@ export default function CustomCodeInjector() {
   useEffect(() => {
     const js = jekyllConfig?.customJs?.trim() || '';
     if (!js || js === lastInjectedRef.current.js) return;
-    lastInjectedRef.current.js = js;
 
+    // Skip the very first mount if the server already rendered and executed server-custom-js
+    if (isFirstMountRef.current && document.getElementById('server-custom-js')) {
+      lastInjectedRef.current.js = js;
+      return;
+    }
+
+    lastInjectedRef.current.js = js;
     try {
       const scriptFn = new Function(js);
       scriptFn();
@@ -55,6 +70,12 @@ export default function CustomCodeInjector() {
   useEffect(() => {
     const headCode = jekyllConfig?.customHeadCode?.trim() || '';
     if (headCode === lastInjectedRef.current.head) return;
+
+    // Skip the very first mount if the server already rendered and executed server-custom-head-code
+    if (isFirstMountRef.current && document.getElementById('server-custom-head-code')) {
+      lastInjectedRef.current.head = headCode;
+      return;
+    }
 
     // Clean up previous dynamically injected head elements
     const prevElements = document.querySelectorAll('[data-injected-head="agb"]');
@@ -97,6 +118,15 @@ export default function CustomCodeInjector() {
     const bodyOpenCode = jekyllConfig?.customBodyOpenCode?.trim() || '';
     if (bodyOpenCode === lastInjectedRef.current.bodyOpen) return;
 
+    // Skip first mount if already populated by SSR
+    if (isFirstMountRef.current) {
+      const existingContainer = document.getElementById('custom-body-open-container');
+      if (existingContainer && existingContainer.innerHTML.trim()) {
+        lastInjectedRef.current.bodyOpen = bodyOpenCode;
+        return;
+      }
+    }
+
     let container = document.getElementById('custom-body-open-container');
     if (bodyOpenCode) {
       if (!container) {
@@ -124,6 +154,15 @@ export default function CustomCodeInjector() {
   useEffect(() => {
     const footerCode = jekyllConfig?.customFooterCode?.trim() || '';
     if (footerCode === lastInjectedRef.current.footer) return;
+
+    // Skip first mount if already populated by SSR
+    if (isFirstMountRef.current) {
+      const existingFooter = document.getElementById('custom-body-footer-container');
+      if (existingFooter && existingFooter.innerHTML.trim()) {
+        lastInjectedRef.current.footer = footerCode;
+        return;
+      }
+    }
 
     let container = document.getElementById('custom-body-footer-container');
     if (footerCode) {
@@ -159,6 +198,11 @@ export default function CustomCodeInjector() {
 
     lastInjectedRef.current.footer = footerCode;
   }, [jekyllConfig?.customFooterCode]);
+
+  // Mark first mount completed
+  useEffect(() => {
+    isFirstMountRef.current = false;
+  }, []);
 
   return null;
 }

@@ -1,3 +1,5 @@
+export type Post = BlogPost & Record<string, any>;
+
 export interface BlogPost {
   id: string;
   title: string;

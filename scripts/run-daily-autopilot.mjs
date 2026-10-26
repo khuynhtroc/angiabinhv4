@@ -554,6 +554,36 @@ async function submitGoogleIndexing(url) {
   }
 }
 
+
+// Nộp IndexNow (Bing, Yandex, Seznam, Naver)
+async function submitIndexNow(url) {
+  try {
+    let key = process.env.INDEXNOW_KEY || '68f6a9788d4444ff94d4ee1bf5df05e0';
+    if (fs.existsSync(ADMIN_SETTINGS_FILE)) {
+      try {
+        const adminSettings = JSON.parse(fs.readFileSync(ADMIN_SETTINGS_FILE, 'utf8'));
+        if (adminSettings?.integrations?.indexNowKey) {
+          key = adminSettings.integrations.indexNowKey;
+        }
+      } catch {}
+    }
+    const host = 'www.betongangiabinh.vn';
+    const res = await fetch('https://api.indexnow.org/IndexNow', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      body: JSON.stringify({
+        host,
+        key,
+        keyLocation: `https://${host}/${key}.txt`,
+        urlList: [url]
+      })
+    });
+    return { ok: res.status === 200 || res.status === 202, status: res.status };
+  } catch (err) {
+    return { ok: false, message: err.message };
+  }
+}
+
 // Gửi thông báo Telegram
 async function sendTelegramAlert(title, bullets = []) {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
@@ -734,6 +764,16 @@ async function main() {
     console.log('✓ Đã nộp URL lên Google Indexing API thành công!');
   } else {
     console.warn('⚠️ Google Indexing lưu ý:', indexRes.message || indexRes.data);
+  }
+
+
+  // 3b. Nộp Bing IndexNow
+  console.log(`📡 Đang gửi URL lên Bing IndexNow: ${canonicalUrl}...`);
+  const indexNowRes = await submitIndexNow(canonicalUrl);
+  if (indexNowRes.ok) {
+    console.log(`✓ Đã nộp URL lên Bing IndexNow thành công (HTTP ${indexNowRes.status})!`);
+  } else {
+    console.warn('⚠️ Bing IndexNow lưu ý:', indexNowRes.message || indexNowRes.status);
   }
 
   // 4. Git Commit & Push

@@ -170,7 +170,7 @@ export async function getGoogleAccessToken(clientEmail: string, privateKey: stri
 }
 
 /**
- * Submit URL to Google Indexing API (https://indexing.googleapis.com/v1/urlNotifications:publish)
+ * Submit URL to Google Indexing API (https://indexing.googleapis.com/v3/urlNotifications:publish)
  */
 export async function submitUrlToGoogleIndexing(
   url: string,
@@ -200,7 +200,7 @@ export async function submitUrlToGoogleIndexing(
 
     const accessToken = await getGoogleAccessToken(clientEmail, privateKey);
 
-    const publishRes = await fetch('https://indexing.googleapis.com/v1/urlNotifications:publish', {
+    const publishRes = await fetch('https://indexing.googleapis.com/v3/urlNotifications:publish', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${accessToken}`,

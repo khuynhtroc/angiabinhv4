@@ -93,6 +93,8 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             data-cfasync="false"
             dangerouslySetInnerHTML={{
               __html: `(function(w,d,s,l,i){
+var p=w.location&&w.location.pathname?w.location.pathname:'';
+if(p.indexOf('/admin')===0)return;
 var h=w.location&&w.location.hostname?w.location.hostname:'';
 if(h&&h.indexOf('betongangiabinh.vn')===-1&&h!=='localhost'&&h.indexOf('workers.dev')===-1)return;
 w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -121,6 +123,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               dangerouslySetInnerHTML={{
                 __html: `
 (function(){
+  var p = typeof window !== 'undefined' && window.location ? window.location.pathname : '';
+  if (p.indexOf('/admin') === 0) {
+    window['ga-disable-${gaId}'] = true;
+    return;
+  }
   var h = typeof window !== 'undefined' && window.location ? window.location.hostname : '';
   if (h && h.indexOf('betongangiabinh.vn') === -1 && h !== 'localhost' && h.indexOf('workers.dev') === -1) return;
   window.dataLayer = window.dataLayer || [];
@@ -171,7 +178,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <script
             id="server-custom-head-code"
             dangerouslySetInnerHTML={{
-              __html: `(function(){try{var code=${JSON.stringify(config.customHeadCode)};if(code&&typeof document!=='undefined'){var r=document.createRange();r.selectNode(document.head);var f=r.createContextualFragment(code);document.head.appendChild(f);}}catch(e){console.warn('Head code injection error:',e);}})();`,
+              __html: `(function(){try{var code=${JSON.stringify(config.customHeadCode)};if(code&&typeof document!=='undefined'){var r=document.createRange();r.selectNode(document.head);var f=r.createContextualFragment(code);Array.from(f.children).forEach(function(c){if(c.setAttribute)c.setAttribute('data-injected-head','agb');});document.head.appendChild(f);}}catch(e){console.warn('Head code injection error:',e);}})();`,
             }}
           />
         )}

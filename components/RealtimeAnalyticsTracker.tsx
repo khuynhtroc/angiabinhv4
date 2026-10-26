@@ -22,6 +22,10 @@ export default function RealtimeAnalyticsTracker() {
   // 1. Handle SPA Route Changes for GA4 & GTM dataLayer
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (pathname && pathname.startsWith('/admin')) {
+      (window as any)['ga-disable-' + gaId] = true;
+      return;
+    }
     const h = window.location.hostname || '';
     if (h && h.indexOf('betongangiabinh.vn') === -1 && h !== 'localhost' && h.indexOf('workers.dev') === -1) return;
 
@@ -104,6 +108,7 @@ export default function RealtimeAnalyticsTracker() {
     const h = window.location.hostname || '';
     if (h && h.indexOf('betongangiabinh.vn') === -1 && h !== 'localhost' && h.indexOf('workers.dev') === -1) return;
 
+    if (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin')) return;
     const handleDocumentClick = (e: MouseEvent) => {
       const target = (e.target as HTMLElement)?.closest('a');
       if (!target) return;

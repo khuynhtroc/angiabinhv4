@@ -25,13 +25,14 @@ import AdminDesignSection from '@/components/AdminDesignSection';
 import AdminTrashSection from '@/components/AdminTrashSection';
 import { optimizePostFull, suggestKeywordsAndTags, generateOptimizedMetaDescription } from '@/lib/postOptimizer';
 import AdminGoogleIndexingCard from '@/components/AdminGoogleIndexingCard';
+import SocialAutoShareManager from '@/components/SocialAutoShareManager';
 import { submitPostUrlToGoogleClient, submitBulkUrlsClient } from '@/lib/google-indexing-client';
 import {
   Radio, Lock, KeyRound, LayoutDashboard, FileText, Building2, Users,
   FolderArchive, Sparkles, RefreshCw, Trash2, Plus, CheckCircle2,
   ExternalLink, Eye, ArrowUpRight, ShieldCheck, Phone, Search, Edit3,
   Image as ImageIcon, Video as VideoIcon, FileCode, Code, Copy, Check, Upload,
-  GitBranch, GitCommit,
+  GitBranch, GitCommit, Share2,
   Globe, FileUp, Zap, Replace, Folder, FolderPlus, Info, Layers, Tag, Palette,
   UploadCloud, Files, Settings, Sliders, CheckSquare, Calendar, Square,
   CheckCheck, X, Menu as MenuIcon, HardDrive, Filter, BarChart2, Link2, Download, Loader2, AlertTriangle, Clock, Eraser
@@ -125,7 +126,7 @@ export default function AdminDashboard() {
   const [loginError, setLoginError] = useState('');
 
   // Tab navigation
-  const [activeTab, setActiveTab] = useState<'analytics' | 'social-listening' | 'crawler' | 'posts' | 'pages' | 'menus' | 'projects' | 'media' | 'leads' | 'design' | 'settings' | 'trash'>('analytics');
+  const [activeTab, setActiveTab] = useState<'analytics' | 'social-listening' | 'social-autoshare' | 'crawler' | 'posts' | 'pages' | 'menus' | 'projects' | 'media' | 'leads' | 'design' | 'settings' | 'trash'>('analytics');
 
   // Modal to select logo/favicon from media files
   const [showMediaLogoPickerModal, setShowMediaLogoPickerModal] = useState<'logo' | 'favicon' | null>(null);
@@ -1874,6 +1875,18 @@ export default function AdminDashboard() {
           </button>
 
           <button
+            onClick={() => setActiveTab('social-autoshare')}
+            className={`px-4 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-2 ${
+              activeTab === 'social-autoshare'
+                ? 'bg-amber-500 text-slate-950 shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <Share2 className="w-4 h-4 text-emerald-600" />
+            <span>Social AutoShare (25+ Kênh)</span>
+          </button>
+
+          <button
             onClick={() => setActiveTab('crawler')}
             className={`px-4 py-2 rounded-xl transition whitespace-nowrap flex items-center gap-2 ${
               activeTab === 'crawler'
@@ -2264,6 +2277,13 @@ export default function AdminDashboard() {
               await submitPostUrlToGoogleClient(url);
             }}
           />
+        )}
+
+        {/* TAB: SOCIAL AUTOSHARE 25+ CHANNELS */}
+        {activeTab === 'social-autoshare' && (
+          <div className="space-y-6">
+            <SocialAutoShareManager />
+          </div>
         )}
 
         {/* TAB 2: AI CRAWLER & REWRITE */}
