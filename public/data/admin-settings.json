@@ -86,9 +86,19 @@
   },
   "updatedAt": "2026-10-20T18:17:00.575Z",
   "socialListening": {
-    "lastRunAt": "2026-10-25T23:43:51.010Z",
-    "autoPublishedCount": 2,
+    "lastRunAt": "2026-10-31T06:28:10.290Z",
+    "autoPublishedCount": 3,
     "logs": [
+      {
+        "id": "news-log-1793428090290",
+        "timestamp": "2026-10-31T06:28:10.290Z",
+        "trendTitle": "dự báo thời tiết tphcm",
+        "generatedTitle": "dự báo thời tiết tphcm: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/du-bao-thoi-tiet-tphcm-9296.html",
+        "wordCount": 747,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1792971831010",
         "timestamp": "2026-10-25T23:43:51.010Z",
