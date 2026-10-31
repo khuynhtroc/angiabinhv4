@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-10-31T17:20:46.031Z",
-    "autoPublishedCount": 8,
+    "lastRunAt": "2026-10-31T17:26:16.262Z",
+    "autoPublishedCount": 9,
     "logs": [
+      {
+        "id": "news-log-1793467576262",
+        "timestamp": "2026-10-31T17:26:16.262Z",
+        "trendTitle": "Thông xe cao tốc phải chạy thật, không phải để lấy ngày, rồi 'đóng cửa' thi công tiếp",
+        "generatedTitle": "Thông xe cao tốc phải chạy thật, không phải để lấy ngày, rồi 'đóng cửa' thi công tiếp: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/thong-xe-cao-toc-phai-chay-that-khong-phai-de-lay-ngay-roi-dong-cua-thi-cong-tiep-5031.html",
+        "wordCount": 838,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1793467246031",
         "timestamp": "2026-10-31T17:20:46.031Z",
