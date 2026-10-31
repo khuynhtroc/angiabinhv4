@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-10-31T17:26:16.262Z",
-    "autoPublishedCount": 9,
+    "lastRunAt": "2026-10-31T17:47:36.792Z",
+    "autoPublishedCount": 10,
     "logs": [
+      {
+        "id": "news-log-1793468856792",
+        "timestamp": "2026-10-31T17:47:36.792Z",
+        "trendTitle": "Quảng Trị: 300 tỷ đồng nâng cấp ĐT560 và QL15 đoạn từ Nam cầu Gianh đến nút giao cao tốc",
+        "generatedTitle": "Quảng Trị: 300 tỷ đồng nâng cấp ĐT560 và QL15 đoạn từ Nam cầu Gianh đến nút giao cao tốc: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/quang-tri-300-ty-dong-nang-cap-dt560-va-ql15-doan-tu-nam-cau-gianh-den-nut-giao-cao-toc-5230.html",
+        "wordCount": 801,
+        "trendScore": 78,
+        "status": "published"
+      },
       {
         "id": "news-log-1793467576262",
         "timestamp": "2026-10-31T17:26:16.262Z",
