@@ -272,35 +272,45 @@ YÊU CẦU BẮT BUỘC VỀ NỘI DUNG VÀ ĐỘ DÀI:
   // Selected cover image from pool based on category
   const coverImage = crawledMedia.coverImage || trend.imageUrl || NEWS_IMAGE_POOL[Math.abs(trend.id.split('').reduce((a, b) => a + b.charCodeAt(0), 0)) % NEWS_IMAGE_POOL.length].url;
 
-  // Chèn các ảnh thực tế đã tải lên R2 vào đúng bố cục bài viết
+  // Chèn toàn bộ các ảnh thực tế đã tải lên R2 vào đúng bố cục bài viết
   if (crawledMedia.media.length > 0) {
-    const m1 = crawledMedia.media[0];
-    const img1Md = `\n\n![${m1.caption || finalTitle}](${m1.r2Url})\n*${m1.caption || finalTitle}*\n\n`;
-    if (finalContent.includes('## 2.')) {
-      finalContent = finalContent.replace('## 2.', `${img1Md}## 2.`);
-    } else {
-      finalContent += img1Md;
-    }
+    const validPhotos = crawledMedia.media.filter((m: any) => m.r2Url && !m.r2Url.includes('logo') && !m.r2Url.includes('icon'));
+    const sectionTargets = ['## 2.', '## 3.', '## 4.', '## 5.', '## 6.'];
+    let photoIdx = 0;
 
-    if (crawledMedia.media.length > 1) {
-      const m2 = crawledMedia.media[1];
-      const img2Md = `\n\n![${m2.caption || finalTitle}](${m2.r2Url})\n*${m2.caption || finalTitle}*\n\n`;
-      if (finalContent.includes('## 4.')) {
-        finalContent = finalContent.replace('## 4.', `${img2Md}## 4.`);
-      } else if (finalContent.includes('## 5.')) {
-        finalContent = finalContent.replace('## 5.', `${img2Md}## 5.`);
-      } else {
-        finalContent += img2Md;
+    for (const sec of sectionTargets) {
+      if (photoIdx < validPhotos.length && finalContent.includes(sec)) {
+        const p = validPhotos[photoIdx++];
+        const caption = p.caption || p.alt || finalTitle;
+        const imgMd = `
+
+![${caption}](${p.r2Url})
+*${caption}*
+
+`;
+        finalContent = finalContent.replace(sec, `${imgMd}${sec}`);
       }
     }
 
-    if (crawledMedia.media.length > 2) {
-      const m3 = crawledMedia.media[2];
-      const img3Md = `\n\n![${m3.caption || finalTitle}](${m3.r2Url})\n*${m3.caption || finalTitle}*\n\n`;
+    // Nếu còn ảnh chưa chèn, tạo phần thư viện hình ảnh thực tế
+    if (photoIdx < validPhotos.length) {
+      let galleryMd = `
+
+### Hình Ảnh Thực Tế Từ Hiện Trường Tuyến Đường & Dự Án
+
+`;
+      while (photoIdx < validPhotos.length) {
+        const p = validPhotos[photoIdx++];
+        const caption = p.caption || p.alt || finalTitle;
+        galleryMd += `![${caption}](${p.r2Url})
+*${caption}*
+
+`;
+      }
       if (finalContent.includes('## 6.')) {
-        finalContent = finalContent.replace('## 6.', `${img3Md}## 6.`);
+        finalContent = finalContent.replace('## 6.', `${galleryMd}## 6.`);
       } else {
-        finalContent += img3Md;
+        finalContent += galleryMd;
       }
     }
   }

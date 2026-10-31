@@ -59,7 +59,7 @@ export default function BlogPostDetailClient({
       `${p.slug}.html` === rawSlug
     );
   });
-  const post = storePost || initialPost || null;
+  const post = initialPost || storePost || null;
 
   // 2. Category page check if no specific post matched
   const matchedCategory = (categories || []).find(

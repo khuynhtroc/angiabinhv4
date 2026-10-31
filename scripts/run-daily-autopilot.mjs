@@ -777,9 +777,64 @@ async function main() {
   const permalink = `/blog/tin-tuc/${uniqueSlug}.html`;
   const canonicalUrl = `${SITE_URL}${permalink}`;
   const wordCount = (generated.content || '').trim().split(/\s+/).filter(Boolean).length;
-  const isoDate = new Date().toISOString().split('T')[0];
+  const isoDate = new Date().toISOString().split('T')[0];  // Cào toàn bộ hình ảnh thực tế từ bài viết gốc và tải lên Cloudflare R2
+  console.log(`🕷️ Đang cào toàn bộ hình ảnh thực tế từ bài viết gốc: ${selectedTrend.url}...`);
+  let crawledMedia = { coverImage: null, media: [] };
+  try {
+    crawledMedia = await crawlAndUploadArticleMedia(selectedTrend.url, { slug: uniqueSlug });
+  } catch (crawlErr) {
+    console.warn('⚠️ Lỗi khi cào media bài gốc:', crawlErr.message);
+  }
+  console.log(`✓ Kết quả cào media: ${crawledMedia.media.length} ảnh nội dung, Cover: ${crawledMedia.coverImage ? 'R2 OK' : 'Dùng Pool trạm trộn'}`);
 
-  const coverImage = NEWS_IMAGE_POOL[Math.floor(Math.random() * NEWS_IMAGE_POOL.length)].url;
+  let coverImage = crawledMedia.coverImage;
+  if (!coverImage) {
+    coverImage = NEWS_IMAGE_POOL[Math.floor(Math.random() * NEWS_IMAGE_POOL.length)].url;
+  }
+
+  // Chèn toàn bộ các ảnh thực tế đã tải lên R2 vào đúng bố cục bài viết
+  let finalContent = generated.content || '';
+  if (crawledMedia.media.length > 0) {
+    const validPhotos = crawledMedia.media.filter(m => m.r2Url && !m.r2Url.includes('logo') && !m.r2Url.includes('icon'));
+    const sectionTargets = ['## 2.', '## 3.', '## 4.', '## 5.', '## 6.'];
+    let photoIdx = 0;
+
+    for (const sec of sectionTargets) {
+      if (photoIdx < validPhotos.length && finalContent.includes(sec)) {
+        const p = validPhotos[photoIdx++];
+        const caption = p.caption || p.alt || generated.title;
+        const imgMd = `
+
+![${caption}](${p.r2Url})
+*${caption}*
+
+`;
+        finalContent = finalContent.replace(sec, `${imgMd}${sec}`);
+      }
+    }
+
+    // Nếu còn ảnh chưa chèn, tạo phần thư viện hình ảnh thực tế công trình
+    if (photoIdx < validPhotos.length) {
+      let galleryMd = `
+
+### Hình Ảnh Thực Tế Từ Hiện Trường Tuyến Đường & Dự Án
+
+`;
+      while (photoIdx < validPhotos.length) {
+        const p = validPhotos[photoIdx++];
+        const caption = p.caption || p.alt || generated.title;
+        galleryMd += `![${caption}](${p.r2Url})
+*${caption}*
+
+`;
+      }
+      if (finalContent.includes('## 6.')) {
+        finalContent = finalContent.replace('## 6.', `${galleryMd}## 6.`);
+      } else {
+        finalContent += galleryMd;
+      }
+    }
+  }
 
   const newPost = {
     id: `post-${Date.now()}`,
