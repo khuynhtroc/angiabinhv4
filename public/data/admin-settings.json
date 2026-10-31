@@ -86,9 +86,19 @@
   },
   "updatedAt": "2026-10-20T18:17:00.575Z",
   "socialListening": {
-    "lastRunAt": "2026-10-31T06:28:10.290Z",
-    "autoPublishedCount": 3,
+    "lastRunAt": "2026-10-31T06:32:38.416Z",
+    "autoPublishedCount": 4,
     "logs": [
+      {
+        "id": "news-log-1793428358416",
+        "timestamp": "2026-10-31T06:32:38.416Z",
+        "trendTitle": "Lạ mắt những vòm cây xanh phủ kín trụ metro, hầm chui ở Hà Nội",
+        "generatedTitle": "Lạ mắt những vòm cây xanh phủ kín trụ metro, hầm chui ở Hà Nội: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/la-mat-nhung-vom-cay-xanh-phu-kin-tru-metro-ham-chui-o-ha-noi-6957.html",
+        "wordCount": 786,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1793428090290",
         "timestamp": "2026-10-31T06:28:10.290Z",
