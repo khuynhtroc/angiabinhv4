@@ -210,7 +210,9 @@ export function SocialAutoShareManager() {
         action === 'start'
           ? data.posted_first
             ? `✅ Đã tạo hàng đợi ${data.total_posts} bài (cũ nhất ➔ mới nhất) và đăng ngay bài đầu tiên: “${data.first_post_title}”!`
-            : `✅ Đã tạo hàng đợi ${data.total_posts} bài, sắp từ cũ đến mới. Bài đầu tiên sẽ được đăng theo giờ đã chọn.`
+            : data.step_error
+              ? `⚠️ Đã tạo hàng đợi ${data.total_posts} bài thành công! (Lưu ý đăng bài đầu tiên: ${data.step_error})`
+              : `✅ Đã tạo hàng đợi ${data.total_posts} bài, sắp từ cũ đến mới. Bài đầu tiên sẽ được đăng theo giờ đã chọn.`
           : action === 'post_now'
             ? `🚀 Đã đăng thành công bài tiếp theo: “${data.post_title}”${data.succeeded_channels?.length ? ` lên [${data.succeeded_channels.join(', ')}]` : ''}!`
             : action === 'pause'

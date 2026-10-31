@@ -18,18 +18,21 @@ export async function buildFacebookBackfillQueue(
       ? startAtDate
       : now;
 
-  const { rows } = await db.find('posts', {
-    eq: { status: 'published' },
-    order: [
-      { field: 'published_at', asc: true },
-      { field: 'created_at', asc: true },
-    ],
-    select: 'id,type,published_at,created_at',
-  });
+  const { rows } = await db.find('posts');
+  const validPosts = (rows || [])
+    .filter((post: any) => {
+      if (!post || !post.id) return false;
+      if (post.isPublished === false) return false;
+      if (post.status === 'draft' || post.status === 'trash') return false;
+      return true;
+    })
+    .sort((a: any, b: any) => {
+      const dateA = a.date || a.published_at || a.created_at || '';
+      const dateB = b.date || b.published_at || b.created_at || '';
+      return dateA.localeCompare(dateB);
+    });
 
-  const postIds = rows
-    .filter((post) => post.type === 'gift' || post.type === 'blog')
-    .map((post) => post.id);
+  const postIds = validPosts.map((post: any) => post.id);
 
   const nextState: FacebookBackfillState = {
     status: 'scheduled',
@@ -156,20 +159,13 @@ export async function executeFacebookBackfillStep(options?: {
   let post: Post | null = null;
   while (cursor < lockedState.post_ids.length) {
     const candidate = await db.findOne('posts', { id: lockedState.post_ids[cursor] });
-    const hasImage = Boolean(
-      candidate &&
-        (candidate.hero_image ||
-          candidate.og_image ||
-          candidate.items?.some((it: any) => it?.image) ||
-          /<img[^>]+src=/i.test(candidate.content_html || ''))
-    );
     if (
       candidate &&
-      candidate.status === 'published' &&
-      (candidate.type === 'gift' || candidate.type === 'blog') &&
-      hasImage
+      candidate.isPublished !== false &&
+      candidate.status !== 'draft' &&
+      candidate.status !== 'trash'
     ) {
-      post = candidate;
+      post = candidate as Post;
       break;
     }
     cursor++;

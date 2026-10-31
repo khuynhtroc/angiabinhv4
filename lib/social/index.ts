@@ -99,15 +99,15 @@ export const DEFAULT_SOCIAL_SETTINGS: SocialSettings = {
   facebook_enabled: false,
   facebook_page_id: '',
   facebook_access_token: '',
-  facebook_app_id: '2272148170382644',
+  facebook_app_id: '1689511572805267',
   facebook_app_secret: '',
-  facebook_template: '🎁 {title}\n\n{excerpt}\n\n👉 Descubre todas las ideas aquí: {url}',
+  facebook_template: '🏗️ {title}\n\n{excerpt}\n\n👉 Chi tiết tại Bê Tông An Gia Bình: {url}',
 
   instagram_enabled: false,
   instagram_user_id: '',
   instagram_access_token: '',
   instagram_template:
-    '🎁 {title}\n\n{excerpt}\n\n👉 Descubre la guía completa en: {url}\n\n#regalos #ideaspararegalar #miregalo #regalosoriginales #guiaDeRegalos',
+    '🏗️ {title}\n\n{excerpt}\n\n👉 Chi tiết tại: {url}\n\n#betongangiabinh #betongtuoi #betongninhbinh',
 
   twitter_enabled: false,
   twitter_api_key: '',
@@ -120,7 +120,7 @@ export const DEFAULT_SOCIAL_SETTINGS: SocialSettings = {
   twitter_oauth2_refresh_token: '',
   twitter_oauth2_expires_at: 0,
   twitter_oauth2_username: '',
-  twitter_template: '🎁 {title}\n\n👉 {url}\n\n#regalos #ideaspararegalar #miregalo',
+  twitter_template: '🏗️ {title}\n\n👉 {url}\n\n#betongangiabinh #betongtuoi',
 
   medium_enabled: false,
   medium_integration_token: '',
@@ -129,7 +129,7 @@ export const DEFAULT_SOCIAL_SETTINGS: SocialSettings = {
 
   pinterest_enabled: false,
   pinterest_access_token: '',
-  pinterest_board_name: 'Ideas de Regalos',
+  pinterest_board_name: 'Bê Tông An Gia Bình',
   pinterest_client_id: '',
   pinterest_client_secret: '',
   pinterest_refresh_token: '',
@@ -138,22 +138,22 @@ export const DEFAULT_SOCIAL_SETTINGS: SocialSettings = {
   telegram_enabled: false,
   telegram_bot_token: '',
   telegram_chat_id: '',
-  telegram_template: '🎁 {title}\n\n{excerpt}\n\n👉 Descubre todas las ideas aquí:\n{url}',
+  telegram_template: '🏗️ *{title}*\n\n{excerpt}\n\n👉 Chi tiết:\n{url}',
 
   bluesky_enabled: false,
   bluesky_identifier: '',
   bluesky_app_password: '',
-  bluesky_template: '🎁 {title}\n\n👉 {url}\n\n#regalos #ideaspararegalar #miregalo',
+  bluesky_template: '🏗️ {title}\n\n👉 {url}\n\n#betongangiabinh',
 
   threads_enabled: false,
   threads_user_id: '',
   threads_access_token: '',
-  threads_template: '🎁 {title}\n\n{excerpt}\n\n👉 {url}',
+  threads_template: '🏗️ {title}\n\n{excerpt}\n\n👉 {url}',
 
   mastodon_enabled: false,
   mastodon_instance_url: 'https://mastodon.social',
   mastodon_access_token: '',
-  mastodon_template: '🎁 {title}\n\n{excerpt}\n\n👉 {url}\n\n#regalos #ideaspararegalar #miregalo',
+  mastodon_template: '🏗️ {title}\n\n{excerpt}\n\n👉 {url}',
 
   discord_enabled: false,
   discord_webhook_url: '',
@@ -161,7 +161,7 @@ export const DEFAULT_SOCIAL_SETTINGS: SocialSettings = {
   linkedin_enabled: false,
   linkedin_access_token: '',
   linkedin_author_urn: '',
-  linkedin_template: '🎁 {title}\n\n{excerpt}\n\n👉 {url}\n\n#regalos #ideaspararegalar #miregalo',
+  linkedin_template: '🏗️ {title}\n\n{excerpt}\n\n👉 {url}',
 
   hubspot_enabled: false,
   hubspot_access_token: '',

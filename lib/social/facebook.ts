@@ -217,15 +217,15 @@ export async function shareToFacebook(
     }
 
     const postUrl = `${SITE_URL}${postPath(post)}`;
-    const title = post.title || 'Guía de Regalos';
-    const excerpt = post.seo_description || post.excerpt || '';
+    const title = post.title || 'Bê Tông An Gia Bình';
+    const excerpt = post.seo_description || post.seoDescription || post.excerpt || '';
 
     const message = template
       ? template
           .replace(/{title}/g, title)
           .replace(/{excerpt}/g, excerpt)
           .replace(/{url}/g, postUrl)
-      : `🎁 ${title}\n\n${excerpt}\n\n👉 Descubre todas las ideas y detalles aquí: ${postUrl}`;
+      : `🏗️ ${title}\n\n${excerpt}\n\n👉 Chi tiết tại Bê Tông An Gia Bình: ${postUrl}`;
 
     // Warm Facebook's OpenGraph cache so the first share of an older URL always renders its og:image
     try {

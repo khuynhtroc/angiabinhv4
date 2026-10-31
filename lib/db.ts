@@ -62,6 +62,36 @@ export const db = {
       // 4. Bundled fallback
       return defaultSocialSettings;
     }
+
+    if (table === 'posts') {
+      const targetId = query?.id || query?.slug;
+      if (!targetId) return null;
+
+      // 1. Try Supabase
+      const sb = getSupabaseClient();
+      if (sb) {
+        try {
+          const { data, error } = await sb
+            .from('posts')
+            .select('*')
+            .or(`id.eq.${targetId},slug.eq.${targetId}`)
+            .maybeSingle();
+
+          if (!error && data) {
+            return data;
+          }
+        } catch (err) {}
+      }
+
+      // 2. Local / bundled posts fallback
+      try {
+        const posts = getAllPostsServer();
+        const found = posts.find((p) => p.id === targetId || p.slug === targetId);
+        if (found) return found;
+      } catch {}
+      return null;
+    }
+
     return null;
   },
 
@@ -129,8 +159,8 @@ export const db = {
         commitFilesViaGitHubApi(
           [{ path: 'public/data/social-settings.json', content: JSON.stringify(data, null, 2) }],
           'chore(settings): auto-persist social settings'
-        ).catch(() => {});
-      } catch {}
+        ).catch(() => { });
+      } catch { }
 
       return data;
     }
@@ -140,7 +170,7 @@ export const db = {
       if (sb) {
         try {
           await sb.from('posts').upsert(data, { onConflict: 'id' });
-        } catch {}
+        } catch { }
       }
     }
 

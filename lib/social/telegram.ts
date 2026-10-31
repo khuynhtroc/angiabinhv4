@@ -71,12 +71,13 @@ export async function shareToTelegram(
     }
 
     const postUrl = `${SITE_URL}${postPath(post)}`;
-    const title = post.title || 'Guía de Regalos';
-    const excerpt = post.seo_description || post.excerpt || '';
+    const title = post.title || 'Bê Tông An Gia Bình';
+    const excerpt = post.seo_description || post.seoDescription || post.excerpt || '';
     const imageUrl =
+      post.coverImage ||
       post.og_image ||
       post.hero_image ||
-      post.items?.find((it) => it?.image)?.image ||
+      post.image ||
       '';
 
     const text = template
@@ -84,7 +85,7 @@ export async function shareToTelegram(
           .replace(/{title}/g, title)
           .replace(/{excerpt}/g, excerpt)
           .replace(/{url}/g, postUrl)
-      : `🎁 ${title}\n\n${excerpt}\n\n👉 Descubre todas las ideas aquí:\n${postUrl}`;
+      : `🏗️ *${title}*\n\n${excerpt}\n\n👉 Chi tiết: ${postUrl}`;
 
     // Try sending as a photo post first if the article has an image and caption <= 1024 chars
     if (imageUrl && text.length <= 1024) {
