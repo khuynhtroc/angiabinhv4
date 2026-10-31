@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-10-31T18:50:34.102Z",
-    "autoPublishedCount": 11,
+    "lastRunAt": "2026-10-31T23:01:58.250Z",
+    "autoPublishedCount": 12,
     "logs": [
+      {
+        "id": "news-log-1793487718250",
+        "timestamp": "2026-10-31T23:01:58.250Z",
+        "trendTitle": "Động thổ cầu Bà Dạt 2 tại Palm City",
+        "generatedTitle": "Động thổ cầu Bà Dạt 2 tại Palm City: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dong-tho-cau-ba-dat-2-tai-palm-city-8111.html",
+        "wordCount": 784,
+        "trendScore": 75,
+        "status": "published"
+      },
       {
         "id": "news-log-1793472634102",
         "timestamp": "2026-10-31T18:50:34.102Z",
