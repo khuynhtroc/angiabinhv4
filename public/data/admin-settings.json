@@ -86,9 +86,19 @@
   },
   "updatedAt": "2026-10-20T18:17:00.575Z",
   "socialListening": {
-    "lastRunAt": "2026-10-31T10:41:11.884Z",
-    "autoPublishedCount": 5,
+    "lastRunAt": "2026-10-31T11:02:37.325Z",
+    "autoPublishedCount": 6,
     "logs": [
+      {
+        "id": "news-log-1793444557325",
+        "timestamp": "2026-10-31T11:02:37.325Z",
+        "trendTitle": "Cận cảnh đại công trường cầu gần 16.000 tỷ đồng qua sông Hồng sau một năm",
+        "generatedTitle": "Cận cảnh đại công trường cầu gần 16.000 tỷ đồng qua sông Hồng sau một năm: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/can-canh-dai-cong-truong-cau-gan-16-000-ty-dong-qua-song-hong-sau-mot-nam-6276.html",
+        "wordCount": 785,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1793443271884",
         "timestamp": "2026-10-31T10:41:11.884Z",
