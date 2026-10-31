@@ -47,7 +47,7 @@ export default function CategoryDetailClient({ cleanSlug }: CategoryDetailClient
 
   // Match category from store or canonical dictionary
   const currentCategory = useMemo(() => {
-    return categories.find((c) => {
+    return (categories || []).find((c) => {
       if (c.slug === cleanSlug || c.id === cleanSlug) return true;
       const normalizedName = (c.name || '')
         .toLowerCase()
@@ -381,7 +381,7 @@ export default function CategoryDetailClient({ cleanSlug }: CategoryDetailClient
                 <span>Bài Viết Mới Nhất</span>
               </h4>
               <div className="space-y-2 text-xs">
-                {posts.slice(0, 4).map((p) => (
+                {(posts || []).slice(0, 4).map((p) => (
                   <Link
                     key={p.id}
                     href={getPostUrl(p)}

@@ -38,6 +38,8 @@ loadEnv();
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || 'https://msxqrdaklnfpqwhxwjlc.supabase.co';
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1zeHFyZGFrbG5mcHF3aHh3amxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM0MDMxNjYsImV4cCI6MjEwODk3OTE2Nn0.QIa6Zq6cTFr08kjaZdIq5cwVPzVvy4eXXh2DnL5967M';
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8876120939:AAEpkh1zZKQu6bq23eLv5gE_encPuFFhsCc';
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '8612893214';
 const SITE_URL = 'https://www.betongangiabinh.vn';
@@ -360,7 +362,7 @@ YÊU CẦU BẮT BUỘC VỀ NỘI DUNG VÀ ĐỘ DÀI:
   "content": "Toàn bộ nội dung bài viết đầy đủ định dạng Markdown..."
 }`;
 
-  const candidateModels = ['gemini-3-flash-preview', 'gemini-3.8-flash', 'gemma-4-26b-a4b-it'];
+  const candidateModels = ['gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-flash-latest', 'gemini-3.8-flash'];
 
   for (const model of candidateModels) {
     try {
@@ -731,6 +733,48 @@ async function main() {
   posts.unshift(newPost);
   fs.writeFileSync(POSTS_FILE, JSON.stringify(posts, null, 2), 'utf8');
   console.log(`✓ Đã lưu bài viết vào posts.json (Tổng bài viết: ${posts.length}).`);
+
+  // Đồng bộ Supabase
+  try {
+    const supabasePayload = {
+      id: newPost.id,
+      title: newPost.title,
+      slug: newPost.slug,
+      excerpt: newPost.excerpt || '',
+      content: newPost.content || '',
+      coverImage: newPost.coverImage || '',
+      author: newPost.author || 'Ban Kỹ Thuật An Gia Bình',
+      date: newPost.date || '',
+      category: newPost.category || 'Tin Tức & Thị Trường',
+      tags: newPost.tags || [],
+      views: newPost.views || 0,
+      readTime: newPost.readTime || '6 phút',
+      seoTitle: newPost.seoTitle || '',
+      seoDescription: newPost.seoDescription || '',
+      focusKeywords: newPost.focusKeywords || [],
+      isPublished: true,
+      permalink: newPost.permalink || '',
+      updatedAt: newPost.updatedAt || new Date().toISOString(),
+      isTrendingNews: true,
+      sourceUrl: newPost.sourceUrl || '',
+      trendScore: newPost.trendScore || 0,
+      newsType: newPost.newsType || ''
+    };
+    await fetch(`${SUPABASE_URL}/rest/v1/posts`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify(supabasePayload)
+    }).then(async r => {
+      if (r.ok) console.log('✓ Đã đồng bộ bài viết tự động lên Supabase Database!');
+    }).catch(() => {});
+  } catch (sbErr) {
+    // Không làm gián đoạn tiến trình chính
+  }
 
   // 2. Cập nhật nhật ký admin-settings.json
   try {

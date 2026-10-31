@@ -41,7 +41,7 @@ export default function AdminMenuManager({
   const [formIcon, setFormIcon] = useState('');
   const [quickLinkType, setQuickLinkType] = useState<'custom' | 'page' | 'category'>('custom');
 
-  const currentMenu = menus.find(m => m.id === activeMenuId) || menus[0];
+  const currentMenu = (menus || []).find(m => m.id === activeMenuId) || (menus || [])[0] || ({} as any);
 
   const handleOpenAdd = () => {
     setEditingItem(null);
@@ -114,7 +114,7 @@ export default function AdminMenuManager({
 
     // Recalculate order numbers
     const updatedItems = items.map((it, idx) => ({ ...it, order: idx + 1 }));
-    const updatedMenus = menus.map(m => m.id === currentMenu.id ? { ...m, items: updatedItems } : m);
+    const updatedMenus = (menus || []).map(m => m.id === currentMenu?.id ? { ...m, items: updatedItems } : m);
     onSaveMenus(updatedMenus);
   };
 
@@ -131,7 +131,7 @@ export default function AdminMenuManager({
   const handleSyncPagesToMenu = () => {
     if (!confirm('Bạn có muốn tự động thêm tất cả các Trang đang bật "Hiển thị trên menu" vào Menu chính không?')) return;
     const existingUrls = new Set(currentMenu.items.map(i => i.url));
-    const activePages = pages.filter(p => p.showInMenu && !existingUrls.has(`/${p.slug}`));
+    const activePages = (pages || []).filter(p => p.showInMenu && !existingUrls.has(`/${p.slug}`));
 
     if (activePages.length === 0) {
       alert('Tất cả các trang bật hiển thị đã có sẵn trong menu!');
@@ -208,7 +208,7 @@ export default function AdminMenuManager({
 
       {/* Menu Selector Tabs */}
       <div className="flex flex-wrap items-center gap-3 border-b border-slate-200 pb-3">
-        {menus.map((menu) => (
+        {(menus || []).map((menu) => (
           <button
             key={menu.id}
             onClick={() => setActiveMenuId(menu.id)}
@@ -404,7 +404,7 @@ export default function AdminMenuManager({
                 <div className="grid grid-cols-2 gap-2">
                   <select
                     onChange={(e) => {
-                      const p = pages.find(page => page.slug === e.target.value);
+                      const p = (pages || []).find(page => page.slug === e.target.value);
                       if (p) handleQuickSelectPage(p.slug, p.title);
                     }}
                     className="bg-slate-50 border border-slate-300 rounded-xl p-2 text-xs text-slate-700 focus:bg-white"

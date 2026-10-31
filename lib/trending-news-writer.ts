@@ -1,3 +1,4 @@
+import { upsertPostToSupabase } from './supabase-client';
 import { GoogleGenAI } from '@google/genai';
 import { BlogPost } from '@/lib/types';
 import { TrendingNewsItem } from '@/lib/social-listening';
@@ -212,21 +213,28 @@ YÊU CẦU BẮT BUỘC VỀ NỘI DUNG VÀ ĐỘ DÀI:
   "content": "Nội dung bài viết đầy đủ định dạng Markdown..."
 }`;
 
-      const res = await ai.models.generateContent({
-        model: 'gemini-3.8-flash',
-        contents: prompt,
-        config: {
-          responseMimeType: 'application/json',
-          temperature: 0.65,
-          maxOutputTokens: 8192
+      const models = ['gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-flash-latest', 'gemini-3.8-flash'];
+      for (const m of models) {
+        try {
+          const res = await ai.models.generateContent({
+            model: m,
+            contents: prompt,
+            config: {
+              responseMimeType: 'application/json',
+              temperature: 0.65,
+              maxOutputTokens: 8192
+            }
+          });
+          const cleanJson = (res.text || '').replace(/^```json\s*/i, '').replace(/\s*```$/, '').trim();
+          const parsed = JSON.parse(cleanJson);
+          if (parsed && parsed.title && parsed.content) {
+            rawGenerated = parsed;
+            sourceUsed = 'ai_gemini';
+            break;
+          }
+        } catch (mErr: any) {
+          console.warn(`[TrendingNewsWriter] Model ${m} note:`, mErr?.message);
         }
-      });
-
-      const cleanJson = (res.text || '').replace(/^```json\s*/i, '').replace(/\s*```$/, '').trim();
-      const parsed = JSON.parse(cleanJson);
-      if (parsed && parsed.title && parsed.content) {
-        rawGenerated = parsed;
-        sourceUsed = 'ai_gemini';
       }
     } catch (err) {
       console.warn('[NewsGenerator] Gemini API error, falling back to deterministic:', err);
@@ -284,6 +292,7 @@ YÊU CẦU BẮT BUỘC VỀ NỘI DUNG VÀ ĐỘ DÀI:
 
   // 1. Save to posts.json
   saveSinglePostServer(newPost);
+  upsertPostToSupabase(newPost).catch(e => console.warn('[TrendingNewsWriter] Supabase upsert note:', e));
 
   // 2. Auto-submit URL to Google Indexing API & IndexNow
   try {

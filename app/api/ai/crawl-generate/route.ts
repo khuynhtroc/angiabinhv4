@@ -640,7 +640,7 @@ ${mergedLinks}
 
     // Try primary model (gemini-3.8-flash), fallback to secondary model (gemini-3.1-pro-preview)
     let parsed: any = null;
-    const candidateModels = ["gemini-3.8-flash", "gemini-3.1-pro-preview"];
+    const candidateModels = ["gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-flash-latest", "gemini-3.8-flash", "gemini-3.1-pro-preview"];
 
     for (const modelName of candidateModels) {
       try {

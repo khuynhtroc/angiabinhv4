@@ -35,7 +35,7 @@ export default function AdminTrashSection({
   // Filtered trash items
   const filteredItems = useMemo(() => {
     const term = searchTerm.toLowerCase().trim();
-    return trash.filter((item) => {
+    return (trash || []).filter((item) => {
       const matchesType = typeFilter === 'all' || item.type === typeFilter;
       const matchesSearch =
         !term ||
@@ -48,7 +48,7 @@ export default function AdminTrashSection({
 
   // Count by type
   const counts = useMemo(() => {
-    const res = { all: trash.length, post: 0, project: 0, page: 0, media: 0, category: 0 };
+    const res = { all: (trash || []).length, post: 0, project: 0, page: 0, media: 0, category: 0 };
     trash.forEach((t) => {
       if (t.type in res) {
         (res as any)[t.type]++;
@@ -152,7 +152,7 @@ export default function AdminTrashSection({
   };
 
   const handleEmptyTrash = async () => {
-    if (trash.length === 0) return;
+    if (!trash || trash.length === 0) return;
     if (
       !confirm(
         `CẢNH BÁO: Bạn sắp dọn sạch toàn bộ ${trash.length} mục trong thùng rác.\nTất cả dữ liệu đã xóa sẽ bị hủy vĩnh viễn và không thể khôi phục lại.\n\nBạn có chắc chắn muốn dọn sạch không?`
@@ -189,7 +189,7 @@ export default function AdminTrashSection({
           <h2 className="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2">
             <span>Quản Lý Thùng Rác</span>
             <span className="text-sm bg-rose-50 text-rose-700 border border-rose-200 px-2.5 py-0.5 rounded-full font-bold">
-              {trash.length} mục đã xóa
+              {(trash || []).length} mục đã xóa
             </span>
           </h2>
           <p className="text-xs text-slate-500 mt-1">
@@ -198,7 +198,7 @@ export default function AdminTrashSection({
           </p>
         </div>
 
-        {trash.length > 0 && (
+        {(trash || []).length > 0 && (
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -316,7 +316,7 @@ export default function AdminTrashSection({
           <div>
             <h3 className="font-extrabold text-slate-800 text-base">Thùng rác trống</h3>
             <p className="text-xs text-slate-500 max-w-md mx-auto mt-1">
-              {trash.length === 0
+              {(trash || []).length === 0
                 ? 'Tuyệt vời! Hiện tại không có bất kỳ dữ liệu nào bị xóa trong thùng rác.'
                 : 'Không tìm thấy mục nào phù hợp với bộ lọc hiện tại.'}
             </p>

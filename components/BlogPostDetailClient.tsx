@@ -43,7 +43,7 @@ export default function BlogPostDetailClient({
   const cleanNoSuffix = cleanSlug.replace(/-\d{3,6}$/, '');
 
   // 1. Check if an article post matches first
-  const storePost = posts.find((p) => {
+  const storePost = (posts || []).find((p) => {
     const pSlug = (p.slug || '').replace(/\.html$/, '');
     const pId = (p.id || '').replace(/\.html$/, '');
     const pSlugNoSuffix = pSlug.replace(/-\d{3,6}$/, '');
@@ -62,7 +62,7 @@ export default function BlogPostDetailClient({
   const post = storePost || initialPost || null;
 
   // 2. Category page check if no specific post matched
-  const matchedCategory = categories.find(
+  const matchedCategory = (categories || []).find(
     (c) => c.slug === cleanSlug || c.id === cleanSlug
   );
   const isCategory = !post && (
@@ -302,9 +302,9 @@ export default function BlogPostDetailClient({
             <div className="pt-4 border-t border-slate-100">
               <span className="text-xs font-bold text-slate-500 block mb-2">Từ khóa SEO bài viết:</span>
               <div className="flex flex-wrap items-center gap-1.5">
-                {post.focusKeywords.map((kw, i) => (
+                {(Array.isArray(post.focusKeywords) ? post.focusKeywords : (typeof post.focusKeywords === "string" ? (post.focusKeywords as string).split(",") : [])).map((kw: any, i: number) => (
                   <span key={i} className="text-xs bg-slate-100 text-slate-700 px-3 py-1 rounded-full font-medium">
-                    #{kw}
+                    #{typeof kw === "string" ? kw.trim() : kw}
                   </span>
                 ))}
               </div>

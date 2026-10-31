@@ -27,8 +27,8 @@ const PROVIDERS: {
     name: 'Google Gemini',
     badge: 'Khuyên Dùng (Miễn Phí/Tốc Độ Cao)',
     color: 'amber',
-    defaultModel: 'gemini-2.5-flash',
-    models: ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-pro'],
+    defaultModel: 'gemini-3.5-flash',
+    models: ['gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-flash-latest', 'gemini-3.8-flash'],
     docUrl: 'https://aistudio.google.com/'
   },
   {
@@ -74,8 +74,8 @@ export default function AdminAiConfigSection({
   onSaveSettings,
   onSetActiveProvider
 }: AdminAiConfigSectionProps) {
-  const [activeTab, setActiveTab] = useState<AiProviderType>(aiSettings.activeProvider || 'gemini');
-  const [formData, setFormData] = useState<AiSettingsConfig>(aiSettings);
+  const [activeTab, setActiveTab] = useState<AiProviderType>(aiSettings?.activeProvider || 'gemini');
+  const [formData, setFormData] = useState<AiSettingsConfig>(aiSettings || ({} as any));
   const [showKeys, setShowKeys] = useState<Record<string, boolean>>({});
   const [testStatus, setTestStatus] = useState<Record<string, { loading?: boolean; success?: boolean; message?: string; latency?: string }>>({});
   const [savedSuccess, setSavedSuccess] = useState(false);

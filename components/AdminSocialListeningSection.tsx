@@ -179,7 +179,7 @@ export default function AdminSocialListeningSection({
   };
 
   // Filtered trends
-  const filteredTrends = trends.filter(t => {
+  const filteredTrends = (trends || []).filter(t => {
     if (activeCategoryFilter !== 'all' && t.category !== activeCategoryFilter) {
       return false;
     }
@@ -204,7 +204,7 @@ export default function AdminSocialListeningSection({
   ];
 
   const highestScoreTrend = trends.length > 0 ? trends[0] : null;
-  const unwrittenCount = trends.filter(t => !t.hasBeenWritten).length;
+  const unwrittenCount = (trends || []).filter(t => !t.hasBeenWritten).length;
 
   return (
     <div className="space-y-6">
@@ -546,9 +546,9 @@ export default function AdminSocialListeningSection({
 
                     {/* Focus keywords tags */}
                     <div className="flex items-center gap-1.5 flex-wrap pt-1">
-                      {trend.focusKeywords.map((kw, i) => (
+                      {(Array.isArray(trend.focusKeywords) ? trend.focusKeywords : (typeof trend.focusKeywords === "string" ? (trend.focusKeywords as string).split(",") : [])).map((kw: any, i: number) => (
                         <span key={i} className="text-[10px] font-semibold bg-slate-100 text-slate-600 px-2 py-0.5 rounded">
-                          #{kw}
+                          #{typeof kw === "string" ? kw.trim() : kw}
                         </span>
                       ))}
                     </div>
@@ -620,7 +620,7 @@ export default function AdminSocialListeningSection({
           </div>
 
           <div className="divide-y divide-slate-100 max-h-80 overflow-y-auto pr-1">
-            {config.logs.map((log: any) => {
+            {(config?.logs || []).map((log: any) => {
               const fullCanonical = log.permalink?.startsWith('http')
                 ? log.permalink
                 : `https://www.betongangiabinh.vn${log.permalink}`;

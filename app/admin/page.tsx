@@ -377,7 +377,7 @@ export default function AdminDashboard() {
       return;
     }
     setIsPersistingPosts(true);
-    setPersistProgressText(`Chuẩn bị lưu ${posts.length} bài viết...`);
+    setPersistProgressText(`Chuẩn bị lưu ${(posts || []).length} bài viết...`);
     try {
       // 1. Chunked upload of all posts to guarantee 100% success and bypass payload limits
       const ok = await persistAllPostsChunked(posts, (prog) => {
@@ -395,7 +395,7 @@ export default function AdminDashboard() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'sync_all_to_code',
-          commitMessage: `chore(admin): synchronize full website content and settings (${posts.length} posts, ${projects.length} projects)`,
+          commitMessage: `chore(admin): synchronize full website content and settings (${(posts || []).length} posts, ${projects.length} projects)`,
           projects,
           pages,
           categories,
@@ -423,7 +423,7 @@ export default function AdminDashboard() {
           confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
         } catch {}
         const commitHash = data.gitResult?.commitHash ? `\n- Mã commit Git: ${data.gitResult.commitHash}` : '';
-        alert(`✅ ĐÃ ĐỒNG BỘ TOÀN BỘ VÀO MÃ NGUỒN VÀ TẠO COMMIT GIT THÀNH CÔNG!\n\n- Thời gian: ${nowStr}${commitHash}\n- Đã lưu ${posts.length} bài viết vào: public/data/posts.json\n- Đã đồng bộ cấu hình vào: lib/initial-data.ts và public/data/config.json\n- Đã lưu ${projects.length} dự án, ${pages.length} trang, ${categories.length} chuyên mục\n\nBản commit Git mới đã được ghi nhận. Bạn có thể chọn menu "Export to GitHub" trên AI Studio để đẩy lên kho GitHub!`);
+        alert(`✅ ĐÃ ĐỒNG BỘ TOÀN BỘ VÀO MÃ NGUỒN VÀ TẠO COMMIT GIT THÀNH CÔNG!\n\n- Thời gian: ${nowStr}${commitHash}\n- Đã lưu ${(posts || []).length} bài viết vào: public/data/posts.json\n- Đã đồng bộ cấu hình vào: lib/initial-data.ts và public/data/config.json\n- Đã lưu ${projects.length} dự án, ${pages.length} trang, ${categories.length} chuyên mục\n\nBản commit Git mới đã được ghi nhận. Bạn có thể chọn menu "Export to GitHub" trên AI Studio để đẩy lên kho GitHub!`);
       } else {
         alert('Lỗi khi lưu dữ liệu cấu hình: ' + (data.error || 'Vui lòng thử lại sau.'));
       }
@@ -490,7 +490,7 @@ export default function AdminDashboard() {
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(posts, null, 2));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `betongangiabinh-posts-${posts.length}-bai.json`);
+      downloadAnchor.setAttribute("download", `betongangiabinh-posts-${(posts || []).length}-bai.json`);
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
@@ -536,7 +536,7 @@ export default function AdminDashboard() {
   const [selectedFolder, setSelectedFolder] = useState<string>('all');
   const [extraFolders, setExtraFolders] = useState<string[]>([]);
   const foldersList = useMemo(() => {
-    const fromFiles = mediaFiles.map(m => m.folder).filter(Boolean) as string[];
+    const fromFiles = (mediaFiles || []).map(m => m.folder).filter(Boolean) as string[];
     return Array.from(new Set([...PRESET_FOLDERS, ...fromFiles, ...extraFolders]));
   }, [mediaFiles, extraFolders]);
   const [targetUploadFolder, setTargetUploadFolder] = useState<string>('/images/blog');
@@ -549,17 +549,17 @@ export default function AdminDashboard() {
   // Integrations state (Google Analytics & Search Console)
   const [userGaId, setUserGaId] = useState<string | null>(null);
   const [userGscCode, setUserGscCode] = useState<string | null>(null);
-  const gaId = userGaId !== null ? userGaId : (integrations.googleAnalyticsId || '');
-  const gscCode = userGscCode !== null ? userGscCode : (integrations.searchConsoleTag || integrations.searchConsoleCode || '');
+  const gaId = userGaId !== null ? userGaId : (integrations?.googleAnalyticsId || '');
+  const gscCode = userGscCode !== null ? userGscCode : (integrations?.searchConsoleTag || integrations?.searchConsoleCode || '');
   const [syncSavedMessage, setSyncSavedMessage] = useState(false);
   const [isSyncingGoogle, setIsSyncingGoogle] = useState(false);
   const [verificationResult, setVerificationResult] = useState<{ status: 'verified' | 'unverified'; message: string } | null>(null);
 
   // Filtered Categories Memo
   const filteredCategories = useMemo(() => {
-    if (!categorySearch.trim()) return categories;
+    if (!categorySearch.trim()) return categories || [];
     const q = categorySearch.toLowerCase().trim();
-    return categories.filter(c => c.name.toLowerCase().includes(q) || c.slug.toLowerCase().includes(q));
+    return (categories || []).filter(c => (c.name || '').toLowerCase().includes(q) || (c.slug || '').toLowerCase().includes(q));
   }, [categories, categorySearch]);
 
   // Jekyll modal
@@ -1585,7 +1585,7 @@ export default function AdminDashboard() {
     let videoCount = 0;
     let docCount = 0;
 
-    mediaFiles.forEach((f) => {
+    (mediaFiles || []).forEach((f) => {
       if (f.type === 'image') imageCount++;
       else if (f.type === 'video') videoCount++;
       else docCount++;
@@ -1611,7 +1611,7 @@ export default function AdminDashboard() {
     const usedPercent = Math.min(100, (parseFloat(totalMB) / maxMB) * 100).toFixed(1);
 
     return {
-      totalCount: mediaFiles.length,
+      totalCount: (mediaFiles || []).length,
       imageCount,
       videoCount,
       docCount,
@@ -1623,7 +1623,7 @@ export default function AdminDashboard() {
 
   // Filter and Sort Blog Posts
   const filteredAndSortedPosts = useMemo(() => {
-    return posts
+    return (posts || [])
       .filter((post) => {
         // Search Term Filter
         if (postSearchTerm.trim()) {
@@ -1710,7 +1710,7 @@ export default function AdminDashboard() {
           return wB - wA;
         }
         if (postSortBy === 'title_asc') {
-          return a.title.localeCompare(b.title, 'vi');
+          return (a?.title || '').localeCompare(b?.title || '', 'vi');
         }
         return 0;
       });
@@ -1907,7 +1907,7 @@ export default function AdminDashboard() {
             }`}
           >
             <FileText className="w-4 h-4" />
-            <span>Quản Lý Bài Viết ({posts.length})</span>
+            <span>Quản Lý Bài Viết ({(posts || []).length})</span>
           </button>
 
           <button
@@ -1967,7 +1967,7 @@ export default function AdminDashboard() {
             }`}
           >
             <Users className="w-4 h-4" />
-            <span>Khách Đặt Lịch &amp; Tư Vấn ({leads.length})</span>
+            <span>Khách Đặt Lịch &amp; Tư Vấn ({(leads || []).length})</span>
           </button>
 
           <button
@@ -2026,7 +2026,7 @@ export default function AdminDashboard() {
               <Clock className="w-3.5 h-3.5 text-amber-600" />
               <span>Đồng bộ mới nhất: <span className="text-amber-800 font-mono">{lastSyncedTime || 'Vừa kết nối phiên này'}</span></span>
             </span>
-            <span>Bài viết: <strong className="text-slate-900">{posts.length}</strong> • Dự án: <strong className="text-slate-900">{projects.length}</strong> • Trang: <strong className="text-slate-900">{pages.length}</strong></span>
+            <span>Bài viết: <strong className="text-slate-900">{(posts || []).length}</strong> • Dự án: <strong className="text-slate-900">{projects.length}</strong> • Trang: <strong className="text-slate-900">{pages.length}</strong></span>
             <button
               onClick={handleSyncFromAiStudio}
               disabled={isPersistingPosts}
@@ -2048,7 +2048,7 @@ export default function AdminDashboard() {
               <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs relative overflow-hidden">
                 <div className="text-slate-500 text-xs font-semibold">Người Đang Xem Trực Tiếp</div>
                 <div className="text-3xl sm:text-4xl font-black text-amber-600 mt-2 flex items-center gap-2">
-                  <span>{realtimeAnalytics.activeUsers}</span>
+                  <span>{realtimeAnalytics?.activeUsers || 0}</span>
                   <span className="w-3 h-3 rounded-full bg-emerald-500 animate-ping inline-block" />
                 </div>
                 <div className="text-[11px] text-slate-500 mt-1">Ninh Bình &amp; lân cận</div>
@@ -2057,7 +2057,7 @@ export default function AdminDashboard() {
               <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs">
                 <div className="text-slate-500 text-xs font-semibold">Lượt Xem Trang Hôm Nay</div>
                 <div className="text-3xl sm:text-4xl font-black text-slate-900 mt-2">
-                  {formatNumber(realtimeAnalytics.pageviewsToday || realtimeAnalytics.totalPageviews)}
+                  {formatNumber(realtimeAnalytics?.pageviewsToday || realtimeAnalytics?.totalPageviews || 0)}
                 </div>
                 <div className="text-[11px] text-emerald-600 font-semibold mt-1">Dữ liệu lượt truy cập thực tế</div>
               </div>
@@ -2065,17 +2065,17 @@ export default function AdminDashboard() {
               <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs">
                 <div className="text-slate-500 text-xs font-semibold">Yêu Cầu Đặt Lịch / Báo Giá</div>
                 <div className="text-3xl sm:text-4xl font-black text-slate-900 mt-2">
-                  {leads.length}
+                  {(leads || []).length}
                 </div>
                 <div className="text-[11px] text-amber-700 font-medium mt-1">
-                  {leads.filter(l => l.status === 'new').length} khách mới chờ gọi
+                  {(leads || []).filter(l => l.status === 'new').length} khách mới chờ gọi
                 </div>
               </div>
 
               <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-xs">
                 <div className="text-slate-500 text-xs font-semibold">Bài Viết Chuẩn SEO TCVN</div>
                 <div className="text-3xl sm:text-4xl font-black text-slate-900 mt-2">
-                  {posts.length}
+                  {(posts || []).length}
                 </div>
                 <div className="text-[11px] text-blue-600 font-medium mt-1">Sẵn sàng xuất bản Jekyll</div>
               </div>
@@ -2194,7 +2194,7 @@ export default function AdminDashboard() {
                 <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
                   <span className="text-[11px] text-slate-500 block">Lượt Xem Trang Thực Tế (Pageviews)</span>
                   <span className="text-lg sm:text-xl font-black text-slate-900 mt-1 block">
-                    {(realtimeAnalytics.pageviewsToday || 1280).toLocaleString('vi-VN')} lượt
+                    {((realtimeAnalytics?.pageviewsToday) || 1280).toLocaleString('vi-VN')} lượt
                   </span>
                   <span className="text-[10px] text-emerald-700 font-medium">Khách hàng tra cứu bê tông Ninh Bình</span>
                 </div>
@@ -2202,7 +2202,7 @@ export default function AdminDashboard() {
                 <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
                   <span className="text-[11px] text-slate-500 block">Yêu Cầu Báo Giá &amp; Liên Hệ</span>
                   <span className="text-lg sm:text-xl font-black text-slate-900 mt-1 block">
-                    {leads.length} liên hệ
+                    {(leads || []).length} liên hệ
                   </span>
                   <span className="text-[10px] text-emerald-700 font-medium">
                     Tỷ lệ chuyển đổi: {((leads.length / Math.max(1, realtimeAnalytics.pageviewsToday)) * 100).toFixed(1)}%
@@ -2240,7 +2240,7 @@ export default function AdminDashboard() {
               </div>
 
               <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
-                {realtimeAnalytics.recentEvents.slice(0, 8).map((evt) => (
+                {(realtimeAnalytics?.recentEvents || []).slice(0, 8).map((evt) => (
                   <div
                     key={evt.id}
                     className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs"
@@ -2501,11 +2501,11 @@ export default function AdminDashboard() {
                       sourceTitle: candidateNews.title,
                       sourceUrl: candidateNews.source || 'Báo Xây Dựng',
                       rawContent: candidateNews.summary || candidateNews.title,
-                      customKeywords: [aiScheduler.primaryKeyword, ...(Array.isArray(aiScheduler.secondaryKeywords) ? aiScheduler.secondaryKeywords : [aiScheduler.secondaryKeywords])].filter(Boolean).join(', ') || 'bê tông tươi Ninh Bình, trạm trộn An Gia Bình, giá bê tông thương phẩm',
-                      primaryKeyword: aiScheduler.primaryKeyword,
-                      secondaryKeywords: Array.isArray(aiScheduler.secondaryKeywords) ? aiScheduler.secondaryKeywords.join(', ') : (aiScheduler.secondaryKeywords || ''),
-                      focusTopic: aiScheduler.focusTopic || (Array.isArray(aiScheduler.focusTopics) ? aiScheduler.focusTopics[0] : ''),
-                      internalLinks: aiScheduler.selectedInternalLinks,
+                      customKeywords: [aiScheduler?.primaryKeyword, ...(Array.isArray(aiScheduler?.secondaryKeywords) ? aiScheduler.secondaryKeywords : [aiScheduler?.secondaryKeywords])].filter(Boolean).join(', ') || 'bê tông tươi Ninh Bình, trạm trộn An Gia Bình, giá bê tông thương phẩm',
+                      primaryKeyword: aiScheduler?.primaryKeyword || 'bê tông tươi Ninh Bình',
+                      secondaryKeywords: Array.isArray(aiScheduler?.secondaryKeywords) ? aiScheduler.secondaryKeywords.join(', ') : (aiScheduler?.secondaryKeywords || ''),
+                      focusTopic: aiScheduler?.focusTopic || (Array.isArray(aiScheduler?.focusTopics) ? aiScheduler.focusTopics[0] : ''),
+                      internalLinks: aiScheduler?.selectedInternalLinks || [],
                       aiConfigs: aiSettings,
                     }),
                   });
@@ -2522,7 +2522,7 @@ export default function AdminDashboard() {
                       date: new Date().toISOString().split('T')[0],
                       coverImage: data.coverImage || '/images/blog/tram-tron-be-tong.webp',
                       tags: data.tags || ['Bê tông Ninh Bình', 'An Gia Bình'],
-                      focusKeywords: data.focusKeywords || [aiScheduler.primaryKeyword, ...(aiScheduler.secondaryKeywords || [])].filter(Boolean),
+                      focusKeywords: data.focusKeywords || [aiScheduler?.primaryKeyword, ...(Array.isArray(aiScheduler?.secondaryKeywords) ? aiScheduler.secondaryKeywords : [])].filter(Boolean),
                       readTime: '6 phút',
                       views: 0,
                     };
@@ -2592,7 +2592,7 @@ export default function AdminDashboard() {
                   }`}
                 >
                   <FileText className="w-3.5 h-3.5" />
-                  <span>Bài Viết ({posts.length})</span>
+                  <span>Bài Viết ({(posts || []).length})</span>
                 </button>
 
                 <button
@@ -2623,7 +2623,7 @@ export default function AdminDashboard() {
                       <div>
                         <div className="font-black text-slate-900 text-sm flex items-center gap-2">
                           <span>Đã chọn {selectedPostIds.length} bài viết</span>
-                          <span className="text-xs font-normal text-slate-500">(trên tổng số {posts.length} bài)</span>
+                          <span className="text-xs font-normal text-slate-500">(trên tổng số {(posts || []).length} bài)</span>
                         </div>
                         <div className="text-xs text-slate-600">
                           Thao tác đồng thời lên toàn bộ các bài viết đã chọn:
@@ -2724,11 +2724,11 @@ export default function AdminDashboard() {
                         <span>Đồng Bộ Dữ Liệu Mã Nguồn &amp; Tên Miền betongangiabinh.vn</span>
                       </span>
                       <span className="bg-emerald-100 text-emerald-900 border border-emerald-300 text-[11px] font-bold px-2 py-0.5 rounded-full">
-                        {posts.length} Bài Viết Sẵn Sàng
+                        {(posts || []).length} Bài Viết Sẵn Sàng
                       </span>
                     </div>
                     <p className="text-xs text-slate-600 max-w-2xl leading-relaxed">
-                      Toàn bộ <strong>{posts.length} bài viết</strong> đã được lưu trực tiếp vào file mã nguồn (<code className="bg-white/80 px-1 py-0.5 rounded text-amber-800 font-mono text-[11px]">public/data/posts.json</code>). Để website chính thức <strong className="text-slate-900">betongangiabinh.vn</strong> hiển thị đủ 100%, hệ thống tự động đồng bộ qua GitHub và Cloudflare (không giới hạn băng thông).
+                      Toàn bộ <strong>{(posts || []).length} bài viết</strong> đã được lưu trực tiếp vào file mã nguồn (<code className="bg-white/80 px-1 py-0.5 rounded text-amber-800 font-mono text-[11px]">public/data/posts.json</code>). Để website chính thức <strong className="text-slate-900">betongangiabinh.vn</strong> hiển thị đủ 100%, hệ thống tự động đồng bộ qua GitHub và Cloudflare (không giới hạn băng thông).
                     </p>
                   </div>
 
@@ -2910,7 +2910,7 @@ export default function AdminDashboard() {
                       ) : (
                         <>
                           <Square className="w-4 h-4 text-slate-400" />
-                          <span>Chọn tất cả ({posts.length})</span>
+                          <span>Chọn tất cả ({(posts || []).length})</span>
                         </>
                       )}
                     </button>
@@ -2931,7 +2931,7 @@ export default function AdminDashboard() {
                       type="button"
                       onClick={() => {
                         const count = syncBlogCategoriesToFolders();
-                        alert(`Đã đồng bộ toàn bộ ${posts.length} bài viết vào đúng 3 thư mục con của trang /blog/ thành công!\n- /blog/tin-tuc (Tin Tức)\n- /blog/kinh-nghiem (Kinh Nghiệm)\n- /blog/kien-thuc (Kiến Thức)\n\nSố bài viết vừa chuẩn hóa: ${count}`);
+                        alert(`Đã đồng bộ toàn bộ ${(posts || []).length} bài viết vào đúng 3 thư mục con của trang /blog/ thành công!\n- /blog/tin-tuc (Tin Tức)\n- /blog/kinh-nghiem (Kinh Nghiệm)\n- /blog/kien-thuc (Kiến Thức)\n\nSố bài viết vừa chuẩn hóa: ${count}`);
                       }}
                       className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-black px-4 py-2.5 rounded-xl text-xs transition shadow-xs cursor-pointer"
                       title="Đồng bộ tất cả bài viết trên website vào 3 thư mục con: Tin Tức / Kinh Nghiệm / Kiến Thức"
@@ -2990,7 +2990,7 @@ export default function AdminDashboard() {
                       <Filter className="w-4 h-4 text-amber-600" />
                       <span className="font-extrabold text-xs text-slate-900">Bộ Lọc &amp; Tìm Kiếm Nâng Cao</span>
                       <span className="text-[11px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full">
-                        Hiển thị {filteredAndSortedPosts.length} / {posts.length} bài
+                        Hiển thị {filteredAndSortedPosts.length} / {(posts || []).length} bài
                       </span>
                     </div>
 
@@ -3058,7 +3058,7 @@ export default function AdminDashboard() {
                         onChange={(e) => setPostScheduleFilter(e.target.value as any)}
                         className="w-full py-2 px-3 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:border-amber-500 text-slate-800 font-medium"
                       >
-                        <option value="all">Tất cả trạng thái ({posts.length})</option>
+                        <option value="all">Tất cả trạng thái ({(posts || []).length})</option>
                         <option value="published">Đã xuất bản ({posts.filter(isPostPublished).length})</option>
                         <option value="scheduled">Hẹn giờ mở ({posts.filter(p => !isPostPublished(p)).length})</option>
                       </select>
@@ -3282,7 +3282,7 @@ export default function AdminDashboard() {
                         }}
                         className="text-xs font-bold text-amber-700 hover:underline"
                       >
-                        Xóa toàn bộ bộ lọc và xem tất cả ({posts.length}) bài viết
+                        Xóa toàn bộ bộ lọc và xem tất cả ({(posts || []).length}) bài viết
                       </button>
                     </div>
                   )}
@@ -3310,7 +3310,7 @@ export default function AdminDashboard() {
                       <FileText className="w-5 h-5" />
                     </div>
                     <div>
-                      <div className="text-2xl font-black text-slate-900">{posts.length}</div>
+                      <div className="text-2xl font-black text-slate-900">{(posts || []).length}</div>
                       <div className="text-xs text-slate-500 font-medium">Bài Viết Đã Phân Loại</div>
                     </div>
                   </div>
@@ -5907,7 +5907,7 @@ plugins:
             batchUpdatePosts(updatedPosts);
             setShowBulkOptimizerModal(false);
             setSelectedPostIds([]);
-            alert(`Đã tối ưu và đồng bộ thành công ${updatedPosts.length} bài viết chuẩn SEO Google!\nToàn bộ ${posts.length} bài viết trên hệ thống được bảo toàn an toàn 100%.`);
+            alert(`Đã tối ưu và đồng bộ thành công ${updatedPosts.length} bài viết chuẩn SEO Google!\nToàn bộ ${(posts || []).length} bài viết trên hệ thống được bảo toàn an toàn 100%.`);
           }}
         />
       )}

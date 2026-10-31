@@ -30,16 +30,25 @@ export default function TodaySearchKeywords({
     const pool = new Set<string>();
 
     if (post) {
-      if (post.focusKeywords && post.focusKeywords.length > 0) {
-        post.focusKeywords.forEach((k) => pool.add(k.trim().toLowerCase()));
-      }
-      if (post.tags && post.tags.length > 0) {
-        post.tags.slice(0, 3).forEach((t) => pool.add(t.trim().toLowerCase()));
-      }
+      const fKw = Array.isArray(post.focusKeywords)
+        ? post.focusKeywords
+        : (typeof post.focusKeywords === 'string' ? (post.focusKeywords as string).split(',') : []);
+      fKw.forEach((k) => {
+        if (typeof k === 'string' && k.trim()) pool.add(k.trim().toLowerCase());
+      });
+
+      const tags = Array.isArray(post.tags)
+        ? post.tags
+        : (typeof post.tags === 'string' ? (post.tags as string).split(',') : []);
+      tags.slice(0, 3).forEach((t) => {
+        if (typeof t === 'string' && t.trim()) pool.add(t.trim().toLowerCase());
+      });
     }
 
-    if (extraKeywords && extraKeywords.length > 0) {
-      extraKeywords.forEach((k) => pool.add(k.trim().toLowerCase()));
+    if (Array.isArray(extraKeywords) && extraKeywords.length > 0) {
+      extraKeywords.forEach((k) => {
+        if (typeof k === 'string' && k.trim()) pool.add(k.trim().toLowerCase());
+      });
     }
 
     // Curated high-volume search intents in Ninh Bình

@@ -16,7 +16,7 @@ export default function AdminSchemaSettingsSection({
   settings,
   onSaveSchemaSettings
 }: AdminSchemaSettingsSectionProps) {
-  const [formData, setFormData] = useState<SchemaSettings>(settings);
+  const [formData, setFormData] = useState<SchemaSettings>(settings || ({} as any));
   const [previewType, setPreviewType] = useState<'organization' | 'post' | 'page'>('organization');
   const [copySuccess, setCopySuccess] = useState(false);
   const [isSaved, setIsSaved] = useState(false);

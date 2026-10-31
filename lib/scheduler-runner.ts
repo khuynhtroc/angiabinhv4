@@ -1,3 +1,4 @@
+import { upsertPostToSupabase } from './supabase-client';
 import { GoogleGenAI } from '@google/genai';
 import {
   getAllPostsServer,
@@ -161,21 +162,28 @@ Trả về đúng định dạng JSON:
   "content": "Nội dung phân tích mở đầu chuyên sâu khoảng 1000 - 1500 từ về đề tài với các thẻ ## H2 phân tích chi tiết kinh nghiệm hiện trường tại Ninh Bình"
 }`;
 
-      const res = await ai.models.generateContent({
-        model: 'gemini-3.8-flash',
-        contents: prompt,
-        config: {
-          responseMimeType: 'application/json',
-          temperature: 0.7,
-          maxOutputTokens: 8192
+      const models = ['gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-flash-latest', 'gemini-3.8-flash'];
+      for (const m of models) {
+        try {
+          const res = await ai.models.generateContent({
+            model: m,
+            contents: prompt,
+            config: {
+              responseMimeType: 'application/json',
+              temperature: 0.7,
+              maxOutputTokens: 8192
+            }
+          });
+          const cleanJson = (res.text || '').replace(/^```json\s*/i, '').replace(/\s*```$/, '').trim();
+          const parsed = JSON.parse(cleanJson);
+          if (parsed && parsed.title && parsed.content) {
+            generatedPost = parsed;
+            sourceUsed = 'ai_gemini';
+            break;
+          }
+        } catch (mErr: any) {
+          console.warn(`[SchedulerRunner] Model ${m} unavailable (${mErr?.status || mErr?.message}), trying next...`);
         }
-      });
-
-      const cleanJson = (res.text || '').replace(/^```json\s*/i, '').replace(/\s*```$/, '').trim();
-      const parsed = JSON.parse(cleanJson);
-      if (parsed && parsed.title && parsed.content) {
-        generatedPost = parsed;
-        sourceUsed = 'ai_gemini';
       }
     } catch (err) {
       console.warn('[SchedulerRunner] Gemini call failed, continuing with deterministic engine:', err);
@@ -210,6 +218,7 @@ Trả về đúng định dạng JSON:
 
   // Save new post to public/data/posts.json
   saveSinglePostServer(newBlogPost);
+  upsertPostToSupabase(newBlogPost).catch(e => console.warn('[SchedulerRunner] Supabase upsert note:', e));
 
   // Auto-submit URL to Google Indexing API & IndexNow
   try {

@@ -54,7 +54,7 @@ export default function DynamicPostClient({
     .replace(/-thang-long/gi, '-an-gia-binh')
     .replace(/-viet-duc/gi, '-an-gia-binh');
 
-  const storePost = posts.find((p) => {
+  const storePost = (posts || []).find((p) => {
     const pSlug = (p.slug || '').replace(/\.html$/, '');
     const pId = (p.id || '').replace(/\.html$/, '');
     const pSlugNoSuffix = pSlug.replace(/-\d{3,6}$/, '');
@@ -222,7 +222,7 @@ export default function DynamicPostClient({
   }
 
   // Related posts (expanded to 6 to strengthen internal link mesh and prevent orphan pages)
-  const relatedPosts = posts
+  const relatedPosts = (posts || [])
     .filter((p) => p.id !== post.id && (p.category === post.category || p.category))
     .slice(0, 6);
 

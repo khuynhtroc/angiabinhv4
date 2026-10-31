@@ -62,17 +62,17 @@ export default function AdminGoogleIndexingCard() {
 
   // Sync from store if present
   useEffect(() => {
-    if (integrations.googleServiceAccountJson && !serviceAccountJson) {
+    if (integrations?.googleServiceAccountJson && !serviceAccountJson) {
       setServiceAccountJson(integrations.googleServiceAccountJson);
     }
-    if (integrations.googleServiceAccountEmail) {
+    if (integrations?.googleServiceAccountEmail) {
       setClientEmailDisplay(integrations.googleServiceAccountEmail);
     }
-    if (integrations.indexNowKey) {
+    if (integrations?.indexNowKey) {
       setIndexNowKey(integrations.indexNowKey);
     }
-    if (Array.isArray(integrations.indexingLogs) && integrations.indexingLogs.length > 0) {
-      setLogs(integrations.indexingLogs);
+    if (Array.isArray(integrations?.indexingLogs) && integrations.indexingLogs.length > 0) {
+      setLogs(integrations?.indexingLogs || []);
     }
   }, [integrations]);
 

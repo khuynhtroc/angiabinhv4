@@ -5,7 +5,6 @@ export const dynamic = 'force-dynamic';
 
 const DEFAULT_OWNER = 'khuynhtroc';
 const DEFAULT_REPO = 'angiabinhv4';
-
 async function dispatchGithubWorkflow(eventType: string, payload: any) {
   const token = (process.env.GITHUB_TOKEN || process.env.GITHUB_PAT || '').trim().replace(/^['"]|['"]$/g, '');
   const owner = (process.env.GITHUB_OWNER || DEFAULT_OWNER).trim();
@@ -65,12 +64,35 @@ export async function GET(req: NextRequest) {
       requested_url: req.url,
     });
 
+    if (!dispatch.ok) {
+      // Fallback: Dispatch failed -> Run autonomous AI writer directly with time budget protection
+      const results: Record<string, any> = {};
+      if (mode === 'all' || mode === 'social' || mode === 'social-listening') {
+        results.socialListening = await checkAndRunSocialListeningAutoPilot(force);
+      }
+      // Only run heavy whitepaper if mode specifically requested or if time budget permits (<15s)
+      if (mode === 'whitepaper' || (mode === 'all' && (Date.now() - startTime) < 15000)) {
+        results.whitepaper = await checkAndRunScheduler(force);
+      }
+      return NextResponse.json({
+        success: true,
+        message: 'AI Auto-Writer task executed directly via Autonomous Engine (GitHub dispatch fallback)',
+        service: 'Be Tong An Gia Binh Autonomous Intelligence Engine',
+        source: 'direct_execution',
+        github_status: dispatch.status,
+        target_domain: 'https://www.betongangiabinh.vn',
+        duration_ms: Date.now() - startTime,
+        timestamp: new Date().toISOString(),
+        results,
+      });
+    }
+
     return NextResponse.json({
       success: true,
       message: 'AI Auto-Writer task successfully triggered and queued on GitHub Actions Cloud Runners!',
       service: 'Be Tong An Gia Binh Autonomous Intelligence Engine',
       source: 'cron-job.org',
-      status: dispatch.ok ? 'dispatched_successfully' : 'dispatch_failed',
+      status: 'dispatched_successfully',
       github_status: dispatch.status,
       target_domain: 'https://www.betongangiabinh.vn',
       duration_ms: Date.now() - startTime,

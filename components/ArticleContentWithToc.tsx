@@ -464,7 +464,7 @@ export default function ArticleContentWithToc({ content }: Props) {
                 const filename = rawSrc.split('/').pop() || '';
 
                 // Look up in mediaFiles
-                const matched = mediaFiles.find(m => 
+                const matched = (mediaFiles || []).find(m => 
                   m.url === rawSrc ||
                   m.path === cleanPath ||
                   m.path === rawSrc ||

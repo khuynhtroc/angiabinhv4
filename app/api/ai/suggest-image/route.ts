@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
       if (ai) {
         try {
           const res = await ai.models.generateContent({
-            model: "gemini-3.8-flash",
+            model: "gemini-3.5-flash",
             contents: `Bạn là trợ lý AI chuyên về hình ảnh xây dựng và bê tông tươi.
 Dựa vào tiêu đề bài viết: "${title}"
 Hãy viết 1 câu Prompt mô tả chi tiết hình ảnh nhiếp ảnh chân thực (photorealistic prompt, độ phân giải cao, ánh sáng tự nhiên, liên quan đến bê tông tươi, xe bồn, xe bơm, hoặc công trình xây dựng tại Ninh Bình).

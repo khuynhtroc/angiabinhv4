@@ -71,25 +71,25 @@ export default function AdminDesignSection({
   onSaveConfig
 }: AdminDesignSectionProps) {
   const [formData, setFormData] = useState<Partial<JekyllConfig>>({
-    primaryColor: config.primaryColor || '#f59e0b',
-    secondaryColor: config.secondaryColor || '#0f172a',
-    accentColor: config.accentColor || '#d97706',
-    fontFamily: config.fontFamily || 'sans',
-    layoutWidth: config.layoutWidth || 'wide',
-    headerStyle: config.headerStyle || 'standard',
-    headerNotice: config.headerNotice || 'Trạm Trộn Bê Tông Tươi An Gia Bình | Trạm 1: KCN Khánh Phú • Trạm 2: Kim Sơn • 35+ Xe bồn',
-    showHeaderTopBar: config.showHeaderTopBar !== false,
-    footerStyle: config.footerStyle || 'columns',
-    footerNotice: config.footerNotice || 'Thương hiệu bê tông thương phẩm hàng đầu Ninh Bình. Hệ thống 2 cụm trạm trộn tự động hóa (KCN Khánh Phú 300m³/h & xã Kim Sơn 150m³/h), 35+ xe bồn và dàn xe bơm cần vươn xa 56m.',
-    footerCopyright: config.footerCopyright || `© ${new Date().getFullYear()} Bê Tông An Gia Bình Ninh Bình. Bản quyền thuộc về Công ty CP TM & DV An Gia Bình.`,
-    sidebarPosition: config.sidebarPosition || 'right',
-    sidebarCtaTitle: config.sidebarCtaTitle || 'Khảo sát & Báo Giá Bê Tông',
-    sidebarCtaPhone: config.sidebarCtaPhone || '0988 2662 93',
-    sidebarCtaDesc: config.sidebarCtaDesc || 'Trạm 1 KCN Khánh Phú (300m³/h) & Trạm 2 Xã Kim Sơn (150m³/h) sẵn sàng điều động 35+ xe bồn, xe bơm cần 37m - 56m.',
-    ctaButtonText: config.ctaButtonText || 'Gọi 0988 2662 93 Báo Giá 24/7',
-    ctaButtonLink: config.ctaButtonLink || 'tel:0988266293',
-    ctaHeading: config.ctaHeading || 'Cần Báo Giá & Khảo Sát Bê Tông Mác 200 - 450?',
-    ctaSubheading: config.ctaSubheading || 'Trạm 1 KCN Khánh Phú (300m³/h) & Trạm 2 Kim Sơn (150m³/h) sẵn sàng phục vụ 24/7.'
+    primaryColor: config?.primaryColor || '#f59e0b',
+    secondaryColor: config?.secondaryColor || '#0f172a',
+    accentColor: config?.accentColor || '#d97706',
+    fontFamily: config?.fontFamily || 'sans',
+    layoutWidth: config?.layoutWidth || 'wide',
+    headerStyle: config?.headerStyle || 'standard',
+    headerNotice: config?.headerNotice || 'Trạm Trộn Bê Tông Tươi An Gia Bình | Trạm 1: KCN Khánh Phú • Trạm 2: Kim Sơn • 35+ Xe bồn',
+    showHeaderTopBar: config?.showHeaderTopBar !== false,
+    footerStyle: config?.footerStyle || 'columns',
+    footerNotice: config?.footerNotice || 'Thương hiệu bê tông thương phẩm hàng đầu Ninh Bình. Hệ thống 2 cụm trạm trộn tự động hóa (KCN Khánh Phú 300m³/h & xã Kim Sơn 150m³/h), 35+ xe bồn và dàn xe bơm cần vươn xa 56m.',
+    footerCopyright: config?.footerCopyright || `© ${new Date().getFullYear()} Bê Tông An Gia Bình Ninh Bình. Bản quyền thuộc về Công ty CP TM & DV An Gia Bình.`,
+    sidebarPosition: config?.sidebarPosition || 'right',
+    sidebarCtaTitle: config?.sidebarCtaTitle || 'Khảo sát & Báo Giá Bê Tông',
+    sidebarCtaPhone: config?.sidebarCtaPhone || '0988 2662 93',
+    sidebarCtaDesc: config?.sidebarCtaDesc || 'Trạm 1 KCN Khánh Phú (300m³/h) & Trạm 2 Xã Kim Sơn (150m³/h) sẵn sàng điều động 35+ xe bồn, xe bơm cần 37m - 56m.',
+    ctaButtonText: config?.ctaButtonText || 'Gọi 0988 2662 93 Báo Giá 24/7',
+    ctaButtonLink: config?.ctaButtonLink || 'tel:0988266293',
+    ctaHeading: config?.ctaHeading || 'Cần Báo Giá & Khảo Sát Bê Tông Mác 200 - 450?',
+    ctaSubheading: config?.ctaSubheading || 'Trạm 1 KCN Khánh Phú (300m³/h) & Trạm 2 Kim Sơn (150m³/h) sẵn sàng phục vụ 24/7.'
   });
 
   const [activeSubTab, setActiveSubTab] = useState<'colors' | 'header' | 'footer' | 'sidebar' | 'cta' | 'layout'>('colors');

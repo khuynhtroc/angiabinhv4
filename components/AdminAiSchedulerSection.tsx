@@ -24,7 +24,7 @@ export default function AdminAiSchedulerSection({
   onSaveScheduler,
   onExecuteSchedulerNow
 }: AdminAiSchedulerSectionProps) {
-  const [formData, setFormData] = useState<AiSchedulerConfig>(config);
+  const [formData, setFormData] = useState<AiSchedulerConfig>(config || ({} as any));
   const [isRunningNow, setIsRunningNow] = useState(false);
   const [runMessage, setRunMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
@@ -299,7 +299,7 @@ export default function AdminAiSchedulerSection({
           <span className="text-slate-500 text-xs font-semibold">Kho Tin Quét Sẵn Sàng</span>
           <div className="mt-2 flex items-baseline gap-2">
             <span className="text-2xl font-black text-slate-900">{unwrittenCount}</span>
-            <span className="text-xs text-slate-500">tin chưa viết lại / tổng {industryNews.length}</span>
+            <span className="text-xs text-slate-500">tin chưa viết lại / tổng {(industryNews || []).length}</span>
           </div>
         </div>
 
@@ -514,7 +514,7 @@ export default function AdminAiSchedulerSection({
                   {formData.historyLogs.map((log) => (
                     <tr key={log.id} className="hover:bg-white transition">
                       <td className="py-2.5 px-3 font-mono text-slate-500 text-[11px]">
-                        {new Date(log.timestamp).toLocaleString('vi-VN')}
+                        {log.timestamp ? new Date(log.timestamp).toLocaleString('vi-VN') : '-'}
                       </td>
                       <td className="py-2.5 px-3 text-slate-700 font-medium max-w-xs truncate">
                         {log.newsTitle}

@@ -40,6 +40,7 @@ import {
   initialMediaFolders
 } from './initial-data';
 import { idbGet, idbSet } from './idb';
+import { fetchPostsFromSupabase, upsertBulkPostsToSupabase } from './supabase-client';
 
 export const APP_STORAGE_VERSION = 'agb_v2026_09_14_v5';
 
@@ -299,8 +300,15 @@ function hydrateFromStorage() {
     const savedAnalytics = localStorage.getItem(STORAGE_KEYS.ANALYTICS);
     if (savedAnalytics) {
       try {
-        globalStore.realtimeAnalytics = JSON.parse(savedAnalytics);
+        const parsed = JSON.parse(savedAnalytics);
+        if (parsed && typeof parsed === 'object') {
+          globalStore.realtimeAnalytics = { ...initialAnalytics, ...parsed };
+        }
       } catch {}
+    }
+    if (!globalStore.realtimeAnalytics) globalStore.realtimeAnalytics = { ...initialAnalytics };
+    if (!Array.isArray(globalStore.realtimeAnalytics.recentEvents)) {
+      globalStore.realtimeAnalytics.recentEvents = initialAnalytics.recentEvents || [];
     }
 
     const savedNews = localStorage.getItem(STORAGE_KEYS.NEWS);
@@ -668,7 +676,17 @@ export async function syncStoreWithServer(force = false): Promise<boolean> {
       // API route error, will try public data fallback below
     }
 
-    // Robust Fallback: If API route is unavailable (e.g. static CDN, Vercel standalone without endpoint), fetch directly from public/data/
+    // Robust Fallback: Check Supabase then static files
+    if (!data || !data.success) {
+      try {
+        const sbPosts = await fetchPostsFromSupabase();
+        if (Array.isArray(sbPosts) && sbPosts.length > 0) {
+          data = data || { success: true };
+          data.posts = sbPosts;
+        }
+      } catch (e) {}
+    }
+
     if (!data || !data.success) {
       try {
         const postsRes = await fetch('/data/posts.json', { cache: 'no-store' });
@@ -958,6 +976,13 @@ export async function persistToServer(immediate = false): Promise<boolean> {
 
   const performSave = async () => {
     try {
+      // Also persist to Supabase in background
+      try {
+        if (Array.isArray(globalStore.posts) && globalStore.posts.length > 0) {
+          upsertBulkPostsToSupabase(globalStore.posts).catch(() => {});
+        }
+      } catch (e) {}
+
       // If posts are substantial (>50), use reliable chunked upload to never hit payload/timeout limits
       if (globalStore.posts && globalStore.posts.length > 50) {
         const chunkSuccess = await persistAllPostsChunked(globalStore.posts);
@@ -2413,25 +2438,25 @@ export function useAppStore() {
 
   return {
     isHydrated: globalStore.isHydrated,
-    posts: globalStore.posts,
-    projects: globalStore.projects,
-    leads: globalStore.leads,
-    realtimeAnalytics: globalStore.realtimeAnalytics,
-    analytics: globalStore.realtimeAnalytics,
-    industryNews: globalStore.industryNews,
-    newsFeed: globalStore.industryNews,
-    jekyllConfig: globalStore.jekyllConfig,
-    mediaFiles: globalStore.mediaFiles,
-    categories: globalStore.categories,
-    integrations: globalStore.integrations,
-    pages: globalStore.pages,
-    aiSettings: globalStore.aiSettings,
-    menus: globalStore.menus,
-    schemaSettings: globalStore.schemaSettings,
-    aiScheduler: globalStore.aiScheduler,
-    mediaFolders: globalStore.mediaFolders,
-    trash: globalStore.trash,
-    isAdminAuthenticated: globalStore.isAdminAuthenticated,
+    posts: Array.isArray(globalStore.posts) ? globalStore.posts : (initialBlogPosts || []),
+    projects: Array.isArray(globalStore.projects) ? globalStore.projects : (initialProjects || []),
+    leads: Array.isArray(globalStore.leads) ? globalStore.leads : (initialLeads || []),
+    realtimeAnalytics: globalStore.realtimeAnalytics || initialAnalytics,
+    analytics: globalStore.realtimeAnalytics || initialAnalytics,
+    industryNews: Array.isArray(globalStore.industryNews) ? globalStore.industryNews : (initialIndustryNews || []),
+    newsFeed: Array.isArray(globalStore.industryNews) ? globalStore.industryNews : (initialIndustryNews || []),
+    jekyllConfig: globalStore.jekyllConfig || initialJekyllConfig,
+    mediaFiles: Array.isArray(globalStore.mediaFiles) ? globalStore.mediaFiles : (initialMediaFiles || []),
+    categories: Array.isArray(globalStore.categories) ? globalStore.categories : (initialCategories || []),
+    integrations: globalStore.integrations || initialIntegrationConfig,
+    pages: Array.isArray(globalStore.pages) ? globalStore.pages : (initialPages || []),
+    aiSettings: globalStore.aiSettings || initialAiSettings,
+    menus: Array.isArray(globalStore.menus) ? globalStore.menus : (initialSiteMenus || []),
+    schemaSettings: globalStore.schemaSettings || initialSchemaSettings,
+    aiScheduler: globalStore.aiScheduler || initialAiSchedulerConfig,
+    mediaFolders: Array.isArray(globalStore.mediaFolders) ? globalStore.mediaFolders : (initialMediaFolders || []),
+    trash: Array.isArray(globalStore.trash) ? globalStore.trash : [],
+    isAdminAuthenticated: Boolean(globalStore.isAdminAuthenticated),
     savePosts,
     saveProjects,
     saveLeads,

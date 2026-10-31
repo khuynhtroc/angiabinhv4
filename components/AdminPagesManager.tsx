@@ -69,7 +69,7 @@ export default function AdminPagesManager({
     setFormSubtitle('');
     setFormStatus('published');
     setFormShowInMenu(true);
-    setFormMenuOrder(pages.length + 1);
+    setFormMenuOrder((pages || []).length + 1);
     setFormHeroImage('https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1200&auto=format&fit=crop&q=80');
     setFormHeroCtaText('Liên Hệ Báo Giá');
     setFormHeroCtaLink('/lien-he');
@@ -125,7 +125,7 @@ export default function AdminPagesManager({
   // Move page menu order Up / Down
   const handleMovePageOrder = (index: number, direction: 'up' | 'down') => {
     const targetIndex = direction === 'up' ? index - 1 : index + 1;
-    if (targetIndex < 0 || targetIndex >= pages.length) return;
+    if (targetIndex < 0 || targetIndex >= (pages || []).length) return;
 
     const newPages = [...pages];
     const temp = newPages[index];
@@ -366,9 +366,9 @@ export default function AdminPagesManager({
           </div>
 
           <div className="flex items-center gap-3 text-xs text-slate-500 whitespace-nowrap">
-            <span>Đang hiển thị: <strong className="text-slate-900 font-mono">{filteredPages.length}</strong> / {pages.length} trang</span>
+            <span>Đang hiển thị: <strong className="text-slate-900 font-mono">{filteredPages.length}</strong> / {(pages || []).length} trang</span>
             <span>•</span>
-            <span>Trên menu: <strong className="text-amber-600 font-mono">{pages.filter(p => p.showInMenu).length}</strong></span>
+            <span>Trên menu: <strong className="text-amber-600 font-mono">{(pages || []).filter(p => p.showInMenu).length}</strong></span>
           </div>
         </div>
 
@@ -382,9 +382,9 @@ export default function AdminPagesManager({
               onChange={(e) => setStatusFilter(e.target.value as any)}
               className="bg-transparent font-bold text-slate-800 focus:outline-hidden text-xs cursor-pointer"
             >
-              <option value="all">Tất cả ({pages.length})</option>
-              <option value="published">Đã xuất bản ({pages.filter(p => p.status === 'published').length})</option>
-              <option value="draft">Bản nháp ({pages.filter(p => p.status === 'draft').length})</option>
+              <option value="all">Tất cả ({(pages || []).length})</option>
+              <option value="published">Đã xuất bản ({(pages || []).filter(p => p.status === 'published').length})</option>
+              <option value="draft">Bản nháp ({(pages || []).filter(p => p.status === 'draft').length})</option>
             </select>
           </div>
 
@@ -397,8 +397,8 @@ export default function AdminPagesManager({
               className="bg-transparent font-bold text-slate-800 focus:outline-hidden text-xs cursor-pointer"
             >
               <option value="all">Tất cả</option>
-              <option value="in_menu">Có trên Menu ({pages.filter(p => p.showInMenu).length})</option>
-              <option value="hidden">Ẩn khỏi Menu ({pages.filter(p => !p.showInMenu).length})</option>
+              <option value="in_menu">Có trên Menu ({(pages || []).filter(p => p.showInMenu).length})</option>
+              <option value="hidden">Ẩn khỏi Menu ({(pages || []).filter(p => !p.showInMenu).length})</option>
             </select>
           </div>
 
