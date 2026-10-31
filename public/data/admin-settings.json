@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-10-31T17:47:36.792Z",
-    "autoPublishedCount": 10,
+    "lastRunAt": "2026-10-31T18:50:34.102Z",
+    "autoPublishedCount": 11,
     "logs": [
+      {
+        "id": "news-log-1793472634102",
+        "timestamp": "2026-10-31T18:50:34.102Z",
+        "trendTitle": "'Săn' lao động xây dựng, giao thông lương từ 15 triệu đồng",
+        "generatedTitle": "'Săn' lao động xây dựng, giao thông lương từ 15 triệu đồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/san-lao-dong-xay-dung-giao-thong-luong-tu-15-trieu-dong-1394.html",
+        "wordCount": 784,
+        "trendScore": 75,
+        "status": "published"
+      },
       {
         "id": "news-log-1793468856792",
         "timestamp": "2026-10-31T17:47:36.792Z",
