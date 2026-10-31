@@ -7,7 +7,7 @@ import type { Post } from '@/lib/types';
 export async function schedulePublishedPostAutoShare(post: Post, source: string): Promise<void> {
   try {
     const { sharePostToAllChannels } = await import('@/lib/social');
-    const report = await sharePostToAllChannels(post);
+    const report = await sharePostToAllChannels(post, { ignoreGlobalToggle: true });
 
     if (report.total_attempted > 0 && report.total_success < report.total_attempted) {
       console.warn(`[Social Auto-Share] ${source} had channel failures:`, report.results);

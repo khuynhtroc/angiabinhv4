@@ -12,7 +12,7 @@ import {
 import { autoSubmitPostUrlServer } from '@/lib/google-indexing';
 import { schedulePublishedPostAutoShare } from '@/lib/social/schedule-auto-share';
 import { commitFilesViaGitHubApi } from '@/lib/github-api';
-import { processPostImagesToR2 } from '@/lib/storage/r2';
+import { processPostImagesToR2, crawlAndUploadArticleMedia } from '@/lib/storage/r2';
 
 // Curated high quality news imagery with construction context
 const NEWS_IMAGE_POOL = [
@@ -259,9 +259,51 @@ YÊU CẦU BẮT BUỘC VỀ NỘI DUNG VÀ ĐỘ DÀI:
 
   // Calculate actual word count
   const words = finalContent.trim().split(/\s+/).filter(Boolean).length;
+  // Cào ảnh thực tế từ bài viết gốc và tải lên Cloudflare R2
+  let crawledMedia = { coverImage: null as string | null, media: [] as any[] };
+  if (trend.url) {
+    try {
+      crawledMedia = await crawlAndUploadArticleMedia(trend.url, { slug: finalSlug });
+    } catch (e) {
+      console.warn('[TrendingNewsWriter] Media crawl error:', e);
+    }
+  }
 
   // Selected cover image from pool based on category
-  const coverImage = trend.imageUrl || NEWS_IMAGE_POOL[Math.abs(trend.id.split('').reduce((a, b) => a + b.charCodeAt(0), 0)) % NEWS_IMAGE_POOL.length].url;
+  const coverImage = crawledMedia.coverImage || trend.imageUrl || NEWS_IMAGE_POOL[Math.abs(trend.id.split('').reduce((a, b) => a + b.charCodeAt(0), 0)) % NEWS_IMAGE_POOL.length].url;
+
+  // Chèn các ảnh thực tế đã tải lên R2 vào đúng bố cục bài viết
+  if (crawledMedia.media.length > 0) {
+    const m1 = crawledMedia.media[0];
+    const img1Md = `\n\n![${m1.caption || finalTitle}](${m1.r2Url})\n*${m1.caption || finalTitle}*\n\n`;
+    if (finalContent.includes('## 2.')) {
+      finalContent = finalContent.replace('## 2.', `${img1Md}## 2.`);
+    } else {
+      finalContent += img1Md;
+    }
+
+    if (crawledMedia.media.length > 1) {
+      const m2 = crawledMedia.media[1];
+      const img2Md = `\n\n![${m2.caption || finalTitle}](${m2.r2Url})\n*${m2.caption || finalTitle}*\n\n`;
+      if (finalContent.includes('## 4.')) {
+        finalContent = finalContent.replace('## 4.', `${img2Md}## 4.`);
+      } else if (finalContent.includes('## 5.')) {
+        finalContent = finalContent.replace('## 5.', `${img2Md}## 5.`);
+      } else {
+        finalContent += img2Md;
+      }
+    }
+
+    if (crawledMedia.media.length > 2) {
+      const m3 = crawledMedia.media[2];
+      const img3Md = `\n\n![${m3.caption || finalTitle}](${m3.r2Url})\n*${m3.caption || finalTitle}*\n\n`;
+      if (finalContent.includes('## 6.')) {
+        finalContent = finalContent.replace('## 6.', `${img3Md}## 6.`);
+      } else {
+        finalContent += img3Md;
+      }
+    }
+  }
 
   // Canonical & Permalink URL: Choice A: /blog/tin-tuc/[slug].html
   const permalink = `/blog/tin-tuc/${finalSlug}.html`;

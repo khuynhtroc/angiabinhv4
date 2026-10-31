@@ -129,11 +129,19 @@ export async function downloadAndUploadToR2(
       return null;
     }
 
-    const contentType = res.headers.get('content-type') || 'image/jpeg';
-    if (!contentType.startsWith('image/')) {
-      console.warn(`[R2] Response is not an image (${contentType}) from ${imageUrl}`);
+    const rawContentType = res.headers.get('content-type') || 'image/jpeg';
+    const isImageByExt = /\.(jpe?g|png|webp|avif|gif)(\?.*)?$/i.test(imageUrl);
+    if (!rawContentType.startsWith('image/') && !isImageByExt) {
+      console.warn(`[R2] Phản hồi không phải là ảnh (${rawContentType}): ${imageUrl}`);
       return null;
     }
+    let ext = 'jpg';
+    if (rawContentType.includes('png') || imageUrl.includes('.png')) ext = 'png';
+    else if (rawContentType.includes('webp') || imageUrl.includes('.webp')) ext = 'webp';
+    else if (rawContentType.includes('avif') || imageUrl.includes('.avif')) ext = 'avif';
+    else if (rawContentType.includes('gif') || imageUrl.includes('.gif')) ext = 'gif';
+
+    const contentType = rawContentType.startsWith('image/') ? rawContentType : (ext === 'jpg' ? 'image/jpeg' : `image/${ext}`);
 
     const arrayBuffer = await res.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
@@ -141,13 +149,6 @@ export async function downloadAndUploadToR2(
       // Too small, likely empty or tracker pixel
       return null;
     }
-
-    // Determine extension
-    let ext = 'jpg';
-    if (contentType.includes('png')) ext = 'png';
-    else if (contentType.includes('webp')) ext = 'webp';
-    else if (contentType.includes('gif')) ext = 'gif';
-    else if (contentType.includes('svg')) ext = 'svg';
 
     const now = new Date();
     const year = now.getFullYear();
@@ -244,4 +245,190 @@ export async function processPostImagesToR2(post: {
 
   return { coverImage, content, replacedCount };
 }
+
+export interface CrawledMediaItem {
+  r2Url: string;
+  originalUrl: string;
+  caption: string;
+  alt: string;
+}
+
+export interface CrawledArticleMediaResult {
+  coverImage: string | null;
+  media: CrawledMediaItem[];
+}
+
+/**
+ * Cào toàn bộ media (ảnh đại diện và ảnh trong nội dung bài viết gốc) từ URL tin tức
+ * và tải trực tiếp lên Cloudflare R2 bucket an-gia-binh-media
+ */
+export async function crawlAndUploadArticleMedia(
+  articleUrl: string,
+  options: { slug?: string } = {}
+): Promise<CrawledArticleMediaResult> {
+  if (!articleUrl || !articleUrl.startsWith('http')) {
+    return { coverImage: null, media: [] };
+  }
+
+  const postSlug = cleanSlug(options.slug || 'news');
+  console.log(`[R2 Crawler] Đang cào dữ liệu media từ trang tin: ${articleUrl}...`);
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+
+    const res = await fetch(articleUrl, {
+      signal: controller.signal,
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+        'Accept-Language': 'vi,en-US;q=0.9,en;q=0.8'
+      }
+    });
+    clearTimeout(timeout);
+
+    if (!res.ok) {
+      console.warn(`[R2 Crawler] Không thể truy cập bài gốc: HTTP ${res.status}`);
+      return { coverImage: null, media: [] };
+    }
+
+    const html = await res.text();
+
+    // 1. Trích xuất og:image hoặc twitter:image
+    const ogMatch =
+      html.match(/<meta\s+(?:property|name)=["']og:image["']\s+content=["']([^"']+)["']/i) ||
+      html.match(/<meta\s+content=["']([^"']+)["']\s+(?:property|name)=["']og:image["']/i) ||
+      html.match(/<meta\s+(?:property|name)=["']twitter:image["']\s+content=["']([^"']+)["']/i);
+
+    let ogImage = ogMatch?.[1] ? ogMatch[1].trim().replace(/&amp;/g, '&') : null;
+    if (ogImage && !ogImage.startsWith('http')) {
+      try {
+        ogImage = new URL(ogImage, articleUrl).href;
+      } catch {}
+    }
+
+    // 2. Tìm kiếm các khối hình ảnh chuyên biệt (PhotoCMS, figure, picture, v.v.)
+    const rawPhotoBlocks = [
+      ...html.matchAll(
+        /(?:<figure[\s\S]*?<\/figure>|<div[^>]*type=["']Photo["'][\s\S]*?<\/div>[\s\S]*?<\/div>|<div[^>]*class=["'][^"']*PhotoCMS_Quote[^"']*["'][\s\S]*?<\/div>[\s\S]*?<\/div>|<table[^>]*class=["'][^"']*picture[^"']*["'][\s\S]*?<\/table>|<div[^>]*class=["'][^"']*VCSortableInPreviewMode[^"']*["'][\s\S]*?<\/div>[\s\S]*?<\/div>)/gi
+      )
+    ];
+
+    const rawCandidates: Array<{ url: string; caption: string; alt: string }> = [];
+    const seenUrls = new Set<string>();
+
+    function addCandidate(rawUrl?: string | null, captionText?: string | null, altText?: string | null) {
+      if (!rawUrl) return;
+      let cleanUrl = rawUrl.trim().replace(/&amp;/g, '&');
+      if (!cleanUrl.startsWith('http')) {
+        try {
+          cleanUrl = new URL(cleanUrl, articleUrl).href;
+        } catch {
+          return;
+        }
+      }
+      const lower = cleanUrl.toLowerCase();
+      if (
+        lower.includes('.svg') ||
+        lower.includes('avatar') ||
+        lower.includes('logo') ||
+        lower.includes('icon') ||
+        lower.includes('button') ||
+        lower.includes('pixel') ||
+        lower.includes('tracking') ||
+        lower.includes('banner') ||
+        lower.includes('enduser_avartar') ||
+        lower.includes('100_100') ||
+        lower.includes('data:image')
+      ) {
+        return;
+      }
+      if (seenUrls.has(cleanUrl)) return;
+      seenUrls.add(cleanUrl);
+
+      const cap = (captionText || altText || '')
+        .replace(/<[^>]+>/g, '')
+        .replace(/&quot;/g, '"')
+        .replace(/&amp;/g, '&')
+        .trim();
+
+      rawCandidates.push({
+        url: cleanUrl,
+        caption: cap,
+        alt: altText || cap
+      });
+    }
+
+    // A. Quét từ các khối photo
+    for (const block of rawPhotoBlocks) {
+      const bHtml = block[0];
+      const srcMatch = bHtml.match(/(?:data-original|data-src|data-lazy|src)=["']([^"']+)["']/i);
+      const capMatch = bHtml.match(
+        /(?:<div[^>]*class=["'][^"']*PhotoCMS_Caption[^"']*["'][^>]*>([\s\S]*?)<\/div>|<figcaption[^>]*>([\s\S]*?)<\/figcaption>|<p[^>]*class=["'][^"']*Image[^"']*["'][^>]*>([\s\S]*?)<\/p>|<td[^>]*class=["'][^"']*caption[^"']*["'][^>]*>([\s\S]*?)<\/td>)/i
+      );
+      const altMatch = bHtml.match(/alt=["']([^"']*)["']/i);
+      const cap = capMatch ? capMatch[1] || capMatch[2] || capMatch[3] || capMatch[4] : '';
+      addCandidate(srcMatch?.[1], cap, altMatch?.[1] || '');
+    }
+
+    // B. Quét thêm thẻ <img> có thuộc tính bài viết
+    const imgTags = [...html.matchAll(/<img[^>]+>/gi)];
+    for (const imgTag of imgTags) {
+      const tag = imgTag[0];
+      const srcMatch = tag.match(/(?:data-original|data-src|data-lazy|src)=["']([^"']+)["']/i);
+      const altMatch = tag.match(/alt=["']([^"']*)["']/i);
+      const titleMatch = tag.match(/title=["']([^"']*)["']/i);
+      if (srcMatch?.[1] && (altMatch?.[1] || titleMatch?.[1] || tag.includes('data-original') || tag.includes('data-src'))) {
+        addCandidate(srcMatch[1], altMatch?.[1] || titleMatch?.[1] || '', altMatch?.[1] || '');
+      }
+    }
+
+    console.log(`[R2 Crawler] Đã trích xuất ${rawCandidates.length} ứng viên ảnh thực tế từ bài gốc.`);
+
+    // 3. Tải và upload từng ảnh lên Cloudflare R2
+    const uploadedMedia: CrawledMediaItem[] = [];
+    let r2CoverUrl: string | null = null;
+
+    if (ogImage && !seenUrls.has(ogImage)) {
+      const up = await downloadAndUploadToR2(ogImage, {
+        slug: `${postSlug}-cover`,
+        subfolder: 'news/covers'
+      });
+      if (up) {
+        r2CoverUrl = up;
+        console.log(`✓ Đã upload og:image làm ảnh cover R2: ${up}`);
+      }
+    }
+
+    let mediaIdx = 1;
+    for (const item of rawCandidates.slice(0, 6)) {
+      const uploaded = await downloadAndUploadToR2(item.url, {
+        slug: `${postSlug}`,
+        index: mediaIdx++,
+        subfolder: 'news/content'
+      });
+      if (uploaded) {
+        uploadedMedia.push({
+          r2Url: uploaded,
+          originalUrl: item.url,
+          caption: item.caption,
+          alt: item.alt || item.caption
+        });
+        if (!r2CoverUrl) {
+          r2CoverUrl = uploaded;
+        }
+      }
+    }
+
+    return {
+      coverImage: r2CoverUrl,
+      media: uploadedMedia
+    };
+  } catch (err: any) {
+    console.warn('[R2 Crawler] Lỗi khi cào media bài gốc:', err?.message || err);
+    return { coverImage: null, media: [] };
+  }
+}
+
 

@@ -10,7 +10,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
 import { GoogleGenAI } from '@google/genai';
-import { processPostImagesToR2 } from './r2-helper.mjs';
+import { processPostImagesToR2, crawlAndUploadArticleMedia } from './r2-helper.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -595,6 +595,73 @@ async function submitIndexNow(url) {
   }
 }
 
+
+// Đăng bài viết lên Facebook Fanpage Bê Tông An Gia Bình
+async function postToFacebookFanpage(newPost) {
+  try {
+    let settings = {};
+    const socialSettingsPath = path.join(ROOT_DIR, 'public', 'data', 'social-settings.json');
+    if (fs.existsSync(socialSettingsPath)) {
+      try {
+        settings = JSON.parse(fs.readFileSync(socialSettingsPath, 'utf8'));
+      } catch {}
+    }
+
+    const pageId = (process.env.FACEBOOK_PAGE_ID || settings.facebook_page_id || '217910354731480').trim();
+    const token = (process.env.FACEBOOK_ACCESS_TOKEN || settings.facebook_access_token || '').trim();
+    const template = settings.facebook_template || '🏗️ {title}\n\n{excerpt}\n\n👉 Chi tiết tại Bê Tông An Gia Bình: {url}';
+
+    if (!pageId || !token) {
+      console.warn('⚠️ Facebook chưa có Page ID hoặc Token');
+      return { ok: false, message: 'Thiếu Facebook Page ID hoặc Token' };
+    }
+
+    const postUrl = `${SITE_URL}${newPost.permalink}`;
+    const title = newPost.title || 'Bê Tông An Gia Bình';
+    const excerpt = newPost.excerpt || newPost.seoDescription || '';
+
+    const message = template
+      .replace(/{title}/g, title)
+      .replace(/{excerpt}/g, excerpt)
+      .replace(/{url}/g, postUrl);
+
+    // Kích hoạt Facebook cào lại OpenGraph cache
+    try {
+      await fetch(`https://graph.facebook.com/v19.0/?id=${encodeURIComponent(postUrl)}&scrape=true`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    } catch {}
+
+    const params = new URLSearchParams({
+      message,
+      link: postUrl
+    });
+
+    const res = await fetch(`https://graph.facebook.com/v19.0/${pageId}/feed`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${token}`
+      },
+      body: params.toString()
+    });
+
+    const data = await res.json();
+    if (res.ok && data.id) {
+      console.log(`✓ Đã đăng bài lên Facebook Fanpage thành công (ID: ${data.id})!`);
+      return { ok: true, id: data.id, url: `https://facebook.com/${data.id}` };
+    } else {
+      const err = data.error?.message || JSON.stringify(data);
+      console.warn('⚠️ Lỗi đăng Facebook Fanpage:', err);
+      return { ok: false, message: err };
+    }
+  } catch (err) {
+    console.warn('⚠️ Ngoại lệ khi đăng Facebook:', err.message);
+    return { ok: false, message: err.message };
+  }
+}
+
 // Gửi thông báo Telegram
 async function sendTelegramAlert(title, bullets = []) {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) return;
@@ -721,7 +788,7 @@ async function main() {
     permalink,
     category: 'Tin Tức & Thị Trường',
     excerpt: generated.excerpt || generated.seoDescription,
-    content: generated.content,
+    content: finalContent,
     date: isoDate,
     updatedAt: new Date().toISOString(),
     coverImage,
@@ -826,7 +893,11 @@ async function main() {
     console.warn('Lỗi cập nhật admin-settings.json:', cfgErr.message);
   }
 
-  // 3. Nộp Google Indexing API
+  // 3. Tự động đăng bài lên Facebook Fanpage Bê Tông An Gia Bình
+  console.log('📲 Đang tự động đăng bài viết lên Facebook Fanpage...');
+  const fbRes = await postToFacebookFanpage(newPost);
+
+  // 3b. Nộp Google Indexing API
   console.log(`📡 Đang gửi URL lên Google Indexing API: ${canonicalUrl}...`);
   const indexRes = await submitGoogleIndexing(canonicalUrl);
   if (indexRes.ok) {
@@ -857,6 +928,8 @@ async function main() {
     `📰 Nguồn trend: <i>${selectedTrend.title}</i> (${selectedTrend.source} - Điểm: ${selectedTrend.score})`,
     `📝 Dung lượng: <b>${wordCount} từ</b> (Chuẩn Newsjacking chuyên sâu)`,
     `🔗 Link bài viết: <a href="${canonicalUrl}">${canonicalUrl}</a>`,
+        `📱 Facebook Fanpage: ${fbRes.ok ? `<a href="${fbRes.url}">✅ Đã đăng thành công</a>` : '⚠️ ' + (fbRes.message || 'Chưa đăng')}`,
+    `🖼️ Media Cloud R2: Đã lưu ${crawledMedia.media.length + (crawledMedia.coverImage ? 1 : 0)} ảnh thực tế từ bài gốc`,
     `📡 Google Indexing: ${indexRes.ok ? '✅ Thành công' : '⚠️ ' + (indexRes.message || 'Lưu ý')}`,
     `🔄 GitHub Commit: <code>${gitRes.hash || 'Đã lưu'}</code>`
   ]);
