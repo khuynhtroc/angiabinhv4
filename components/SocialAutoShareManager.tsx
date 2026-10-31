@@ -866,7 +866,7 @@ export function SocialAutoShareManager() {
               📚 Đăng lại bài cũ lên Mạng Xã Hội theo lịch (Multi-Channel Backfill)
             </h3>
             <p style={{ margin: 0, fontSize: '0.84rem', color: '#53627c', lineHeight: 1.55 }}>
-              Tạo hàng đợi riêng từ các bài hướng dẫn quà tặng và bài blog đã xuất bản, tự động đăng theo lịch từ bài cũ nhất đến mới nhất. Bạn có thể chọn đăng lên Facebook và các mạng xã hội khác cùng lúc. Tiến trình tiếp tục bám sát tiến trình hiện tại.
+              Tạo hàng đợi riêng từ các bài viết kỹ thuật, bảng giá và tin tức thị trường Bê Tông An Gia Bình đã xuất bản, tự động đăng theo lịch từ bài cũ nhất đến mới nhất. Bạn có thể chọn đăng lên Facebook và các mạng xã hội khác cùng lúc. Tiến trình tiếp tục bám sát tiến trình hiện tại.
             </p>
           </div>
           <span style={{ padding: '6px 12px', borderRadius: '999px', fontSize: '0.8rem', fontWeight: 700, background: '#e7f0ff', color: '#175cd3' }}>
@@ -1700,7 +1700,7 @@ export function SocialAutoShareManager() {
             <input
               className="form-input"
               type="text"
-              placeholder="VD: @miregalo_us hoặc -1001234567890"
+              placeholder="VD: @angiabinh_seo_99_bot hoặc 8612893214"
               value={settings.telegram_chat_id || ''}
               onChange={(e) => setSettings({ ...settings, telegram_chat_id: e.target.value })}
               style={{ fontFamily: 'monospace' }}
@@ -1787,7 +1787,7 @@ export function SocialAutoShareManager() {
             <input
               className="form-input"
               type="text"
-              placeholder="VD: miregalo.bsky.social"
+              placeholder="VD: betongangiabinh.bsky.social"
               value={settings.bluesky_identifier || ''}
               onChange={(e) => setSettings({ ...settings, bluesky_identifier: e.target.value })}
               style={{ fontFamily: 'monospace' }}
@@ -2352,7 +2352,7 @@ export function SocialAutoShareManager() {
                 </span>
               </div>
               <p style={{ margin: 0, fontSize: '0.8rem', color: '#69707d' }}>
-                Tự động đăng bài kèm thẻ <code>canonical_url</code> và Backlink Dofollow trỏ thẳng về miregalo.us
+                Tự động đăng bài kèm thẻ <code>canonical_url</code> và Backlink Dofollow trỏ thẳng về betongangiabinh.vn
               </p>
             </div>
           </div>
@@ -2460,7 +2460,7 @@ export function SocialAutoShareManager() {
             <input
               className="form-input"
               type="url"
-              placeholder="https://miregalo.wordpress.com"
+              placeholder="https://betongangiabinh.wordpress.com"
               value={settings.wordpress_site_url || ''}
               onChange={(e) => setSettings({ ...settings, wordpress_site_url: e.target.value })}
               style={{ fontFamily: 'monospace' }}
@@ -2579,7 +2579,7 @@ export function SocialAutoShareManager() {
             <input
               className="form-input"
               type="text"
-              placeholder="VD: miregalo.tumblr.com"
+              placeholder="VD: betongangiabinh.tumblr.com"
               value={settings.tumblr_blog_name || ''}
               onChange={(e) => setSettings({ ...settings, tumblr_blog_name: e.target.value })}
               style={{ fontFamily: 'monospace' }}
@@ -2795,7 +2795,7 @@ export function SocialAutoShareManager() {
             <input
               className="form-input"
               type="password"
-              placeholder="Gửi trong header X-Miregalo-Secret"
+              placeholder="Gửi trong header X-Cron-Secret"
               value={settings.webhook_secret || ''}
               onChange={(e) => setSettings({ ...settings, webhook_secret: e.target.value })}
               style={{ fontFamily: 'monospace' }}

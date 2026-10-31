@@ -779,7 +779,7 @@ export function ExtendedSocialChannelsCards({
               <input
                 className="form-input"
                 type="url"
-                placeholder="https://newsletter.miregalo.us"
+                placeholder="https://newsletter.betongangiabinh.vn"
                 value={settings.listmonk_url || ''}
                 onChange={(e) => setSettings({ ...settings, listmonk_url: e.target.value })}
               />
