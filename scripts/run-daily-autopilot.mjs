@@ -10,6 +10,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
 import { GoogleGenAI } from '@google/genai';
+import { processPostImagesToR2 } from './r2-helper.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -51,7 +52,7 @@ const ADMIN_SETTINGS_FILE = path.join(ROOT_DIR, 'public', 'data', 'admin-setting
 // Pool hình ảnh chất lượng cao ngành xây dựng
 const NEWS_IMAGE_POOL = [
   {
-    url: 'https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1200&auto=format&fit=crop&q=80',
+    url: 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg',
     alt: 'Trạm trộn bê tông thương phẩm An Gia Bình công suất 450m3/h tại Ninh Bình',
     caption: 'Cụm trạm trộn bê tông tự động hóa của Bê Tông An Gia Bình sẵn sàng cung ứng 24/7 cho các dự án trọng điểm.'
   },
@@ -730,6 +731,22 @@ async function main() {
     trendScore: selectedTrend.score,
     newsType: selectedTrend.category
   };
+
+  // Tải toàn bộ ảnh đại diện và ảnh trong nội dung bài viết lên Cloudflare R2
+  console.log('☁️ Đang đồng bộ toàn bộ hình ảnh bài viết sang Cloudflare R2...');
+  try {
+    const r2Result = await processPostImagesToR2({
+      title: newPost.title,
+      slug: newPost.slug,
+      coverImage: newPost.coverImage,
+      content: newPost.content
+    });
+    newPost.coverImage = r2Result.coverImage;
+    newPost.content = r2Result.content;
+    console.log(`✓ Đã lưu ${r2Result.replacedCount} ảnh bài viết lên Cloudflare R2 thành công!`);
+  } catch (r2Err) {
+    console.warn('⚠️ Gặp lỗi khi tải ảnh lên R2 (vẫn tiếp tục lưu bài):', r2Err.message);
+  }
 
   // 1. Lưu vào posts.json
   posts.unshift(newPost);

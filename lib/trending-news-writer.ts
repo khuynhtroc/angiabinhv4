@@ -12,11 +12,12 @@ import {
 import { autoSubmitPostUrlServer } from '@/lib/google-indexing';
 import { schedulePublishedPostAutoShare } from '@/lib/social/schedule-auto-share';
 import { commitFilesViaGitHubApi } from '@/lib/github-api';
+import { processPostImagesToR2 } from '@/lib/storage/r2';
 
 // Curated high quality news imagery with construction context
 const NEWS_IMAGE_POOL = [
   {
-    url: 'https://images.unsplash.com/photo-1541888946425-d0fbb186156a?w=1200&auto=format&fit=crop&q=80',
+    url: 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg',
     alt: 'Trạm trộn bê tông thương phẩm An Gia Bình công suất 450m3/h tại Ninh Bình',
     caption: 'Cụm trạm trộn bê tông tự động hóa của Bê Tông An Gia Bình sẵn sàng cung ứng 24/7 cho các dự án trọng điểm.'
   },
@@ -266,6 +267,22 @@ YÊU CẦU BẮT BUỘC VỀ NỘI DUNG VÀ ĐỘ DÀI:
   const permalink = `/blog/tin-tuc/${finalSlug}.html`;
   const canonicalUrl = `https://www.betongangiabinh.vn${permalink}`;
 
+  // Auto-upload and replace all images to Cloudflare R2
+  let processedCover = coverImage;
+  let processedContent = finalContent;
+  try {
+    const r2Res = await processPostImagesToR2({
+      title: finalTitle,
+      slug: finalSlug,
+      coverImage: processedCover,
+      content: finalContent
+    });
+    processedCover = r2Res.coverImage;
+    processedContent = r2Res.content;
+  } catch (r2Err) {
+    console.warn('[TrendingNewsWriter] R2 image upload note:', r2Err);
+  }
+
   const newPost: BlogPost = {
     id: `post-${Date.now()}`,
     title: finalTitle,
@@ -273,9 +290,9 @@ YÊU CẦU BẮT BUỘC VỀ NỘI DUNG VÀ ĐỘ DÀI:
     permalink,
     category: 'Tin Tức & Thị Trường',
     excerpt: finalExcerpt,
-    content: finalContent,
+    content: processedContent,
     date: isoDate,
-    coverImage,
+    coverImage: processedCover,
     tags: [trend.category, 'Tin Tức Thị Trường', 'Bê Tông Ninh Bình', 'An Gia Bình'],
     focusKeywords: rawGenerated?.focusKeywords || trend.focusKeywords,
     readTime: `${Math.max(6, Math.ceil(words / 220))} phút`,

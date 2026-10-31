@@ -17,6 +17,7 @@
     "seo:bot": "node scripts/seo-telegram-bot.mjs"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1161.0",
     "@google/genai": "^2.4.0",
     "@hookform/resolvers": "^5.2.1",
     "@supabase/supabase-js": "^2.118.0",
