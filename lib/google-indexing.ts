@@ -340,19 +340,23 @@ export async function autoSubmitPostUrlServer(
   // Normalize URL
   let fullUrl = postSlugOrUrl;
   if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
-    const isNews = postSlugOrUrl.includes('tin-tuc/') || postSlugOrUrl.includes('/tin-tuc/');
-    const clean = postSlugOrUrl
-      .trim()
-      .replace(/^\/?(blog\/)?/, '')
-      .replace(/^tin-tuc\//, '')
-      .replace(/\/+\.html$/, '')
-      .replace(/\.html$/, '')
-      .replace(/\/+$/, '')
-      .trim();
-    if (isNews) {
-      fullUrl = `https://www.betongangiabinh.vn/blog/tin-tuc/${clean}.html`;
+    if (fullUrl.startsWith('/')) {
+      fullUrl = `https://www.betongangiabinh.vn${fullUrl}`;
     } else {
-      fullUrl = `https://www.betongangiabinh.vn/${clean}.html`;
+      const isNews = postSlugOrUrl.includes('tin-tuc/') || postSlugOrUrl.includes('/tin-tuc/');
+      const clean = postSlugOrUrl
+        .trim()
+        .replace(/^\/?(blog\/)?/, '')
+        .replace(/^tin-tuc\//, '')
+        .replace(/\/+\.html$/, '')
+        .replace(/\.html$/, '')
+        .replace(/\/+$/, '')
+        .trim();
+      if (isNews) {
+        fullUrl = `https://www.betongangiabinh.vn/blog/tin-tuc/${clean}.html`;
+      } else {
+        fullUrl = `https://www.betongangiabinh.vn/${clean}.html`;
+      }
     }
   }
 

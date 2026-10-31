@@ -206,7 +206,7 @@ export async function shareToFacebook(
   const timestamp = new Date().toISOString();
   try {
     const cleanId = (pageId || '').trim().replace(/['"]/g, '');
-    const cleanToken = (accessToken || '').trim().replace(/['"]/g, '');
+    let cleanToken = (accessToken || '').trim().replace(/['"]/g, '');
     if (!cleanId || !cleanToken) {
       return {
         channel: 'facebook',
@@ -215,6 +215,26 @@ export async function shareToFacebook(
         timestamp,
       };
     }
+
+    // Auto-resolve Page Access Token if input token is a User token
+    try {
+      const pageInfoRes = await fetch(`${FB_GRAPH_API}/${cleanId}?fields=access_token`, {
+        headers: { Authorization: `Bearer ${cleanToken}` },
+      });
+      const pageInfoData = await pageInfoRes.json();
+      if (pageInfoData?.access_token) {
+        cleanToken = pageInfoData.access_token;
+      } else {
+        const accountsRes = await fetch(`${FB_GRAPH_API}/me/accounts?fields=id,access_token`, {
+          headers: { Authorization: `Bearer ${cleanToken}` },
+        });
+        const accountsData = await accountsRes.json();
+        const found = (accountsData?.data || []).find((p: any) => String(p.id) === cleanId);
+        if (found?.access_token) {
+          cleanToken = found.access_token;
+        }
+      }
+    } catch {}
 
     const postUrl = `${SITE_URL}${postPath(post)}`;
     const title = post.title || 'Bê Tông An Gia Bình';
@@ -261,6 +281,8 @@ export async function shareToFacebook(
         } else {
           errMsg += ' - Token Facebook đã hết hạn. Hãy cập nhật Token mới trong Cài Đặt.';
         }
+      } else if (fbErr?.code === 200) {
+        errMsg += ' - Hướng dẫn khắc phục: Token bạn đang dùng là User Token cá nhân hoặc App chưa được cấp quyền quản trị trên Page. Trong Graph API Explorer, hãy click dropdown "User or Page" -> chọn Fanpage "Bê Tông An Gia Bình" để sinh đúng Page Access Token có quyền pages_manage_posts và pages_read_engagement.';
       }
       return {
         channel: 'facebook',

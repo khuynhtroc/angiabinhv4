@@ -23,6 +23,7 @@ import projectsDataJson from '@/public/data/projects.json';
 import pagesDataJson from '@/public/data/pages.json';
 import categoriesDataJson from '@/public/data/categories.json';
 import configDataJson from '@/public/data/config.json';
+import adminSettingsJson from '@/public/data/admin-settings.json';
 
 const DATA_DIR = path.join(process.cwd(), 'public', 'data');
 const POSTS_FILE = path.join(DATA_DIR, 'posts.json');
@@ -932,7 +933,7 @@ export function getAdminConfigServer(): any {
   } catch (err) {
     console.warn('[server-data] Failed to read ADMIN_CONFIG_FILE:', err);
   }
-  return null;
+  return adminSettingsJson || null;
 }
 
 export function saveAdminConfigServer(adminConfig: any): boolean {

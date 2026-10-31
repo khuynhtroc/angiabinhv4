@@ -82,9 +82,10 @@
     "googleIndexingEnabled": true,
     "autoSubmitNewPosts": true,
     "indexNowKey": "68f6a9788d4444ff94d4ee1bf5df05e0",
-    "indexNowEnabled": true
+    "indexNowEnabled": true,
+    "googleServiceAccountEmail": "betongangiabinh@betongangiabinh.iam.gserviceaccount.com"
   },
-  "updatedAt": "2026-10-20T18:17:00.575Z",
+  "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
     "lastRunAt": "2026-10-31T15:55:42.376Z",
     "autoPublishedCount": 7,
