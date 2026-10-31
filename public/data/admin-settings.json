@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-10-31T15:55:42.376Z",
-    "autoPublishedCount": 7,
+    "lastRunAt": "2026-10-31T17:20:46.031Z",
+    "autoPublishedCount": 8,
     "logs": [
+      {
+        "id": "news-log-1793467246031",
+        "timestamp": "2026-10-31T17:20:46.031Z",
+        "trendTitle": "Cao tốc Châu Đốc - Cần Thơ - Sóc Trăng qua Cần Thơ thiếu nguồn hơn 2,6 triệu m³ đá",
+        "generatedTitle": "Cao tốc Châu Đốc - Cần Thơ - Sóc Trăng qua Cần Thơ thiếu nguồn hơn 2,6 triệu m³ đá: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/cao-toc-chau-doc---can-tho---soc-trang-qua-can-tho-thieu-nguon-hon-2-6-trieu-m-da-5204.html",
+        "wordCount": 805,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1793462142376",
         "timestamp": "2026-10-31T15:55:42.376Z",
