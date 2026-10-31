@@ -86,9 +86,19 @@
   },
   "updatedAt": "2026-10-20T18:17:00.575Z",
   "socialListening": {
-    "lastRunAt": "2026-10-31T06:32:38.416Z",
-    "autoPublishedCount": 4,
+    "lastRunAt": "2026-10-31T10:41:11.884Z",
+    "autoPublishedCount": 5,
     "logs": [
+      {
+        "id": "news-log-1793443271884",
+        "timestamp": "2026-10-31T10:41:11.884Z",
+        "trendTitle": "Duy trì nhân sự tinh nhuệ, làm ba ca liên tục đưa dự án Cảng hàng không Quảng Trị về đích",
+        "generatedTitle": "Duy trì nhân sự tinh nhuệ, làm ba ca liên tục đưa dự án Cảng hàng không Quảng Trị về đích: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/duy-tri-nhan-su-tinh-nhue-lam-ba-ca-lien-tuc-dua-du-an-cang-hang-khong-quang-tri-ve-dich-0884.html",
+        "wordCount": 807,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1793428358416",
         "timestamp": "2026-10-31T06:32:38.416Z",
