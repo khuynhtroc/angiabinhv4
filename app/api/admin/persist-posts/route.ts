@@ -39,6 +39,7 @@ import path from 'node:path';
 import { BlogPost, Project } from '@/lib/types';
 import { autoSubmitPostUrlServer } from '@/lib/google-indexing';
 import { schedulePublishedPostAutoShare } from '@/lib/social/schedule-auto-share';
+import { getSocialSettings } from '@/lib/social';
 
 export const dynamic = 'force-dynamic';
 
@@ -295,6 +296,24 @@ export async function POST(req: NextRequest) {
         { path: 'public/data/media.json', content: JSON.stringify(allMedia, null, 2) },
       ];
 
+      if (body.adminConfig) {
+        saveAdminConfigServer(body.adminConfig);
+        filesToCommit.push({
+          path: 'public/data/admin-settings.json',
+          content: JSON.stringify(body.adminConfig, null, 2),
+        });
+      }
+
+      try {
+        const currentSocialSettings = await getSocialSettings();
+        if (currentSocialSettings) {
+          filesToCommit.push({
+            path: 'public/data/social-settings.json',
+            content: JSON.stringify(currentSocialSettings, null, 2),
+          });
+        }
+      } catch {}
+
       const initialCode = getUpdatedInitialDataCode('all');
       if (initialCode) {
         filesToCommit.push({ path: 'lib/initial-data.ts', content: initialCode });
@@ -315,8 +334,9 @@ export async function POST(req: NextRequest) {
         gitResult,
         gitStatus: currentGitStatus,
         message: gitResult?.committed
-          ? `Đã đồng bộ toàn bộ dữ liệu lên GitHub thành công [${gitResult.commitHash}]! Vercel đang tự động build và cập nhật livesite.`
+          ? `Đã đồng bộ toàn bộ dữ liệu lên GitHub thành công [${gitResult.commitHash}]! Website betongangiabinh.vn đang tự động cập nhật.`
           : (gitResult?.message || 'Đã đồng bộ dữ liệu.'),
+        error: gitResult?.success ? undefined : (gitResult?.message || 'Không thể đồng bộ lên GitHub'),
         timestamp: new Date().toISOString()
       });
     }

@@ -2,43 +2,65 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { getAllPostsServer } from './server-data';
 import { getSupabaseClient } from './supabase-client';
+import { commitFilesViaGitHubApi } from './github-api';
+import defaultSocialSettings from '@/public/data/social-settings.json';
 
 const DATA_DIR = path.join(process.cwd(), 'public', 'data');
 const SOCIAL_SETTINGS_FILE = path.join(DATA_DIR, 'social-settings.json');
 
+// In-memory cache across serverless requests in the same isolate
+const memorySettingsCache: Record<string, any> = {
+  social_settings: defaultSocialSettings,
+  main: defaultSocialSettings,
+  settings: defaultSocialSettings,
+};
+
 export const db = {
   async findOne(table: string, query?: Record<string, any>) {
-    // 1. Try Supabase
-    const sb = getSupabaseClient();
-    if (sb) {
-      try {
-        if (table === 'settings' || table === 'social_settings') {
+    const id = query?.id || 'main';
+
+    if (table === 'settings' || table === 'social_settings') {
+      // 1. Try memory cache first
+      if (memorySettingsCache[id]) {
+        return memorySettingsCache[id];
+      }
+      if (id === 'social_settings' && memorySettingsCache['main']) {
+        return memorySettingsCache['main'];
+      }
+
+      // 2. Try Supabase
+      const sb = getSupabaseClient();
+      if (sb) {
+        try {
           const { data, error } = await sb
             .from('social_settings')
             .select('data')
-            .eq('id', query?.id || 'main')
+            .eq('id', id)
             .maybeSingle();
 
           if (!error && data?.data) {
+            memorySettingsCache[id] = data.data;
             return data.data;
           }
+        } catch (err) {
+          // Ignore missing table error
         }
-      } catch (err) {
-        console.warn('[db] Supabase findOne error:', err);
       }
-    }
 
-    // 2. Fallback to local filesystem if available
-    if (table === 'settings' || table === 'social_settings') {
+      // 3. Fallback to local filesystem if available
       try {
         if (typeof fs !== 'undefined' && fs.existsSync && fs.existsSync(SOCIAL_SETTINGS_FILE)) {
           const raw = fs.readFileSync(SOCIAL_SETTINGS_FILE, 'utf8');
-          return JSON.parse(raw);
+          const parsed = JSON.parse(raw);
+          memorySettingsCache[id] = parsed;
+          return parsed;
         }
       } catch (err) {
         console.warn('[db] Failed to read social settings:', err);
       }
-      return null;
+
+      // 4. Bundled fallback
+      return defaultSocialSettings;
     }
     return null;
   },
@@ -53,7 +75,7 @@ export const db = {
             return { rows: data, total: data.length };
           }
         } catch (e) {
-          console.warn('[db] Supabase find posts error:', e);
+          // ignore
         }
       }
 
@@ -68,27 +90,29 @@ export const db = {
   },
 
   async update(table: string, idOrQuery: any, data: any) {
-    // 1. Try Supabase
-    const sb = getSupabaseClient();
-    if (sb) {
-      try {
-        if (table === 'settings' || table === 'social_settings') {
-          const id = typeof idOrQuery === 'string' ? idOrQuery : idOrQuery?.id || 'main';
+    const id = typeof idOrQuery === 'string' ? idOrQuery : idOrQuery?.id || 'main';
+
+    if (table === 'settings' || table === 'social_settings') {
+      // 1. Update in-memory cache immediately
+      memorySettingsCache[id] = data;
+      memorySettingsCache['social_settings'] = data;
+      memorySettingsCache['main'] = data;
+
+      // 2. Try Supabase safely
+      const sb = getSupabaseClient();
+      if (sb) {
+        try {
           await sb.from('social_settings').upsert({
             id,
             data,
             updated_at: new Date().toISOString(),
           });
-        } else if (table === 'posts' && data?.id) {
-          await sb.from('posts').upsert(data, { onConflict: 'id' });
+        } catch (err) {
+          // safe catch if table doesn't exist
         }
-      } catch (err) {
-        console.warn('[db] Supabase update error:', err);
       }
-    }
 
-    // 2. Local filesystem fallback
-    if (table === 'settings' || table === 'social_settings') {
+      // 3. Local filesystem fallback if writable
       try {
         if (typeof fs !== 'undefined' && fs.writeFileSync) {
           if (!fs.existsSync(DATA_DIR)) {
@@ -97,9 +121,29 @@ export const db = {
           fs.writeFileSync(SOCIAL_SETTINGS_FILE, JSON.stringify(data, null, 2), 'utf8');
         }
       } catch (err) {
-        console.error('[db] Failed to save social settings locally:', err);
+        // Cloudflare worker read-only filesystem is expected
+      }
+
+      // 4. Asynchronously commit to GitHub via GitHub Git Database API
+      try {
+        commitFilesViaGitHubApi(
+          [{ path: 'public/data/social-settings.json', content: JSON.stringify(data, null, 2) }],
+          'chore(settings): auto-persist social settings'
+        ).catch(() => {});
+      } catch {}
+
+      return data;
+    }
+
+    if (table === 'posts' && data?.id) {
+      const sb = getSupabaseClient();
+      if (sb) {
+        try {
+          await sb.from('posts').upsert(data, { onConflict: 'id' });
+        } catch {}
       }
     }
+
     return data;
   },
 
@@ -109,12 +153,17 @@ export const db = {
 
   async getSetting(key: string) {
     const s = await this.findOne('settings', { id: key });
-    return s ? (s[key] ?? s) : null;
+    if (!s) return null;
+    return s[key] !== undefined ? s[key] : s;
   },
 
   async setSetting(key: string, val: any) {
-    const s = (await this.findOne('settings', { id: key })) || {};
+    let s = (await this.findOne('settings', { id: key })) || {};
+    if (typeof s !== 'object' || s === null) s = {};
     s[key] = val;
+    if (typeof val === 'object' && val !== null) {
+      s = { ...s, ...val };
+    }
     return this.update('settings', { id: key }, s);
   }
 };

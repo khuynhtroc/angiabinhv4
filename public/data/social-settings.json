@@ -1,0 +1,29 @@
+{
+  "auto_share_enabled": true,
+  "facebook_backfill": {
+    "status": "idle",
+    "queue_id": null,
+    "post_ids": [],
+    "cursor": 0,
+    "interval_minutes": 240,
+    "channels": [
+      "facebook"
+    ],
+    "start_at": null,
+    "next_post_at": null,
+    "started_at": null,
+    "last_posted_at": null,
+    "last_post_title": null,
+    "last_error": null,
+    "skipped_count": 0,
+    "lock_id": null,
+    "lock_until": null
+  },
+  "facebook_enabled": true,
+  "facebook_page_id": "217910354731480",
+  "facebook_access_token": "",
+  "facebook_app_id": "1689511572805267",
+  "facebook_app_secret": "",
+  "facebook_template": "🏗️ {title}\n\n{excerpt}\n\n👉 Chi tiết tại Bê Tông An Gia Bình: {url}"
+}
+

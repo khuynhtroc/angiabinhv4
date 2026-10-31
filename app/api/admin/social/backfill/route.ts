@@ -16,10 +16,40 @@ export async function POST(req: NextRequest) {
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
-    const { action, interval_minutes, start_at, post_immediately, channels } = await req.json();
+    const body = await req.json();
+    const { action, interval_minutes, start_at, post_immediately, channels } = body;
+
+    // Merge any credentials passed directly in request body
+    const credentialsToSave: Record<string, any> = {};
+    if (typeof body.facebook_page_id === 'string' && body.facebook_page_id.trim()) {
+      credentialsToSave.facebook_page_id = body.facebook_page_id.trim();
+    }
+    if (typeof body.facebook_access_token === 'string' && body.facebook_access_token.trim()) {
+      credentialsToSave.facebook_access_token = body.facebook_access_token.trim();
+    }
+    if (typeof body.facebook_app_id === 'string' && body.facebook_app_id.trim()) {
+      credentialsToSave.facebook_app_id = body.facebook_app_id.trim();
+    }
+    if (typeof body.facebook_app_secret === 'string' && body.facebook_app_secret.trim()) {
+      credentialsToSave.facebook_app_secret = body.facebook_app_secret.trim();
+    }
+    if (body.settings && typeof body.settings === 'object') {
+      if (body.settings.facebook_page_id) credentialsToSave.facebook_page_id = body.settings.facebook_page_id;
+      if (body.settings.facebook_access_token) credentialsToSave.facebook_access_token = body.settings.facebook_access_token;
+      if (body.settings.facebook_app_id) credentialsToSave.facebook_app_id = body.settings.facebook_app_id;
+      if (body.settings.facebook_app_secret) credentialsToSave.facebook_app_secret = body.settings.facebook_app_secret;
+    }
+
+    if (Object.keys(credentialsToSave).length > 0) {
+      await saveSocialSettings(credentialsToSave);
+    }
+
     const settings = await getSocialSettings();
     const current = settings.facebook_backfill;
     const now = new Date();
+
+    const effectiveFbPageId = credentialsToSave.facebook_page_id || settings.facebook_page_id;
+    const effectiveFbToken = credentialsToSave.facebook_access_token || settings.facebook_access_token;
 
     if (action === 'update_channels') {
       const cleanChannels = Array.isArray(channels)
@@ -42,7 +72,7 @@ export async function POST(req: NextRequest) {
         );
       }
       const chosenChannels = Array.isArray(channels) && channels.length > 0 ? channels : (current.channels || ['facebook']);
-      if (chosenChannels.includes('facebook') && (!settings.facebook_page_id || !settings.facebook_access_token)) {
+      if (chosenChannels.includes('facebook') && (!effectiveFbPageId || !effectiveFbToken)) {
         return NextResponse.json(
           { error: 'Nhập Page ID và Page Access Token rồi lưu cấu hình trước khi tạo hàng đợi bài cũ.' },
           { status: 400 }
@@ -87,7 +117,7 @@ export async function POST(req: NextRequest) {
 
     if (action === 'post_now') {
       const activeChannels = current.channels && current.channels.length > 0 ? current.channels : ['facebook'];
-      if (activeChannels.includes('facebook') && (!settings.facebook_page_id || !settings.facebook_access_token)) {
+      if (activeChannels.includes('facebook') && (!effectiveFbPageId || !effectiveFbToken)) {
         return NextResponse.json(
           { error: 'Nhập Page ID và Page Access Token hợp lệ trước khi đăng bài lên Fanpage.' },
           { status: 400 }

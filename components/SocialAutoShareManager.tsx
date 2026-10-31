@@ -177,7 +177,15 @@ export function SocialAutoShareManager() {
     setBackfillBusy(true);
     setMsg(null);
     try {
-      const payload: Record<string, unknown> = { action, ...extraPayload };
+      const payload: Record<string, unknown> = {
+        action,
+        facebook_page_id: settings.facebook_page_id,
+        facebook_access_token: settings.facebook_access_token,
+        facebook_app_id: settings.facebook_app_id,
+        facebook_app_secret: settings.facebook_app_secret,
+        settings,
+        ...extraPayload,
+      };
       if (action === 'start') {
         payload.start_at = backfillStartAt ? new Date(backfillStartAt).toISOString() : new Date().toISOString();
         payload.interval_minutes = backfillInterval;
