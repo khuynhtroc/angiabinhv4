@@ -86,9 +86,19 @@
   },
   "updatedAt": "2026-10-20T18:17:00.575Z",
   "socialListening": {
-    "lastRunAt": "2026-10-31T11:02:37.325Z",
-    "autoPublishedCount": 6,
+    "lastRunAt": "2026-10-31T15:55:42.376Z",
+    "autoPublishedCount": 7,
     "logs": [
+      {
+        "id": "news-log-1793462142376",
+        "timestamp": "2026-10-31T15:55:42.376Z",
+        "trendTitle": "Toàn cảnh đại công trường sân vận động 135.000 chỗ ngồi ở Hà Nội",
+        "generatedTitle": "Toàn cảnh đại công trường sân vận động 135.000 chỗ ngồi ở Hà Nội: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/toan-canh-dai-cong-truong-san-van-dong-135-000-cho-ngoi-o-ha-noi-1102.html",
+        "wordCount": 788,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1793444557325",
         "timestamp": "2026-10-31T11:02:37.325Z",
