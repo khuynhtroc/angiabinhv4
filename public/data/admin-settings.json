@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-01T11:36:12.729Z",
-    "autoPublishedCount": 16,
+    "lastRunAt": "2026-11-01T23:01:37.039Z",
+    "autoPublishedCount": 17,
     "logs": [
+      {
+        "id": "news-log-1793574097039",
+        "timestamp": "2026-11-01T23:01:37.039Z",
+        "trendTitle": "Người dân 2 tỉnh miền Tây này đón tin vui: Chính thức phê duyệt xây dựng cầu dây văng 2 tầng hơn 27.000 tỷ đồng, có 6 làn cao tốc ở tầng trên, đường sắt chạy bên dưới, dự kiến khởi công năm 2027",
+        "generatedTitle": "Người dân 2 tỉnh miền Tây này đón tin vui: Chính thức phê duyệt xây dựng cầu dây văng 2 tầng hơn 27.000 tỷ đồng, có 6 làn cao tốc ở tầng trên, đường sắt chạy bên dưới, dự kiến khởi công năm 2027: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/nguoi-dan-2-tinh-mien-tay-nay-don-tin-vui-chinh-thuc-phe-duyet-xay-dung-cau-day-vang-2-tang-hon-27-000-ty-dong-co-6-lan-cao-toc-o-tang-tren-duong-sat-chay-ben-duoi-du-kien-khoi-cong-nam-2027-4868.html",
+        "wordCount": 795,
+        "trendScore": 75,
+        "status": "published"
+      },
       {
         "id": "news-log-1793532972729",
         "timestamp": "2026-11-01T11:36:12.729Z",
