@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-01T01:40:27.200Z",
-    "autoPublishedCount": 13,
+    "lastRunAt": "2026-11-01T05:01:18.601Z",
+    "autoPublishedCount": 14,
     "logs": [
+      {
+        "id": "news-log-1793509278601",
+        "timestamp": "2026-11-01T05:01:18.601Z",
+        "trendTitle": "Máy bay chuyển hướng hạ cánh tại Pakistan để cấp cứu hành khách",
+        "generatedTitle": "Máy bay chuyển hướng hạ cánh tại Pakistan để cấp cứu hành khách: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/may-bay-chuyen-huong-ha-canh-tai-pakistan-de-cap-cuu-hanh-khach-9950.html",
+        "wordCount": 785,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1793497227200",
         "timestamp": "2026-11-01T01:40:27.200Z",
