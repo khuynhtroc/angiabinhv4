@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-01T05:01:18.601Z",
-    "autoPublishedCount": 14,
+    "lastRunAt": "2026-11-01T11:01:29.618Z",
+    "autoPublishedCount": 15,
     "logs": [
+      {
+        "id": "news-log-1793530889618",
+        "timestamp": "2026-11-01T11:01:29.618Z",
+        "trendTitle": "Hà Nội đồng loạt thay hàng rào trên 14 tuyến đường",
+        "generatedTitle": "Hà Nội đồng loạt thay hàng rào trên 14 tuyến đường: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/ha-noi-dong-loat-thay-hang-rao-tren-14-tuyen-duong-7591.html",
+        "wordCount": 787,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1793509278601",
         "timestamp": "2026-11-01T05:01:18.601Z",
