@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-01T11:01:29.618Z",
-    "autoPublishedCount": 15,
+    "lastRunAt": "2026-11-01T11:36:12.729Z",
+    "autoPublishedCount": 16,
     "logs": [
+      {
+        "id": "news-log-1793532972729",
+        "timestamp": "2026-11-01T11:36:12.729Z",
+        "trendTitle": "Thứ trưởng Lê Anh Tuấn yêu cầu rà soát nguồn vật liệu cho dự án Vành đai 4",
+        "generatedTitle": "Thứ trưởng Lê Anh Tuấn yêu cầu rà soát nguồn vật liệu cho dự án Vành đai 4: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/thu-truong-le-anh-tuan-yeu-cau-ra-soat-nguon-vat-lieu-cho-du-an-vanh-dai-4-1618.html",
+        "wordCount": 791,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1793530889618",
         "timestamp": "2026-11-01T11:01:29.618Z",
