@@ -186,33 +186,24 @@ export async function getPostBySlugServerAsync(rawSlug: string): Promise<BlogPos
     }
   } catch {}
 
-  // 2. Try fetching fresh posts.json from Cloudflare R2
-  try {
-    const r2MainUrl = 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/data/posts.json';
-    const r2MainRes = await fetch(r2MainUrl, { next: { revalidate: 60 } });
-    if (r2MainRes.ok) {
-      const freshPosts = (await r2MainRes.json()) as BlogPost[];
-      if (Array.isArray(freshPosts) && freshPosts.length > 0) {
-        buildPostIndex(freshPosts);
-        const retryMatch = getPostBySlugServer(rawSlug);
-        if (retryMatch) return retryMatch;
+  // 2. Try without 4-digit random suffix if present (e.g. slug-1234 -> slug)
+  const noSuffix = coreClean.replace(/-[0-9]{4}$/, '');
+  if (noSuffix && noSuffix !== coreClean) {
+    try {
+      const r2AltUrl = `https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/data/posts/${noSuffix}.json`;
+      const r2AltRes = await fetch(r2AltUrl, { next: { revalidate: 30 } });
+      if (r2AltRes.ok) {
+        const post = (await r2AltRes.json()) as BlogPost;
+        if (post && (post.id || post.slug)) {
+          slugToPostMap.set(coreClean, post);
+          slugToPostMap.set(noSuffix, post);
+          if (post.slug) slugToPostMap.set(post.slug, post);
+          if (post.id) idToPostMap.set(post.id, post);
+          return post;
+        }
       }
-    }
-  } catch {}
-
-  // 3. Fallback to GitHub Raw
-  try {
-    const ghUrl = 'https://raw.githubusercontent.com/khuynhtroc/angiabinhv4/main/public/data/posts.json';
-    const ghRes = await fetch(ghUrl, { next: { revalidate: 60 } });
-    if (ghRes.ok) {
-      const freshPosts = (await ghRes.json()) as BlogPost[];
-      if (Array.isArray(freshPosts) && freshPosts.length > 0) {
-        buildPostIndex(freshPosts);
-        const retryMatch = getPostBySlugServer(rawSlug);
-        if (retryMatch) return retryMatch;
-      }
-    }
-  } catch {}
+    } catch {}
+  }
 
   return null;
 }
