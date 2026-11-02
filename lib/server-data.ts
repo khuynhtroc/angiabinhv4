@@ -70,14 +70,54 @@ export function getAllPostsServer(): BlogPost[] {
   return initialBlogPosts;
 }
 
+// In-memory index cache for O(1) lightning fast lookups without memory pressure
+let indexedPostsList: BlogPost[] = [];
+const slugToPostMap = new Map<string, BlogPost>();
+const idToPostMap = new Map<string, BlogPost>();
+
+export function buildPostIndex(posts: BlogPost[]): void {
+  indexedPostsList = posts;
+  slugToPostMap.clear();
+  idToPostMap.clear();
+
+  for (const post of posts) {
+    if (!post) continue;
+    if (post.id) {
+      idToPostMap.set(post.id, post);
+      slugToPostMap.set(post.id, post);
+    }
+    if (post.slug) {
+      const clean = post.slug.replace(/\.html$/, '').replace(/^\/?(blog\/)?(tin-tuc\/)?/, '');
+      slugToPostMap.set(post.slug, post);
+      slugToPostMap.set(clean, post);
+      slugToPostMap.set(clean.toLowerCase(), post);
+
+      const noSuffix = clean.replace(/-\d{3,6}$/, '');
+      if (noSuffix && !slugToPostMap.has(noSuffix)) {
+        slugToPostMap.set(noSuffix, post);
+      }
+    }
+    if (post.permalink) {
+      slugToPostMap.set(post.permalink, post);
+      const permClean = post.permalink.replace(/\.html$/, '').replace(/^\/?(blog\/)?(tin-tuc\/)?/, '');
+      slugToPostMap.set(permClean, post);
+    }
+  }
+}
+
+function ensurePostIndex(): void {
+  if (slugToPostMap.size > 0 && indexedPostsList.length > 0) return;
+  const posts = getAllPostsServer();
+  buildPostIndex(posts);
+}
+
 /**
- * Find a specific post by slug or ID on the server.
+ * Find a specific post by slug or ID on the server (Fast Synchronous Lookup).
  */
 export function getPostBySlugServer(rawSlug: string): BlogPost | null {
   if (!rawSlug) return null;
-  // Deep clean rawSlug:
-  // - Remove leading /, /blog/, blog/
-  // - Remove trailing /, .html, /.html
+  ensurePostIndex();
+
   const clean = decodeURIComponent(rawSlug)
     .trim()
     .replace(/^\/?(blog\/)?/, '')
@@ -86,105 +126,93 @@ export function getPostBySlugServer(rawSlug: string): BlogPost | null {
     .replace(/\/+$/, '');
 
   if (!clean) return null;
-  const posts = getAllPostsServer();
-
-  // 1. Exact match
   const coreClean = clean.replace(/^tin-tuc\//, '');
+  const noSuffix = coreClean.replace(/-\d{3,6}$/, '');
 
-  // 1. Exact match
-  const exact = posts.find(
-    (p) =>
-      p.slug === clean ||
-      p.slug === coreClean ||
-      p.id === clean ||
-      p.id === coreClean ||
-      p.slug === rawSlug ||
-      p.id === rawSlug ||
-      `${p.slug}.html` === rawSlug ||
-      `${p.id}.html` === rawSlug ||
-      `${p.slug}.html` === clean ||
-      `${p.slug}.html` === coreClean ||
-      p.slug === `${clean}.html` ||
-      p.slug === `${coreClean}.html` ||
-      (p.permalink && (
-        p.permalink === rawSlug ||
-        p.permalink === clean ||
-        p.permalink === `/${clean}.html` ||
-        p.permalink === `/blog/${clean}.html` ||
-        p.permalink.endsWith(`/${coreClean}.html`)
-      ))
-  );
-  if (exact) return exact;
+  // Fast O(1) Map lookups - sub-millisecond, 0 CPU loops!
+  let match =
+    slugToPostMap.get(clean) ||
+    slugToPostMap.get(coreClean) ||
+    slugToPostMap.get(rawSlug) ||
+    slugToPostMap.get(noSuffix) ||
+    idToPostMap.get(clean) ||
+    idToPostMap.get(coreClean);
 
-  // 2. Suffix match (e.g. user enters "slug" and post has "slug-5281", or vice versa)
-  const cleanNoSuffix = clean.replace(/-\d{3,6}$/, '');
-  const suffixMatch = posts.find((p) => {
-    const pSlug = (p.slug || '').replace(/\.html$/, '');
-    const pSlugNoSuffix = pSlug.replace(/-\d{3,6}$/, '');
-    return (
-      pSlug === clean ||
-      pSlugNoSuffix === clean ||
-      pSlug === cleanNoSuffix ||
-      pSlugNoSuffix === cleanNoSuffix
-    );
-  });
-  if (suffixMatch) return suffixMatch;
+  if (match) return match;
 
-  // 3. Partial / loose prefix match for long slugs (> 15 chars)
-  if (cleanNoSuffix.length >= 15) {
-    const looseMatch = posts.find((p) => {
-      const pSlug = (p.slug || '').replace(/\.html$/, '').replace(/-\d{3,6}$/, '');
-      return pSlug.startsWith(cleanNoSuffix) || cleanNoSuffix.startsWith(pSlug);
-    });
-    if (looseMatch) return looseMatch;
-  }
-
-  // 4. Handle aliases if slug contained external brand names
+  // Fallback checks for historical brand aliases
   const aliasClean = clean
     .replace(/-dufago/gi, '-an-gia-binh')
     .replace(/-cong-thanh/gi, '-an-gia-binh')
     .replace(/-me-kong/gi, '-an-gia-binh')
-    .replace(/-mekong/gi, '-an-gia-binh')
-    .replace(/-thang-long/gi, '-an-gia-binh')
-    .replace(/-viet-duc/gi, '-an-gia-binh')
-    .replace(/-thien-truong-an/gi, '-an-gia-binh')
-    .replace(/-the-gioi-nha/gi, '-an-gia-binh')
-    .replace(/-le-phan/gi, '-an-gia-binh')
-    .replace(/-viet-han/gi, '-an-gia-binh')
-    .replace(/-viet-nhat/gi, '-an-gia-binh')
-    .replace(/-hung-vuong-dong-nai/gi, '-an-gia-binh-ninh-binh')
-    .replace(/-hung-vuong/gi, '-an-gia-binh')
-    .replace(/-saigon-rdc/gi, '-an-gia-binh')
-    .replace(/-terra-yamaken/gi, '-an-gia-binh')
-    .replace(/-yamaken/gi, '-an-gia-binh')
-    .replace(/-fico-panu/gi, '-an-gia-binh')
-    .replace(/-fico/gi, '-an-gia-binh')
-    .replace(/-becamex/gi, '-an-gia-binh')
-    .replace(/-ninh-binh-today/gi, '-an-gia-binh');
-
+    .replace(/-viet-duc/gi, '-an-gia-binh');
   if (aliasClean !== clean) {
-    const aliasMatch = posts.find((p) => {
-      const pSlug = (p.slug || '').replace(/\.html$/, '');
-      const pSlugNoSuffix = pSlug.replace(/-\d{3,6}$/, '');
-      const aliasNoSuffix = aliasClean.replace(/-\d{3,6}$/, '');
-      return (
-        pSlug === aliasClean ||
-        pSlug === aliasNoSuffix ||
-        pSlugNoSuffix === aliasClean ||
-        pSlugNoSuffix === aliasNoSuffix
-      );
-    });
+    const aliasCore = aliasClean.replace(/^tin-tuc\//, '');
+    const aliasMatch = slugToPostMap.get(aliasClean) || slugToPostMap.get(aliasCore);
     if (aliasMatch) return aliasMatch;
   }
 
-  // Reverse check if slug in database still has -dufago
-  const reverseClean = clean.replace(/-an-gia-binh/gi, '-dufago');
-  if (reverseClean !== clean) {
-    const reverseMatch = posts.find(
-      (p) => p.slug === reverseClean || `${p.slug}.html` === reverseClean
-    );
-    if (reverseMatch) return reverseMatch;
-  }
+  return null;
+}
+
+/**
+ * Asynchronous post lookup with live fallback to Cloudflare R2 and GitHub Raw.
+ * Ensures newly published articles (e.g. from GitHub Actions) are immediately accessible without 404!
+ */
+export async function getPostBySlugServerAsync(rawSlug: string): Promise<BlogPost | null> {
+  const syncMatch = getPostBySlugServer(rawSlug);
+  if (syncMatch) return syncMatch;
+
+  const clean = decodeURIComponent(rawSlug)
+    .trim()
+    .replace(/^\/?(blog\/)?/, '')
+    .replace(/\/+\.html$/, '')
+    .replace(/\.html$/, '')
+    .replace(/\/+$/, '');
+  const coreClean = clean.replace(/^tin-tuc\//, '');
+
+  // 1. Try fetching lightweight individual post JSON from Cloudflare R2 (~8KB)
+  try {
+    const r2Url = `https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/data/posts/${coreClean}.json`;
+    const r2Res = await fetch(r2Url, { next: { revalidate: 30 } });
+    if (r2Res.ok) {
+      const post = (await r2Res.json()) as BlogPost;
+      if (post && (post.id || post.slug)) {
+        slugToPostMap.set(coreClean, post);
+        if (post.slug) slugToPostMap.set(post.slug, post);
+        if (post.id) idToPostMap.set(post.id, post);
+        return post;
+      }
+    }
+  } catch {}
+
+  // 2. Try fetching fresh posts.json from Cloudflare R2
+  try {
+    const r2MainUrl = 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/data/posts.json';
+    const r2MainRes = await fetch(r2MainUrl, { next: { revalidate: 60 } });
+    if (r2MainRes.ok) {
+      const freshPosts = (await r2MainRes.json()) as BlogPost[];
+      if (Array.isArray(freshPosts) && freshPosts.length > 0) {
+        buildPostIndex(freshPosts);
+        const retryMatch = getPostBySlugServer(rawSlug);
+        if (retryMatch) return retryMatch;
+      }
+    }
+  } catch {}
+
+  // 3. Fallback to GitHub Raw
+  try {
+    const ghUrl = 'https://raw.githubusercontent.com/khuynhtroc/angiabinhv4/main/public/data/posts.json';
+    const ghRes = await fetch(ghUrl, { next: { revalidate: 60 } });
+    if (ghRes.ok) {
+      const freshPosts = (await ghRes.json()) as BlogPost[];
+      if (Array.isArray(freshPosts) && freshPosts.length > 0) {
+        buildPostIndex(freshPosts);
+        const retryMatch = getPostBySlugServer(rawSlug);
+        if (retryMatch) return retryMatch;
+      }
+    }
+  } catch {}
 
   return null;
 }

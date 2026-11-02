@@ -881,6 +881,25 @@ async function main() {
   fs.writeFileSync(POSTS_FILE, JSON.stringify(posts, null, 2), 'utf8');
   console.log(`✓ Đã lưu bài viết vào posts.json (Tổng bài viết: ${posts.length}).`);
 
+  // 1b. Tải ngay file JSON bài viết riêng và posts.json lên Cloudflare R2 để Livesite phục vụ tức thì (chống 404)
+  try {
+    const { uploadBufferToR2 } = await import('./r2-helper.mjs');
+    await uploadBufferToR2(
+      Buffer.from(JSON.stringify(newPost), 'utf8'),
+      'data/posts/' + uniqueSlug + '.json',
+      'application/json'
+    );
+    await uploadBufferToR2(
+      Buffer.from(JSON.stringify(posts), 'utf8'),
+      'data/posts.json',
+      'application/json'
+    );
+    console.log('✓ Đã đồng bộ bài viết mới và posts.json lên Cloudflare R2 cho Livesite tức thì!');
+  } catch (r2SyncErr) {
+    console.warn('⚠️ Gặp lỗi khi đồng bộ posts.json lên R2:', r2SyncErr.message);
+  }
+
+
   // Đồng bộ Supabase
   try {
     const supabasePayload = {

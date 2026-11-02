@@ -23,8 +23,11 @@ import {
   ArrowLeft
 } from 'lucide-react';
 
+import { BlogPost } from '@/lib/types';
+
 interface CategoryDetailClientProps {
   cleanSlug: string;
+  initialPosts?: BlogPost[];
 }
 
 const CANONICAL_CATEGORY_NAMES: Record<string, string> = {
@@ -39,7 +42,7 @@ const CANONICAL_CATEGORY_NAMES: Record<string, string> = {
   'du-an-tieu-bieu': 'Dự Án Tiêu Biểu'
 };
 
-export default function CategoryDetailClient({ cleanSlug }: CategoryDetailClientProps) {
+export default function CategoryDetailClient({ cleanSlug, initialPosts = [] }: CategoryDetailClientProps) {
   const { posts, categories } = useAppStore();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTag, setSelectedTag] = useState<string>('Tất Cả');
@@ -76,7 +79,8 @@ export default function CategoryDetailClient({ cleanSlug }: CategoryDetailClient
 
   // Filter posts belonging to this category (only published articles up to today)
   const categoryPosts = useMemo(() => {
-    const published = filterPublishedPosts(posts);
+    const rawList = posts && posts.length > 50 ? posts : (initialPosts && initialPosts.length > 0 ? initialPosts : posts);
+    const published = filterPublishedPosts(rawList);
     return published.filter((p) => {
       const postCatLower = (p.category || '').toLowerCase();
       const targetTitleLower = categoryTitle.toLowerCase();

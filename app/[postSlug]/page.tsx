@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import { getPostBySlugServer, getPageBySlugServer } from '@/lib/server-data';
+import { getPostBySlugServer, getPostBySlugServerAsync, getPageBySlugServer } from '@/lib/server-data';
 import { SERVICES_DATABASE, SLUG_ALIASES } from '@/components/ServiceDetailView';
 import DynamicPostClient from '@/components/DynamicPostClient';
 
@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const cleanSlug = decodeURIComponent(rawSlug).replace(/\.html$/, '');
 
   // 1. Check if it's a Blog Post
-  const post = getPostBySlugServer(cleanSlug) || getPostBySlugServer(rawSlug);
+  const post = (await getPostBySlugServerAsync(cleanSlug)) || (await getPostBySlugServerAsync(rawSlug));
   if (post) {
     const isNews = post.category === 'Tin Tức & Thị Trường' || post.category === 'tin-tuc' || post.isTrendingNews || post.permalink?.includes('/blog/tin-tuc/');
     const rawTitle = post.seoTitle || post.title;
@@ -104,7 +104,7 @@ export default async function DynamicPostHtmlPage({ params }: PageProps) {
   const { postSlug } = await params;
   const cleanSlug = decodeURIComponent(postSlug || '').replace(/\.html$/, '');
 
-  const initialPost = getPostBySlugServer(cleanSlug) || getPostBySlugServer(postSlug);
+  const initialPost = (await getPostBySlugServerAsync(cleanSlug)) || (await getPostBySlugServerAsync(postSlug));
   
   if (initialPost) {
     const isNews = initialPost.category === 'Tin Tức & Thị Trường' || initialPost.category === 'tin-tuc' || initialPost.isTrendingNews || initialPost.permalink?.includes('/blog/tin-tuc/');

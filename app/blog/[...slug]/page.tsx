@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import { getPostBySlugServer, getAllCategoriesServer } from '@/lib/server-data';
+import { getPostBySlugServer, getPostBySlugServerAsync, getAllCategoriesServer } from '@/lib/server-data';
 import BlogPostDetailClient from '@/components/BlogPostDetailClient';
 import CategoryDetailClient from '@/components/CategoryDetailClient';
 
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (validSegments.length >= 2 && validSegments[0] === 'tin-tuc') {
     const rawPostSlug = validSegments[1];
     const cleanPostSlug = decodeURIComponent(rawPostSlug).replace(/\/+\.html$/, '').replace(/\.html$/, '');
-    const post = getPostBySlugServer(cleanPostSlug) || getPostBySlugServer(rawPostSlug);
+    const post = (await getPostBySlugServerAsync(cleanPostSlug)) || (await getPostBySlugServerAsync(rawPostSlug));
     if (post) {
       const rawTitle = post.seoTitle || post.title;
       let finalTitle = rawTitle.includes('An Gia Bình') || rawTitle.includes('Bê Tông')
@@ -99,7 +99,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   // Case 3: Single post legacy /blog/[slug].html
-  const post = getPostBySlugServer(cleanSlug) || getPostBySlugServer(rawSlug);
+  const post = (await getPostBySlugServerAsync(cleanSlug)) || (await getPostBySlugServerAsync(rawSlug));
   if (post) {
     const isNews = post.category === 'Tin Tức & Thị Trường' || post.category === 'tin-tuc' || post.isTrendingNews || post.permalink?.includes('/blog/tin-tuc/');
     const canonicalUrl = isNews
@@ -145,7 +145,7 @@ export default async function BlogPostCatchAllPage({ params }: PageProps) {
   if (validSegments.length >= 2 && validSegments[0] === 'tin-tuc') {
     const rawPostSlug = validSegments[1];
     const cleanPostSlug = decodeURIComponent(rawPostSlug).replace(/\/+\.html$/, '').replace(/\.html$/, '');
-    const initialPost = getPostBySlugServer(cleanPostSlug) || getPostBySlugServer(rawPostSlug);
+    const initialPost = (await getPostBySlugServerAsync(cleanPostSlug)) || (await getPostBySlugServerAsync(rawPostSlug));
 
     // Server-side rendered NewsArticle JSON-LD for Google News & Top Stories
     let newsJsonLd: any = null;
@@ -202,7 +202,7 @@ export default async function BlogPostCatchAllPage({ params }: PageProps) {
   }
 
   // Case 3: Other blog posts visited via /blog/[slug].html
-  const initialPost = getPostBySlugServer(cleanSlug) || getPostBySlugServer(rawSlug);
+  const initialPost = (await getPostBySlugServerAsync(cleanSlug)) || (await getPostBySlugServerAsync(rawSlug));
   if (initialPost) {
     const isNews = initialPost.category === 'Tin Tức & Thị Trường' || initialPost.category === 'tin-tuc' || initialPost.isTrendingNews || initialPost.permalink?.includes('/blog/tin-tuc/');
     if (isNews) {
