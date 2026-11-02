@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-02T05:02:08.701Z",
-    "autoPublishedCount": 19,
+    "lastRunAt": "2026-11-02T11:02:19.711Z",
+    "autoPublishedCount": 20,
     "logs": [
+      {
+        "id": "news-log-1793617339711",
+        "timestamp": "2026-11-02T11:02:19.711Z",
+        "trendTitle": "Chưa đầy 2 tuần nữa, đại gia Xuân Thiện sẽ khởi công dự án thủy điện 28.000 tỷ đồng, có thiết kế cáp treo tại tỉnh rộng nhất miền Bắc",
+        "generatedTitle": "Chưa đầy 2 tuần nữa, đại gia Xuân Thiện sẽ khởi công dự án thủy điện 28.000 tỷ đồng, có thiết kế cáp treo tại tỉnh rộng nhất miền Bắc: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/chua-day-2-tuan-nua-dai-gia-xuan-thien-se-khoi-cong-du-an-thuy-dien-28-000-ty-dong-co-thiet-ke-cap-treo-tai-tinh-rong-nhat-mien-bac-4107.html",
+        "wordCount": 807,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1793595728701",
         "timestamp": "2026-11-02T05:02:08.701Z",
