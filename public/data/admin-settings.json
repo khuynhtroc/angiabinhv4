@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-02T12:59:40.459Z",
-    "autoPublishedCount": 21,
+    "lastRunAt": "2026-11-02T23:02:22.861Z",
+    "autoPublishedCount": 22,
     "logs": [
+      {
+        "id": "news-log-1793660542861",
+        "timestamp": "2026-11-02T23:02:22.861Z",
+        "trendTitle": "Những hộ dân cuối dỡ nhà thi công nút giao lớn nhất TP HCM",
+        "generatedTitle": "Những hộ dân cuối dỡ nhà thi công nút giao lớn nhất TP HCM: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/nhung-ho-dan-cuoi-do-nha-thi-cong-nut-giao-lon-nhat-tp-hcm-2876.html",
+        "wordCount": 779,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1793624380459",
         "timestamp": "2026-11-02T12:59:40.459Z",
