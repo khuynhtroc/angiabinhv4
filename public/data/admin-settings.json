@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-02T01:59:13.014Z",
-    "autoPublishedCount": 18,
+    "lastRunAt": "2026-11-02T05:02:08.701Z",
+    "autoPublishedCount": 19,
     "logs": [
+      {
+        "id": "news-log-1793595728701",
+        "timestamp": "2026-11-02T05:02:08.701Z",
+        "trendTitle": "Thông tin mới nhất về tuyến cao tốc dài nhất miền Tây: Dài hơn 188km, tổng vốn gần 44.700 tỷ đồng",
+        "generatedTitle": "Thông tin mới nhất về tuyến cao tốc dài nhất miền Tây: Dài hơn 188km, tổng vốn gần 44.700 tỷ đồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/thong-tin-moi-nhat-ve-tuyen-cao-toc-dai-nhat-mien-tay-dai-hon-188km-tong-von-gan-44-700-ty-dong-9394.html",
+        "wordCount": 803,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1793584753014",
         "timestamp": "2026-11-02T01:59:13.014Z",
