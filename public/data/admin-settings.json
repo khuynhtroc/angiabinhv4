@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-02T11:02:19.711Z",
-    "autoPublishedCount": 20,
+    "lastRunAt": "2026-11-02T12:59:40.459Z",
+    "autoPublishedCount": 21,
     "logs": [
+      {
+        "id": "news-log-1793624380459",
+        "timestamp": "2026-11-02T12:59:40.459Z",
+        "trendTitle": "Gia Lai rót hơn 860 tỷ mở rộng đường nối với sân bay Phù Cát",
+        "generatedTitle": "Gia Lai rót hơn 860 tỷ mở rộng đường nối với sân bay Phù Cát: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/gia-lai-rot-hon-860-ty-mo-rong-duong-noi-voi-san-bay-phu-cat-7194.html",
+        "wordCount": 785,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1793617339711",
         "timestamp": "2026-11-02T11:02:19.711Z",
