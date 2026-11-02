@@ -487,7 +487,7 @@ Tốc độ tải siêu tốc, bảo mật tối ưu (không cần database runt
 - **GitHub Pages:** Đẩy toàn bộ source này lên repository GitHub, kích hoạt GitHub Pages trong Settings > Pages > Source = GitHub Actions (hoặc Deploy from a branch).
 - **Netlify / Vercel:** Kết nối repo, Build command: \`jekyll build\`, Publish directory: \`_site\`.
 
-Fanpage chính thức: https://www.facebook.com/betongangiabinh/
+Fanpage chính thức: https://www.facebook.com/betongangiabinh.vn/
 Hotline: 0988 2662 93
 Email: ketoan.angiabinh@gmail.com
 `

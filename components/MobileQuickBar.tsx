@@ -13,7 +13,7 @@ export default function MobileQuickBar({ onOpenChat, onOpenCalculator }: MobileQ
   const { jekyllConfig } = useAppStore();
   const phoneDisplay = jekyllConfig?.phone || '0988 2662 93';
   const phoneCall = phoneDisplay.replace(/\s+/g, '');
-  const facebookUrl = jekyllConfig?.facebook_page || 'https://www.facebook.com/betongangiabinh/';
+  const facebookUrl = jekyllConfig?.facebook_page || 'https://www.facebook.com/betongangiabinh.vn/';
 
   const handleCalculator = () => {
     if (onOpenCalculator) {

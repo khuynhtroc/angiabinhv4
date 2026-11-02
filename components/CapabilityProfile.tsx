@@ -25,7 +25,7 @@ export default function CapabilityProfile() {
 HỒ SƠ NĂNG LỰC CÔNG TY CỔ PHẦN THƯƠNG MẠI VÀ DỊCH VỤ AN GIA BÌNH
 TRẠM TRỘN BÊ TÔNG THƯƠNG PHẨM TIÊU CHUẨN TCVN TẠI NINH BÌNH
 Mã số thuế: 2700870972
-Fanpage: https://www.facebook.com/betongangiabinh/
+Fanpage: https://www.facebook.com/betongangiabinh.vn/
 Hotline 24/7: 0988 2662 93
 Email: ketoan.angiabinh@gmail.com
 =====================================================

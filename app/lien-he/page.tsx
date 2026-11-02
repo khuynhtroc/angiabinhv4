@@ -140,12 +140,12 @@ export default function ContactPage() {
                   <span>Fanpage Chính Thức</span>
                 </div>
                 <a
-                  href="https://www.facebook.com/betongangiabinh/"
+                  href="https://www.facebook.com/betongangiabinh.vn/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-bold text-blue-600 hover:underline block truncate"
                 >
-                  facebook.com/betongangiabinh
+                  facebook.com/betongangiabinh.vn
                 </a>
                 <p className="text-slate-500 text-[11px]">Cập nhật hình ảnh thi công thực tế mỗi ngày</p>
               </div>

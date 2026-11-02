@@ -54,7 +54,7 @@ export default function Navbar() {
 
           <div className="flex items-center gap-2 sm:gap-3 text-xs shrink-0">
             <a
-              href="https://www.facebook.com/betongangiabinh/"
+              href="https://www.facebook.com/betongangiabinh.vn/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 font-medium py-1 px-1.5 rounded transition"
@@ -62,7 +62,7 @@ export default function Navbar() {
               aria-label="Truy cập Fanpage Facebook Bê Tông An Gia Bình"
             >
               <Facebook className="w-3.5 h-3.5" />
-              <span className="hidden xs:inline sm:inline">fb.com/betongangiabinh</span>
+              <span className="hidden xs:inline sm:inline">fb.com/betongangiabinh.vn</span>
               <span className="xs:hidden sm:hidden">Fanpage</span>
             </a>
           </div>
@@ -527,7 +527,7 @@ export default function Navbar() {
             </a>
             <div className="flex items-center justify-center text-xs text-slate-500 pt-2 px-1">
               <a
-                href="https://www.facebook.com/betongangiabinh/"
+                href="https://www.facebook.com/betongangiabinh.vn/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 font-semibold flex items-center gap-1"

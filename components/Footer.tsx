@@ -54,7 +54,7 @@ export default function Footer() {
               "longitude": 105.9752
             },
             "sameAs": [
-              jekyllConfig?.facebook_page || "https://www.facebook.com/betongangiabinh/"
+              jekyllConfig?.facebook_page || "https://www.facebook.com/betongangiabinh.vn/"
             ],
             "priceRange": "$$"
           })
@@ -90,14 +90,14 @@ export default function Footer() {
             </p>
             <div className="pt-2">
               <a
-                href="https://www.facebook.com/betongangiabinh/"
+                href="https://www.facebook.com/betongangiabinh.vn/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition shadow-xs"
                 id="footer-fanpage-btn"
               >
                 <Facebook className="w-4 h-4" />
-                <span>Fanpage: @betongangiabinh</span>
+                <span>Fanpage: @betongangiabinh.vn</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
             </div>

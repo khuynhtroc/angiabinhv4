@@ -23,7 +23,7 @@ export const initialJekyllConfig: JekyllConfig = {
   "url": "https://betongangiabinh.vn",
   "twitter_username": "betongangiabinh",
   "github_username": "angiabinh-concrete",
-  "facebook_page": "https://www.facebook.com/betongangiabinh/",
+  "facebook_page": "https://www.facebook.com/betongangiabinh.vn/",
   "markdown": "kramdown",
   "permalink": "/:title.html",
   "plugins": [
@@ -1058,7 +1058,7 @@ export const initialAnalytics: RealtimeAnalytics = {
   ],
   sourceBreakdown: [
     { source: "Google Tìm kiếm Tự nhiên (SEO)", percentage: 52, count: 738 },
-    { source: "Facebook Fanpage (@betongangiabinh)", percentage: 29, count: 412 },
+    { source: "Facebook Fanpage (@betongangiabinh.vn)", percentage: 29, count: 412 },
     { source: "Truy cập trực tiếp (Direct URL)", percentage: 12, count: 170 },
     { source: "Zalo OA & Giới thiệu", percentage: 7, count: 100 }
   ],
@@ -1697,7 +1697,7 @@ export const initialSchemaSettings: SchemaSettings = {
   openingHours: "Mo-Su 00:00-23:59",
   priceRange: "$$",
   sameAs: [
-    "https://www.facebook.com/betongangiabinh/",
+    "https://www.facebook.com/betongangiabinh.vn/",
     "https://zalo.me/0988266293"
   ],
   postDefaultType: "BlogPosting",

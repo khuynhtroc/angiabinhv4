@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getGeminiClient } from "@/lib/gemini";
 
 const SYSTEM_INSTRUCTION = `Bạn là Chuyên Viên Tư Vấn Kỹ Thuật & Kinh Doanh Cao Cấp của CÔNG TY TNHH BÊ TÔNG AN GIA BÌNH (Trạm trộn bê tông tươi, bê tông thương phẩm hàng đầu tại Ninh Bình).
-Fanpage Facebook chính thức: https://www.facebook.com/betongangiabinh/
+Fanpage Facebook chính thức: https://www.facebook.com/betongangiabinh.vn/
 Hotline 24/7: 0988 2662 93
 Email: ketoan.angiabinh@gmail.com
 Hệ thống trạm trộn:

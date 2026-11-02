@@ -163,7 +163,7 @@ export default function AdminDashboard() {
   const [siteDescription, setSiteDescription] = useState(jekyllConfig?.description || 'Trạm trộn bê tông tươi, bê tông thương phẩm công nghệ cao tại Ninh Bình.');
   const [siteUrl, setSiteUrl] = useState(jekyllConfig?.url || 'https://betongangiabinh.vn');
   const [siteBaseurl, setSiteBaseurl] = useState(jekyllConfig?.baseurl || '');
-  const [siteFacebookPage, setSiteFacebookPage] = useState(jekyllConfig?.facebook_page || 'https://www.facebook.com/betongangiabinh/');
+  const [siteFacebookPage, setSiteFacebookPage] = useState(jekyllConfig?.facebook_page || 'https://www.facebook.com/betongangiabinh.vn/');
   const [siteCustomHeadCode, setSiteCustomHeadCode] = useState(jekyllConfig?.customHeadCode || '');
   const [siteCustomBodyOpenCode, setSiteCustomBodyOpenCode] = useState(jekyllConfig?.customBodyOpenCode || '');
   const [siteCustomFooterCode, setSiteCustomFooterCode] = useState(jekyllConfig?.customFooterCode || '');
@@ -4384,7 +4384,7 @@ export default function AdminDashboard() {
                       type="text"
                       value={siteFacebookPage}
                       onChange={(e) => setSiteFacebookPage(e.target.value)}
-                      placeholder="https://www.facebook.com/betongangiabinh/"
+                      placeholder="https://www.facebook.com/betongangiabinh.vn/"
                       className="w-full bg-slate-50 border border-slate-300 text-slate-900 p-3 rounded-xl focus:border-amber-500 focus:bg-white font-mono"
                     />
                   </div>
