@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-01T23:01:37.039Z",
-    "autoPublishedCount": 17,
+    "lastRunAt": "2026-11-02T01:59:13.014Z",
+    "autoPublishedCount": 18,
     "logs": [
+      {
+        "id": "news-log-1793584753014",
+        "timestamp": "2026-11-02T01:59:13.014Z",
+        "trendTitle": "Quốc lộ 21B mở rộng thông xe, về đích sớm 1 tháng",
+        "generatedTitle": "Quốc lộ 21B mở rộng thông xe, về đích sớm 1 tháng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/quoc-lo-21b-mo-rong-thong-xe-ve-dich-som-1-thang-6264.html",
+        "wordCount": 791,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1793574097039",
         "timestamp": "2026-11-01T23:01:37.039Z",
