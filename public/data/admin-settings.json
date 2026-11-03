@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-03T11:02:22.883Z",
-    "autoPublishedCount": 25,
+    "lastRunAt": "2026-11-03T12:31:55.029Z",
+    "autoPublishedCount": 26,
     "logs": [
+      {
+        "id": "news-log-1793709115029",
+        "timestamp": "2026-11-03T12:31:55.029Z",
+        "trendTitle": "Căn hộ hạng sang Triton Crown 'may đo' nội thất từ cảm hứng hoa sen",
+        "generatedTitle": "Căn hộ hạng sang Triton Crown 'may đo' nội thất từ cảm hứng hoa sen: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/can-ho-hang-sang-triton-crown-may-do-noi-that-tu-cam-hung-hoa-sen-7826.html",
+        "wordCount": 797,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1793703742883",
         "timestamp": "2026-11-03T11:02:22.883Z",
