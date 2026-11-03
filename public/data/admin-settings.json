@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-03T03:48:45.995Z",
-    "autoPublishedCount": 23,
+    "lastRunAt": "2026-11-03T05:02:25.840Z",
+    "autoPublishedCount": 24,
     "logs": [
+      {
+        "id": "news-log-1793682145840",
+        "timestamp": "2026-11-03T05:02:25.840Z",
+        "trendTitle": "Siêu sân vận động gần 70.000 chỗ, lớn gần gấp đôi Mỹ Đình: Sở hữu hai tấm mái khổng lồ có thể tách đôi, tự động đóng mở trong chưa đầy 12 phút, được nâng đỡ bởi hai dầm thép dài gần 300 m",
+        "generatedTitle": "Siêu sân vận động gần 70.000 chỗ, lớn gần gấp đôi Mỹ Đình: Sở hữu hai tấm mái khổng lồ có thể tách đôi, tự động đóng mở trong chưa đầy 12 phút, được nâng đỡ bởi hai dầm thép dài gần 300 m: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/sieu-san-van-dong-gan-70-000-cho-lon-gan-gap-doi-my-dinh-so-huu-hai-tam-mai-khong-lo-co-the-tach-doi-tu-dong-dong-mo-trong-chua-day-12-phut-duoc-nang-do-boi-hai-dam-thep-dai-gan-300-m-8507.html",
+        "wordCount": 821,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1793677725995",
         "timestamp": "2026-11-03T03:48:45.995Z",
