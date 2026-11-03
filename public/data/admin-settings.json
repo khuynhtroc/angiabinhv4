@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-02T23:02:22.861Z",
-    "autoPublishedCount": 22,
+    "lastRunAt": "2026-11-03T03:48:45.995Z",
+    "autoPublishedCount": 23,
     "logs": [
+      {
+        "id": "news-log-1793677725995",
+        "timestamp": "2026-11-03T03:48:45.995Z",
+        "trendTitle": "Dải phân cách đại lộ ở Ninh Bình biến thành ruộng dứa, chủ đầu tư yêu cầu dọn bỏ",
+        "generatedTitle": "Dải phân cách đại lộ ở Ninh Bình biến thành ruộng dứa, chủ đầu tư yêu cầu dọn bỏ: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dai-phan-cach-dai-lo-o-ninh-binh-bien-thanh-ruong-dua-chu-dau-tu-yeu-cau-don-bo-9144.html",
+        "wordCount": 789,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1793660542861",
         "timestamp": "2026-11-02T23:02:22.861Z",
