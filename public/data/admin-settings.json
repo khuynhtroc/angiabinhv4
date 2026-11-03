@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-03T05:02:25.840Z",
-    "autoPublishedCount": 24,
+    "lastRunAt": "2026-11-03T11:02:22.883Z",
+    "autoPublishedCount": 25,
     "logs": [
+      {
+        "id": "news-log-1793703742883",
+        "timestamp": "2026-11-03T11:02:22.883Z",
+        "trendTitle": "Viện Địa công nghệ và Môi trường cảnh báo nếu san phẳng núi Một ở Quy Nhơn",
+        "generatedTitle": "Viện Địa công nghệ và Môi trường cảnh báo nếu san phẳng núi Một ở Quy Nhơn: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/vien-dia-cong-nghe-va-moi-truong-canh-bao-neu-san-phang-nui-mot-o-quy-nhon-3401.html",
+        "wordCount": 823,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1793682145840",
         "timestamp": "2026-11-03T05:02:25.840Z",
