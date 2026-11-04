@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-04T05:02:13.964Z",
-    "autoPublishedCount": 29,
+    "lastRunAt": "2026-11-04T11:02:03.877Z",
+    "autoPublishedCount": 30,
     "logs": [
+      {
+        "id": "news-log-1793790123877",
+        "timestamp": "2026-11-04T11:02:03.877Z",
+        "trendTitle": "Cà Mau: Phê duyệt dự án nâng cấp ĐT980 và đường bờ Tây kênh Láng Trâm",
+        "generatedTitle": "Cà Mau: Phê duyệt dự án nâng cấp ĐT980 và đường bờ Tây kênh Láng Trâm: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/ca-mau-phe-duyet-du-an-nang-cap-dt980-va-duong-bo-tay-kenh-lang-tram-6615.html",
+        "wordCount": 795,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1793768533964",
         "timestamp": "2026-11-04T05:02:13.964Z",
