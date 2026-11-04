@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-04T12:41:38.481Z",
-    "autoPublishedCount": 31,
+    "lastRunAt": "2026-11-04T23:01:54.511Z",
+    "autoPublishedCount": 32,
     "logs": [
+      {
+        "id": "news-log-1793833314511",
+        "timestamp": "2026-11-04T23:01:54.511Z",
+        "trendTitle": "TP.HCM hỗ trợ 2,5 triệu m³ đá xây dựng cho Cần Thơ làm đường cao tốc",
+        "generatedTitle": "TP.HCM hỗ trợ 2,5 triệu m³ đá xây dựng cho Cần Thơ làm đường cao tốc: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/tp-hcm-ho-tro-2-5-trieu-m-da-xay-dung-cho-can-tho-lam-duong-cao-toc-7590.html",
+        "wordCount": 781,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1793796098481",
         "timestamp": "2026-11-04T12:41:38.481Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "dự báo thời tiết tphcm: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/du-bao-thoi-tiet-tphcm-9296.html",
         "wordCount": 747,
-        "trendScore": 85,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1792971831010",
-        "timestamp": "2026-10-25T23:43:51.010Z",
-        "trendTitle": "dự báo thời tiết hà nội",
-        "generatedTitle": "Dự báo thời tiết Hà Nội & Miền Bắc: Kỹ thuật đổ bê tông mùa nghịch",
-        "permalink": "/blog/tin-tuc/du-bao-thoi-tiet-ha-noi-ky-thuat-do-be-tong-ninh-binh-0922.html",
-        "wordCount": 1270,
         "trendScore": 85,
         "status": "published"
       }
