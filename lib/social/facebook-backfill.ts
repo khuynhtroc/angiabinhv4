@@ -49,7 +49,7 @@ export async function buildFacebookBackfillQueue(
     skipped_count: 0,
     lock_id: null,
     lock_until: null,
-    channels: channels && channels.length > 0 ? channels : ['facebook'],
+    channels: channels && channels.length > 0 ? channels : ['facebook', 'telegram'],
     last_channels_posted: [],
   };
 
@@ -115,7 +115,7 @@ export async function executeFacebookBackfillStep(options?: {
   const selectedChannels: SocialChannelId[] =
     Array.isArray(state.channels) && state.channels.length > 0
       ? state.channels
-      : ['facebook'];
+      : ['facebook', 'telegram'];
 
   const requiresFacebook = selectedChannels.includes('facebook');
   if (requiresFacebook && (!settings.facebook_page_id || !settings.facebook_access_token)) {
