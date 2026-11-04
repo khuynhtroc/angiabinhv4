@@ -2,7 +2,7 @@
   "auto_share_enabled": true,
   "facebook_backfill": {
     "status": "scheduled",
-    "queue_id": "f24c83e3-7e85-4dc6-9c8e-eb46b4efa036",
+    "queue_id": "e740ee54-ee5e-4c94-8b77-a4da2a43021d",
     "post_ids": [
       "post-1789356202097-0-121o",
       "post-j9lzq2m",
@@ -974,15 +974,15 @@
     ],
     "cursor": 0,
     "interval_minutes": 240,
-    "start_at": "2026-11-04T16:25:31.953Z",
-    "next_post_at": "2026-11-04T16:25:31.953Z",
-    "started_at": "2026-11-04T16:25:31.953Z",
+    "start_at": "2026-11-04T22:19:23.588Z",
+    "next_post_at": "2026-11-04T22:19:23.588Z",
+    "started_at": "2026-11-04T22:19:23.588Z",
     "last_posted_at": null,
     "last_post_title": null,
     "last_error": null,
     "skipped_count": 0,
-    "lock_id": "065911c2-95de-429b-ba43-286a2f1dad9c",
-    "lock_until": "2026-11-04T16:35:31.953Z",
+    "lock_id": null,
+    "lock_until": null,
     "channels": [
       "facebook"
     ],
@@ -1135,7 +1135,7 @@
     "auto_share_enabled": true,
     "facebook_backfill": {
       "status": "scheduled",
-      "queue_id": "f24c83e3-7e85-4dc6-9c8e-eb46b4efa036",
+      "queue_id": "e740ee54-ee5e-4c94-8b77-a4da2a43021d",
       "post_ids": [
         "post-1789356202097-0-121o",
         "post-j9lzq2m",
@@ -2107,15 +2107,15 @@
       ],
       "cursor": 0,
       "interval_minutes": 240,
-      "start_at": "2026-11-04T16:25:31.953Z",
-      "next_post_at": "2026-11-04T16:25:31.953Z",
-      "started_at": "2026-11-04T16:25:31.953Z",
+      "start_at": "2026-11-04T22:19:23.588Z",
+      "next_post_at": "2026-11-04T22:19:23.588Z",
+      "started_at": "2026-11-04T22:19:23.588Z",
       "last_posted_at": null,
       "last_post_title": null,
       "last_error": null,
       "skipped_count": 0,
-      "lock_id": "065911c2-95de-429b-ba43-286a2f1dad9c",
-      "lock_until": "2026-11-04T16:35:31.953Z",
+      "lock_id": null,
+      "lock_until": null,
       "channels": [
         "facebook"
       ],
