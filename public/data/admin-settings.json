@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-03T23:02:11.733Z",
-    "autoPublishedCount": 27,
+    "lastRunAt": "2026-11-04T02:51:46.008Z",
+    "autoPublishedCount": 28,
     "logs": [
+      {
+        "id": "news-log-1793760706008",
+        "timestamp": "2026-11-04T02:51:46.008Z",
+        "trendTitle": "Nhà 3 tầng mang dáng dấp phố xưa với mái ngói đỏ và cửa vòm",
+        "generatedTitle": "Nhà 3 tầng mang dáng dấp phố xưa với mái ngói đỏ và cửa vòm: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/nha-3-tang-mang-dang-dap-pho-xua-voi-mai-ngoi-do-va-cua-vom-6100.html",
+        "wordCount": 809,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1793746931733",
         "timestamp": "2026-11-03T23:02:11.733Z",
