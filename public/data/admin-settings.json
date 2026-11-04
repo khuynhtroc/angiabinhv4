@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-04T11:02:03.877Z",
-    "autoPublishedCount": 30,
+    "lastRunAt": "2026-11-04T12:41:38.481Z",
+    "autoPublishedCount": 31,
     "logs": [
+      {
+        "id": "news-log-1793796098481",
+        "timestamp": "2026-11-04T12:41:38.481Z",
+        "trendTitle": "Hà Nội chi hơn 42.800 tỷ đồng làm 5 dự án khẩn cấp giải quyết ùn tắc giao thông",
+        "generatedTitle": "Hà Nội chi hơn 42.800 tỷ đồng làm 5 dự án khẩn cấp giải quyết ùn tắc giao thông: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/ha-noi-chi-hon-42-800-ty-dong-lam-5-du-an-khan-cap-giai-quyet-un-tac-giao-thong-1609.html",
+        "wordCount": 792,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1793790123877",
         "timestamp": "2026-11-04T11:02:03.877Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/du-bao-thoi-tiet-ha-noi-ky-thuat-do-be-tong-ninh-binh-0922.html",
         "wordCount": 1270,
         "trendScore": 85,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1792520220574",
-        "timestamp": "2026-10-20T18:17:00.574Z",
-        "trendTitle": "Những \"bông hồng thép\" trên cung đường cao tốc",
-        "generatedTitle": "Những \"bông hồng thép\" trên cung đường cao tốc: Tác Động Đến Giá Thành Xây Dựng & Lời Khuyên Từ Kỹ Sư Bê Tông",
-        "permalink": "/blog/tin-tuc/nhung-bong-hong-thep-tren-cung-duong-cao-toc-tac-dong-den-gia-thanh-xay-dung-loi-khuyen-tu-ky-su-be-tong-2221.html",
-        "wordCount": 1263,
-        "trendScore": 81,
         "status": "published"
       }
     ]
