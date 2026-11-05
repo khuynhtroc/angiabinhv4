@@ -830,7 +830,25 @@ export function SocialAutoShareManager() {
         </div>
 
         <div className="form-group">
-          <label className="form-label">Mẫu nội dung bài đăng (Template)</label>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+            <label className="form-label" style={{ marginBottom: 0 }}>Mẫu nội dung bài đăng (Template chuẩn 5 phần SEO GEO)</label>
+            <button
+              type="button"
+              onClick={() => setSettings({ ...settings, facebook_template: '{auto_seo}' })}
+              style={{
+                fontSize: '0.78rem',
+                padding: '4px 10px',
+                borderRadius: '6px',
+                background: settings.facebook_template === '{auto_seo}' ? '#16a34a' : '#2563eb',
+                color: '#fff',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: 600,
+              }}
+            >
+              ⚡ Chế độ Tự động tối ưu 5 phần SEO GEO (Khuyên dùng)
+            </button>
+          </div>
           <textarea
             className="form-textarea"
             style={{ minHeight: '80px', fontFamily: 'monospace', fontSize: '0.85rem' }}
@@ -838,7 +856,7 @@ export function SocialAutoShareManager() {
             onChange={(e) => setSettings({ ...settings, facebook_template: e.target.value })}
           />
           <p className="form-hint">
-            Biến hỗ trợ: <code>&#123;title&#125;</code> (tiêu đề), <code>&#123;excerpt&#125;</code> (tóm tắt), <code>&#123;url&#125;</code> (link bài viết)
+            Nhập <code>&#123;auto_seo&#125;</code> để tự động sinh cấu trúc 5 phần chuẩn SEO GEO Bê Tông An Gia Bình (1. Hook Headline theo danh mục • 2. Storytelling kỹ thuật • 3. Địa chỉ trạm trộn &amp; Hotline 0988 266 293 khử trùng lặp • 4. Mẹo kỹ thuật &amp; CTA • 5. Cụm 8-12 Hashtags SEO GEO Ninh Bình).
           </p>
         </div>
 

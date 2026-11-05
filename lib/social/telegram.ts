@@ -1,6 +1,7 @@
 import { SITE_URL, postPath } from '@/lib/urls';
 import type { Post } from '@/lib/types';
 import type { ChannelShareResult } from './types';
+import { buildOptimizedTelegramMessage } from './seo-content-generator';
 
 const TG_API = 'https://api.telegram.org';
 
@@ -80,12 +81,18 @@ export async function shareToTelegram(
       post.image ||
       '';
 
-    const text = template
-      ? template
+    const isAutoSeo =
+      !template ||
+      template.trim() === '' ||
+      template.includes('{auto_seo}') ||
+      template.includes('👉 Chi tiết');
+
+    const text = isAutoSeo
+      ? buildOptimizedTelegramMessage({ ...post, title, excerpt, url: postUrl }, SITE_URL)
+      : template
           .replace(/{title}/g, title)
           .replace(/{excerpt}/g, excerpt)
-          .replace(/{url}/g, postUrl)
-      : `🏗️ *${title}*\n\n${excerpt}\n\n👉 Chi tiết: ${postUrl}`;
+          .replace(/{url}/g, postUrl);
 
     // Try sending as a photo post first if the article has an image and caption <= 1024 chars
     if (imageUrl && text.length <= 1024) {
@@ -96,6 +103,7 @@ export async function shareToTelegram(
           chat_id: cleanChat,
           photo: imageUrl,
           caption: text,
+          parse_mode: isAutoSeo ? 'HTML' : undefined,
         }),
       });
       const photoData = await photoRes.json();
@@ -120,6 +128,7 @@ export async function shareToTelegram(
       body: JSON.stringify({
         chat_id: cleanChat,
         text,
+        parse_mode: isAutoSeo ? 'HTML' : undefined,
         disable_web_page_preview: false,
       }),
     });

@@ -1,6 +1,7 @@
 import { SITE_URL, postPath } from '@/lib/urls';
 import type { Post } from '@/lib/types';
 import type { ChannelShareResult } from './types';
+import { buildOptimizedFacebookStatus } from './seo-content-generator';
 
 const FB_GRAPH_API = 'https://graph.facebook.com/v19.0';
 
@@ -240,12 +241,26 @@ export async function shareToFacebook(
     const title = post.title || 'Bê Tông An Gia Bình';
     const excerpt = post.seo_description || post.seoDescription || post.excerpt || '';
 
-    const message = template
-      ? template
+    const isAutoSeo =
+      !template ||
+      template.trim() === '' ||
+      template.includes('{auto_seo}') ||
+      template.includes('👉 Chi tiết tại Bê Tông An Gia Bình:');
+
+    const message = isAutoSeo
+      ? buildOptimizedFacebookStatus(
+          {
+            ...post,
+            title,
+            excerpt,
+            url: postUrl,
+          },
+          SITE_URL
+        )
+      : template
           .replace(/{title}/g, title)
           .replace(/{excerpt}/g, excerpt)
-          .replace(/{url}/g, postUrl)
-      : `🏗️ ${title}\n\n${excerpt}\n\n👉 Chi tiết tại Bê Tông An Gia Bình: ${postUrl}`;
+          .replace(/{url}/g, postUrl);
 
     // Warm Facebook's OpenGraph cache so the first share of an older URL always renders its og:image
     try {

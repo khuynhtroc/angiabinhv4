@@ -47,6 +47,7 @@ import {
 } from './extended-community';
 
 export * from './types';
+export * from './seo-content-generator';
 export * from './facebook';
 export * from './instagram';
 export * from './facebook-backfill';
@@ -101,7 +102,7 @@ export const DEFAULT_SOCIAL_SETTINGS: SocialSettings = {
   facebook_access_token: '',
   facebook_app_id: '1689511572805267',
   facebook_app_secret: '',
-  facebook_template: '🏗️ {title}\n\n{excerpt}\n\n👉 Chi tiết tại Bê Tông An Gia Bình: {url}',
+  facebook_template: '{auto_seo}',
 
   instagram_enabled: false,
   instagram_user_id: '',
@@ -138,7 +139,7 @@ export const DEFAULT_SOCIAL_SETTINGS: SocialSettings = {
   telegram_enabled: false,
   telegram_bot_token: '',
   telegram_chat_id: '',
-  telegram_template: '🏗️ *{title}*\n\n{excerpt}\n\n👉 Chi tiết:\n{url}',
+  telegram_template: '{auto_seo}',
 
   bluesky_enabled: false,
   bluesky_identifier: '',

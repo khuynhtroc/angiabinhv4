@@ -596,6 +596,107 @@ async function submitIndexNow(url) {
 }
 
 
+
+function toHashtagSlug(str) {
+  if (!str) return '';
+  return str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D')
+    .replace(/[^a-zA-Z0-9\s]/g, '')
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 4)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join('');
+}
+
+function buildOptimizedFacebookStatusForAutopilot(post, siteUrl = SITE_URL) {
+  const rawTitle = (post.title || 'Bê Tông An Gia Bình').trim();
+  const rawCategory = (post.category || 'Tin Tức & Thị Trường').trim();
+  const rawExcerpt = (post.excerpt || post.seoDescription || '').trim();
+  const postUrl = `${siteUrl}${post.permalink}`;
+
+  const combined = `${rawTitle} ${rawCategory} ${rawExcerpt}`.toLowerCase();
+  let topic = 'general';
+  if (/cao tốc|quốc lộ|đường tỉnh|đt\d+|ql\d+|cầu |sân bay|hạ tầng|giao thông|ùn tắc|thông xe|khởi công|nâng cấp|đầu tư công|dự án khẩn cấp|tuyến đường/i.test(combined)) {
+    topic = 'infrastructure';
+  } else if (/bảng giá|báo giá|đơn giá|giá bê tông|chi phí|ép cọc|mác 200|mác 250|mác 300|mác 350/i.test(combined)) {
+    topic = 'pricing';
+  } else if (/bảo dưỡng|độ sụt|nứt sàn|cấp phối|mác bê tông|cường độ|r28|phụ gia|chống thấm|kỹ thuật|tcvn/i.test(combined)) {
+    topic = 'technical';
+  } else if (/xe bơm|bơm cần|bơm tĩnh|xe bồn|trạm trộn/i.test(combined)) {
+    topic = 'pump';
+  } else if (/thị trường|bất động sản|thời sự|quy hoạch|xây dựng/i.test(combined)) {
+    topic = 'market';
+  }
+
+  const hookMap = {
+    infrastructure: `🛣️ [TIẾN ĐỘ HẠ TẦNG & GIAO THÔNG] • ${rawTitle.toUpperCase()}`,
+    pricing: `📊 [BẢNG GIÁ BÊ TÔNG TƯƠI MỚI NHẤT] • ${rawTitle.toUpperCase()}`,
+    technical: `⚙️ [KỸ THUẬT & TIÊU CHUẨN ĐỔ BÊ TÔNG] • ${rawTitle.toUpperCase()}`,
+    pump: `🚛 [CỤM TRẠM TRỘN & DỊCH VỤ XE BƠM 24/7] • ${rawTitle.toUpperCase()}`,
+    market: `📰 [THỊ TRƯỜNG XÂY DỰNG & VẬT LIỆU 24H] • ${rawTitle.toUpperCase()}`,
+    general: `🏗️ [BÊ TÔNG AN GIA BÌNH - VỮNG BỀN MỌI CÔNG TRÌNH] • ${rawTitle.toUpperCase()}`,
+  };
+  const hookTitle = hookMap[topic] || hookMap.general;
+
+  const cleanIntro = rawExcerpt
+    .replace(/(?:Điện thoại|Hotline|Số điện thoại|ĐT|SĐT)[\s:]*[0-9\s.hoặc/,-]{9,60}/gi, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const narrativeIntro = cleanIntro.length >= 40
+    ? cleanIntro
+    : 'Các dự án hạ tầng giao thông và công trình trọng điểm luôn đòi hỏi tiêu chuẩn khắt khe về chất lượng mác bê tông, tiến độ cấp hàng liên tục và kiểm soát chặt chẽ quy trình thử mẫu nghiệm thu. Đội ngũ kỹ sư Bê Tông An Gia Bình luôn sẵn sàng đồng hành cùng các nhà thầu thi công đạt chuẩn chất lượng và vượt tiến độ.';
+
+  const infoSection = [
+    '📌 THÔNG TIN LIÊN HỆ & NĂNG LỰC CUNG ỨNG:',
+    '📍 Trạm trộn & Nhà máy: Trạm 1: KCN Khánh Phú, Yên Khánh, Ninh Bình • Trạm 2: Kim Sơn, Ninh Bình',
+    '📞 Hotline tư vấn & đặt dịch vụ 24/7: 0988 266 293',
+    `🏷️ Chuyên mục: ${rawCategory}`,
+  ].join('\n');
+
+  const tipMap = {
+    infrastructure: '💡 Lời khuyên cho nhà thầu: Với các hạng mục đổ bê tông khối lớn, nên phối hợp chặt chẽ với trạm trộn để điều tiết tần suất xe bồn 10-15 phút/xe, tránh tình trạng chờ lâu làm suy giảm độ sụt thiết kế!',
+    pricing: '💡 Lời khuyên cho chủ đầu tư: Hãy liên hệ sớm trước 24h - 48h để kỹ sư trạm khảo sát mặt bằng, tư vấn cấp phối mác tối ưu chi phí và nhận chính sách chiết khấu trực tiếp tốt nhất!',
+    technical: '💡 Lời khuyên kỹ thuật: 7 ngày đầu tiên sau khi đổ là \'thời gian vàng\' phát triển cường độ; hãy duy trì tưới nước dưỡng ẩm liên tục ngày 3-4 lần để phòng tránh tối đa hiện tượng rạn nứt bề mặt!',
+    general: '💡 Lời khuyên: Luôn yêu cầu nhân viên kỹ thuật thử độ sụt bằng côn chuẩn tại công trình và giữ lại biên bản giao nhận có kẹp chì niêm phong xe bồn.',
+  };
+  const tipText = tipMap[topic] || tipMap.general;
+  const ctaSection = `👉 Xem chi tiết bài viết, phân tích kỹ thuật và nhận báo giá ưu đãi tại:\n🔗 ${postUrl}`;
+
+  const tags = [
+    '#BeTongAnGiaBinh',
+    '#AnGiaBinh',
+    '#BeTongTuoi',
+    '#BeTongThuongPham',
+    '#TramTronBeTong',
+    '#BeTongNinhBinh',
+    '#BeTongTuoiNinhBinh',
+    '#XayDungNinhBinh',
+    topic === 'infrastructure' ? '#HaTangGiaoThong' : '#VatLieuXayDung',
+    '#TienDoCongTrinh',
+  ];
+  const slugTag = toHashtagSlug(rawTitle);
+  if (slugTag && slugTag.length > 3) tags.push(`#${slugTag}`);
+
+  return [
+    hookTitle,
+    '',
+    narrativeIntro,
+    '',
+    infoSection,
+    '',
+    tipText,
+    '',
+    ctaSection,
+    '',
+    tags.slice(0, 12).join(' '),
+  ].join('\n').trim();
+}
+
 // Đăng bài viết lên Facebook Fanpage Bê Tông An Gia Bình
 async function postToFacebookFanpage(newPost) {
   try {
@@ -620,10 +721,13 @@ async function postToFacebookFanpage(newPost) {
     const title = newPost.title || 'Bê Tông An Gia Bình';
     const excerpt = newPost.excerpt || newPost.seoDescription || '';
 
-    const message = template
-      .replace(/{title}/g, title)
-      .replace(/{excerpt}/g, excerpt)
-      .replace(/{url}/g, postUrl);
+    const isAutoSeo = !template || template.includes('{auto_seo}') || template.includes('👉 Chi tiết tại Bê Tông An Gia Bình:');
+    const message = isAutoSeo
+      ? buildOptimizedFacebookStatusForAutopilot(newPost, SITE_URL)
+      : template
+          .replace(/{title}/g, title)
+          .replace(/{excerpt}/g, excerpt)
+          .replace(/{url}/g, postUrl);
 
     // Kích hoạt Facebook cào lại OpenGraph cache
     try {
