@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-05T05:01:50.166Z",
-    "autoPublishedCount": 34,
+    "lastRunAt": "2026-11-05T11:02:15.477Z",
+    "autoPublishedCount": 35,
     "logs": [
+      {
+        "id": "news-log-1793876535477",
+        "timestamp": "2026-11-05T11:02:15.477Z",
+        "trendTitle": "Đề xuất 6 tuyến tàu điện, kết nối trung tâm Đà Lạt với sân bay Liên Khương",
+        "generatedTitle": "Đề xuất 6 tuyến tàu điện, kết nối trung tâm Đà Lạt với sân bay Liên Khương: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/de-xuat-6-tuyen-tau-dien-ket-noi-trung-tam-da-lat-voi-san-bay-lien-khuong-5523.html",
+        "wordCount": 809,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1793854910166",
         "timestamp": "2026-11-05T05:01:50.166Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/can-canh-dai-cong-truong-cau-gan-16-000-ty-dong-qua-song-hong-sau-mot-nam-6276.html",
         "wordCount": 785,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793443271884",
-        "timestamp": "2026-10-31T10:41:11.884Z",
-        "trendTitle": "Duy trì nhân sự tinh nhuệ, làm ba ca liên tục đưa dự án Cảng hàng không Quảng Trị về đích",
-        "generatedTitle": "Duy trì nhân sự tinh nhuệ, làm ba ca liên tục đưa dự án Cảng hàng không Quảng Trị về đích: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/duy-tri-nhan-su-tinh-nhue-lam-ba-ca-lien-tuc-dua-du-an-cang-hang-khong-quang-tri-ve-dich-0884.html",
-        "wordCount": 807,
-        "trendScore": 88,
         "status": "published"
       }
     ]
