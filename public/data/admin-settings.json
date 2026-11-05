@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-04T23:01:54.511Z",
-    "autoPublishedCount": 32,
+    "lastRunAt": "2026-11-05T02:59:38.285Z",
+    "autoPublishedCount": 33,
     "logs": [
+      {
+        "id": "news-log-1793847578285",
+        "timestamp": "2026-11-05T02:59:38.285Z",
+        "trendTitle": "Hà Nội: Người dân len lỏi giữa đất đá, hố sâu và bụi mù trên đường Lĩnh Nam",
+        "generatedTitle": "Hà Nội: Người dân len lỏi giữa đất đá, hố sâu và bụi mù trên đường Lĩnh Nam: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/ha-noi-nguoi-dan-len-loi-giua-dat-da-ho-sau-va-bui-mu-tren-duong-linh-nam-5608.html",
+        "wordCount": 790,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1793833314511",
         "timestamp": "2026-11-04T23:01:54.511Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/la-mat-nhung-vom-cay-xanh-phu-kin-tru-metro-ham-chui-o-ha-noi-6957.html",
         "wordCount": 786,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793428090290",
-        "timestamp": "2026-10-31T06:28:10.290Z",
-        "trendTitle": "dự báo thời tiết tphcm",
-        "generatedTitle": "dự báo thời tiết tphcm: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/du-bao-thoi-tiet-tphcm-9296.html",
-        "wordCount": 747,
-        "trendScore": 85,
         "status": "published"
       }
     ]
