@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-06T11:01:53.037Z",
-    "autoPublishedCount": 40,
+    "lastRunAt": "2026-11-06T12:37:17.313Z",
+    "autoPublishedCount": 41,
     "logs": [
+      {
+        "id": "news-log-1793968637313",
+        "timestamp": "2026-11-06T12:37:17.313Z",
+        "trendTitle": "Sân bay Cà Mau lùi ngày khai thác trở lại đến 18/12",
+        "generatedTitle": "Sân bay Cà Mau lùi ngày khai thác trở lại đến 18/12: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/san-bay-ca-mau-lui-ngay-khai-thac-tro-lai-den-18-12-4768.html",
+        "wordCount": 781,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1793962913037",
         "timestamp": "2026-11-06T11:01:53.037Z",
@@ -376,16 +386,6 @@
         "trendTitle": "Động thổ cầu Bà Dạt 2 tại Palm City",
         "generatedTitle": "Động thổ cầu Bà Dạt 2 tại Palm City: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/dong-tho-cau-ba-dat-2-tai-palm-city-8111.html",
-        "wordCount": 784,
-        "trendScore": 75,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793472634102",
-        "timestamp": "2026-10-31T18:50:34.102Z",
-        "trendTitle": "'Săn' lao động xây dựng, giao thông lương từ 15 triệu đồng",
-        "generatedTitle": "'Săn' lao động xây dựng, giao thông lương từ 15 triệu đồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/san-lao-dong-xay-dung-giao-thong-luong-tu-15-trieu-dong-1394.html",
         "wordCount": 784,
         "trendScore": 75,
         "status": "published"
