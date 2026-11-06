@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-06T05:02:06.862Z",
-    "autoPublishedCount": 39,
+    "lastRunAt": "2026-11-06T11:01:53.037Z",
+    "autoPublishedCount": 40,
     "logs": [
+      {
+        "id": "news-log-1793962913037",
+        "timestamp": "2026-11-06T11:01:53.037Z",
+        "trendTitle": "hồng lĩnh hà tĩnh đấu với thép xanh nam định",
+        "generatedTitle": "hồng lĩnh hà tĩnh đấu với thép xanh nam định: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/hong-linh-ha-tinh-dau-voi-thep-xanh-nam-dinh-8599.html",
+        "wordCount": 757,
+        "trendScore": 100,
+        "status": "published"
+      },
       {
         "id": "news-log-1793941326862",
         "timestamp": "2026-11-06T05:02:06.862Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/san-lao-dong-xay-dung-giao-thong-luong-tu-15-trieu-dong-1394.html",
         "wordCount": 784,
         "trendScore": 75,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793468856792",
-        "timestamp": "2026-10-31T17:47:36.792Z",
-        "trendTitle": "Quảng Trị: 300 tỷ đồng nâng cấp ĐT560 và QL15 đoạn từ Nam cầu Gianh đến nút giao cao tốc",
-        "generatedTitle": "Quảng Trị: 300 tỷ đồng nâng cấp ĐT560 và QL15 đoạn từ Nam cầu Gianh đến nút giao cao tốc: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/quang-tri-300-ty-dong-nang-cap-dt560-va-ql15-doan-tu-nam-cau-gianh-den-nut-giao-cao-toc-5230.html",
-        "wordCount": 801,
-        "trendScore": 78,
         "status": "published"
       }
     ]
