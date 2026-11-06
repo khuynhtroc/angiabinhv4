@@ -273,37 +273,63 @@ async function publishToFacebook(post, settings) {
   const postUrl = getCanonicalPostUrl(post);
   const message = buildOptimizedFacebookStatus(post, postUrl);
 
-  // Kích hoạt Facebook cào OpenGraph trước khi đăng
-  try {
-    await fetch(`https://graph.facebook.com/v19.0/?id=${encodeURIComponent(postUrl)}&scrape=true`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${token}` },
+  const DEFAULT_COVER = 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg';
+  const R2_BASE = 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev';
+  let rawCover = String(post.coverImage || post.og_image || post.hero_image || post.image || '')
+    .replace(/["'`]/g, '')
+    .split('#')[0]
+    .trim()
+    .split(/\s+/)[0];
+
+  if (!rawCover && post.content) {
+    const mdImgMatch = String(post.content).match(/!\[[^\]]*\]\(([^)\s]+)\)/);
+    const htmlImgMatch = String(post.content).match(/<img[^>]+src=["']([^"']+)["']/i);
+    rawCover = (mdImgMatch && mdImgMatch[1]) || (htmlImgMatch && htmlImgMatch[1]) || '';
+  }
+
+  let photoUrl = rawCover || DEFAULT_COVER;
+  if (photoUrl.startsWith('/images/')) {
+    photoUrl = `${R2_BASE}${photoUrl}`;
+  } else if (photoUrl.startsWith('/')) {
+    photoUrl = `${SITE_URL}${photoUrl}`;
+  }
+
+  if (/\.webp(\?|$)/i.test(photoUrl)) {
+    photoUrl = `https://wsrv.nl/?url=${encodeURIComponent(photoUrl)}&output=jpg&q=90`;
+  }
+
+  const sendPhotoRequest = async (targetImgUrl) => {
+    const params = new URLSearchParams({
+      url: targetImgUrl,
+      caption: message,
     });
-  } catch {}
+    const r = await fetch(`https://graph.facebook.com/v19.0/${pageId}/photos`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${token}`,
+      },
+      body: params.toString(),
+    });
+    return { res: r, data: await r.json() };
+  };
 
-  const params = new URLSearchParams({
-    message,
-    link: postUrl,
-  });
+  let { res, data } = await sendPhotoRequest(photoUrl);
+  if ((!res.ok || data.error) && photoUrl !== DEFAULT_COVER) {
+    console.warn(`⚠️ Ảnh gốc (${photoUrl}) không tải được lên FB, chuyển sang ảnh đại diện chuẩn R2...`);
+    ({ res, data } = await sendPhotoRequest(DEFAULT_COVER));
+  }
 
-  const res = await fetch(`https://graph.facebook.com/v19.0/${pageId}/feed`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: `Bearer ${token}`,
-    },
-    body: params.toString(),
-  });
-
-  const data = await res.json();
   if (!res.ok || data.error) {
     throw new Error(data.error?.message || JSON.stringify(data));
   }
 
+  const fbPostId = data.post_id || data.id;
   return {
-    post_id: data.id,
-    url: `https://facebook.com/${data.id}`,
+    post_id: fbPostId,
+    url: `https://facebook.com/${fbPostId}`,
     postUrl,
+    photoUrl,
   };
 }
 

@@ -729,32 +729,49 @@ async function postToFacebookFanpage(newPost) {
           .replace(/{excerpt}/g, excerpt)
           .replace(/{url}/g, postUrl);
 
-    // Kích hoạt Facebook cào lại OpenGraph cache
-    try {
-      await fetch(`https://graph.facebook.com/v19.0/?id=${encodeURIComponent(postUrl)}&scrape=true`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` }
+    const DEFAULT_COVER = 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg';
+    const R2_BASE = 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev';
+    let photoUrl = String(newPost.coverImage || DEFAULT_COVER)
+      .replace(/["'`]/g, '')
+      .split('#')[0]
+      .trim()
+      .split(/\s+/)[0];
+
+    if (photoUrl.startsWith('/images/')) {
+      photoUrl = `${R2_BASE}${photoUrl}`;
+    } else if (photoUrl.startsWith('/')) {
+      photoUrl = `${SITE_URL}${photoUrl}`;
+    }
+
+    if (/\.webp(\?|$)/i.test(photoUrl)) {
+      photoUrl = `https://wsrv.nl/?url=${encodeURIComponent(photoUrl)}&output=jpg&q=90`;
+    }
+
+    const sendPhotoRequest = async (targetImgUrl) => {
+      const params = new URLSearchParams({
+        url: targetImgUrl,
+        caption: message
       });
-    } catch {}
+      const r = await fetch(`https://graph.facebook.com/v19.0/${pageId}/photos`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: `Bearer ${token}`
+        },
+        body: params.toString()
+      });
+      return { res: r, data: await r.json() };
+    };
 
-    const params = new URLSearchParams({
-      message,
-      link: postUrl
-    });
+    let { res, data } = await sendPhotoRequest(photoUrl);
+    if ((!res.ok || data.error) && photoUrl !== DEFAULT_COVER) {
+      ({ res, data } = await sendPhotoRequest(DEFAULT_COVER));
+    }
 
-    const res = await fetch(`https://graph.facebook.com/v19.0/${pageId}/feed`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${token}`
-      },
-      body: params.toString()
-    });
-
-    const data = await res.json();
-    if (res.ok && data.id) {
-      console.log(`✓ Đã đăng bài lên Facebook Fanpage thành công (ID: ${data.id})!`);
-      return { ok: true, id: data.id, url: `https://facebook.com/${data.id}` };
+    const fbPostId = data.post_id || data.id;
+    if (res.ok && fbPostId) {
+      console.log(`✓ Đã đăng bài kèm ảnh đại diện + caption lên Facebook Fanpage thành công (ID: ${fbPostId})!`);
+      return { ok: true, id: fbPostId, url: `https://facebook.com/${fbPostId}` };
     } else {
       const err = data.error?.message || JSON.stringify(data);
       console.warn('⚠️ Lỗi đăng Facebook Fanpage:', err);

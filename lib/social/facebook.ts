@@ -262,29 +262,54 @@ export async function shareToFacebook(
           .replace(/{excerpt}/g, excerpt)
           .replace(/{url}/g, postUrl);
 
-    // Warm Facebook's OpenGraph cache so the first share of an older URL always renders its og:image
-    try {
-      await fetch(`${FB_GRAPH_API}/?id=${encodeURIComponent(postUrl)}&scrape=true`, {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${cleanToken}` },
+    // Resolve article cover image for Facebook Photo + Caption post
+    const DEFAULT_COVER = 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg';
+    const R2_BASE = 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev';
+    let rawCover = String(post.coverImage || post.og_image || post.hero_image || post.image || '')
+      .replace(/["'`]/g, '')
+      .split('#')[0]
+      .trim()
+      .split(/\s+/)[0];
+
+    if (!rawCover && post.content) {
+      const mdImgMatch = String(post.content).match(/!\[[^\]]*\]\(([^)\s]+)\)/);
+      const htmlImgMatch = String(post.content).match(/<img[^>]+src=["']([^"']+)["']/i);
+      rawCover = (mdImgMatch && mdImgMatch[1]) || (htmlImgMatch && htmlImgMatch[1]) || '';
+    }
+
+    let photoUrl = rawCover || DEFAULT_COVER;
+    if (photoUrl.startsWith('/images/')) {
+      photoUrl = `${R2_BASE}${photoUrl}`;
+    } else if (photoUrl.startsWith('/')) {
+      photoUrl = `${SITE_URL}${photoUrl}`;
+    }
+
+    // Facebook /photos endpoint requires JPEG/PNG/GIF; convert .webp on the fly via wsrv.nl
+    if (/\.webp(\?|$)/i.test(photoUrl)) {
+      photoUrl = `https://wsrv.nl/?url=${encodeURIComponent(photoUrl)}&output=jpg&q=90`;
+    }
+
+    const postPhoto = async (targetImgUrl: string) => {
+      const photoParams = new URLSearchParams({
+        url: targetImgUrl,
+        caption: message,
       });
-    } catch {}
+      const r = await fetch(`${FB_GRAPH_API}/${cleanId}/photos`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: `Bearer ${cleanToken}`,
+        },
+        body: photoParams.toString(),
+      });
+      return { res: r, data: await r.json() };
+    };
 
-    const params = new URLSearchParams({
-      message,
-      link: postUrl,
-    });
-
-    const res = await fetch(`${FB_GRAPH_API}/${cleanId}/feed`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${cleanToken}`,
-      },
-      body: params.toString(),
-    });
-
-    const data = await res.json();
+    let { res, data } = await postPhoto(photoUrl);
+    if ((!res.ok || data.error) && photoUrl !== DEFAULT_COVER) {
+      // Fallback to verified R2 batching plant cover image if primary cover image URL is unreachable
+      ({ res, data } = await postPhoto(DEFAULT_COVER));
+    }
     if (!res.ok || data.error) {
       const fbErr = data.error;
       let errMsg = fbErr
@@ -307,13 +332,13 @@ export async function shareToFacebook(
       };
     }
 
-    const postId = data.id;
+    const postId = data.post_id || data.id;
     return {
       channel: 'facebook',
       success: true,
       post_id: postId,
       url: `https://facebook.com/${postId}`,
-      message: 'Đăng bài lên Facebook Fanpage thành công',
+      message: 'Đăng bài kèm ảnh đại diện + caption lên Facebook Fanpage thành công',
       timestamp,
     };
   } catch (err: any) {
