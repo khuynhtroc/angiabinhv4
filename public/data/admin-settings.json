@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-06T12:37:17.313Z",
-    "autoPublishedCount": 41,
+    "lastRunAt": "2026-11-06T23:02:17.156Z",
+    "autoPublishedCount": 42,
     "logs": [
+      {
+        "id": "news-log-1794006137156",
+        "timestamp": "2026-11-06T23:02:17.156Z",
+        "trendTitle": "Vì sao sân bay Cà Mau lùi lịch mở cửa?",
+        "generatedTitle": "Vì sao sân bay Cà Mau lùi lịch mở cửa?: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/vi-sao-san-bay-ca-mau-lui-lich-mo-cua-9664.html",
+        "wordCount": 797,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1793968637313",
         "timestamp": "2026-11-06T12:37:17.313Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/se-co-duong-bay-thang-tu-quang-ninh-toi-indonesia-6053.html",
         "wordCount": 798,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793487718250",
-        "timestamp": "2026-10-31T23:01:58.250Z",
-        "trendTitle": "Động thổ cầu Bà Dạt 2 tại Palm City",
-        "generatedTitle": "Động thổ cầu Bà Dạt 2 tại Palm City: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/dong-tho-cau-ba-dat-2-tai-palm-city-8111.html",
-        "wordCount": 784,
-        "trendScore": 75,
         "status": "published"
       }
     ]
