@@ -1,12 +1,18 @@
+import { getPostUrl } from './utils';
+
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.betongangiabinh.vn';
 
-export function postPath(slugOrPost: string | { slug?: string; id?: string }): string {
+export function postPath(
+  slugOrPost: string | { id?: string; slug?: string; permalink?: string; category?: string; isTrendingNews?: boolean }
+): string {
   if (!slugOrPost) return '/blog';
-  const slug = typeof slugOrPost === 'string' ? slugOrPost : slugOrPost.slug || slugOrPost.id || '';
-  const clean = slug.replace(/^\//, '');
-  return clean.startsWith('blog/') ? `/${clean}` : `/blog/${clean}`;
+  return getPostUrl(slugOrPost);
 }
 
-export function absolutePostUrl(slugOrPost: string | { slug?: string; id?: string }): string {
-  return `${SITE_URL}${postPath(slugOrPost)}`;
+export function absolutePostUrl(
+  slugOrPost: string | { id?: string; slug?: string; permalink?: string; category?: string; isTrendingNews?: boolean }
+): string {
+  const path = postPath(slugOrPost);
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  return `${SITE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
 }

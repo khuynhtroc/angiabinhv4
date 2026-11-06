@@ -9,6 +9,9 @@ on:
   repository_dispatch:
     types: [social_backfill, run_backfill]
 
+permissions:
+  contents: write
+
 jobs:
   backfill:
     name: Tự Động Đăng Bài Viết Cũ Theo Hàng Đợi (Backfill)
@@ -17,15 +20,28 @@ jobs:
     steps:
       - name: Checkout Code Repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
 
       - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
+
+      - name: Cài đặt Dependencies
+        run: npm ci
+
+      - name: Cấu hình Git Identity
+        run: |
+          git config --global user.name "Be Tong An Gia Binh Bot"
+          git config --global user.email "bot@betongangiabinh.vn"
 
       - name: Kích hoạt Lượt Đăng Tiếp Theo Trong Hàng Đợi
         env:
           APP_URL: https://www.betongangiabinh.vn
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN || '8876120939:AAEpkh1zZKQu6bq23eLv5gE_encPuFFhsCc' }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID || '8612893214' }}
         run: node scripts/run-social-backfill.mjs

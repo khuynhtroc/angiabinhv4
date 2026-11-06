@@ -7,28 +7,74 @@ import defaultSocialSettings from '@/public/data/social-settings.json';
 
 const DATA_DIR = path.join(process.cwd(), 'public', 'data');
 const SOCIAL_SETTINGS_FILE = path.join(DATA_DIR, 'social-settings.json');
+const R2_SETTINGS_URL = 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/data/social-settings.json';
+const GITHUB_RAW_SETTINGS_URL = 'https://raw.githubusercontent.com/khuynhtroc/angiabinhv4/main/public/data/social-settings.json';
 
-// In-memory cache across serverless requests in the same isolate
-const memorySettingsCache: Record<string, any> = {
-  social_settings: defaultSocialSettings,
-  main: defaultSocialSettings,
-  settings: defaultSocialSettings,
-};
+// Short-lived in-memory cache (10 seconds TTL) to avoid stale cursor across cron runs
+let cachedSettings: any = null;
+let cachedAt = 0;
+const CACHE_TTL_MS = 10 * 1000;
 
 export const db = {
   async findOne(table: string, query?: Record<string, any>) {
     const id = query?.id || 'main';
 
     if (table === 'settings' || table === 'social_settings') {
-      // 1. Try memory cache first
-      if (memorySettingsCache[id]) {
-        return memorySettingsCache[id];
-      }
-      if (id === 'social_settings' && memorySettingsCache['main']) {
-        return memorySettingsCache['main'];
+      const now = Date.now();
+      if (cachedSettings && now - cachedAt < CACHE_TTL_MS) {
+        return cachedSettings;
       }
 
-      // 2. Try Supabase
+      // 1. Try local filesystem first when running in Node/CLI/Dev
+      try {
+        if (typeof fs !== 'undefined' && fs.existsSync && fs.existsSync(SOCIAL_SETTINGS_FILE)) {
+          const raw = fs.readFileSync(SOCIAL_SETTINGS_FILE, 'utf8');
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            cachedSettings = parsed;
+            cachedAt = now;
+            // On Cloudflare Workers, fs.readFileSync may return the static build-time asset;
+            // so we still check live R2 / GitHub Raw below if we are in a worker environment.
+          }
+        }
+      } catch {}
+
+      // 2. Try live Cloudflare R2 (updated immediately by GitHub Actions & Admin)
+      try {
+        const r2Res = await fetch(`${R2_SETTINGS_URL}?t=${now}`, { cache: 'no-store' });
+        if (r2Res.ok) {
+          const r2Data = await r2Res.json();
+          if (r2Data && typeof r2Data === 'object' && r2Data.facebook_backfill) {
+            // Pick whichever has the higher cursor between local and R2
+            const localCursor = cachedSettings?.facebook_backfill?.cursor || 0;
+            const r2Cursor = r2Data?.facebook_backfill?.cursor || 0;
+            if (!cachedSettings || r2Cursor >= localCursor) {
+              cachedSettings = r2Data;
+              cachedAt = now;
+              return r2Data;
+            }
+          }
+        }
+      } catch {}
+
+      // 3. Try GitHub Raw (always reflects latest git commit on main)
+      try {
+        const ghRes = await fetch(`${GITHUB_RAW_SETTINGS_URL}?t=${now}`, { cache: 'no-store' });
+        if (ghRes.ok) {
+          const ghData = await ghRes.json();
+          if (ghData && typeof ghData === 'object' && ghData.facebook_backfill) {
+            const currentCursor = cachedSettings?.facebook_backfill?.cursor || 0;
+            const ghCursor = ghData?.facebook_backfill?.cursor || 0;
+            if (!cachedSettings || ghCursor >= currentCursor) {
+              cachedSettings = ghData;
+              cachedAt = now;
+              return ghData;
+            }
+          }
+        }
+      } catch {}
+
+      // 4. Try Supabase
       const sb = getSupabaseClient();
       if (sb) {
         try {
@@ -39,27 +85,18 @@ export const db = {
             .maybeSingle();
 
           if (!error && data?.data) {
-            memorySettingsCache[id] = data.data;
+            cachedSettings = data.data;
+            cachedAt = now;
             return data.data;
           }
-        } catch (err) {
-          // Ignore missing table error
-        }
+        } catch {}
       }
 
-      // 3. Fallback to local filesystem if available
-      try {
-        if (typeof fs !== 'undefined' && fs.existsSync && fs.existsSync(SOCIAL_SETTINGS_FILE)) {
-          const raw = fs.readFileSync(SOCIAL_SETTINGS_FILE, 'utf8');
-          const parsed = JSON.parse(raw);
-          memorySettingsCache[id] = parsed;
-          return parsed;
-        }
-      } catch (err) {
-        console.warn('[db] Failed to read social settings:', err);
+      if (cachedSettings) {
+        return cachedSettings;
       }
 
-      // 4. Bundled fallback
+      // 5. Bundled fallback
       return defaultSocialSettings;
     }
 
@@ -80,7 +117,7 @@ export const db = {
           if (!error && data) {
             return data;
           }
-        } catch (err) {}
+        } catch {}
       }
 
       // 2. Local / bundled posts fallback
@@ -95,7 +132,7 @@ export const db = {
     return null;
   },
 
-  async find(table: string, query?: any) {
+  async find(table: string, _query?: any) {
     if (table === 'posts') {
       const sb = getSupabaseClient();
       if (sb) {
@@ -104,9 +141,7 @@ export const db = {
           if (!error && Array.isArray(data) && data.length > 0) {
             return { rows: data, total: data.length };
           }
-        } catch (e) {
-          // ignore
-        }
+        } catch {}
       }
 
       try {
@@ -124,9 +159,8 @@ export const db = {
 
     if (table === 'settings' || table === 'social_settings') {
       // 1. Update in-memory cache immediately
-      memorySettingsCache[id] = data;
-      memorySettingsCache['social_settings'] = data;
-      memorySettingsCache['main'] = data;
+      cachedSettings = data;
+      cachedAt = Date.now();
 
       // 2. Try Supabase safely
       const sb = getSupabaseClient();
@@ -137,9 +171,7 @@ export const db = {
             data,
             updated_at: new Date().toISOString(),
           });
-        } catch (err) {
-          // safe catch if table doesn't exist
-        }
+        } catch {}
       }
 
       // 3. Local filesystem fallback if writable
@@ -148,19 +180,17 @@ export const db = {
           if (!fs.existsSync(DATA_DIR)) {
             fs.mkdirSync(DATA_DIR, { recursive: true });
           }
-          fs.writeFileSync(SOCIAL_SETTINGS_FILE, JSON.stringify(data, null, 2), 'utf8');
+          fs.writeFileSync(SOCIAL_SETTINGS_FILE, JSON.stringify(data, null, 2) + '\n', 'utf8');
         }
-      } catch (err) {
-        // Cloudflare worker read-only filesystem is expected
-      }
+      } catch {}
 
-      // 4. Asynchronously commit to GitHub via GitHub Git Database API
+      // 4. Commit to GitHub via GitHub API (awaited so serverless workers don't terminate early)
       try {
-        commitFilesViaGitHubApi(
-          [{ path: 'public/data/social-settings.json', content: JSON.stringify(data, null, 2) }],
+        await commitFilesViaGitHubApi(
+          [{ path: 'public/data/social-settings.json', content: JSON.stringify(data, null, 2) + '\n' }],
           'chore(settings): auto-persist social settings'
-        ).catch(() => { });
-      } catch { }
+        );
+      } catch {}
 
       return data;
     }
@@ -170,7 +200,7 @@ export const db = {
       if (sb) {
         try {
           await sb.from('posts').upsert(data, { onConflict: 'id' });
-        } catch { }
+        } catch {}
       }
     }
 
