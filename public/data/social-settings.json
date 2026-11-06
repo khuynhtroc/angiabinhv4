@@ -972,7 +972,7 @@
       "post-1789356202097-966-v6dv",
       "post-1789356202097-967-wfwr"
     ],
-    "cursor": 0,
+    "cursor": 2,
     "interval_minutes": 240,
     "start_at": "2026-11-06T01:19:18.439Z",
     "next_post_at": "2026-11-06T01:19:18.439Z",
@@ -986,7 +986,13 @@
     "channels": [
       "facebook"
     ],
-    "last_channels_posted": []
+    "last_channels_posted": [
+      "facebook"
+    ],
+    "posted_ids": [
+      "post-1789356202097-0-121o",
+      "post-j9lzq2m"
+    ]
   },
   "facebook_enabled": true,
   "facebook_page_id": "217910354731480",
