@@ -133,6 +133,24 @@ async function main() {
     } catch (e) {}
   }
 
+  // 5. Social Settings (Backfill Queue & Auto-Share)
+  const socialPath = path.join(DATA_DIR, 'social-settings.json');
+  if (fs.existsSync(socialPath)) {
+    try {
+      const social = JSON.parse(fs.readFileSync(socialPath, 'utf8'));
+      const { error } = await sb.from('social_settings').upsert({
+        id: 'main',
+        data: social,
+        updated_at: new Date().toISOString()
+      });
+      if (!error) {
+        console.log('✓ Đã đồng bộ social-settings.json vào bảng "social_settings".');
+      } else {
+        console.warn('[Seed social_settings] Lỗi:', error.message);
+      }
+    } catch (e) {}
+  }
+
   console.log('\n======================================================');
   console.log('HOÀN THÀNH ĐỒNG BỘ SUPABASE CHO BETONGANGIABINH.VN!');
   console.log('Nếu bảng chưa tồn tại, hãy nhớ chạy file supabase_schema.sql trong Supabase SQL Editor.');

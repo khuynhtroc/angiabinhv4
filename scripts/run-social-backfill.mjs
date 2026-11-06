@@ -35,6 +35,8 @@ if (fs.existsSync(envPath)) {
 
 const SITE_URL = process.env.APP_URL || 'https://www.betongangiabinh.vn';
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || 'https://msxqrdaklnfpqwhxwjlc.supabase.co';
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1zeHFyZGFrbG5mcHF3aHh3amxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM0MDMxNjYsImV4cCI6MjEwODk3OTE2Nn0.QIa6Zq6cTFr08kjaZdIq5cwVPzVvy4eXXh2DnL5967M';
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8876120939:AAEpkh1zZKQu6bq23eLv5gE_encPuFFhsCc';
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '8612893214';
 
@@ -465,6 +467,28 @@ async function main() {
   } catch (r2Err) {
     console.warn('⚠️ Lỗi đồng bộ R2:', r2Err.message);
   }
+
+  // 2b. Đồng bộ trạng thái hàng đợi & bài viết lên Supabase (giữ kết nối DB hoạt động 24/7 chống bị tạm dừng)
+  try {
+    const sbHeaders = {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      'Content-Type': 'application/json',
+      Prefer: 'resolution=merge-duplicates',
+    };
+    const sbRes = await fetch(`${SUPABASE_URL}/rest/v1/social_settings`, {
+      method: 'POST',
+      headers: sbHeaders,
+      body: JSON.stringify({
+        id: 'main',
+        data: settings,
+        updated_at: new Date().toISOString(),
+      }),
+    });
+    if (sbRes.ok) {
+      console.log('✓ Đã đồng bộ trạng thái hàng đợi lên Supabase Database!');
+    }
+  } catch {}
 
   // 3. Commit & Push lên GitHub
   gitPersistSettings(`chore(backfill): advance queue cursor to ${nextCursor}/${postIds.length} (${targetPost.slug})`);
