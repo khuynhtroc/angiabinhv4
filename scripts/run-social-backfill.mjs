@@ -343,11 +343,11 @@ function gitPersistSettings(commitMsg) {
 
     if (GITHUB_TOKEN) {
       const remoteUrl = `https://${GITHUB_TOKEN}@github.com/khuynhtroc/angiabinhv4.git`;
-      execSync(`git pull --rebase -X ours ${remoteUrl} main`, { cwd: ROOT_DIR, stdio: 'pipe' });
+      execSync(`git pull --rebase --autostash -X ours ${remoteUrl} main`, { cwd: ROOT_DIR, stdio: 'pipe' });
       execSync(`git push ${remoteUrl} main`, { cwd: ROOT_DIR, stdio: 'pipe' });
       console.log(`✓ Đã push tiến trình hàng đợi (commit ${hash}) lên GitHub main!`);
     } else {
-      execSync('git pull --rebase -X ours origin main', { cwd: ROOT_DIR, stdio: 'pipe' });
+      execSync('git pull --rebase --autostash -X ours origin main', { cwd: ROOT_DIR, stdio: 'pipe' });
       execSync('git push origin main', { cwd: ROOT_DIR, stdio: 'pipe' });
       console.log(`✓ Đã push tiến trình hàng đợi (commit ${hash}) lên origin main!`);
     }
