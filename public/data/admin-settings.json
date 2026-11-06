@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-05T23:02:28.676Z",
-    "autoPublishedCount": 37,
+    "lastRunAt": "2026-11-06T02:59:11.957Z",
+    "autoPublishedCount": 38,
     "logs": [
+      {
+        "id": "news-log-1793933951957",
+        "timestamp": "2026-11-06T02:59:11.957Z",
+        "trendTitle": "Hà Nội đẩy nhanh tiến độ dự án nâng cấp Quốc lộ 6 và đường 70",
+        "generatedTitle": "Hà Nội đẩy nhanh tiến độ dự án nâng cấp Quốc lộ 6 và đường 70: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/ha-noi-day-nhanh-tien-do-du-an-nang-cap-quoc-lo-6-va-duong-70-7399.html",
+        "wordCount": 814,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1793919748676",
         "timestamp": "2026-11-05T23:02:28.676Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/thong-xe-cao-toc-phai-chay-that-khong-phai-de-lay-ngay-roi-dong-cua-thi-cong-tiep-5031.html",
         "wordCount": 838,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793467246031",
-        "timestamp": "2026-10-31T17:20:46.031Z",
-        "trendTitle": "Cao tốc Châu Đốc - Cần Thơ - Sóc Trăng qua Cần Thơ thiếu nguồn hơn 2,6 triệu m³ đá",
-        "generatedTitle": "Cao tốc Châu Đốc - Cần Thơ - Sóc Trăng qua Cần Thơ thiếu nguồn hơn 2,6 triệu m³ đá: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/cao-toc-chau-doc---can-tho---soc-trang-qua-can-tho-thieu-nguon-hon-2-6-trieu-m-da-5204.html",
-        "wordCount": 805,
-        "trendScore": 85,
         "status": "published"
       }
     ]
