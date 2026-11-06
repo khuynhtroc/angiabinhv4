@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-06T02:59:11.957Z",
-    "autoPublishedCount": 38,
+    "lastRunAt": "2026-11-06T05:02:06.862Z",
+    "autoPublishedCount": 39,
     "logs": [
+      {
+        "id": "news-log-1793941326862",
+        "timestamp": "2026-11-06T05:02:06.862Z",
+        "trendTitle": "Diễn biến mới nhất về nút giao 2.400 tỷ đồng, vượt đại lộ 16 làn xe đẹp như châu Âu: Có hầm chui 4 làn dài gần 1km, nằm sát đại đô thị của tỷ phú Phạm Nhật Vượng",
+        "generatedTitle": "Diễn biến mới nhất về nút giao 2.400 tỷ đồng, vượt đại lộ 16 làn xe đẹp như châu Âu: Có hầm chui 4 làn dài gần 1km, nằm sát đại đô thị của tỷ phú Phạm Nhật Vượng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dien-bien-moi-nhat-ve-nut-giao-2-400-ty-dong-vuot-dai-lo-16-lan-xe-dep-nhu-chau-au-co-ham-chui-4-lan-dai-gan-1km-nam-sat-dai-do-thi-cua-ty-phu-pham-nhat-vuong-4652.html",
+        "wordCount": 836,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1793933951957",
         "timestamp": "2026-11-06T02:59:11.957Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/quang-tri-300-ty-dong-nang-cap-dt560-va-ql15-doan-tu-nam-cau-gianh-den-nut-giao-cao-toc-5230.html",
         "wordCount": 801,
         "trendScore": 78,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793467576262",
-        "timestamp": "2026-10-31T17:26:16.262Z",
-        "trendTitle": "Thông xe cao tốc phải chạy thật, không phải để lấy ngày, rồi 'đóng cửa' thi công tiếp",
-        "generatedTitle": "Thông xe cao tốc phải chạy thật, không phải để lấy ngày, rồi 'đóng cửa' thi công tiếp: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/thong-xe-cao-toc-phai-chay-that-khong-phai-de-lay-ngay-roi-dong-cua-thi-cong-tiep-5031.html",
-        "wordCount": 838,
-        "trendScore": 82,
         "status": "published"
       }
     ]
