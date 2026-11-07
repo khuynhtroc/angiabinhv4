@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-07T02:28:17.043Z",
-    "autoPublishedCount": 43,
+    "lastRunAt": "2026-11-07T05:02:02.557Z",
+    "autoPublishedCount": 44,
     "logs": [
+      {
+        "id": "news-log-1794027722557",
+        "timestamp": "2026-11-07T05:02:02.557Z",
+        "trendTitle": "Chính phủ đề xuất đầu tư 3 dự án cao tốc hơn 162 nghìn tỷ đồng",
+        "generatedTitle": "Chính phủ đề xuất đầu tư 3 dự án cao tốc hơn 162 nghìn tỷ đồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/chinh-phu-de-xuat-dau-tu-3-du-an-cao-toc-hon-162-nghin-ty-dong-7035.html",
+        "wordCount": 785,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1794018497043",
         "timestamp": "2026-11-07T02:28:17.043Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/ha-noi-dong-loat-thay-hang-rao-tren-14-tuyen-duong-7591.html",
         "wordCount": 787,
         "trendScore": 88,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793509278601",
-        "timestamp": "2026-11-01T05:01:18.601Z",
-        "trendTitle": "Máy bay chuyển hướng hạ cánh tại Pakistan để cấp cứu hành khách",
-        "generatedTitle": "Máy bay chuyển hướng hạ cánh tại Pakistan để cấp cứu hành khách: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/may-bay-chuyen-huong-ha-canh-tai-pakistan-de-cap-cuu-hanh-khach-9950.html",
-        "wordCount": 785,
-        "trendScore": 82,
         "status": "published"
       }
     ]
