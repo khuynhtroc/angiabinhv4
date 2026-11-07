@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-07T05:02:02.557Z",
-    "autoPublishedCount": 44,
+    "lastRunAt": "2026-11-07T11:02:19.986Z",
+    "autoPublishedCount": 45,
     "logs": [
+      {
+        "id": "news-log-1794049339986",
+        "timestamp": "2026-11-07T11:02:19.986Z",
+        "trendTitle": "Khối bê tông đổ sập hoàn toàn từ độ cao hàng chục mét, Việt Nam vẫn hoàn thành siêu cầu 5.000 tỷ đồng lập kỷ lục Đông Nam Á, nay có thêm công trình 27.000 tỷ đồng \"chia lửa\"",
+        "generatedTitle": "Khối bê tông đổ sập hoàn toàn từ độ cao hàng chục mét, Việt Nam vẫn hoàn thành siêu cầu 5.000 tỷ đồng lập kỷ lục Đông Nam Á, nay có thêm công trình 27.000 tỷ đồng \"chia lửa\": Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/khoi-be-tong-do-sap-hoan-toan-tu-do-cao-hang-chuc-met-viet-nam-van-hoan-thanh-sieu-cau-5-000-ty-dong-lap-ky-luc-dong-nam-a-nay-co-them-cong-trinh-27-000-ty-dong-chia-lua-2774.html",
+        "wordCount": 824,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1794027722557",
         "timestamp": "2026-11-07T05:02:02.557Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Thứ trưởng Lê Anh Tuấn yêu cầu rà soát nguồn vật liệu cho dự án Vành đai 4: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/thu-truong-le-anh-tuan-yeu-cau-ra-soat-nguon-vat-lieu-cho-du-an-vanh-dai-4-1618.html",
         "wordCount": 791,
-        "trendScore": 88,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793530889618",
-        "timestamp": "2026-11-01T11:01:29.618Z",
-        "trendTitle": "Hà Nội đồng loạt thay hàng rào trên 14 tuyến đường",
-        "generatedTitle": "Hà Nội đồng loạt thay hàng rào trên 14 tuyến đường: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/ha-noi-dong-loat-thay-hang-rao-tren-14-tuyen-duong-7591.html",
-        "wordCount": 787,
         "trendScore": 88,
         "status": "published"
       }
