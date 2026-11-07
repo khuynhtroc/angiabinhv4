@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-07T11:02:19.986Z",
-    "autoPublishedCount": 45,
+    "lastRunAt": "2026-11-07T11:26:01.291Z",
+    "autoPublishedCount": 46,
     "logs": [
+      {
+        "id": "news-log-1794050761291",
+        "timestamp": "2026-11-07T11:26:01.291Z",
+        "trendTitle": "Nhà xưởng ở Hà Nội bốc cháy ngùn ngụt",
+        "generatedTitle": "Nhà xưởng ở Hà Nội bốc cháy ngùn ngụt: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/nha-xuong-o-ha-noi-boc-chay-ngun-ngut-5661.html",
+        "wordCount": 766,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1794049339986",
         "timestamp": "2026-11-07T11:02:19.986Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/nguoi-dan-2-tinh-mien-tay-nay-don-tin-vui-chinh-thuc-phe-duyet-xay-dung-cau-day-vang-2-tang-hon-27-000-ty-dong-co-6-lan-cao-toc-o-tang-tren-duong-sat-chay-ben-duoi-du-kien-khoi-cong-nam-2027-4868.html",
         "wordCount": 795,
         "trendScore": 75,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793532972729",
-        "timestamp": "2026-11-01T11:36:12.729Z",
-        "trendTitle": "Thứ trưởng Lê Anh Tuấn yêu cầu rà soát nguồn vật liệu cho dự án Vành đai 4",
-        "generatedTitle": "Thứ trưởng Lê Anh Tuấn yêu cầu rà soát nguồn vật liệu cho dự án Vành đai 4: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/thu-truong-le-anh-tuan-yeu-cau-ra-soat-nguon-vat-lieu-cho-du-an-vanh-dai-4-1618.html",
-        "wordCount": 791,
-        "trendScore": 88,
         "status": "published"
       }
     ]
