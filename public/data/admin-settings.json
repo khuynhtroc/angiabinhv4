@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-06T23:02:17.156Z",
-    "autoPublishedCount": 42,
+    "lastRunAt": "2026-11-07T02:28:17.043Z",
+    "autoPublishedCount": 43,
     "logs": [
+      {
+        "id": "news-log-1794018497043",
+        "timestamp": "2026-11-07T02:28:17.043Z",
+        "trendTitle": "Có vật liệu, đường nghìn tỷ nối sân vận động lớn nhất Hưng Yên tăng tốc thi công",
+        "generatedTitle": "Có vật liệu, đường nghìn tỷ nối sân vận động lớn nhất Hưng Yên tăng tốc thi công: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/co-vat-lieu-duong-nghin-ty-noi-san-van-dong-lon-nhat-hung-yen-tang-toc-thi-cong-5484.html",
+        "wordCount": 802,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1794006137156",
         "timestamp": "2026-11-06T23:02:17.156Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Máy bay chuyển hướng hạ cánh tại Pakistan để cấp cứu hành khách: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/may-bay-chuyen-huong-ha-canh-tai-pakistan-de-cap-cuu-hanh-khach-9950.html",
         "wordCount": 785,
-        "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793497227200",
-        "timestamp": "2026-11-01T01:40:27.200Z",
-        "trendTitle": "Sẽ có đường bay thẳng từ Quảng Ninh tới Indonesia?",
-        "generatedTitle": "Sẽ có đường bay thẳng từ Quảng Ninh tới Indonesia?: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/se-co-duong-bay-thang-tu-quang-ninh-toi-indonesia-6053.html",
-        "wordCount": 798,
         "trendScore": 82,
         "status": "published"
       }
