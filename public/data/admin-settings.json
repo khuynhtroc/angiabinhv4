@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-08T11:38:22.571Z",
-    "autoPublishedCount": 51,
+    "lastRunAt": "2026-11-08T23:02:10.181Z",
+    "autoPublishedCount": 52,
     "logs": [
+      {
+        "id": "news-log-1794178930181",
+        "timestamp": "2026-11-08T23:02:10.181Z",
+        "trendTitle": "Huy động hơn 1.500 người và 800 máy móc, Việt Nam sẽ đào hầm gần 6km xuyên núi qua 2 đèo hiểm trở bậc nhất cả nước",
+        "generatedTitle": "Huy động hơn 1.500 người và 800 máy móc, Việt Nam sẽ đào hầm gần 6km xuyên núi qua 2 đèo hiểm trở bậc nhất cả nước: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/huy-dong-hon-1-500-nguoi-va-800-may-moc-viet-nam-se-dao-ham-gan-6km-xuyen-nui-qua-2-deo-hiem-tro-bac-nhat-ca-nuoc-7468.html",
+        "wordCount": 826,
+        "trendScore": 75,
+        "status": "published"
+      },
       {
         "id": "news-log-1794137902571",
         "timestamp": "2026-11-08T11:38:22.571Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Dải phân cách đại lộ ở Ninh Bình biến thành ruộng dứa, chủ đầu tư yêu cầu dọn bỏ: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/dai-phan-cach-dai-lo-o-ninh-binh-bien-thanh-ruong-dua-chu-dau-tu-yeu-cau-don-bo-9144.html",
         "wordCount": 789,
-        "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793660542861",
-        "timestamp": "2026-11-02T23:02:22.861Z",
-        "trendTitle": "Những hộ dân cuối dỡ nhà thi công nút giao lớn nhất TP HCM",
-        "generatedTitle": "Những hộ dân cuối dỡ nhà thi công nút giao lớn nhất TP HCM: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/nhung-ho-dan-cuoi-do-nha-thi-cong-nut-giao-lon-nhat-tp-hcm-2876.html",
-        "wordCount": 779,
         "trendScore": 82,
         "status": "published"
       }
