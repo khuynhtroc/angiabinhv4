@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-08T11:02:18.654Z",
-    "autoPublishedCount": 50,
+    "lastRunAt": "2026-11-08T11:38:22.571Z",
+    "autoPublishedCount": 51,
     "logs": [
+      {
+        "id": "news-log-1794137902571",
+        "timestamp": "2026-11-08T11:38:22.571Z",
+        "trendTitle": "Mở đường lớn đánh thức tiềm năng phát triển kinh tế biển Đồng Tháp",
+        "generatedTitle": "Mở đường lớn đánh thức tiềm năng phát triển kinh tế biển Đồng Tháp: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/mo-duong-lon-danh-thuc-tiem-nang-phat-trien-kinh-te-bien-dong-thap-0035.html",
+        "wordCount": 779,
+        "trendScore": 78,
+        "status": "published"
+      },
       {
         "id": "news-log-1794135738654",
         "timestamp": "2026-11-08T11:02:18.654Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Những hộ dân cuối dỡ nhà thi công nút giao lớn nhất TP HCM: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/nhung-ho-dan-cuoi-do-nha-thi-cong-nut-giao-lon-nhat-tp-hcm-2876.html",
         "wordCount": 779,
-        "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793624380459",
-        "timestamp": "2026-11-02T12:59:40.459Z",
-        "trendTitle": "Gia Lai rót hơn 860 tỷ mở rộng đường nối với sân bay Phù Cát",
-        "generatedTitle": "Gia Lai rót hơn 860 tỷ mở rộng đường nối với sân bay Phù Cát: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/gia-lai-rot-hon-860-ty-mo-rong-duong-noi-voi-san-bay-phu-cat-7194.html",
-        "wordCount": 785,
         "trendScore": 82,
         "status": "published"
       }
