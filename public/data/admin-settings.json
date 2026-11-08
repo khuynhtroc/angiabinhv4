@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-08T05:02:05.877Z",
-    "autoPublishedCount": 49,
+    "lastRunAt": "2026-11-08T11:02:18.654Z",
+    "autoPublishedCount": 50,
     "logs": [
+      {
+        "id": "news-log-1794135738654",
+        "timestamp": "2026-11-08T11:02:18.654Z",
+        "trendTitle": "Toàn cảnh công trường Trung tâm hành chính TP.HCM sau hơn 6 tháng khởi công",
+        "generatedTitle": "Toàn cảnh công trường Trung tâm hành chính TP.HCM sau hơn 6 tháng khởi công: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/toan-canh-cong-truong-trung-tam-hanh-chinh-tp-hcm-sau-hon-6-thang-khoi-cong-8830.html",
+        "wordCount": 787,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1794114125877",
         "timestamp": "2026-11-08T05:02:05.877Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Gia Lai rót hơn 860 tỷ mở rộng đường nối với sân bay Phù Cát: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/gia-lai-rot-hon-860-ty-mo-rong-duong-noi-voi-san-bay-phu-cat-7194.html",
         "wordCount": 785,
-        "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793617339711",
-        "timestamp": "2026-11-02T11:02:19.711Z",
-        "trendTitle": "Chưa đầy 2 tuần nữa, đại gia Xuân Thiện sẽ khởi công dự án thủy điện 28.000 tỷ đồng, có thiết kế cáp treo tại tỉnh rộng nhất miền Bắc",
-        "generatedTitle": "Chưa đầy 2 tuần nữa, đại gia Xuân Thiện sẽ khởi công dự án thủy điện 28.000 tỷ đồng, có thiết kế cáp treo tại tỉnh rộng nhất miền Bắc: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/chua-day-2-tuan-nua-dai-gia-xuan-thien-se-khoi-cong-du-an-thuy-dien-28-000-ty-dong-co-thiet-ke-cap-treo-tai-tinh-rong-nhat-mien-bac-4107.html",
-        "wordCount": 807,
         "trendScore": 82,
         "status": "published"
       }
