@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-09T02:15:30.603Z",
-    "autoPublishedCount": 53,
+    "lastRunAt": "2026-11-09T05:02:18.874Z",
+    "autoPublishedCount": 54,
     "logs": [
+      {
+        "id": "news-log-1794200538874",
+        "timestamp": "2026-11-09T05:02:18.874Z",
+        "trendTitle": "Phát hiện một công trình hơn 4.300 tỷ đồng tại Hà Nội: Huy động 5.000 người thi công, sử dụng 14.000 tấn cốt thép, 34.000m² đá ốp lát, thuộc top lớn nhất Đông Nam Á",
+        "generatedTitle": "Phát hiện một công trình hơn 4.300 tỷ đồng tại Hà Nội: Huy động 5.000 người thi công, sử dụng 14.000 tấn cốt thép, 34.000m² đá ốp lát, thuộc top lớn nhất Đông Nam Á: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/phat-hien-mot-cong-trinh-hon-4-300-ty-dong-tai-ha-noi-huy-dong-5-000-nguoi-thi-cong-su-dung-14-000-tan-cot-thep-34-000m-da-op-lat-thuoc-top-lon-nhat-dong-nam-a-4225.html",
+        "wordCount": 820,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1794190530603",
         "timestamp": "2026-11-09T02:15:30.603Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Viện Địa công nghệ và Môi trường cảnh báo nếu san phẳng núi Một ở Quy Nhơn: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/vien-dia-cong-nghe-va-moi-truong-canh-bao-neu-san-phang-nui-mot-o-quy-nhon-3401.html",
         "wordCount": 823,
-        "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793682145840",
-        "timestamp": "2026-11-03T05:02:25.840Z",
-        "trendTitle": "Siêu sân vận động gần 70.000 chỗ, lớn gần gấp đôi Mỹ Đình: Sở hữu hai tấm mái khổng lồ có thể tách đôi, tự động đóng mở trong chưa đầy 12 phút, được nâng đỡ bởi hai dầm thép dài gần 300 m",
-        "generatedTitle": "Siêu sân vận động gần 70.000 chỗ, lớn gần gấp đôi Mỹ Đình: Sở hữu hai tấm mái khổng lồ có thể tách đôi, tự động đóng mở trong chưa đầy 12 phút, được nâng đỡ bởi hai dầm thép dài gần 300 m: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/sieu-san-van-dong-gan-70-000-cho-lon-gan-gap-doi-my-dinh-so-huu-hai-tam-mai-khong-lo-co-the-tach-doi-tu-dong-dong-mo-trong-chua-day-12-phut-duoc-nang-do-boi-hai-dam-thep-dai-gan-300-m-8507.html",
-        "wordCount": 821,
         "trendScore": 92,
         "status": "published"
       }
