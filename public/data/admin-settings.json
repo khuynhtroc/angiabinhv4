@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-09T05:02:18.874Z",
-    "autoPublishedCount": 54,
+    "lastRunAt": "2026-11-09T11:01:57.740Z",
+    "autoPublishedCount": 55,
     "logs": [
+      {
+        "id": "news-log-1794222117740",
+        "timestamp": "2026-11-09T11:01:57.740Z",
+        "trendTitle": "Đại gia gốc Thanh Hóa từng thi công mái vòm lớn nhất hành tinh tiếp tục góp mặt tại SVĐ 60.000 chỗ lớn gấp 1,5 lần Mỹ Đình, đảm nhiệm hệ mái thép nặng 8.600 tấn tích hợp công nghệ đóng mở tự động",
+        "generatedTitle": "Đại gia gốc Thanh Hóa từng thi công mái vòm lớn nhất hành tinh tiếp tục góp mặt tại SVĐ 60.000 chỗ lớn gấp 1,5 lần Mỹ Đình, đảm nhiệm hệ mái thép nặng 8.600 tấn tích hợp công nghệ đóng mở tự động: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dai-gia-goc-thanh-hoa-tung-thi-cong-mai-vom-lon-nhat-hanh-tinh-tiep-tuc-gop-mat-tai-svd-60-000-cho-lon-gap-1-5-lan-my-dinh-dam-nhiem-he-mai-thep-nang-8-600-tan-tich-hop-cong-nghe-dong-mo-tu-dong-1922.html",
+        "wordCount": 821,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1794200538874",
         "timestamp": "2026-11-09T05:02:18.874Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Căn hộ hạng sang Triton Crown 'may đo' nội thất từ cảm hứng hoa sen: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/can-ho-hang-sang-triton-crown-may-do-noi-that-tu-cam-hung-hoa-sen-7826.html",
         "wordCount": 797,
-        "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793703742883",
-        "timestamp": "2026-11-03T11:02:22.883Z",
-        "trendTitle": "Viện Địa công nghệ và Môi trường cảnh báo nếu san phẳng núi Một ở Quy Nhơn",
-        "generatedTitle": "Viện Địa công nghệ và Môi trường cảnh báo nếu san phẳng núi Một ở Quy Nhơn: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/vien-dia-cong-nghe-va-moi-truong-canh-bao-neu-san-phang-nui-mot-o-quy-nhon-3401.html",
-        "wordCount": 823,
         "trendScore": 92,
         "status": "published"
       }
