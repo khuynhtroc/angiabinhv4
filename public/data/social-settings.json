@@ -972,13 +972,13 @@
       "post-1789356202097-966-v6dv",
       "post-1789356202097-967-wfwr"
     ],
-    "cursor": 15,
+    "cursor": 16,
     "interval_minutes": 240,
     "start_at": "2026-11-06T01:19:18.439Z",
-    "next_post_at": "2026-11-09T11:32:14.600Z",
+    "next_post_at": "2026-11-09T23:25:16.259Z",
     "started_at": "2026-11-06T01:19:18.439Z",
-    "last_posted_at": "2026-11-09T07:32:14.600Z",
-    "last_post_title": "Bảng Báo Giá Bê Tông Tươi Ninh Bình Mới Nhất 2025 - 2026 | Bê Tông An Gia Bình",
+    "last_posted_at": "2026-11-09T19:25:16.259Z",
+    "last_post_title": "An Gia Bình Đưa Cụm Trạm Trộn Tự Động Hóa 300m³/h Vào Hoạt Động Tại KCN Khánh Phú",
     "last_error": null,
     "skipped_count": 0,
     "lock_id": null,
@@ -1004,7 +1004,8 @@
       "post-4",
       "post-3",
       "post-2",
-      "post-1"
+      "post-1",
+      "post-5"
     ]
   },
   "facebook_enabled": true,
