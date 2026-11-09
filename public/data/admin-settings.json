@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-09T11:01:57.740Z",
-    "autoPublishedCount": 55,
+    "lastRunAt": "2026-11-09T13:30:59.255Z",
+    "autoPublishedCount": 56,
     "logs": [
+      {
+        "id": "news-log-1794231059255",
+        "timestamp": "2026-11-09T13:30:59.255Z",
+        "trendTitle": "Mua vé tàu hỏa qua VNeID",
+        "generatedTitle": "Mua vé tàu hỏa qua VNeID: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/mua-ve-tau-hoa-qua-vneid-5142.html",
+        "wordCount": 778,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1794222117740",
         "timestamp": "2026-11-09T11:01:57.740Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/toan-canh-cau-day-vang-gan-12-000-ty-dong-bac-qua-song-hong-tru-thap-cao-tuong-duong-toa-nha-40-tang-nhip-day-vang-350m-ket-noi-ha-noi-voi-sieu-san-van-dong-lon-thu-2-viet-nam-9920.html",
         "wordCount": 833,
         "trendScore": 75,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793709115029",
-        "timestamp": "2026-11-03T12:31:55.029Z",
-        "trendTitle": "Căn hộ hạng sang Triton Crown 'may đo' nội thất từ cảm hứng hoa sen",
-        "generatedTitle": "Căn hộ hạng sang Triton Crown 'may đo' nội thất từ cảm hứng hoa sen: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/can-ho-hang-sang-triton-crown-may-do-noi-that-tu-cam-hung-hoa-sen-7826.html",
-        "wordCount": 797,
-        "trendScore": 92,
         "status": "published"
       }
     ]
