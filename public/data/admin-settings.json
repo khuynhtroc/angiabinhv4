@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-08T23:02:10.181Z",
-    "autoPublishedCount": 52,
+    "lastRunAt": "2026-11-09T02:15:30.603Z",
+    "autoPublishedCount": 53,
     "logs": [
+      {
+        "id": "news-log-1794190530603",
+        "timestamp": "2026-11-09T02:15:30.603Z",
+        "trendTitle": "Quá nhanh: Siêu cột trụ đầu tiên cao bằng tòa nhà 24 tầng tại sân vận động lớn nhất thế giới do Vingroup xây dựng vừa đạt bước tiến mới",
+        "generatedTitle": "Quá nhanh: Siêu cột trụ đầu tiên cao bằng tòa nhà 24 tầng tại sân vận động lớn nhất thế giới do Vingroup xây dựng vừa đạt bước tiến mới: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/qua-nhanh-sieu-cot-tru-dau-tien-cao-bang-toa-nha-24-tang-tai-san-van-dong-lon-nhat-the-gioi-do-vingroup-xay-dung-vua-dat-buoc-tien-moi-0763.html",
+        "wordCount": 812,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1794178930181",
         "timestamp": "2026-11-08T23:02:10.181Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/sieu-san-van-dong-gan-70-000-cho-lon-gan-gap-doi-my-dinh-so-huu-hai-tam-mai-khong-lo-co-the-tach-doi-tu-dong-dong-mo-trong-chua-day-12-phut-duoc-nang-do-boi-hai-dam-thep-dai-gan-300-m-8507.html",
         "wordCount": 821,
         "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793677725995",
-        "timestamp": "2026-11-03T03:48:45.995Z",
-        "trendTitle": "Dải phân cách đại lộ ở Ninh Bình biến thành ruộng dứa, chủ đầu tư yêu cầu dọn bỏ",
-        "generatedTitle": "Dải phân cách đại lộ ở Ninh Bình biến thành ruộng dứa, chủ đầu tư yêu cầu dọn bỏ: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/dai-phan-cach-dai-lo-o-ninh-binh-bien-thanh-ruong-dua-chu-dau-tu-yeu-cau-don-bo-9144.html",
-        "wordCount": 789,
-        "trendScore": 82,
         "status": "published"
       }
     ]
