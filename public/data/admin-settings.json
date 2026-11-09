@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-09T13:30:59.255Z",
-    "autoPublishedCount": 56,
+    "lastRunAt": "2026-11-09T23:01:42.939Z",
+    "autoPublishedCount": 57,
     "logs": [
+      {
+        "id": "news-log-1794265302939",
+        "timestamp": "2026-11-09T23:01:42.939Z",
+        "trendTitle": "sân bay quốc tế long thành",
+        "generatedTitle": "sân bay quốc tế long thành: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/san-bay-quoc-te-long-thanh-7267.html",
+        "wordCount": 749,
+        "trendScore": 90,
+        "status": "published"
+      },
       {
         "id": "news-log-1794231059255",
         "timestamp": "2026-11-09T13:30:59.255Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/nha-3-tang-mang-dang-dap-pho-xua-voi-mai-ngoi-do-va-cua-vom-6100.html",
         "wordCount": 809,
         "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793746931733",
-        "timestamp": "2026-11-03T23:02:11.733Z",
-        "trendTitle": "Toàn cảnh cầu dây văng gần 12.000 tỷ đồng bắc qua sông Hồng: Trụ tháp cao tương đương toà nhà 40 tầng, nhịp dây văng 350m, kết nối Hà Nội với siêu sân vận động lớn thứ 2 Việt Nam",
-        "generatedTitle": "Toàn cảnh cầu dây văng gần 12.000 tỷ đồng bắc qua sông Hồng: Trụ tháp cao tương đương toà nhà 40 tầng, nhịp dây văng 350m, kết nối Hà Nội với siêu sân vận động lớn thứ 2 Việt Nam: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/toan-canh-cau-day-vang-gan-12-000-ty-dong-bac-qua-song-hong-tru-thap-cao-tuong-duong-toa-nha-40-tang-nhip-day-vang-350m-ket-noi-ha-noi-voi-sieu-san-van-dong-lon-thu-2-viet-nam-9920.html",
-        "wordCount": 833,
-        "trendScore": 75,
         "status": "published"
       }
     ]
