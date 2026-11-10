@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-10T13:09:50.391Z",
-    "autoPublishedCount": 61,
+    "lastRunAt": "2026-11-10T23:02:29.011Z",
+    "autoPublishedCount": 62,
     "logs": [
+      {
+        "id": "news-log-1794351749011",
+        "timestamp": "2026-11-10T23:02:29.011Z",
+        "trendTitle": "Cao tốc TP HCM - Long Thành sau hơn một năm mở rộng",
+        "generatedTitle": "Cao tốc TP HCM - Long Thành sau hơn một năm mở rộng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/cao-toc-tp-hcm---long-thanh-sau-hon-mot-nam-mo-rong-4984.html",
+        "wordCount": 783,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1794316190391",
         "timestamp": "2026-11-10T13:09:50.391Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/ha-noi-nguoi-dan-len-loi-giua-dat-da-ho-sau-va-bui-mu-tren-duong-linh-nam-5608.html",
         "wordCount": 790,
         "trendScore": 88,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793833314511",
-        "timestamp": "2026-11-04T23:01:54.511Z",
-        "trendTitle": "TP.HCM hỗ trợ 2,5 triệu m³ đá xây dựng cho Cần Thơ làm đường cao tốc",
-        "generatedTitle": "TP.HCM hỗ trợ 2,5 triệu m³ đá xây dựng cho Cần Thơ làm đường cao tốc: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/tp-hcm-ho-tro-2-5-trieu-m-da-xay-dung-cho-can-tho-lam-duong-cao-toc-7590.html",
-        "wordCount": 781,
-        "trendScore": 85,
         "status": "published"
       }
     ]
