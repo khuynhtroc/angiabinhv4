@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-10T11:02:18.004Z",
-    "autoPublishedCount": 60,
+    "lastRunAt": "2026-11-10T13:09:50.391Z",
+    "autoPublishedCount": 61,
     "logs": [
+      {
+        "id": "news-log-1794316190391",
+        "timestamp": "2026-11-10T13:09:50.391Z",
+        "trendTitle": "Hà Nội: Ngắm cây cầu mang dáng hình vô cực đang thành hình trên sông Hồng",
+        "generatedTitle": "Hà Nội: Ngắm cây cầu mang dáng hình vô cực đang thành hình trên sông Hồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/ha-noi-ngam-cay-cau-mang-dang-hinh-vo-cuc-dang-thanh-hinh-tren-song-hong-0801.html",
+        "wordCount": 798,
+        "trendScore": 81,
+        "status": "published"
+      },
       {
         "id": "news-log-1794308538004",
         "timestamp": "2026-11-10T11:02:18.004Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/tp-hcm-ho-tro-2-5-trieu-m-da-xay-dung-cho-can-tho-lam-duong-cao-toc-7590.html",
         "wordCount": 781,
         "trendScore": 85,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793796098481",
-        "timestamp": "2026-11-04T12:41:38.481Z",
-        "trendTitle": "Hà Nội chi hơn 42.800 tỷ đồng làm 5 dự án khẩn cấp giải quyết ùn tắc giao thông",
-        "generatedTitle": "Hà Nội chi hơn 42.800 tỷ đồng làm 5 dự án khẩn cấp giải quyết ùn tắc giao thông: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/ha-noi-chi-hon-42-800-ty-dong-lam-5-du-an-khan-cap-giai-quyet-un-tac-giao-thong-1609.html",
-        "wordCount": 792,
-        "trendScore": 82,
         "status": "published"
       }
     ]
