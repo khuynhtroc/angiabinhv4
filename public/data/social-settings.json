@@ -972,13 +972,13 @@
       "post-1789356202097-966-v6dv",
       "post-1789356202097-967-wfwr"
     ],
-    "cursor": 17,
+    "cursor": 18,
     "interval_minutes": 240,
     "start_at": "2026-11-06T01:19:18.439Z",
-    "next_post_at": "2026-11-10T07:06:48.880Z",
+    "next_post_at": "2026-11-10T17:11:55.142Z",
     "started_at": "2026-11-06T01:19:18.439Z",
-    "last_posted_at": "2026-11-10T03:06:48.881Z",
-    "last_post_title": "Nguồn Gốc Xuất Xứ Bê Tông Thương Phẩm Tại Ninh Bình | Bê Tông An Gia Bình",
+    "last_posted_at": "2026-11-10T13:11:55.142Z",
+    "last_post_title": "Gạch bê tông khí chưng áp AAC – Vật liệu xây dựng “xanh” Tại Ninh Bình | Bê Tông An Gia Bình",
     "last_error": null,
     "skipped_count": 0,
     "lock_id": null,
@@ -1006,7 +1006,8 @@
       "post-2",
       "post-1",
       "post-5",
-      "post-nguon-goc-be-tong-thuong-pham"
+      "post-nguon-goc-be-tong-thuong-pham",
+      "post-1789356202097-7-eemi"
     ]
   },
   "facebook_enabled": true,
