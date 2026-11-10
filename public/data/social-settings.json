@@ -972,13 +972,13 @@
       "post-1789356202097-966-v6dv",
       "post-1789356202097-967-wfwr"
     ],
-    "cursor": 16,
+    "cursor": 17,
     "interval_minutes": 240,
     "start_at": "2026-11-06T01:19:18.439Z",
-    "next_post_at": "2026-11-09T23:25:16.259Z",
+    "next_post_at": "2026-11-10T07:06:48.880Z",
     "started_at": "2026-11-06T01:19:18.439Z",
-    "last_posted_at": "2026-11-09T19:25:16.259Z",
-    "last_post_title": "An Gia Bình Đưa Cụm Trạm Trộn Tự Động Hóa 300m³/h Vào Hoạt Động Tại KCN Khánh Phú",
+    "last_posted_at": "2026-11-10T03:06:48.881Z",
+    "last_post_title": "Nguồn Gốc Xuất Xứ Bê Tông Thương Phẩm Tại Ninh Bình | Bê Tông An Gia Bình",
     "last_error": null,
     "skipped_count": 0,
     "lock_id": null,
@@ -1005,7 +1005,8 @@
       "post-3",
       "post-2",
       "post-1",
-      "post-5"
+      "post-5",
+      "post-nguon-goc-be-tong-thuong-pham"
     ]
   },
   "facebook_enabled": true,
