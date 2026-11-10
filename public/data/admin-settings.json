@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-09T23:01:42.939Z",
-    "autoPublishedCount": 57,
+    "lastRunAt": "2026-11-10T04:26:52.220Z",
+    "autoPublishedCount": 58,
     "logs": [
+      {
+        "id": "news-log-1794284812220",
+        "timestamp": "2026-11-10T04:26:52.220Z",
+        "trendTitle": "Một nhà thầu lớn sẽ thi công loạt hạng mục quan trọng tại tuyến metro gần 4 tỷ USD, dài 54km nối Bến Thành - Cần Giờ của tỷ phú Phạm Nhật Vượng",
+        "generatedTitle": "Một nhà thầu lớn sẽ thi công loạt hạng mục quan trọng tại tuyến metro gần 4 tỷ USD, dài 54km nối Bến Thành - Cần Giờ của tỷ phú Phạm Nhật Vượng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/mot-nha-thau-lon-se-thi-cong-loat-hang-muc-quan-trong-tai-tuyen-metro-gan-4-ty-usd-dai-54km-noi-ben-thanh---can-gio-cua-ty-phu-pham-nhat-vuong-1132.html",
+        "wordCount": 820,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1794265302939",
         "timestamp": "2026-11-09T23:01:42.939Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/san-bay-quoc-te-nhung-ca-nam-khong-co-chuyen-bay-quoc-te-nao-du-kien-duoc-rot-them-14-000-ty-dong-de-mo-rong-duong-bang-tang-vi-tri-do-may-bay-8955.html",
         "wordCount": 826,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793760706008",
-        "timestamp": "2026-11-04T02:51:46.008Z",
-        "trendTitle": "Nhà 3 tầng mang dáng dấp phố xưa với mái ngói đỏ và cửa vòm",
-        "generatedTitle": "Nhà 3 tầng mang dáng dấp phố xưa với mái ngói đỏ và cửa vòm: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/nha-3-tang-mang-dang-dap-pho-xua-voi-mai-ngoi-do-va-cua-vom-6100.html",
-        "wordCount": 809,
-        "trendScore": 92,
         "status": "published"
       }
     ]
