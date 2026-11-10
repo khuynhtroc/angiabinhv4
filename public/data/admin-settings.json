@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-10T04:26:52.220Z",
-    "autoPublishedCount": 58,
+    "lastRunAt": "2026-11-10T05:01:42.654Z",
+    "autoPublishedCount": 59,
     "logs": [
+      {
+        "id": "news-log-1794286902654",
+        "timestamp": "2026-11-10T05:01:42.654Z",
+        "trendTitle": "Cao tốc từ TP HCM đi Cần Thơ điều chỉnh giao thông 20 ngày",
+        "generatedTitle": "Cao tốc từ TP HCM đi Cần Thơ điều chỉnh giao thông 20 ngày: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/cao-toc-tu-tp-hcm-di-can-tho-dieu-chinh-giao-thong-20-ngay-9905.html",
+        "wordCount": 788,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1794284812220",
         "timestamp": "2026-11-10T04:26:52.220Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/ca-mau-phe-duyet-du-an-nang-cap-dt980-va-duong-bo-tay-kenh-lang-tram-6615.html",
         "wordCount": 795,
         "trendScore": 88,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793768533964",
-        "timestamp": "2026-11-04T05:02:13.964Z",
-        "trendTitle": "Sân bay quốc tế nhưng cả năm không có chuyến bay quốc tế nào dự kiến được rót thêm 14.000 tỷ đồng để mở rộng đường băng, tăng vị trí đỗ máy bay",
-        "generatedTitle": "Sân bay quốc tế nhưng cả năm không có chuyến bay quốc tế nào dự kiến được rót thêm 14.000 tỷ đồng để mở rộng đường băng, tăng vị trí đỗ máy bay: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/san-bay-quoc-te-nhung-ca-nam-khong-co-chuyen-bay-quoc-te-nao-du-kien-duoc-rot-them-14-000-ty-dong-de-mo-rong-duong-bang-tang-vi-tri-do-may-bay-8955.html",
-        "wordCount": 826,
-        "trendScore": 82,
         "status": "published"
       }
     ]
