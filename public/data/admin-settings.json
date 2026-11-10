@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-10T05:01:42.654Z",
-    "autoPublishedCount": 59,
+    "lastRunAt": "2026-11-10T11:02:18.004Z",
+    "autoPublishedCount": 60,
     "logs": [
+      {
+        "id": "news-log-1794308538004",
+        "timestamp": "2026-11-10T11:02:18.004Z",
+        "trendTitle": "Dự án mở rộng cao tốc TP.HCM - Trung Lương - Mỹ Thuận đối mặt áp lực thiếu vật liệu",
+        "generatedTitle": "Dự án mở rộng cao tốc TP.HCM - Trung Lương - Mỹ Thuận đối mặt áp lực thiếu vật liệu: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/du-an-mo-rong-cao-toc-tp-hcm---trung-luong---my-thuan-doi-mat-ap-luc-thieu-vat-lieu-1016.html",
+        "wordCount": 805,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1794286902654",
         "timestamp": "2026-11-10T05:01:42.654Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/ha-noi-chi-hon-42-800-ty-dong-lam-5-du-an-khan-cap-giai-quyet-un-tac-giao-thong-1609.html",
         "wordCount": 792,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793790123877",
-        "timestamp": "2026-11-04T11:02:03.877Z",
-        "trendTitle": "Cà Mau: Phê duyệt dự án nâng cấp ĐT980 và đường bờ Tây kênh Láng Trâm",
-        "generatedTitle": "Cà Mau: Phê duyệt dự án nâng cấp ĐT980 và đường bờ Tây kênh Láng Trâm: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/ca-mau-phe-duyet-du-an-nang-cap-dt980-va-duong-bo-tay-kenh-lang-tram-6615.html",
-        "wordCount": 795,
-        "trendScore": 88,
         "status": "published"
       }
     ]
