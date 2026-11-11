@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-11T12:19:33.700Z",
-    "autoPublishedCount": 66,
+    "lastRunAt": "2026-11-11T23:02:19.836Z",
+    "autoPublishedCount": 67,
     "logs": [
+      {
+        "id": "news-log-1794438139836",
+        "timestamp": "2026-11-11T23:02:19.836Z",
+        "trendTitle": "Vlasta Premier - Phú Thuận tập trung vào tiêu chuẩn bàn giao",
+        "generatedTitle": "Vlasta Premier - Phú Thuận tập trung vào tiêu chuẩn bàn giao: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/vlasta-premier---phu-thuan-tap-trung-vao-tieu-chuan-ban-giao-3948.html",
+        "wordCount": 788,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1794399573700",
         "timestamp": "2026-11-11T12:19:33.700Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/ha-noi-day-nhanh-tien-do-du-an-nang-cap-quoc-lo-6-va-duong-70-7399.html",
         "wordCount": 814,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793919748676",
-        "timestamp": "2026-11-05T23:02:28.676Z",
-        "trendTitle": "Bất ngờ với tốc độ xây dựng siêu sân vận động lớn nhất thế giới của Vingroup, khán đài 135.000 chỗ ngồi dần thành hình, chuẩn bị nâng mái che khổng lồ nặng 40.000 tấn",
-        "generatedTitle": "Bất ngờ với tốc độ xây dựng siêu sân vận động lớn nhất thế giới của Vingroup, khán đài 135.000 chỗ ngồi dần thành hình, chuẩn bị nâng mái che khổng lồ nặng 40.000 tấn: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/bat-ngo-voi-toc-do-xay-dung-sieu-san-van-dong-lon-nhat-the-gioi-cua-vingroup-khan-dai-135-000-cho-ngoi-dan-thanh-hinh-chuan-bi-nang-mai-che-khong-lo-nang-40-000-tan-4711.html",
-        "wordCount": 825,
-        "trendScore": 92,
         "status": "published"
       }
     ]
