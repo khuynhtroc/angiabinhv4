@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-11T11:02:07.746Z",
-    "autoPublishedCount": 65,
+    "lastRunAt": "2026-11-11T12:19:33.700Z",
+    "autoPublishedCount": 66,
     "logs": [
+      {
+        "id": "news-log-1794399573700",
+        "timestamp": "2026-11-11T12:19:33.700Z",
+        "trendTitle": "Chốt thời gian khai thác sân bay Long Thành, thị trường bất động sản phía Đông TP. Hồ Chí Minh sẽ thế nào?",
+        "generatedTitle": "Chốt thời gian khai thác sân bay Long Thành, thị trường bất động sản phía Đông TP. Hồ Chí Minh sẽ thế nào?: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/chot-thoi-gian-khai-thac-san-bay-long-thanh-thi-truong-bat-dong-san-phia-dong-tp-ho-chi-minh-se-the-nao-8226.html",
+        "wordCount": 827,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1794394927746",
         "timestamp": "2026-11-11T11:02:07.746Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/bat-ngo-voi-toc-do-xay-dung-sieu-san-van-dong-lon-nhat-the-gioi-cua-vingroup-khan-dai-135-000-cho-ngoi-dan-thanh-hinh-chuan-bi-nang-mai-che-khong-lo-nang-40-000-tan-4711.html",
         "wordCount": 825,
         "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793883157407",
-        "timestamp": "2026-11-05T12:52:37.407Z",
-        "trendTitle": "TP.HCM làm đường kết nối cảng khu vực Cái Mép - Thị Vải hơn 400 tỷ đồng",
-        "generatedTitle": "TP.HCM làm đường kết nối cảng khu vực Cái Mép - Thị Vải hơn 400 tỷ đồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/tp-hcm-lam-duong-ket-noi-cang-khu-vuc-cai-mep---thi-vai-hon-400-ty-dong-3537.html",
-        "wordCount": 802,
-        "trendScore": 78,
         "status": "published"
       }
     ]
