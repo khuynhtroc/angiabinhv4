@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-11T05:02:10.361Z",
-    "autoPublishedCount": 64,
+    "lastRunAt": "2026-11-11T11:02:07.746Z",
+    "autoPublishedCount": 65,
     "logs": [
+      {
+        "id": "news-log-1794394927746",
+        "timestamp": "2026-11-11T11:02:07.746Z",
+        "trendTitle": "Mở đường cho doanh nghiệp Việt tham gia chuỗi cung ứng đường sắt",
+        "generatedTitle": "Mở đường cho doanh nghiệp Việt tham gia chuỗi cung ứng đường sắt: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/mo-duong-cho-doanh-nghiep-viet-tham-gia-chuoi-cung-ung-duong-sat-0726.html",
+        "wordCount": 783,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1794373330361",
         "timestamp": "2026-11-11T05:02:10.361Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/tp-hcm-lam-duong-ket-noi-cang-khu-vuc-cai-mep---thi-vai-hon-400-ty-dong-3537.html",
         "wordCount": 802,
         "trendScore": 78,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793876535477",
-        "timestamp": "2026-11-05T11:02:15.477Z",
-        "trendTitle": "Đề xuất 6 tuyến tàu điện, kết nối trung tâm Đà Lạt với sân bay Liên Khương",
-        "generatedTitle": "Đề xuất 6 tuyến tàu điện, kết nối trung tâm Đà Lạt với sân bay Liên Khương: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/de-xuat-6-tuyen-tau-dien-ket-noi-trung-tam-da-lat-voi-san-bay-lien-khuong-5523.html",
-        "wordCount": 809,
-        "trendScore": 82,
         "status": "published"
       }
     ]
