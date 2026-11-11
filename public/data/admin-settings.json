@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-11T02:24:56.232Z",
-    "autoPublishedCount": 63,
+    "lastRunAt": "2026-11-11T05:02:10.361Z",
+    "autoPublishedCount": 64,
     "logs": [
+      {
+        "id": "news-log-1794373330361",
+        "timestamp": "2026-11-11T05:02:10.361Z",
+        "trendTitle": "Gỡ khó nguồn vật liệu, đưa cao tốc dài 188km qua An Giang, Cần Thơ vào khai thác năm 2027",
+        "generatedTitle": "Gỡ khó nguồn vật liệu, đưa cao tốc dài 188km qua An Giang, Cần Thơ vào khai thác năm 2027: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/go-kho-nguon-vat-lieu-dua-cao-toc-dai-188km-qua-an-giang-can-tho-vao-khai-thac-nam-2027-4928.html",
+        "wordCount": 791,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1794363896232",
         "timestamp": "2026-11-11T02:24:56.232Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Đề xuất 6 tuyến tàu điện, kết nối trung tâm Đà Lạt với sân bay Liên Khương: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/de-xuat-6-tuyen-tau-dien-ket-noi-trung-tam-da-lat-voi-san-bay-lien-khuong-5523.html",
         "wordCount": 809,
-        "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793854910166",
-        "timestamp": "2026-11-05T05:01:50.166Z",
-        "trendTitle": "Hà Nội thông qua cơ chế đặc thù để tăng tốc đầu tư đường sắt đô thị",
-        "generatedTitle": "Hà Nội thông qua cơ chế đặc thù để tăng tốc đầu tư đường sắt đô thị: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/ha-noi-thong-qua-co-che-dac-thu-de-tang-toc-dau-tu-duong-sat-do-thi-3452.html",
-        "wordCount": 795,
         "trendScore": 82,
         "status": "published"
       }
