@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-12T03:30:36.820Z",
-    "autoPublishedCount": 68,
+    "lastRunAt": "2026-11-12T05:01:56.744Z",
+    "autoPublishedCount": 69,
     "logs": [
+      {
+        "id": "news-log-1794459716744",
+        "timestamp": "2026-11-12T05:01:56.744Z",
+        "trendTitle": "Cổng Parabol 40 tấn của Đại học Bách khoa Hà Nội sẽ được di dời thế nào?",
+        "generatedTitle": "Cổng Parabol 40 tấn của Đại học Bách khoa Hà Nội sẽ được di dời thế nào?: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/cong-parabol-40-tan-cua-dai-hoc-bach-khoa-ha-noi-se-duoc-di-doi-the-nao-2627.html",
+        "wordCount": 791,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1794454236820",
         "timestamp": "2026-11-12T03:30:36.820Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/hong-linh-ha-tinh-dau-voi-thep-xanh-nam-dinh-8599.html",
         "wordCount": 757,
         "trendScore": 100,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793941326862",
-        "timestamp": "2026-11-06T05:02:06.862Z",
-        "trendTitle": "Diễn biến mới nhất về nút giao 2.400 tỷ đồng, vượt đại lộ 16 làn xe đẹp như châu Âu: Có hầm chui 4 làn dài gần 1km, nằm sát đại đô thị của tỷ phú Phạm Nhật Vượng",
-        "generatedTitle": "Diễn biến mới nhất về nút giao 2.400 tỷ đồng, vượt đại lộ 16 làn xe đẹp như châu Âu: Có hầm chui 4 làn dài gần 1km, nằm sát đại đô thị của tỷ phú Phạm Nhật Vượng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/dien-bien-moi-nhat-ve-nut-giao-2-400-ty-dong-vuot-dai-lo-16-lan-xe-dep-nhu-chau-au-co-ham-chui-4-lan-dai-gan-1km-nam-sat-dai-do-thi-cua-ty-phu-pham-nhat-vuong-4652.html",
-        "wordCount": 836,
-        "trendScore": 82,
         "status": "published"
       }
     ]
