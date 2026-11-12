@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-12T05:01:56.744Z",
-    "autoPublishedCount": 69,
+    "lastRunAt": "2026-11-12T11:02:18.701Z",
+    "autoPublishedCount": 70,
     "logs": [
+      {
+        "id": "news-log-1794481338701",
+        "timestamp": "2026-11-12T11:02:18.701Z",
+        "trendTitle": "\"Đại gia phố núi\" vang bóng một thời nghiên cứu đầu tư tuyến cao tốc 261 km, vốn gần 85.000 tỷ đồng qua 3 tỉnh rộng nhất Việt Nam",
+        "generatedTitle": "\"Đại gia phố núi\" vang bóng một thời nghiên cứu đầu tư tuyến cao tốc 261 km, vốn gần 85.000 tỷ đồng qua 3 tỉnh rộng nhất Việt Nam: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dai-gia-pho-nui-vang-bong-mot-thoi-nghien-cuu-dau-tu-tuyen-cao-toc-261-km-von-gan-85-000-ty-dong-qua-3-tinh-rong-nhat-viet-nam-2221.html",
+        "wordCount": 807,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1794459716744",
         "timestamp": "2026-11-12T05:01:56.744Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/san-bay-ca-mau-lui-ngay-khai-thac-tro-lai-den-18-12-4768.html",
         "wordCount": 781,
         "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793962913037",
-        "timestamp": "2026-11-06T11:01:53.037Z",
-        "trendTitle": "hồng lĩnh hà tĩnh đấu với thép xanh nam định",
-        "generatedTitle": "hồng lĩnh hà tĩnh đấu với thép xanh nam định: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/hong-linh-ha-tinh-dau-voi-thep-xanh-nam-dinh-8599.html",
-        "wordCount": 757,
-        "trendScore": 100,
         "status": "published"
       }
     ]
