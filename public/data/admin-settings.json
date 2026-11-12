@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-12T11:02:18.701Z",
-    "autoPublishedCount": 70,
+    "lastRunAt": "2026-11-12T13:28:59.383Z",
+    "autoPublishedCount": 71,
     "logs": [
+      {
+        "id": "news-log-1794490139383",
+        "timestamp": "2026-11-12T13:28:59.383Z",
+        "trendTitle": "Ninh Bình làm đường nối Vành đai 4 - Vành đai 5, vốn hơn 224 tỷ đồng",
+        "generatedTitle": "Ninh Bình làm đường nối Vành đai 4 - Vành đai 5, vốn hơn 224 tỷ đồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/ninh-binh-lam-duong-noi-vanh-dai-4---vanh-dai-5-von-hon-224-ty-dong-2398.html",
+        "wordCount": 808,
+        "trendScore": 78,
+        "status": "published"
+      },
       {
         "id": "news-log-1794481338701",
         "timestamp": "2026-11-12T11:02:18.701Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/vi-sao-san-bay-ca-mau-lui-lich-mo-cua-9664.html",
         "wordCount": 797,
         "trendScore": 85,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1793968637313",
-        "timestamp": "2026-11-06T12:37:17.313Z",
-        "trendTitle": "Sân bay Cà Mau lùi ngày khai thác trở lại đến 18/12",
-        "generatedTitle": "Sân bay Cà Mau lùi ngày khai thác trở lại đến 18/12: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/san-bay-ca-mau-lui-ngay-khai-thac-tro-lai-den-18-12-4768.html",
-        "wordCount": 781,
-        "trendScore": 92,
         "status": "published"
       }
     ]
