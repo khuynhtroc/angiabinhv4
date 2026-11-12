@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-12T13:28:59.383Z",
-    "autoPublishedCount": 71,
+    "lastRunAt": "2026-11-12T23:02:12.189Z",
+    "autoPublishedCount": 72,
     "logs": [
+      {
+        "id": "news-log-1794524532189",
+        "timestamp": "2026-11-12T23:02:12.189Z",
+        "trendTitle": "Nvidia chi gần 4 triệu USD bảo vệ nơi ở và hoạt động cá nhân của Jensen Huang",
+        "generatedTitle": "Nvidia chi gần 4 triệu USD bảo vệ nơi ở và hoạt động cá nhân của Jensen Huang: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/nvidia-chi-gan-4-trieu-usd-bao-ve-noi-o-va-hoat-dong-ca-nhan-cua-jensen-huang-8657.html",
+        "wordCount": 796,
+        "trendScore": 72,
+        "status": "published"
+      },
       {
         "id": "news-log-1794490139383",
         "timestamp": "2026-11-12T13:28:59.383Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/co-vat-lieu-duong-nghin-ty-noi-san-van-dong-lon-nhat-hung-yen-tang-toc-thi-cong-5484.html",
         "wordCount": 802,
         "trendScore": 88,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794006137156",
-        "timestamp": "2026-11-06T23:02:17.156Z",
-        "trendTitle": "Vì sao sân bay Cà Mau lùi lịch mở cửa?",
-        "generatedTitle": "Vì sao sân bay Cà Mau lùi lịch mở cửa?: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/vi-sao-san-bay-ca-mau-lui-lich-mo-cua-9664.html",
-        "wordCount": 797,
-        "trendScore": 85,
         "status": "published"
       }
     ]
