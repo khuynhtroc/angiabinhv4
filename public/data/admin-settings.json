@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-13T11:02:23.632Z",
-    "autoPublishedCount": 75,
+    "lastRunAt": "2026-11-13T12:44:46.264Z",
+    "autoPublishedCount": 76,
     "logs": [
+      {
+        "id": "news-log-1794573886263",
+        "timestamp": "2026-11-13T12:44:46.263Z",
+        "trendTitle": "Đồng Nai: Đại lộ Nguyễn Hữu Cảnh hơn 6.500 tỷ đồng mở trục kết nối về cao tốc",
+        "generatedTitle": "Đồng Nai: Đại lộ Nguyễn Hữu Cảnh hơn 6.500 tỷ đồng mở trục kết nối về cao tốc: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dong-nai-dai-lo-nguyen-huu-canh-hon-6-500-ty-dong-mo-truc-ket-noi-ve-cao-toc-7556.html",
+        "wordCount": 806,
+        "trendScore": 78,
+        "status": "published"
+      },
       {
         "id": "news-log-1794567743632",
         "timestamp": "2026-11-13T11:02:23.632Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/cong-an-ha-noi-thong-tin-vu-chay-khu-nha-xuong-rong-3-000m-o-xa-an-khanh-2848.html",
         "wordCount": 791,
         "trendScore": 85,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794050761291",
-        "timestamp": "2026-11-07T11:26:01.291Z",
-        "trendTitle": "Nhà xưởng ở Hà Nội bốc cháy ngùn ngụt",
-        "generatedTitle": "Nhà xưởng ở Hà Nội bốc cháy ngùn ngụt: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/nha-xuong-o-ha-noi-boc-chay-ngun-ngut-5661.html",
-        "wordCount": 766,
-        "trendScore": 92,
         "status": "published"
       }
     ]
