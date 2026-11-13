@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-12T23:02:12.189Z",
-    "autoPublishedCount": 72,
+    "lastRunAt": "2026-11-13T03:03:17.769Z",
+    "autoPublishedCount": 73,
     "logs": [
+      {
+        "id": "news-log-1794538997769",
+        "timestamp": "2026-11-13T03:03:17.769Z",
+        "trendTitle": "\"Siêu\" cầu vượt sông Hồng 16.200 tỷ đồng nối khu phố cổ với Long Biên do Sun Group triển khai đã hoàn thành toàn bộ cọc khoan nhồi và bệ trụ chính, tiến tới lắp dựng 26.000 tấn kết cấu thép",
+        "generatedTitle": "\"Siêu\" cầu vượt sông Hồng 16.200 tỷ đồng nối khu phố cổ với Long Biên do Sun Group triển khai đã hoàn thành toàn bộ cọc khoan nhồi và bệ trụ chính, tiến tới lắp dựng 26.000 tấn kết cấu thép: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/sieu-cau-vuot-song-hong-16-200-ty-dong-noi-khu-pho-co-voi-long-bien-do-sun-group-trien-khai-da-hoan-thanh-toan-bo-coc-khoan-nhoi-va-be-tru-chinh-tien-toi-lap-dung-26-000-tan-ket-cau-thep-7528.html",
+        "wordCount": 817,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1794524532189",
         "timestamp": "2026-11-12T23:02:12.189Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/chinh-phu-de-xuat-dau-tu-3-du-an-cao-toc-hon-162-nghin-ty-dong-7035.html",
         "wordCount": 785,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794018497043",
-        "timestamp": "2026-11-07T02:28:17.043Z",
-        "trendTitle": "Có vật liệu, đường nghìn tỷ nối sân vận động lớn nhất Hưng Yên tăng tốc thi công",
-        "generatedTitle": "Có vật liệu, đường nghìn tỷ nối sân vận động lớn nhất Hưng Yên tăng tốc thi công: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/co-vat-lieu-duong-nghin-ty-noi-san-van-dong-lon-nhat-hung-yen-tang-toc-thi-cong-5484.html",
-        "wordCount": 802,
-        "trendScore": 88,
         "status": "published"
       }
     ]
