@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-13T12:44:46.264Z",
-    "autoPublishedCount": 76,
+    "lastRunAt": "2026-11-13T23:02:28.156Z",
+    "autoPublishedCount": 77,
     "logs": [
+      {
+        "id": "news-log-1794610948156",
+        "timestamp": "2026-11-13T23:02:28.156Z",
+        "trendTitle": "Tuyến cao tốc hơn 14.900 tỷ đồng, dài 22 km nối TP.HCM với siêu sân bay 16 tỷ USD chưa từng có trong lịch sử Việt Nam, rộng gấp 6 lần Tân Sơn Nhất đạt cột mốc quan trọng",
+        "generatedTitle": "Tuyến cao tốc hơn 14.900 tỷ đồng, dài 22 km nối TP.HCM với siêu sân bay 16 tỷ USD chưa từng có trong lịch sử Việt Nam, rộng gấp 6 lần Tân Sơn Nhất đạt cột mốc quan trọng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/tuyen-cao-toc-hon-14-900-ty-dong-dai-22-km-noi-tp-hcm-voi-sieu-san-bay-16-ty-usd-chua-tung-co-trong-lich-su-viet-nam-rong-gap-6-lan-tan-son-nhat-dat-cot-moc-quan-trong-1950.html",
+        "wordCount": 836,
+        "trendScore": 75,
+        "status": "published"
+      },
       {
         "id": "news-log-1794573886263",
         "timestamp": "2026-11-13T12:44:46.263Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/ngoi-nha-chia-thanh-4-khoi-rieng-biet-cua-doi-vo-chong-nghi-huu-7729.html",
         "wordCount": 808,
         "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794092545215",
-        "timestamp": "2026-11-07T23:02:25.215Z",
-        "trendTitle": "Công an Hà Nội thông tin vụ cháy khu nhà xưởng rộng 3.000m² ở xã An Khánh",
-        "generatedTitle": "Công an Hà Nội thông tin vụ cháy khu nhà xưởng rộng 3.000m² ở xã An Khánh: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/cong-an-ha-noi-thong-tin-vu-chay-khu-nha-xuong-rong-3-000m-o-xa-an-khanh-2848.html",
-        "wordCount": 791,
-        "trendScore": 85,
         "status": "published"
       }
     ]
