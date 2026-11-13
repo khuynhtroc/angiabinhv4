@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-13T03:03:17.769Z",
-    "autoPublishedCount": 73,
+    "lastRunAt": "2026-11-13T05:02:08.137Z",
+    "autoPublishedCount": 74,
     "logs": [
+      {
+        "id": "news-log-1794546128137",
+        "timestamp": "2026-11-13T05:02:08.137Z",
+        "trendTitle": "Hơn 51.000 tấn thép được đưa vào một công trình đặc biệt ở Phú Quốc, riêng hệ mái chiếm 33.000 tấn, nhịp lớn nhất 72m",
+        "generatedTitle": "Hơn 51.000 tấn thép được đưa vào một công trình đặc biệt ở Phú Quốc, riêng hệ mái chiếm 33.000 tấn, nhịp lớn nhất 72m: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/hon-51-000-tan-thep-duoc-dua-vao-mot-cong-trinh-dac-biet-o-phu-quoc-rieng-he-mai-chiem-33-000-tan-nhip-lon-nhat-72m-7765.html",
+        "wordCount": 821,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1794538997769",
         "timestamp": "2026-11-13T03:03:17.769Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/khoi-be-tong-do-sap-hoan-toan-tu-do-cao-hang-chuc-met-viet-nam-van-hoan-thanh-sieu-cau-5-000-ty-dong-lap-ky-luc-dong-nam-a-nay-co-them-cong-trinh-27-000-ty-dong-chia-lua-2774.html",
         "wordCount": 824,
         "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794027722557",
-        "timestamp": "2026-11-07T05:02:02.557Z",
-        "trendTitle": "Chính phủ đề xuất đầu tư 3 dự án cao tốc hơn 162 nghìn tỷ đồng",
-        "generatedTitle": "Chính phủ đề xuất đầu tư 3 dự án cao tốc hơn 162 nghìn tỷ đồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/chinh-phu-de-xuat-dau-tu-3-du-an-cao-toc-hon-162-nghin-ty-dong-7035.html",
-        "wordCount": 785,
-        "trendScore": 82,
         "status": "published"
       }
     ]
