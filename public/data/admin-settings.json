@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-13T05:02:08.137Z",
-    "autoPublishedCount": 74,
+    "lastRunAt": "2026-11-13T11:02:23.632Z",
+    "autoPublishedCount": 75,
     "logs": [
+      {
+        "id": "news-log-1794567743632",
+        "timestamp": "2026-11-13T11:02:23.632Z",
+        "trendTitle": "Vì sao đường Tây Thăng Long ở Hà Nội vẫn 'nằm im' dù đã cơ bản có mặt bằng sạch?",
+        "generatedTitle": "Vì sao đường Tây Thăng Long ở Hà Nội vẫn 'nằm im' dù đã cơ bản có mặt bằng sạch?: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/vi-sao-duong-tay-thang-long-o-ha-noi-van-nam-im-du-da-co-ban-co-mat-bang-sach-4673.html",
+        "wordCount": 790,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1794546128137",
         "timestamp": "2026-11-13T05:02:08.137Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Nhà xưởng ở Hà Nội bốc cháy ngùn ngụt: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/nha-xuong-o-ha-noi-boc-chay-ngun-ngut-5661.html",
         "wordCount": 766,
-        "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794049339986",
-        "timestamp": "2026-11-07T11:02:19.986Z",
-        "trendTitle": "Khối bê tông đổ sập hoàn toàn từ độ cao hàng chục mét, Việt Nam vẫn hoàn thành siêu cầu 5.000 tỷ đồng lập kỷ lục Đông Nam Á, nay có thêm công trình 27.000 tỷ đồng \"chia lửa\"",
-        "generatedTitle": "Khối bê tông đổ sập hoàn toàn từ độ cao hàng chục mét, Việt Nam vẫn hoàn thành siêu cầu 5.000 tỷ đồng lập kỷ lục Đông Nam Á, nay có thêm công trình 27.000 tỷ đồng \"chia lửa\": Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/khoi-be-tong-do-sap-hoan-toan-tu-do-cao-hang-chuc-met-viet-nam-van-hoan-thanh-sieu-cau-5-000-ty-dong-lap-ky-luc-dong-nam-a-nay-co-them-cong-trinh-27-000-ty-dong-chia-lua-2774.html",
-        "wordCount": 824,
         "trendScore": 92,
         "status": "published"
       }
