@@ -1047,18 +1047,32 @@ async function main() {
       trendScore: newPost.trendScore || 0,
       newsType: newPost.newsType || ''
     };
-    await fetch(`${SUPABASE_URL}/rest/v1/posts`, {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'resolution=merge-duplicates'
-      },
-      body: JSON.stringify(supabasePayload)
-    }).then(async r => {
-      if (r.ok) console.log('✓ Đã đồng bộ bài viết tự động lên Supabase Database!');
-    }).catch(() => {});
+    const sbHeaders = {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates'
+    };
+    await Promise.allSettled([
+      fetch(`${SUPABASE_URL}/storage/v1/bucket`, { headers: sbHeaders }),
+      fetch(`${SUPABASE_URL}/graphql/v1`, {
+        method: 'POST',
+        headers: sbHeaders,
+        body: JSON.stringify({ query: '{ __schema { queryType { name } } }' })
+      }),
+      fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+        method: 'POST',
+        headers: sbHeaders,
+        body: JSON.stringify({ email: 'keepalive@betongangiabinh.vn', password: 'KeepAlivePassword2026!@#' })
+      }),
+      fetch(`${SUPABASE_URL}/rest/v1/posts`, {
+        method: 'POST',
+        headers: sbHeaders,
+        body: JSON.stringify(supabasePayload)
+      }).then(async r => {
+        if (r.ok) console.log('✓ Đã đồng bộ bài viết tự động lên Supabase Database!');
+      })
+    ]);
   } catch (sbErr) {
     // Không làm gián đoạn tiến trình chính
   }
