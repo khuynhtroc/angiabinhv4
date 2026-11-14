@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+:root {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
 /* ═══════════════════════════════════════════════════════════════
    ADMIN & SOCIAL AUTO-SHARE FORM CONTROLS
    ═══════════════════════════════════════════════════════════════ */

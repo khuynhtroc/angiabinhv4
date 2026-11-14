@@ -1,25 +1,10 @@
 import type {Metadata, Viewport} from 'next';
-import { Plus_Jakarta_Sans, Space_Grotesk } from 'next/font/google';
 import FetchPatch from '@/components/FetchPatch';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
 import CustomCodeInjector from '@/components/CustomCodeInjector';
 import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import { getConfigServer } from '@/lib/server-data';
 import './globals.css';
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ['vietnamese', 'latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-sans',
-  display: 'swap',
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  weight: ['500', '700'],
-  variable: '--font-heading',
-  display: 'swap',
-});
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -84,8 +69,14 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   const googleVerify = (config?.google_verify || '-ampbrMsq6krT2SrsKAAvQSdxBns-wa9mv9aEGR86Ik').trim();
 
   return (
-    <html lang="vi" className={`scroll-smooth ${plusJakartaSans.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
+    <html lang="vi" className="scroll-smooth" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+        />
         {/* Google Tag Manager (GTM-MXH8TM7H) - High in head, filtered against bots & headless scanners */}
         {gtmId && (
           <script
@@ -199,7 +190,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           />
         )}
       </head>
-      <body className={`${plusJakartaSans.className} antialiased text-slate-900 bg-slate-50 selection:bg-amber-500 selection:text-white min-h-screen`} suppressHydrationWarning>
+      <body className="font-sans antialiased text-slate-900 bg-slate-50 selection:bg-amber-500 selection:text-white min-h-screen" suppressHydrationWarning>
         {/* Google Tag Manager (noscript) */}
         {gtmId && (
           <noscript
