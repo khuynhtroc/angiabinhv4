@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-14T02:50:04.805Z",
-    "autoPublishedCount": 78,
+    "lastRunAt": "2026-11-14T05:01:54.499Z",
+    "autoPublishedCount": 79,
     "logs": [
+      {
+        "id": "news-log-1794632514499",
+        "timestamp": "2026-11-14T05:01:54.499Z",
+        "trendTitle": "Vành đai 3 TP.HCM nỗ lực vượt khó, tăng tốc về đích",
+        "generatedTitle": "Vành đai 3 TP.HCM nỗ lực vượt khó, tăng tốc về đích: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/vanh-dai-3-tp-hcm-no-luc-vuot-kho-tang-toc-ve-dich-4184.html",
+        "wordCount": 796,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1794624604805",
         "timestamp": "2026-11-14T02:50:04.805Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/toan-canh-cong-truong-trung-tam-hanh-chinh-tp-hcm-sau-hon-6-thang-khoi-cong-8830.html",
         "wordCount": 787,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794114125877",
-        "timestamp": "2026-11-08T05:02:05.877Z",
-        "trendTitle": "Nhà mái chéo 350 m2 thiết kế không cần điều hòa",
-        "generatedTitle": "Nhà mái chéo 350 m2 thiết kế không cần điều hòa: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/nha-mai-cheo-350-m2-thiet-ke-khong-can-dieu-hoa-9098.html",
-        "wordCount": 774,
-        "trendScore": 85,
         "status": "published"
       }
     ]
