@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-14T11:53:15.271Z",
-    "autoPublishedCount": 81,
+    "lastRunAt": "2026-11-14T23:01:58.955Z",
+    "autoPublishedCount": 82,
     "logs": [
+      {
+        "id": "news-log-1794697318955",
+        "timestamp": "2026-11-14T23:01:58.955Z",
+        "trendTitle": "Huế tính mở rộng trường học, công viên, chỉnh trang đô thị trung tâm",
+        "generatedTitle": "Huế tính mở rộng trường học, công viên, chỉnh trang đô thị trung tâm: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/hue-tinh-mo-rong-truong-hoc-cong-vien-chinh-trang-do-thi-trung-tam-8518.html",
+        "wordCount": 799,
+        "trendScore": 75,
+        "status": "published"
+      },
       {
         "id": "news-log-1794657195271",
         "timestamp": "2026-11-14T11:53:15.271Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/qua-nhanh-sieu-cot-tru-dau-tien-cao-bang-toa-nha-24-tang-tai-san-van-dong-lon-nhat-the-gioi-do-vingroup-xay-dung-vua-dat-buoc-tien-moi-0763.html",
         "wordCount": 812,
         "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794178930181",
-        "timestamp": "2026-11-08T23:02:10.181Z",
-        "trendTitle": "Huy động hơn 1.500 người và 800 máy móc, Việt Nam sẽ đào hầm gần 6km xuyên núi qua 2 đèo hiểm trở bậc nhất cả nước",
-        "generatedTitle": "Huy động hơn 1.500 người và 800 máy móc, Việt Nam sẽ đào hầm gần 6km xuyên núi qua 2 đèo hiểm trở bậc nhất cả nước: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/huy-dong-hon-1-500-nguoi-va-800-may-moc-viet-nam-se-dao-ham-gan-6km-xuyen-nui-qua-2-deo-hiem-tro-bac-nhat-ca-nuoc-7468.html",
-        "wordCount": 826,
-        "trendScore": 75,
         "status": "published"
       }
     ]
