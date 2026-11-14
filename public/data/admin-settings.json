@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-14T05:01:54.499Z",
-    "autoPublishedCount": 79,
+    "lastRunAt": "2026-11-14T11:02:18.340Z",
+    "autoPublishedCount": 80,
     "logs": [
+      {
+        "id": "news-log-1794654138340",
+        "timestamp": "2026-11-14T11:02:18.340Z",
+        "trendTitle": "Đường nối cao tốc Biên Hòa - Vũng Tàu: Nhiều gói thầu chậm vì thiếu vật liệu",
+        "generatedTitle": "Đường nối cao tốc Biên Hòa - Vũng Tàu: Nhiều gói thầu chậm vì thiếu vật liệu: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/duong-noi-cao-toc-bien-hoa---vung-tau-nhieu-goi-thau-cham-vi-thieu-vat-lieu-0330.html",
+        "wordCount": 811,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1794632514499",
         "timestamp": "2026-11-14T05:01:54.499Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/mo-duong-lon-danh-thuc-tiem-nang-phat-trien-kinh-te-bien-dong-thap-0035.html",
         "wordCount": 779,
         "trendScore": 78,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794135738654",
-        "timestamp": "2026-11-08T11:02:18.654Z",
-        "trendTitle": "Toàn cảnh công trường Trung tâm hành chính TP.HCM sau hơn 6 tháng khởi công",
-        "generatedTitle": "Toàn cảnh công trường Trung tâm hành chính TP.HCM sau hơn 6 tháng khởi công: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/toan-canh-cong-truong-trung-tam-hanh-chinh-tp-hcm-sau-hon-6-thang-khoi-cong-8830.html",
-        "wordCount": 787,
-        "trendScore": 82,
         "status": "published"
       }
     ]
