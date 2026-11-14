@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-13T23:02:28.156Z",
-    "autoPublishedCount": 77,
+    "lastRunAt": "2026-11-14T02:50:04.805Z",
+    "autoPublishedCount": 78,
     "logs": [
+      {
+        "id": "news-log-1794624604805",
+        "timestamp": "2026-11-14T02:50:04.805Z",
+        "trendTitle": "Đồng Nai đón 800 khách quốc tế qua cảng biển duy nhất của thành phố",
+        "generatedTitle": "Đồng Nai đón 800 khách quốc tế qua cảng biển duy nhất của thành phố: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dong-nai-don-800-khach-quoc-te-qua-cang-bien-duy-nhat-cua-thanh-pho-0241.html",
+        "wordCount": 781,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1794610948156",
         "timestamp": "2026-11-13T23:02:28.156Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/nha-mai-cheo-350-m2-thiet-ke-khong-can-dieu-hoa-9098.html",
         "wordCount": 774,
         "trendScore": 85,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794103095297",
-        "timestamp": "2026-11-08T01:58:15.297Z",
-        "trendTitle": "Ngôi nhà chia thành 4 khối riêng biệt của đôi vợ chồng nghỉ hưu",
-        "generatedTitle": "Ngôi nhà chia thành 4 khối riêng biệt của đôi vợ chồng nghỉ hưu: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/ngoi-nha-chia-thanh-4-khoi-rieng-biet-cua-doi-vo-chong-nghi-huu-7729.html",
-        "wordCount": 808,
-        "trendScore": 92,
         "status": "published"
       }
     ]
