@@ -22,6 +22,14 @@ export default function RealtimeAnalyticsTracker() {
   // 1. Handle SPA Route Changes for GA4 & GTM dataLayer
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    const ua = (typeof navigator !== 'undefined' && navigator.userAgent) || '';
+    if (
+      (typeof navigator !== 'undefined' && navigator.webdriver) ||
+      /bot|crawl|spider|slurp|facebookexternalhit|facebot|meta-externalagent|meta-externalfetcher|bytespider|gptbot|claudebot|headlesschrome|phantomjs|lighthouse|pagespeed|gtmetrix|pingdom|uptimerobot|curl|wget|python|node/i.test(ua)
+    ) {
+      (window as any)['ga-disable-' + gaId] = true;
+      return;
+    }
     if (pathname && pathname.startsWith('/admin')) {
       (window as any)['ga-disable-' + gaId] = true;
       return;

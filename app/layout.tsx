@@ -86,7 +86,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="vi" className={`scroll-smooth ${plusJakartaSans.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <head>
-        {/* Google Tag Manager (GTM-MXH8TM7H) - High in head */}
+        {/* Google Tag Manager (GTM-MXH8TM7H) - High in head, filtered against bots & headless scanners */}
         {gtmId && (
           <script
             id="google-tag-manager"
@@ -97,6 +97,8 @@ var p=w.location&&w.location.pathname?w.location.pathname:'';
 if(p.indexOf('/admin')===0)return;
 var h=w.location&&w.location.hostname?w.location.hostname:'';
 if(h&&h.indexOf('betongangiabinh.vn')===-1&&h!=='localhost'&&h.indexOf('workers.dev')===-1)return;
+var ua=(w.navigator&&w.navigator.userAgent)||'';
+if((w.navigator&&w.navigator.webdriver)||/bot|crawl|spider|slurp|facebookexternalhit|facebot|meta-externalagent|meta-externalfetcher|bytespider|gptbot|claudebot|headlesschrome|phantomjs|lighthouse|pagespeed|gtmetrix|pingdom|uptimerobot|curl|wget|python|node/i.test(ua))return;
 w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -130,6 +132,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   var h = typeof window !== 'undefined' && window.location ? window.location.hostname : '';
   if (h && h.indexOf('betongangiabinh.vn') === -1 && h !== 'localhost' && h.indexOf('workers.dev') === -1) return;
+  var ua = (typeof navigator !== 'undefined' && navigator.userAgent) || '';
+  if ((typeof navigator !== 'undefined' && navigator.webdriver) || /bot|crawl|spider|slurp|facebookexternalhit|facebot|meta-externalagent|meta-externalfetcher|bytespider|gptbot|claudebot|headlesschrome|phantomjs|lighthouse|pagespeed|gtmetrix|pingdom|uptimerobot|curl|wget|python|node/i.test(ua)) {
+    window['ga-disable-${gaId}'] = true;
+    return;
+  }
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   window.gtag = gtag;
