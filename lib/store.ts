@@ -668,7 +668,9 @@ export async function syncStoreWithServer(force = false): Promise<boolean> {
   try {
     let data: any = null;
     try {
-      const res = await fetch('/api/admin/persist-posts', { cache: 'no-store' });
+      const isAdminPage = typeof window !== 'undefined' && window.location?.pathname?.startsWith('/admin');
+      const syncUrl = isAdminPage ? '/api/admin/persist-posts?git=true' : '/api/admin/persist-posts?summary=true';
+      const res = await fetch(syncUrl, { cache: 'no-store' });
       if (res.ok) {
         data = await res.json();
       }
@@ -740,8 +742,13 @@ export async function syncStoreWithServer(force = false): Promise<boolean> {
           mergedMap.set(key, clientPost);
           clientHasNewOrUpdated = true;
         } else {
-          // Both have this post. Check if client has local edits that are newer
+          // Both have this post. Preserve client's full content if server returned lightweight summary
           const serverPost = mergedMap.get(key)!;
+          if (!serverPost.content && clientPost.content) {
+            serverPost.content = clientPost.content;
+            serverPost.jekyllMarkdown = clientPost.jekyllMarkdown || serverPost.jekyllMarkdown;
+          }
+          // Check if client has local edits that are newer
           if (clientPost.updatedAt && serverPost.updatedAt) {
             if (new Date(clientPost.updatedAt).getTime() > new Date(serverPost.updatedAt).getTime()) {
               mergedMap.set(key, clientPost);

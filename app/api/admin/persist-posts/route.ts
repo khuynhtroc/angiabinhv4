@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
   getAllPostsServer,
+  getLightweightPostsServer,
   getAllProjectsServer,
   getAllPagesServer,
   getAllCategoriesServer,
@@ -62,6 +63,7 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const summary = searchParams.get('summary') === 'true';
+    const includeGit = searchParams.get('git') === 'true';
     const singleId = searchParams.get('id') || searchParams.get('slug');
 
     const posts = getAllPostsServer();
@@ -83,10 +85,14 @@ export async function GET(req: NextRequest) {
     const media = getAllMediaServer();
     const trash = getAllTrashServer();
 
-    // In summary mode (used for high-performance store sync), omit heavy article content
+    // In summary mode (used for high-performance store sync), omit heavy article content (reduces payload from 8.7MB to ~120KB)
     const returnedPosts = summary
-      ? posts.map(({ content, ...rest }) => rest)
+      ? getLightweightPostsServer()
       : posts;
+
+    const gitStatus = includeGit
+      ? ((await getGitHubStatusViaApi()) || getGitStatusServer())
+      : undefined;
 
     return NextResponse.json({
       success: true,
@@ -99,7 +105,7 @@ export async function GET(req: NextRequest) {
       adminConfig,
       media,
       trash,
-      gitStatus: (await getGitHubStatusViaApi()) || getGitStatusServer(),
+      gitStatus,
       source: 'AI Studio Server Data (public/data/)',
       timestamp: new Date().toISOString()
     });

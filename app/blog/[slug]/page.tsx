@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import { getPostBySlugServer, getAllCategoriesServer, getAllPostsServer } from '@/lib/server-data';
+import { getPostBySlugServer, getAllCategoriesServer, getLightweightPostsServer } from '@/lib/server-data';
 import BlogPostDetailClient from '@/components/BlogPostDetailClient';
 import CategoryDetailClient from '@/components/CategoryDetailClient';
 
@@ -112,7 +112,7 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
 
   // If this is a category route (/blog/tin-tuc, /blog/kinh-nghiem, /blog/kien-thuc), render category view
   if (isCategorySlug(cleanSlug)) {
-    const allPosts = getAllPostsServer();
+    const allPosts = getLightweightPostsServer();
     return <CategoryDetailClient cleanSlug={cleanSlug} initialPosts={allPosts} />;
   }
 

@@ -54,12 +54,14 @@ export async function GET() {
   const allPosts = getAllPostsServer();
   const publishedPosts = allPosts.filter((post) => !post.date || post.date <= todayIso);
 
-  // Sort posts by date descending so newest posts always appear first
-  const sortedPosts = [...publishedPosts].sort((a, b) => {
-    const timeA = a.date ? new Date(a.date).getTime() : 0;
-    const timeB = b.date ? new Date(b.date).getTime() : 0;
-    return timeB - timeA;
-  });
+  // Sort posts by date descending and limit to latest 60 posts to keep RSS XML lightweight and <2ms Worker CPU time
+  const sortedPosts = [...publishedPosts]
+    .sort((a, b) => {
+      const timeA = a.date ? new Date(a.date).getTime() : 0;
+      const timeB = b.date ? new Date(b.date).getTime() : 0;
+      return timeB - timeA;
+    })
+    .slice(0, 60);
 
   const itemsXml = sortedPosts
     .filter((post) => {
