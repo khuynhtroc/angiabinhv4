@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-14T23:01:58.955Z",
-    "autoPublishedCount": 82,
+    "lastRunAt": "2026-11-15T02:17:31.389Z",
+    "autoPublishedCount": 83,
     "logs": [
+      {
+        "id": "news-log-1794709051389",
+        "timestamp": "2026-11-15T02:17:31.389Z",
+        "trendTitle": "Việt Nam có một nơi quanh năm mát mẻ chỉ 20 độ C, nằm ở độ cao 1.200m được ví như “Đà Lạt thứ hai” của Tây Nguyên, sắp có khu đô thị nghìn tỷ của Sun Group được khởi công",
+        "generatedTitle": "Việt Nam có một nơi quanh năm mát mẻ chỉ 20 độ C, nằm ở độ cao 1.200m được ví như “Đà Lạt thứ hai” của Tây Nguyên, sắp có khu đô thị nghìn tỷ của Sun Group được khởi công: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/viet-nam-co-mot-noi-quanh-nam-mat-me-chi-20-do-c-nam-o-do-cao-1-200m-duoc-vi-nhu-da-lat-thu-hai-cua-tay-nguyen-sap-co-khu-do-thi-nghin-ty-cua-sun-group-duoc-khoi-cong-7359.html",
+        "wordCount": 811,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1794697318955",
         "timestamp": "2026-11-14T23:01:58.955Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Phát hiện một công trình hơn 4.300 tỷ đồng tại Hà Nội: Huy động 5.000 người thi công, sử dụng 14.000 tấn cốt thép, 34.000m² đá ốp lát, thuộc top lớn nhất Đông Nam Á: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/phat-hien-mot-cong-trinh-hon-4-300-ty-dong-tai-ha-noi-huy-dong-5-000-nguoi-thi-cong-su-dung-14-000-tan-cot-thep-34-000m-da-op-lat-thuoc-top-lon-nhat-dong-nam-a-4225.html",
         "wordCount": 820,
-        "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794190530603",
-        "timestamp": "2026-11-09T02:15:30.603Z",
-        "trendTitle": "Quá nhanh: Siêu cột trụ đầu tiên cao bằng tòa nhà 24 tầng tại sân vận động lớn nhất thế giới do Vingroup xây dựng vừa đạt bước tiến mới",
-        "generatedTitle": "Quá nhanh: Siêu cột trụ đầu tiên cao bằng tòa nhà 24 tầng tại sân vận động lớn nhất thế giới do Vingroup xây dựng vừa đạt bước tiến mới: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/qua-nhanh-sieu-cot-tru-dau-tien-cao-bang-toa-nha-24-tang-tai-san-van-dong-lon-nhat-the-gioi-do-vingroup-xay-dung-vua-dat-buoc-tien-moi-0763.html",
-        "wordCount": 812,
         "trendScore": 92,
         "status": "published"
       }
