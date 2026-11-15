@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-15T11:02:10.962Z",
-    "autoPublishedCount": 85,
+    "lastRunAt": "2026-11-15T12:24:19.745Z",
+    "autoPublishedCount": 86,
     "logs": [
+      {
+        "id": "news-log-1794745459745",
+        "timestamp": "2026-11-15T12:24:19.745Z",
+        "trendTitle": "Xe tải lật, hàng tấn đá tảng đổ xuống quốc lộ",
+        "generatedTitle": "Xe tải lật, hàng tấn đá tảng đổ xuống quốc lộ: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/xe-tai-lat-hang-tan-da-tang-do-xuong-quoc-lo-8084.html",
+        "wordCount": 777,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1794740530962",
         "timestamp": "2026-11-15T11:02:10.962Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/san-bay-quoc-te-long-thanh-7267.html",
         "wordCount": 749,
         "trendScore": 90,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794231059255",
-        "timestamp": "2026-11-09T13:30:59.255Z",
-        "trendTitle": "Mua vé tàu hỏa qua VNeID",
-        "generatedTitle": "Mua vé tàu hỏa qua VNeID: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/mua-ve-tau-hoa-qua-vneid-5142.html",
-        "wordCount": 778,
-        "trendScore": 82,
         "status": "published"
       }
     ]
