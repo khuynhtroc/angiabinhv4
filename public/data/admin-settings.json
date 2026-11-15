@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-15T05:01:52.468Z",
-    "autoPublishedCount": 84,
+    "lastRunAt": "2026-11-15T11:02:10.962Z",
+    "autoPublishedCount": 85,
     "logs": [
+      {
+        "id": "news-log-1794740530962",
+        "timestamp": "2026-11-15T11:02:10.962Z",
+        "trendTitle": "Tập đoàn của tỷ phú Nguyễn Thị Phương Thảo đề xuất làm tuyến metro đầu tiên ở khu Nam TP.HCM: Có hơn 20km đi xuyên lòng đất đến trung tâm, dự kiến thu hồi đất của 1.855 hộ dân",
+        "generatedTitle": "Tập đoàn của tỷ phú Nguyễn Thị Phương Thảo đề xuất làm tuyến metro đầu tiên ở khu Nam TP.HCM: Có hơn 20km đi xuyên lòng đất đến trung tâm, dự kiến thu hồi đất của 1.855 hộ dân: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/tap-doan-cua-ty-phu-nguyen-thi-phuong-thao-de-xuat-lam-tuyen-metro-dau-tien-o-khu-nam-tp-hcm-co-hon-20km-di-xuyen-long-dat-den-trung-tam-du-kien-thu-hoi-dat-cua-1-855-ho-dan-0150.html",
+        "wordCount": 846,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1794718912468",
         "timestamp": "2026-11-15T05:01:52.468Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/mua-ve-tau-hoa-qua-vneid-5142.html",
         "wordCount": 778,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794222117740",
-        "timestamp": "2026-11-09T11:01:57.740Z",
-        "trendTitle": "Đại gia gốc Thanh Hóa từng thi công mái vòm lớn nhất hành tinh tiếp tục góp mặt tại SVĐ 60.000 chỗ lớn gấp 1,5 lần Mỹ Đình, đảm nhiệm hệ mái thép nặng 8.600 tấn tích hợp công nghệ đóng mở tự động",
-        "generatedTitle": "Đại gia gốc Thanh Hóa từng thi công mái vòm lớn nhất hành tinh tiếp tục góp mặt tại SVĐ 60.000 chỗ lớn gấp 1,5 lần Mỹ Đình, đảm nhiệm hệ mái thép nặng 8.600 tấn tích hợp công nghệ đóng mở tự động: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/dai-gia-goc-thanh-hoa-tung-thi-cong-mai-vom-lon-nhat-hanh-tinh-tiep-tuc-gop-mat-tai-svd-60-000-cho-lon-gap-1-5-lan-my-dinh-dam-nhiem-he-mai-thep-nang-8-600-tan-tich-hop-cong-nghe-dong-mo-tu-dong-1922.html",
-        "wordCount": 821,
-        "trendScore": 85,
         "status": "published"
       }
     ]
