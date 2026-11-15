@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-15T02:17:31.389Z",
-    "autoPublishedCount": 83,
+    "lastRunAt": "2026-11-15T05:01:52.468Z",
+    "autoPublishedCount": 84,
     "logs": [
+      {
+        "id": "news-log-1794718912468",
+        "timestamp": "2026-11-15T05:01:52.468Z",
+        "trendTitle": "Đồng Nai khởi công nhà máy điện rác hơn 2.600 tỷ đồng",
+        "generatedTitle": "Đồng Nai khởi công nhà máy điện rác hơn 2.600 tỷ đồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dong-nai-khoi-cong-nha-may-dien-rac-hon-2-600-ty-dong-8498.html",
+        "wordCount": 779,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1794709051389",
         "timestamp": "2026-11-15T02:17:31.389Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/dai-gia-goc-thanh-hoa-tung-thi-cong-mai-vom-lon-nhat-hanh-tinh-tiep-tuc-gop-mat-tai-svd-60-000-cho-lon-gap-1-5-lan-my-dinh-dam-nhiem-he-mai-thep-nang-8-600-tan-tich-hop-cong-nghe-dong-mo-tu-dong-1922.html",
         "wordCount": 821,
         "trendScore": 85,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794200538874",
-        "timestamp": "2026-11-09T05:02:18.874Z",
-        "trendTitle": "Phát hiện một công trình hơn 4.300 tỷ đồng tại Hà Nội: Huy động 5.000 người thi công, sử dụng 14.000 tấn cốt thép, 34.000m² đá ốp lát, thuộc top lớn nhất Đông Nam Á",
-        "generatedTitle": "Phát hiện một công trình hơn 4.300 tỷ đồng tại Hà Nội: Huy động 5.000 người thi công, sử dụng 14.000 tấn cốt thép, 34.000m² đá ốp lát, thuộc top lớn nhất Đông Nam Á: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/phat-hien-mot-cong-trinh-hon-4-300-ty-dong-tai-ha-noi-huy-dong-5-000-nguoi-thi-cong-su-dung-14-000-tan-cot-thep-34-000m-da-op-lat-thuoc-top-lon-nhat-dong-nam-a-4225.html",
-        "wordCount": 820,
-        "trendScore": 92,
         "status": "published"
       }
     ]
