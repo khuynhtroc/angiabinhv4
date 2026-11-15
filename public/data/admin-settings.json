@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-15T12:24:19.745Z",
-    "autoPublishedCount": 86,
+    "lastRunAt": "2026-11-15T23:02:12.458Z",
+    "autoPublishedCount": 87,
     "logs": [
+      {
+        "id": "news-log-1794783732458",
+        "timestamp": "2026-11-15T23:02:12.458Z",
+        "trendTitle": "Siêu tổ hợp đường sắt 260 ha của Vingroup, nơi dừng chân của dự án đường sắt tốc độ cao 67 tỷ USD đi qua 15 tỉnh thành vừa có diễn biến mới",
+        "generatedTitle": "Siêu tổ hợp đường sắt 260 ha của Vingroup, nơi dừng chân của dự án đường sắt tốc độ cao 67 tỷ USD đi qua 15 tỉnh thành vừa có diễn biến mới: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/sieu-to-hop-duong-sat-260-ha-cua-vingroup-noi-dung-chan-cua-du-an-duong-sat-toc-do-cao-67-ty-usd-di-qua-15-tinh-thanh-vua-co-dien-bien-moi-8149.html",
+        "wordCount": 812,
+        "trendScore": 75,
+        "status": "published"
+      },
       {
         "id": "news-log-1794745459745",
         "timestamp": "2026-11-15T12:24:19.745Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/mot-nha-thau-lon-se-thi-cong-loat-hang-muc-quan-trong-tai-tuyen-metro-gan-4-ty-usd-dai-54km-noi-ben-thanh---can-gio-cua-ty-phu-pham-nhat-vuong-1132.html",
         "wordCount": 820,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794265302939",
-        "timestamp": "2026-11-09T23:01:42.939Z",
-        "trendTitle": "sân bay quốc tế long thành",
-        "generatedTitle": "sân bay quốc tế long thành: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/san-bay-quoc-te-long-thanh-7267.html",
-        "wordCount": 749,
-        "trendScore": 90,
         "status": "published"
       }
     ]
