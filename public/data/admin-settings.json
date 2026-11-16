@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-16T02:30:58.084Z",
-    "autoPublishedCount": 88,
+    "lastRunAt": "2026-11-16T05:02:10.911Z",
+    "autoPublishedCount": 89,
     "logs": [
+      {
+        "id": "news-log-1794805330911",
+        "timestamp": "2026-11-16T05:02:10.911Z",
+        "trendTitle": "Phát hiện 450 xe tải liên tục đổ 60.000 m³ bê tông suốt 63 giờ, từng giúp các kỹ sư Trung Quốc xây tòa tháp cao bậc nhất thế giới, vượt Landmark 81 gần 200m",
+        "generatedTitle": "Phát hiện 450 xe tải liên tục đổ 60.000 m³ bê tông suốt 63 giờ, từng giúp các kỹ sư Trung Quốc xây tòa tháp cao bậc nhất thế giới, vượt Landmark 81 gần 200m: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/phat-hien-450-xe-tai-lien-tuc-do-60-000-m-be-tong-suot-63-gio-tung-giup-cac-ky-su-trung-quoc-xay-toa-thap-cao-bac-nhat-the-gioi-vuot-landmark-81-gan-200m-7752.html",
+        "wordCount": 814,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1794796258084",
         "timestamp": "2026-11-16T02:30:58.084Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/du-an-mo-rong-cao-toc-tp-hcm---trung-luong---my-thuan-doi-mat-ap-luc-thieu-vat-lieu-1016.html",
         "wordCount": 805,
         "trendScore": 88,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794286902654",
-        "timestamp": "2026-11-10T05:01:42.654Z",
-        "trendTitle": "Cao tốc từ TP HCM đi Cần Thơ điều chỉnh giao thông 20 ngày",
-        "generatedTitle": "Cao tốc từ TP HCM đi Cần Thơ điều chỉnh giao thông 20 ngày: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/cao-toc-tu-tp-hcm-di-can-tho-dieu-chinh-giao-thong-20-ngay-9905.html",
-        "wordCount": 788,
-        "trendScore": 82,
         "status": "published"
       }
     ]
