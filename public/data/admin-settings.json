@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-16T13:16:16.452Z",
-    "autoPublishedCount": 91,
+    "lastRunAt": "2026-11-16T23:02:13.056Z",
+    "autoPublishedCount": 92,
     "logs": [
+      {
+        "id": "news-log-1794870133056",
+        "timestamp": "2026-11-16T23:02:13.056Z",
+        "trendTitle": "Ngôi nhà ở Campuchia mở sân vườn đón gió sông Mekong",
+        "generatedTitle": "Ngôi nhà ở Campuchia mở sân vườn đón gió sông Mekong: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/ngoi-nha-o-campuchia-mo-san-vuon-don-gio-song-mekong-7304.html",
+        "wordCount": 777,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1794834976452",
         "timestamp": "2026-11-16T13:16:16.452Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Đà Lạt dự kiến xây 6 tuyến tàu điện dài hơn 101km, kết nối sân bay Liên Khương với loạt điểm du lịch nổi tiếng, khôi phục tuyến đường sắt 84km: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/da-lat-du-kien-xay-6-tuyen-tau-dien-dai-hon-101km-ket-noi-san-bay-lien-khuong-voi-loat-diem-du-lich-noi-tieng-khoi-phuc-tuyen-duong-sat-84km-1396.html",
         "wordCount": 823,
-        "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794351749011",
-        "timestamp": "2026-11-10T23:02:29.011Z",
-        "trendTitle": "Cao tốc TP HCM - Long Thành sau hơn một năm mở rộng",
-        "generatedTitle": "Cao tốc TP HCM - Long Thành sau hơn một năm mở rộng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/cao-toc-tp-hcm---long-thanh-sau-hon-mot-nam-mo-rong-4984.html",
-        "wordCount": 783,
         "trendScore": 82,
         "status": "published"
       }
