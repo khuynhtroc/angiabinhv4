@@ -159,7 +159,7 @@ Trả về đúng định dạng JSON:
   "focusKeywords": ["${primaryKeyword}", "bê tông an gia bình", "ninh bình"],
   "category": "Kỹ Thuật Thi Công",
   "tags": ["bê tông tươi ninh bình", "bê tông an gia bình", "kỹ thuật thi công"],
-  "content": "Nội dung phân tích mở đầu chuyên sâu khoảng 1000 - 1500 từ về đề tài với các thẻ ## H2 phân tích chi tiết kinh nghiệm hiện trường tại Ninh Bình"
+  "content": "Nội dung phân tích mở đầu chuyên sâu khoảng 1000 - 1500 từ về đề tài với hộp Tóm Tắt Nhanh (AI Overview Summary Box) 50-65 từ ở đầu bài trả lời thẳng vào câu hỏi chính + các thẻ ## H2 phân tích chi tiết kinh nghiệm hiện trường tại Ninh Bình + 5 câu hỏi đáp ### Câu 1..5 ở cuối phần mở đầu theo chuẩn Answer-First cho Google AI Overview"
 }`;
 
       const models = ['gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-flash-latest', 'gemini-3.8-flash'];

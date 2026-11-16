@@ -18,6 +18,7 @@ export interface PageSeoHeadProps {
   publishedTime?: string;
   modifiedTime?: string;
   breadcrumbs?: Array<{ name: string; item: string }>;
+  faqs?: Array<{ question: string; answer: string }>;
 }
 
 const SITE_NAME = 'Bê Tông An Gia Bình';
@@ -38,7 +39,8 @@ export default function PageSeoHead({
   category,
   publishedTime,
   modifiedTime,
-  breadcrumbs
+  breadcrumbs,
+  faqs
 }: PageSeoHeadProps) {
   const { pages, jekyllConfig } = useAppStore();
 
@@ -254,6 +256,22 @@ export default function PageSeoHead({
         });
       }
 
+      // FAQPage Schema for Article / Specific Page
+      if (faqs && faqs.length > 0) {
+        schemaData.push({
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqs.map((f) => ({
+            '@type': 'Question',
+            name: f.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: f.answer
+            }
+          }))
+        });
+      }
+
       if (schemaData.length > 0) {
         scriptTag.text = JSON.stringify(schemaData.length === 1 ? schemaData[0] : schemaData);
       }
@@ -274,6 +292,7 @@ export default function PageSeoHead({
     publishedTime,
     modifiedTime,
     breadcrumbs,
+    faqs,
     pages,
     jekyllConfig
   ]);

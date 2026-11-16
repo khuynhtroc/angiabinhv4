@@ -10,6 +10,8 @@ import ChatbotWidget from '@/components/ChatbotWidget';
 import MobileQuickBar from '@/components/MobileQuickBar';
 import PageSeoHead from '@/components/PageSeoHead';
 import TodaySearchKeywords from '@/components/TodaySearchKeywords';
+import AiFaqSection from '@/components/AiFaqSection';
+import { MASTER_CONCRETE_FAQS } from '@/lib/ai-seo-faq';
 import {
   Calculator, Phone, ShieldCheck, CheckCircle2, Truck,
   Building2, ArrowRight, HelpCircle, MapPin, Award,
@@ -71,6 +73,7 @@ export default function PricingPage() {
         slug="/bang-gia"
         defaultTitle="Báo giá bê tông tươi tại Ninh Bình - Bê Tông An Gia Bình"
         defaultDescription="Báo giá bê tông tươi tại Ninh Bình mới nhất 2025 - 2026. Bảng tra giá mác 150, 200, 250, 300, 350, giá bơm bê tông cần 56m và phụ gia. Mọi bảng giá đều mang tính chất tham khảo tại thời điểm hiện tại."
+        faqs={MASTER_CONCRETE_FAQS}
       />
       <Navbar />
 
@@ -434,6 +437,9 @@ export default function PricingPage() {
             </a>
           </div>
         </article>
+
+        {/* 12 Comprehensive AI Overview Q&A Section */}
+        <AiFaqSection />
 
         {/* Dynamic Today Search Keywords Section */}
         <TodaySearchKeywords

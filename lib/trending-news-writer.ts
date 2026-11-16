@@ -200,7 +200,8 @@ YÊU CẦU BẮT BUỘC VỀ NỘI DUNG VÀ ĐỘ DÀI:
    - ## 3. Góc Nhìn Kỹ Sư Bê Tông An Gia Bình: Giải Pháp Kỹ Thuật Đón Đầu
    - ## 4. Bảng Phân Tích Thông Số Cấp Phối & Tiết Kiệm Ngân Sách
    - ## 5. Khuyến Nghị Thực Tiễn Dành Cho Chủ Đầu Tư & Nhà Thầu Tại Ninh Bình
-   - ## 6. Thông Tin Liên Hệ & Đặt Lịch Cung Ứng Bê Tông An Gia Bình
+   - ## 6. Giải Đáp Nhanh (FAQ) Về Kỹ Thuật & Báo Giá Bê Tông Tươi Ninh Bình (gồm 4 câu hỏi ### Câu 1..4 trả lời trực diện 40-60 từ chuẩn Google AI Overview)
+   - ## 7. Thông Tin Liên Hệ & Đặt Lịch Cung Ứng Bê Tông An Gia Bình
 4. Trích dẫn số hotline 0988 2662 93, cam kết đúng mác, đủ khối lượng, kẹp chì xe bồn, chứng chỉ nén mẫu LAS-XD.
 5. Tạo một bảng Markdown so sánh chi tiết trong bài viết.
 6. Trả về ĐÚNG định dạng JSON sau:

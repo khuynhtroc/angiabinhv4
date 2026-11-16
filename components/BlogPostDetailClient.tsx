@@ -13,6 +13,8 @@ import ArticleContentWithToc from '@/components/ArticleContentWithToc';
 import PageSeoHead from '@/components/PageSeoHead';
 import { Calendar, Clock, ArrowLeft, Phone, ChevronRight, BookOpen, Layers } from 'lucide-react';
 import TodaySearchKeywords from '@/components/TodaySearchKeywords';
+import AiFaqSection from '@/components/AiFaqSection';
+import { buildContextualFaqsForPost } from '@/lib/ai-seo-faq';
 import { BlogPost } from '@/lib/types';
 import NotFoundRedirect from '@/components/NotFoundRedirect';
 
@@ -197,6 +199,7 @@ export default function BlogPostDetailClient({
   const isNews = post.category === 'Tin Tức & Thị Trường' || post.category === 'tin-tuc' || Boolean(post.isTrendingNews) || Boolean(post.permalink?.includes('/blog/tin-tuc/'));
   const postPath = isNews ? `/blog/tin-tuc/${post.slug || post.id}.html` : `/${post.slug || post.id}.html`;
   const postCanonical = `https://www.betongangiabinh.vn${postPath}`;
+  const postFaqs = buildContextualFaqsForPost(post);
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 font-sans">
@@ -216,6 +219,7 @@ export default function BlogPostDetailClient({
           { name: isNews ? 'Tin Tức & Thị Trường' : 'Kiến Thức & Blog', item: isNews ? '/blog/tin-tuc' : '/blog' },
           { name: post.title, item: postPath }
         ]}
+        faqs={postFaqs}
       />
       <RealtimeAnalyticsTracker />
       <Navbar />
@@ -278,6 +282,16 @@ export default function BlogPostDetailClient({
         </div>
 
         <ArticleContentWithToc content={post.content} />
+
+        {/* AI Overview & Contextual Q&A Block for every Article */}
+        <div className="mt-8 bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-2xs">
+          <AiFaqSection
+            faqs={postFaqs}
+            title={`Câu Hỏi Thường Gặp Về: ${articleTitle}`}
+            subtitle="Tổng hợp giải đáp kỹ thuật, đơn giá mác bê tông và tiêu chuẩn nghiệm thu TCVN tại Ninh Bình."
+            compact
+          />
+        </div>
 
         <div className="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-2xs space-y-6 mt-8">
           <div className="p-6 bg-amber-50 text-slate-900 rounded-2xl border border-amber-200 space-y-3">

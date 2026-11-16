@@ -4,6 +4,7 @@ import CookieConsentBanner from '@/components/CookieConsentBanner';
 import CustomCodeInjector from '@/components/CustomCodeInjector';
 import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
 import { getConfigServer } from '@/lib/server-data';
+import { buildMasterStructuredDataJsonLd } from '@/lib/ai-seo-faq';
 import './globals.css';
 
 export const viewport: Viewport = {
@@ -159,6 +160,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         />
         <link rel="alternate" type="application/rss+xml" title="Bê Tông An Gia Bình RSS Feed" href="/rss.xml" />
         <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+        {/* Server-Side Master JSON-LD (LocalBusiness + OfferCatalog + 12 Q&A FAQPage for Google AI Overview) */}
+        <script
+          id="master-ai-seo-jsonld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(buildMasterStructuredDataJsonLd()),
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var f=window.fetch;var c=f?f.bind(window):null;try{Object.defineProperty(window,'fetch',{get:function(){return c;},set:function(v){c=v;},configurable:true,enumerable:true});}catch(e){try{if(window.Window&&window.Window.prototype){Object.defineProperty(window.Window.prototype,'fetch',{get:function(){return c;},set:function(v){c=v;},configurable:true,enumerable:true});}}catch(e2){}}}catch(e3){}window.addEventListener('error',function(e){if(e&&e.message&&e.message.indexOf('fetch')!==-1&&e.message.indexOf('only a getter')!==-1){e.preventDefault();if(e.stopImmediatePropagation)e.stopImmediatePropagation();return true;}},true);})();`,

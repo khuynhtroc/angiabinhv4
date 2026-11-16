@@ -11,6 +11,7 @@ import CapabilityProfile from '@/components/CapabilityProfile';
 import ProjectsShowcase from '@/components/ProjectsShowcase';
 import HomeBlogSection from '@/components/HomeBlogSection';
 import HomeConstructionNews from '@/components/HomeConstructionNews';
+import AiFaqSection from '@/components/AiFaqSection';
 import ChatbotWidget from '@/components/ChatbotWidget';
 import MobileQuickBar from '@/components/MobileQuickBar';
 import RealtimeAnalyticsTracker from '@/components/RealtimeAnalyticsTracker';
@@ -58,6 +59,9 @@ export default function HomePage() {
 
         {/* 8. Construction News & Ideas (Ninh Bình & Nationwide) */}
         <HomeConstructionNews />
+
+        {/* 9. AI Overview & People Also Ask Q&A Section */}
+        <AiFaqSection />
       </main>
 
       <Footer />
