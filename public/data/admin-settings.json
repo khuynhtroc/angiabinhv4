@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-16T11:02:07.275Z",
-    "autoPublishedCount": 90,
+    "lastRunAt": "2026-11-16T13:16:16.452Z",
+    "autoPublishedCount": 91,
     "logs": [
+      {
+        "id": "news-log-1794834976452",
+        "timestamp": "2026-11-16T13:16:16.452Z",
+        "trendTitle": "Diện mạo nút giao 4 tầng với cầu vượt thép lớn nhất TP HCM",
+        "generatedTitle": "Diện mạo nút giao 4 tầng với cầu vượt thép lớn nhất TP HCM: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dien-mao-nut-giao-4-tang-voi-cau-vuot-thep-lon-nhat-tp-hcm-8389.html",
+        "wordCount": 786,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1794826927275",
         "timestamp": "2026-11-16T11:02:07.275Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/cao-toc-tp-hcm---long-thanh-sau-hon-mot-nam-mo-rong-4984.html",
         "wordCount": 783,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794316190391",
-        "timestamp": "2026-11-10T13:09:50.391Z",
-        "trendTitle": "Hà Nội: Ngắm cây cầu mang dáng hình vô cực đang thành hình trên sông Hồng",
-        "generatedTitle": "Hà Nội: Ngắm cây cầu mang dáng hình vô cực đang thành hình trên sông Hồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/ha-noi-ngam-cay-cau-mang-dang-hinh-vo-cuc-dang-thanh-hinh-tren-song-hong-0801.html",
-        "wordCount": 798,
-        "trendScore": 81,
         "status": "published"
       }
     ]
