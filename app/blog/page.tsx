@@ -8,7 +8,7 @@ import Footer from '@/components/Footer';
 import ChatbotWidget from '@/components/ChatbotWidget';
 import MobileQuickBar from '@/components/MobileQuickBar';
 import PageSeoHead from '@/components/PageSeoHead';
-import { useAppStore } from '@/lib/store';
+import { useAppStore, syncStoreWithServer } from '@/lib/store';
 import { BlogPost } from '@/lib/types';
 import { getPostUrl, getCategorySlug, getPostBlogUrl, resolveMediaUrl, handleImageFallback, cleanExcerptText, filterPublishedPosts } from '@/lib/utils';
 import {
@@ -221,6 +221,10 @@ function BlogListInner() {
     setCurrentSlide(page);
     const total = Math.max(1, Math.ceil(scrollWidth / (clientWidth || 1)));
     setTotalSlides(total);
+  }, []);
+
+  useEffect(() => {
+    syncStoreWithServer(true).catch(() => {});
   }, []);
 
   useEffect(() => {

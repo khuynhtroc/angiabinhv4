@@ -439,10 +439,10 @@ export function getUpdatedInitialDataCode(
       }
     }
 
-    // 2. Sync Posts (Keep initial-data.ts lightweight with latest 20 posts while posts.json keeps all posts)
+    // 2. Sync Posts (Keep initial-data.ts ultra-lightweight with latest 12 posts and empty body content so client JS bundle stays small and SSR hydration takes <0.5ms CPU!)
     if (section === 'posts' || section === 'all') {
       const posts = getAllPostsServer();
-      const postsForCode = (posts.length > 25 ? posts.slice(0, 20) : posts).map((p) => ({
+      const postsForCode = (posts.length > 12 ? posts.slice(0, 12) : posts).map((p) => ({
         ...p,
         excerpt: p.excerpt || p.title || '',
         author: p.author || 'Ban Kỹ Thuật An Gia Bình',
@@ -453,7 +453,8 @@ export function getUpdatedInitialDataCode(
         views: typeof p.views === 'number' ? p.views : 100,
         readTime: p.readTime || '3 phút',
         coverImage: p.coverImage || '/logo.png',
-        content: p.content || '',
+        content: '',
+        jekyllMarkdown: '',
       }));
       const postsJson = JSON.stringify(postsForCode, null, 2);
       const replacement = `export const initialBlogPosts: BlogPost[] = ${postsJson};`;

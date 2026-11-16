@@ -27,7 +27,20 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+  const { pathname } = request.nextUrl;
+
+  if (request.method === 'GET' && !pathname.startsWith('/admin') && !pathname.startsWith('/api')) {
+    const edgeTTL = pathname === '/' || pathname === '/bang-gia' ? 300 : 1800; // 5m for home/pricing, 30m for articles
+    response.headers.set(
+      'Cache-Control',
+      `public, max-age=120, s-maxage=${edgeTTL}, stale-while-revalidate=86400`
+    );
+    response.headers.set('CDN-Cache-Control', `public, s-maxage=${edgeTTL}, stale-while-revalidate=86400`);
+    response.headers.set('Cloudflare-CDN-Cache-Control', `public, s-maxage=${edgeTTL}, stale-while-revalidate=86400`);
+  }
+
+  return response;
 }
 
 export const config = {

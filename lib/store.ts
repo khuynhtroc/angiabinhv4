@@ -661,6 +661,11 @@ let isSyncing = false;
 export async function syncStoreWithServer(force = false): Promise<boolean> {
   if (typeof window === 'undefined') return false;
   const now = Date.now();
+  const isAdminPage = typeof window !== 'undefined' && window.location?.pathname?.startsWith('/admin');
+  if (!isAdminPage && !force) {
+    // Do not auto-fetch 976 posts on every public pageview when initialPost/initialPosts are already SSR-rendered
+    return false;
+  }
   if (!force && (isSyncing || now - lastSyncTimestamp < 3000)) {
     return false;
   }
@@ -668,7 +673,6 @@ export async function syncStoreWithServer(force = false): Promise<boolean> {
   try {
     let data: any = null;
     try {
-      const isAdminPage = typeof window !== 'undefined' && window.location?.pathname?.startsWith('/admin');
       const syncUrl = isAdminPage ? '/api/admin/persist-posts?git=true' : '/api/admin/persist-posts?summary=true';
       const res = await fetch(syncUrl, { cache: 'no-store' });
       if (res.ok) {

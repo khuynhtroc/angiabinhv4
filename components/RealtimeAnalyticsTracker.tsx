@@ -101,12 +101,6 @@ export default function RealtimeAnalyticsTracker() {
         device: device,
         details: `Truy cập trang ${fullUrl}`,
       });
-
-      fetch('/api/analytics', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'pageview', path: fullUrl }),
-      }).catch(() => {});
     } catch {}
   }, [pathname, gaId, logRealtimeEvent]);
 

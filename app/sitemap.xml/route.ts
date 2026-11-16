@@ -19,7 +19,20 @@ function escapeXml(unsafe: string): string {
     .replace(/'/g, '&apos;');
 }
 
+const gSitemap = globalThis as any;
+const SITEMAP_TTL_MS = 10 * 60 * 1000;
+
 export async function GET() {
+  if (gSitemap.__sitemapXmlCache && Date.now() - gSitemap.__sitemapXmlCache.ts < SITEMAP_TTL_MS) {
+    return new NextResponse(gSitemap.__sitemapXmlCache.xml, {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/xml; charset=utf-8',
+        'Cache-Control': 'public, max-age=600, s-maxage=3600, stale-while-revalidate=86400',
+        'X-Content-Type-Options': 'nosniff'
+      }
+    });
+  }
   const baseUrl = 'https://www.betongangiabinh.vn';
   const nowIso = new Date().toISOString().split('T')[0];
 
@@ -158,11 +171,13 @@ export async function GET() {
 ${xmlEntries}
 </urlset>`;
 
+  gSitemap.__sitemapXmlCache = { xml: sitemapXml, ts: Date.now() };
+
   return new NextResponse(sitemapXml, {
     status: 200,
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, max-age=300, s-maxage=600, stale-while-revalidate=86400',
+      'Cache-Control': 'public, max-age=600, s-maxage=3600, stale-while-revalidate=86400',
       'X-Content-Type-Options': 'nosniff'
     }
   });

@@ -32,8 +32,13 @@ function saveEvents(events: AnalyticsEventItem[]) {
   } catch {}
 }
 
+const gAnalytics = globalThis as any;
+if (!Array.isArray(gAnalytics.__analyticsEvents)) {
+  gAnalytics.__analyticsEvents = [];
+}
+
 export async function GET() {
-  const events = readEvents();
+  const events = gAnalytics.__analyticsEvents as AnalyticsEventItem[];
   return NextResponse.json({
     success: true,
     totalEvents: events.length,
@@ -46,7 +51,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const eventType = body.type || "pageview";
     const eventPath = body.path || "/";
-    const events = readEvents();
+    const events = gAnalytics.__analyticsEvents as AnalyticsEventItem[];
     events.unshift({
       id: `ev-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
       timestamp: new Date().toISOString(),
@@ -55,7 +60,7 @@ export async function POST(req: NextRequest) {
       userAgent: req.headers.get("user-agent") || undefined,
       referer: req.headers.get("referer") || undefined,
     });
-    saveEvents(events);
+    if (events.length > 200) events.length = 200;
 
     return NextResponse.json({
       success: true,

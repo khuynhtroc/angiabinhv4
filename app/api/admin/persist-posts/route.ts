@@ -59,12 +59,25 @@ if (typeof setInterval !== 'undefined') {
   }, 5 * 60 * 1000);
 }
 
+const gPersist = globalThis as any;
+const SUMMARY_CACHE_TTL_MS = 2 * 60 * 1000;
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const summary = searchParams.get('summary') === 'true';
     const includeGit = searchParams.get('git') === 'true';
     const singleId = searchParams.get('id') || searchParams.get('slug');
+
+    if (summary && !includeGit && !singleId && gPersist.__summaryJsonCache && Date.now() - gPersist.__summaryJsonCache.ts < SUMMARY_CACHE_TTL_MS) {
+      return new NextResponse(gPersist.__summaryJsonCache.json, {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'Cache-Control': 'public, max-age=60, s-maxage=120'
+        }
+      });
+    }
 
     const posts = getAllPostsServer();
 
@@ -94,7 +107,7 @@ export async function GET(req: NextRequest) {
       ? ((await getGitHubStatusViaApi()) || getGitStatusServer())
       : undefined;
 
-    return NextResponse.json({
+    const payload = {
       success: true,
       count: posts.length,
       posts: returnedPosts,
@@ -108,7 +121,21 @@ export async function GET(req: NextRequest) {
       gitStatus,
       source: 'AI Studio Server Data (public/data/)',
       timestamp: new Date().toISOString()
-    });
+    };
+
+    if (summary && !includeGit && !singleId) {
+      const jsonStr = JSON.stringify(payload);
+      gPersist.__summaryJsonCache = { json: jsonStr, ts: Date.now() };
+      return new NextResponse(jsonStr, {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'Cache-Control': 'public, max-age=60, s-maxage=120'
+        }
+      });
+    }
+
+    return NextResponse.json(payload);
   } catch (error: any) {
     return NextResponse.json(
       { success: false, error: error?.message || 'Lỗi đọc dữ liệu từ máy chủ.' },

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-import { getPostBySlugServer, getPostBySlugServerAsync, getAllCategoriesServer } from '@/lib/server-data';
+import { getPostBySlugServer, getPostBySlugServerAsync, getAllCategoriesServer, getLightweightPostsServer } from '@/lib/server-data';
 import BlogPostDetailClient from '@/components/BlogPostDetailClient';
 import CategoryDetailClient from '@/components/CategoryDetailClient';
 
@@ -198,7 +198,8 @@ export default async function BlogPostCatchAllPage({ params }: PageProps) {
 
   // Case 2: Category route (/blog/tin-tuc, /blog/kinh-nghiem, etc.)
   if (isCategorySlug(cleanSlug)) {
-    return <CategoryDetailClient cleanSlug={cleanSlug} />;
+    const allPosts = getLightweightPostsServer();
+    return <CategoryDetailClient cleanSlug={cleanSlug} initialPosts={allPosts} />;
   }
 
   // Case 3: Other blog posts visited via /blog/[slug].html
