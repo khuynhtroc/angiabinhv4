@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-15T23:02:12.458Z",
-    "autoPublishedCount": 87,
+    "lastRunAt": "2026-11-16T02:30:58.084Z",
+    "autoPublishedCount": 88,
     "logs": [
+      {
+        "id": "news-log-1794796258084",
+        "timestamp": "2026-11-16T02:30:58.084Z",
+        "trendTitle": "Công trường thi công trong đô thị: Phải bảo đảm vệ sinh môi trường, an toàn cho người dân",
+        "generatedTitle": "Công trường thi công trong đô thị: Phải bảo đảm vệ sinh môi trường, an toàn cho người dân: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/cong-truong-thi-cong-trong-do-thi-phai-bao-dam-ve-sinh-moi-truong-an-toan-cho-nguoi-dan-0489.html",
+        "wordCount": 802,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1794783732458",
         "timestamp": "2026-11-15T23:02:12.458Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Cao tốc từ TP HCM đi Cần Thơ điều chỉnh giao thông 20 ngày: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/cao-toc-tu-tp-hcm-di-can-tho-dieu-chinh-giao-thong-20-ngay-9905.html",
         "wordCount": 788,
-        "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794284812220",
-        "timestamp": "2026-11-10T04:26:52.220Z",
-        "trendTitle": "Một nhà thầu lớn sẽ thi công loạt hạng mục quan trọng tại tuyến metro gần 4 tỷ USD, dài 54km nối Bến Thành - Cần Giờ của tỷ phú Phạm Nhật Vượng",
-        "generatedTitle": "Một nhà thầu lớn sẽ thi công loạt hạng mục quan trọng tại tuyến metro gần 4 tỷ USD, dài 54km nối Bến Thành - Cần Giờ của tỷ phú Phạm Nhật Vượng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/mot-nha-thau-lon-se-thi-cong-loat-hang-muc-quan-trong-tai-tuyen-metro-gan-4-ty-usd-dai-54km-noi-ben-thanh---can-gio-cua-ty-phu-pham-nhat-vuong-1132.html",
-        "wordCount": 820,
         "trendScore": 82,
         "status": "published"
       }
