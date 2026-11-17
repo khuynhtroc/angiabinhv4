@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-16T23:02:13.056Z",
-    "autoPublishedCount": 92,
+    "lastRunAt": "2026-11-17T04:54:08.961Z",
+    "autoPublishedCount": 93,
     "logs": [
+      {
+        "id": "news-log-1794891248961",
+        "timestamp": "2026-11-17T04:54:08.961Z",
+        "trendTitle": "Hơn 150 nhà dân dọc kênh Thụy Phương bị lún, nứt",
+        "generatedTitle": "Hơn 150 nhà dân dọc kênh Thụy Phương bị lún, nứt: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/hon-150-nha-dan-doc-kenh-thuy-phuong-bi-lun-nut-6731.html",
+        "wordCount": 779,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1794870133056",
         "timestamp": "2026-11-16T23:02:13.056Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/go-kho-nguon-vat-lieu-dua-cao-toc-dai-188km-qua-an-giang-can-tho-vao-khai-thac-nam-2027-4928.html",
         "wordCount": 791,
         "trendScore": 88,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794363896232",
-        "timestamp": "2026-11-11T02:24:56.232Z",
-        "trendTitle": "Đà Lạt dự kiến xây 6 tuyến tàu điện dài hơn 101km, kết nối sân bay Liên Khương với loạt điểm du lịch nổi tiếng, khôi phục tuyến đường sắt 84km",
-        "generatedTitle": "Đà Lạt dự kiến xây 6 tuyến tàu điện dài hơn 101km, kết nối sân bay Liên Khương với loạt điểm du lịch nổi tiếng, khôi phục tuyến đường sắt 84km: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/da-lat-du-kien-xay-6-tuyen-tau-dien-dai-hon-101km-ket-noi-san-bay-lien-khuong-voi-loat-diem-du-lich-noi-tieng-khoi-phuc-tuyen-duong-sat-84km-1396.html",
-        "wordCount": 823,
-        "trendScore": 82,
         "status": "published"
       }
     ]
