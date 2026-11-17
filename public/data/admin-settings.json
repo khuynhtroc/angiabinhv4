@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-17T05:02:02.361Z",
-    "autoPublishedCount": 94,
+    "lastRunAt": "2026-11-17T11:02:06.083Z",
+    "autoPublishedCount": 95,
     "logs": [
+      {
+        "id": "news-log-1794913326083",
+        "timestamp": "2026-11-17T11:02:06.083Z",
+        "trendTitle": "Thứ trưởng Lê Anh Tuấn: Huy động máy móc, nhân lực đẩy nhanh cao tốc Dầu Giây - Tân Phú",
+        "generatedTitle": "Thứ trưởng Lê Anh Tuấn: Huy động máy móc, nhân lực đẩy nhanh cao tốc Dầu Giây - Tân Phú: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/thu-truong-le-anh-tuan-huy-dong-may-moc-nhan-luc-day-nhanh-cao-toc-dau-giay---tan-phu-4798.html",
+        "wordCount": 810,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1794891722361",
         "timestamp": "2026-11-17T05:02:02.361Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/chot-thoi-gian-khai-thac-san-bay-long-thanh-thi-truong-bat-dong-san-phia-dong-tp-ho-chi-minh-se-the-nao-8226.html",
         "wordCount": 827,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794394927746",
-        "timestamp": "2026-11-11T11:02:07.746Z",
-        "trendTitle": "Mở đường cho doanh nghiệp Việt tham gia chuỗi cung ứng đường sắt",
-        "generatedTitle": "Mở đường cho doanh nghiệp Việt tham gia chuỗi cung ứng đường sắt: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/mo-duong-cho-doanh-nghiep-viet-tham-gia-chuoi-cung-ung-duong-sat-0726.html",
-        "wordCount": 783,
-        "trendScore": 88,
         "status": "published"
       }
     ]
