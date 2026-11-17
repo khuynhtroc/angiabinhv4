@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-17T11:02:06.083Z",
-    "autoPublishedCount": 95,
+    "lastRunAt": "2026-11-17T14:00:16.931Z",
+    "autoPublishedCount": 96,
     "logs": [
+      {
+        "id": "news-log-1794924016931",
+        "timestamp": "2026-11-17T14:00:16.931Z",
+        "trendTitle": "Hà Nội phân luồng giao thông 3 tuyến phố từ ngày 20/11 để thi công cáp ngầm 110kV",
+        "generatedTitle": "Hà Nội phân luồng giao thông 3 tuyến phố từ ngày 20/11 để thi công cáp ngầm 110kV: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/ha-noi-phan-luong-giao-thong-3-tuyen-pho-tu-ngay-20-11-de-thi-cong-cap-ngam-110kv-8742.html",
+        "wordCount": 806,
+        "trendScore": 78,
+        "status": "published"
+      },
       {
         "id": "news-log-1794913326083",
         "timestamp": "2026-11-17T11:02:06.083Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/vlasta-premier---phu-thuan-tap-trung-vao-tieu-chuan-ban-giao-3948.html",
         "wordCount": 788,
         "trendScore": 85,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794399573700",
-        "timestamp": "2026-11-11T12:19:33.700Z",
-        "trendTitle": "Chốt thời gian khai thác sân bay Long Thành, thị trường bất động sản phía Đông TP. Hồ Chí Minh sẽ thế nào?",
-        "generatedTitle": "Chốt thời gian khai thác sân bay Long Thành, thị trường bất động sản phía Đông TP. Hồ Chí Minh sẽ thế nào?: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/chot-thoi-gian-khai-thac-san-bay-long-thanh-thi-truong-bat-dong-san-phia-dong-tp-ho-chi-minh-se-the-nao-8226.html",
-        "wordCount": 827,
-        "trendScore": 82,
         "status": "published"
       }
     ]
