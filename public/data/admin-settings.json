@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-17T14:00:16.931Z",
-    "autoPublishedCount": 96,
+    "lastRunAt": "2026-11-17T23:02:33.184Z",
+    "autoPublishedCount": 97,
     "logs": [
+      {
+        "id": "news-log-1794956553184",
+        "timestamp": "2026-11-17T23:02:33.184Z",
+        "trendTitle": "Sân vận động 75.000 chỗ ngồi, lớn gần gấp đôi Mỹ Đình: Được bao phủ bằng vật liệu đặc biệt dày 0,2 mm, bên ngoài có thể phát sáng tới 16 triệu màu",
+        "generatedTitle": "Sân vận động 75.000 chỗ ngồi, lớn gần gấp đôi Mỹ Đình: Được bao phủ bằng vật liệu đặc biệt dày 0,2 mm, bên ngoài có thể phát sáng tới 16 triệu màu: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/san-van-dong-75-000-cho-ngoi-lon-gan-gap-doi-my-dinh-duoc-bao-phu-bang-vat-lieu-dac-biet-day-0-2-mm-ben-ngoai-co-the-phat-sang-toi-16-trieu-mau-4816.html",
+        "wordCount": 797,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1794924016931",
         "timestamp": "2026-11-17T14:00:16.931Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/phat-hien-33-khoi-be-tong-moi-khoi-nang-80-000-tan-duoc-cac-ky-su-trung-quoc-danh-chim-xuong-day-bien-mo-duong-cho-sieu-du-an-529-000-ty-dong-1088.html",
         "wordCount": 820,
         "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794438139836",
-        "timestamp": "2026-11-11T23:02:19.836Z",
-        "trendTitle": "Vlasta Premier - Phú Thuận tập trung vào tiêu chuẩn bàn giao",
-        "generatedTitle": "Vlasta Premier - Phú Thuận tập trung vào tiêu chuẩn bàn giao: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/vlasta-premier---phu-thuan-tap-trung-vao-tieu-chuan-ban-giao-3948.html",
-        "wordCount": 788,
-        "trendScore": 85,
         "status": "published"
       }
     ]
