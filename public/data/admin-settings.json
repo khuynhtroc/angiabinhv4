@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-18T13:35:38.404Z",
-    "autoPublishedCount": 101,
+    "lastRunAt": "2026-11-18T23:01:48.554Z",
+    "autoPublishedCount": 102,
     "logs": [
+      {
+        "id": "news-log-1795042908554",
+        "timestamp": "2026-11-18T23:01:48.554Z",
+        "trendTitle": "Nhà bê tông 400 m2 như phòng trưng bày nghệ thuật",
+        "generatedTitle": "Nhà bê tông 400 m2 như phòng trưng bày nghệ thuật: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/nha-be-tong-400-m2-nhu-phong-trung-bay-nghe-thuat-4870.html",
+        "wordCount": 778,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1795008938404",
         "timestamp": "2026-11-18T13:35:38.404Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/sieu-cau-vuot-song-hong-16-200-ty-dong-noi-khu-pho-co-voi-long-bien-do-sun-group-trien-khai-da-hoan-thanh-toan-bo-coc-khoan-nhoi-va-be-tru-chinh-tien-toi-lap-dung-26-000-tan-ket-cau-thep-7528.html",
         "wordCount": 817,
         "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794524532189",
-        "timestamp": "2026-11-12T23:02:12.189Z",
-        "trendTitle": "Nvidia chi gần 4 triệu USD bảo vệ nơi ở và hoạt động cá nhân của Jensen Huang",
-        "generatedTitle": "Nvidia chi gần 4 triệu USD bảo vệ nơi ở và hoạt động cá nhân của Jensen Huang: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/nvidia-chi-gan-4-trieu-usd-bao-ve-noi-o-va-hoat-dong-ca-nhan-cua-jensen-huang-8657.html",
-        "wordCount": 796,
-        "trendScore": 72,
         "status": "published"
       }
     ]
