@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-18T03:58:34.648Z",
-    "autoPublishedCount": 98,
+    "lastRunAt": "2026-11-18T05:01:31.515Z",
+    "autoPublishedCount": 99,
     "logs": [
+      {
+        "id": "news-log-1794978091515",
+        "timestamp": "2026-11-18T05:01:31.515Z",
+        "trendTitle": "Từ đất xen kẹt đến những công viên trong phố",
+        "generatedTitle": "Từ đất xen kẹt đến những công viên trong phố: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/tu-dat-xen-ket-den-nhung-cong-vien-trong-pho-7035.html",
+        "wordCount": 793,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1794974314648",
         "timestamp": "2026-11-18T03:58:34.648Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/dai-gia-pho-nui-vang-bong-mot-thoi-nghien-cuu-dau-tu-tuyen-cao-toc-261-km-von-gan-85-000-ty-dong-qua-3-tinh-rong-nhat-viet-nam-2221.html",
         "wordCount": 807,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794459716744",
-        "timestamp": "2026-11-12T05:01:56.744Z",
-        "trendTitle": "Cổng Parabol 40 tấn của Đại học Bách khoa Hà Nội sẽ được di dời thế nào?",
-        "generatedTitle": "Cổng Parabol 40 tấn của Đại học Bách khoa Hà Nội sẽ được di dời thế nào?: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/cong-parabol-40-tan-cua-dai-hoc-bach-khoa-ha-noi-se-duoc-di-doi-the-nao-2627.html",
-        "wordCount": 791,
-        "trendScore": 92,
         "status": "published"
       }
     ]
