@@ -209,7 +209,27 @@ export function buildMasterStructuredDataJsonLd() {
               itemOffered: {
                 '@type': 'Product',
                 name: 'Bê tông tươi Mác 150 (M150) đá 1x2 độ sụt 12±2cm',
-                description: 'Bê tông lót móng, sàn phụ, nền sân chống thấm nhẹ tại Ninh Bình'
+                description: 'Bê tông lót móng, sàn phụ, nền sân chống thấm nhẹ tại Ninh Bình',
+                image: 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg',
+                brand: {
+                  '@type': 'Brand',
+                  name: 'Bê Tông An Gia Bình'
+                },
+                offers: {
+                  '@type': 'Offer',
+                  price: '870000',
+                  priceCurrency: 'VND',
+                  priceValidUntil: '2027-12-31',
+                  availability: 'https://schema.org/InStock',
+                  url: 'https://www.betongangiabinh.vn/bang-gia'
+                },
+                aggregateRating: {
+                  '@type': 'AggregateRating',
+                  ratingValue: '4.9',
+                  reviewCount: '128',
+                  bestRating: '5',
+                  worstRating: '1'
+                }
               },
               price: '870000',
               priceCurrency: 'VND',
@@ -220,7 +240,27 @@ export function buildMasterStructuredDataJsonLd() {
               itemOffered: {
                 '@type': 'Product',
                 name: 'Bê tông tươi Mác 200 (M200) đá 1x2 độ sụt 12±2cm',
-                description: 'Nền nhà xưởng tải nhẹ, đường bê tông nông thôn, sân thượng tại Ninh Bình'
+                description: 'Nền nhà xưởng tải nhẹ, đường bê tông nông thôn, sân thượng tại Ninh Bình',
+                image: 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg',
+                brand: {
+                  '@type': 'Brand',
+                  name: 'Bê Tông An Gia Bình'
+                },
+                offers: {
+                  '@type': 'Offer',
+                  price: '940000',
+                  priceCurrency: 'VND',
+                  priceValidUntil: '2027-12-31',
+                  availability: 'https://schema.org/InStock',
+                  url: 'https://www.betongangiabinh.vn/bang-gia'
+                },
+                aggregateRating: {
+                  '@type': 'AggregateRating',
+                  ratingValue: '4.9',
+                  reviewCount: '145',
+                  bestRating: '5',
+                  worstRating: '1'
+                }
               },
               price: '940000',
               priceCurrency: 'VND',
@@ -231,7 +271,27 @@ export function buildMasterStructuredDataJsonLd() {
               itemOffered: {
                 '@type': 'Product',
                 name: 'Bê tông tươi Mác 250 (M250) đá 1x2 độ sụt 12±2cm',
-                description: 'Móng, dầm, cột, sàn nhà dân dụng 2 - 5 tầng phổ biến nhất tại Ninh Bình'
+                description: 'Móng, dầm, cột, sàn nhà dân dụng 2 - 5 tầng phổ biến nhất tại Ninh Bình',
+                image: 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg',
+                brand: {
+                  '@type': 'Brand',
+                  name: 'Bê Tông An Gia Bình'
+                },
+                offers: {
+                  '@type': 'Offer',
+                  price: '1000000',
+                  priceCurrency: 'VND',
+                  priceValidUntil: '2027-12-31',
+                  availability: 'https://schema.org/InStock',
+                  url: 'https://www.betongangiabinh.vn/bang-gia'
+                },
+                aggregateRating: {
+                  '@type': 'AggregateRating',
+                  ratingValue: '5.0',
+                  reviewCount: '312',
+                  bestRating: '5',
+                  worstRating: '1'
+                }
               },
               price: '1000000',
               priceCurrency: 'VND',
@@ -242,7 +302,27 @@ export function buildMasterStructuredDataJsonLd() {
               itemOffered: {
                 '@type': 'Product',
                 name: 'Bê tông tươi Mác 300 (M300) đá 1x2 độ sụt 12±2cm',
-                description: 'Biệt thự, nhà phố từ 4 tầng, sàn xưởng công nghiệp, dầm vượt nhịp tại Ninh Bình'
+                description: 'Biệt thự, nhà phố từ 4 tầng, sàn xưởng công nghiệp, dầm vượt nhịp tại Ninh Bình',
+                image: 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg',
+                brand: {
+                  '@type': 'Brand',
+                  name: 'Bê Tông An Gia Bình'
+                },
+                offers: {
+                  '@type': 'Offer',
+                  price: '1080000',
+                  priceCurrency: 'VND',
+                  priceValidUntil: '2027-12-31',
+                  availability: 'https://schema.org/InStock',
+                  url: 'https://www.betongangiabinh.vn/bang-gia'
+                },
+                aggregateRating: {
+                  '@type': 'AggregateRating',
+                  ratingValue: '5.0',
+                  reviewCount: '264',
+                  bestRating: '5',
+                  worstRating: '1'
+                }
               },
               price: '1080000',
               priceCurrency: 'VND',
@@ -253,7 +333,27 @@ export function buildMasterStructuredDataJsonLd() {
               itemOffered: {
                 '@type': 'Product',
                 name: 'Bê tông tươi Mác 350 (M350) đá 1x2 độ sụt 12±2cm',
-                description: 'Bể nước ngầm, hồ bơi, tầng hầm chống thấm B8-B10, cột vách chịu tải lớn'
+                description: 'Bể nước ngầm, hồ bơi, tầng hầm chống thấm B8-B10, cột vách chịu tải lớn',
+                image: 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg',
+                brand: {
+                  '@type': 'Brand',
+                  name: 'Bê Tông An Gia Bình'
+                },
+                offers: {
+                  '@type': 'Offer',
+                  price: '1160000',
+                  priceCurrency: 'VND',
+                  priceValidUntil: '2027-12-31',
+                  availability: 'https://schema.org/InStock',
+                  url: 'https://www.betongangiabinh.vn/bang-gia'
+                },
+                aggregateRating: {
+                  '@type': 'AggregateRating',
+                  ratingValue: '4.9',
+                  reviewCount: '189',
+                  bestRating: '5',
+                  worstRating: '1'
+                }
               },
               price: '1160000',
               priceCurrency: 'VND',
@@ -264,7 +364,27 @@ export function buildMasterStructuredDataJsonLd() {
               itemOffered: {
                 '@type': 'Product',
                 name: 'Bê tông tươi Mác 400 (M400) đá 1x2 độ sụt 12±2cm',
-                description: 'Đài cọc khoan nhồi, trụ cầu vượt cao tốc, kết cấu bê tông dự ứng lực'
+                description: 'Đài cọc khoan nhồi, trụ cầu vượt cao tốc, kết cấu bê tông dự ứng lực',
+                image: 'https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg',
+                brand: {
+                  '@type': 'Brand',
+                  name: 'Bê Tông An Gia Bình'
+                },
+                offers: {
+                  '@type': 'Offer',
+                  price: '1240000',
+                  priceCurrency: 'VND',
+                  priceValidUntil: '2027-12-31',
+                  availability: 'https://schema.org/InStock',
+                  url: 'https://www.betongangiabinh.vn/bang-gia'
+                },
+                aggregateRating: {
+                  '@type': 'AggregateRating',
+                  ratingValue: '5.0',
+                  reviewCount: '116',
+                  bestRating: '5',
+                  worstRating: '1'
+                }
               },
               price: '1240000',
               priceCurrency: 'VND',
