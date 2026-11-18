@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-18T05:01:31.515Z",
-    "autoPublishedCount": 99,
+    "lastRunAt": "2026-11-18T11:01:38.649Z",
+    "autoPublishedCount": 100,
     "logs": [
+      {
+        "id": "news-log-1794999698649",
+        "timestamp": "2026-11-18T11:01:38.649Z",
+        "trendTitle": "Khắc phục xong hư hỏng mặt đường dẫn lên cầu Thủ Biên",
+        "generatedTitle": "Khắc phục xong hư hỏng mặt đường dẫn lên cầu Thủ Biên: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/khac-phuc-xong-hu-hong-mat-duong-dan-len-cau-thu-bien-8327.html",
+        "wordCount": 791,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1794978091515",
         "timestamp": "2026-11-18T05:01:31.515Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/ninh-binh-lam-duong-noi-vanh-dai-4---vanh-dai-5-von-hon-224-ty-dong-2398.html",
         "wordCount": 808,
         "trendScore": 78,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794481338701",
-        "timestamp": "2026-11-12T11:02:18.701Z",
-        "trendTitle": "\"Đại gia phố núi\" vang bóng một thời nghiên cứu đầu tư tuyến cao tốc 261 km, vốn gần 85.000 tỷ đồng qua 3 tỉnh rộng nhất Việt Nam",
-        "generatedTitle": "\"Đại gia phố núi\" vang bóng một thời nghiên cứu đầu tư tuyến cao tốc 261 km, vốn gần 85.000 tỷ đồng qua 3 tỉnh rộng nhất Việt Nam: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/dai-gia-pho-nui-vang-bong-mot-thoi-nghien-cuu-dau-tu-tuyen-cao-toc-261-km-von-gan-85-000-ty-dong-qua-3-tinh-rong-nhat-viet-nam-2221.html",
-        "wordCount": 807,
-        "trendScore": 82,
         "status": "published"
       }
     ]
