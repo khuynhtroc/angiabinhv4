@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-17T23:02:33.184Z",
-    "autoPublishedCount": 97,
+    "lastRunAt": "2026-11-18T03:58:34.648Z",
+    "autoPublishedCount": 98,
     "logs": [
+      {
+        "id": "news-log-1794974314648",
+        "timestamp": "2026-11-18T03:58:34.648Z",
+        "trendTitle": "Cầu Trần Hưng Đạo dần hiện hình với những vòm thép vượt sông",
+        "generatedTitle": "Cầu Trần Hưng Đạo dần hiện hình với những vòm thép vượt sông: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/cau-tran-hung-dao-dan-hien-hinh-voi-nhung-vom-thep-vuot-song-0380.html",
+        "wordCount": 780,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1794956553184",
         "timestamp": "2026-11-17T23:02:33.184Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Cổng Parabol 40 tấn của Đại học Bách khoa Hà Nội sẽ được di dời thế nào?: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/cong-parabol-40-tan-cua-dai-hoc-bach-khoa-ha-noi-se-duoc-di-doi-the-nao-2627.html",
         "wordCount": 791,
-        "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794454236820",
-        "timestamp": "2026-11-12T03:30:36.820Z",
-        "trendTitle": "Phát hiện 33 khối bê tông, mỗi khối nặng 80.000 tấn được các kỹ sư Trung Quốc đánh chìm xuống đáy biển, mở đường cho siêu dự án 529.000 tỷ đồng",
-        "generatedTitle": "Phát hiện 33 khối bê tông, mỗi khối nặng 80.000 tấn được các kỹ sư Trung Quốc đánh chìm xuống đáy biển, mở đường cho siêu dự án 529.000 tỷ đồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/phat-hien-33-khoi-be-tong-moi-khoi-nang-80-000-tan-duoc-cac-ky-su-trung-quoc-danh-chim-xuong-day-bien-mo-duong-cho-sieu-du-an-529-000-ty-dong-1088.html",
-        "wordCount": 820,
         "trendScore": 92,
         "status": "published"
       }
