@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-18T11:01:38.649Z",
-    "autoPublishedCount": 100,
+    "lastRunAt": "2026-11-18T13:35:38.404Z",
+    "autoPublishedCount": 101,
     "logs": [
+      {
+        "id": "news-log-1795008938404",
+        "timestamp": "2026-11-18T13:35:38.404Z",
+        "trendTitle": "Đắk Lắk: Cận cảnh công trường cầu vượt đường sắt 753 tỷ đồng trên quốc lộ 1",
+        "generatedTitle": "Đắk Lắk: Cận cảnh công trường cầu vượt đường sắt 753 tỷ đồng trên quốc lộ 1: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dak-lak-can-canh-cong-truong-cau-vuot-duong-sat-753-ty-dong-tren-quoc-lo-1-7948.html",
+        "wordCount": 792,
+        "trendScore": 78,
+        "status": "published"
+      },
       {
         "id": "news-log-1794999698649",
         "timestamp": "2026-11-18T11:01:38.649Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/nvidia-chi-gan-4-trieu-usd-bao-ve-noi-o-va-hoat-dong-ca-nhan-cua-jensen-huang-8657.html",
         "wordCount": 796,
         "trendScore": 72,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794490139383",
-        "timestamp": "2026-11-12T13:28:59.383Z",
-        "trendTitle": "Ninh Bình làm đường nối Vành đai 4 - Vành đai 5, vốn hơn 224 tỷ đồng",
-        "generatedTitle": "Ninh Bình làm đường nối Vành đai 4 - Vành đai 5, vốn hơn 224 tỷ đồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/ninh-binh-lam-duong-noi-vanh-dai-4---vanh-dai-5-von-hon-224-ty-dong-2398.html",
-        "wordCount": 808,
-        "trendScore": 78,
         "status": "published"
       }
     ]
