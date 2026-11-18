@@ -638,9 +638,9 @@ ${mergedLinks}
       return NextResponse.json(fallbackPost);
     }
 
-    // Try primary model (gemini-3.8-flash), fallback to secondary model (gemini-3.1-pro-preview)
+    // Try primary model (gemini-2.5-flash), fallback to secondary models
     let parsed: any = null;
-    const candidateModels = ["gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-flash-latest", "gemini-3.8-flash", "gemini-3.1-pro-preview"];
+    const candidateModels = ["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-flash-latest"];
 
     for (const modelName of candidateModels) {
       try {

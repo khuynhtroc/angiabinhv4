@@ -55,7 +55,7 @@ export async function checkAndRunScheduler(force = false): Promise<SchedulerExec
     minute: '2-digit',
     hour12: false
   });
-  
+
   const parts = vnFormatter.formatToParts(now);
   const getPart = (type: string) => parts.find(p => p.type === type)?.value || '';
   const todayVn = `${getPart('year')}-${getPart('month')}-${getPart('day')}`;
@@ -110,25 +110,25 @@ export async function checkAndRunScheduler(force = false): Promise<SchedulerExec
   const secondaryKeywordsList = Array.isArray(scheduler?.secondaryKeywords)
     ? scheduler.secondaryKeywords
     : [
-        'bê tông ngõ hẹp ninh bình',
-        'xử lý đổ bê tông gặp mưa to',
-        'cách kiểm tra độ sụt nón côn',
-        'bê tông chống thấm b8 tầng hầm',
-        'mác bê tông 250 đổ mái nhà phố',
-        'bảng giá bê tông an gia bình',
-        'bơm tĩnh bê tông tươi 150m',
-        'đúc mẫu nén r28 bê tông',
-        'bảo dưỡng bê tông 7 ngày vàng'
-      ];
+      'bê tông ngõ hẹp ninh bình',
+      'xử lý đổ bê tông gặp mưa to',
+      'cách kiểm tra độ sụt nón côn',
+      'bê tông chống thấm b8 tầng hầm',
+      'mác bê tông 250 đổ mái nhà phố',
+      'bảng giá bê tông an gia bình',
+      'bơm tĩnh bê tông tươi 150m',
+      'đúc mẫu nén r28 bê tông',
+      'bảo dưỡng bê tông 7 ngày vàng'
+    ];
   const focusTopics = Array.isArray(scheduler?.focusTopics) && scheduler.focusTopics.length > 0
     ? scheduler.focusTopics
     : [
-        'Cẩm nang xử lý đổ bê tông tươi gặp trời mưa to bất chợt và chống nứt co ngót mùa hè tại Ninh Bình',
-        'Giải pháp bơm tĩnh bê tông tươi ngõ hẹp sâu 150m tại TP. Ninh Bình và Tam Điệp',
-        'Hướng dẫn kiểm tra kẹp chì xe bồn, đo độ sụt nón côn và đúc mẫu nén R28 chống gian lận mác',
-        'Kỹ thuật đổ bê tông chống thấm B6 B8 cho bể nước ngầm và tầng hầm chuẩn TCVN',
-        'So sánh chi phí đổ bê tông tươi thương phẩm và trộn tay cho nhà phố 100m2 Ninh Bình'
-      ];
+      'Cẩm nang xử lý đổ bê tông tươi gặp trời mưa to bất chợt và chống nứt co ngót mùa hè tại Ninh Bình',
+      'Giải pháp bơm tĩnh bê tông tươi ngõ hẹp sâu 150m tại TP. Ninh Bình và Tam Điệp',
+      'Hướng dẫn kiểm tra kẹp chì xe bồn, đo độ sụt nón côn và đúc mẫu nén R28 chống gian lận mác',
+      'Kỹ thuật đổ bê tông chống thấm B6 B8 cho bể nước ngầm và tầng hầm chuẩn TCVN',
+      'So sánh chi phí đổ bê tông tươi thương phẩm và trộn tay cho nhà phố 100m2 Ninh Bình'
+    ];
 
   const topicIndex = (scheduler?.totalPublished || 0) % focusTopics.length;
   const currentTopic = focusTopics[topicIndex];
@@ -162,7 +162,7 @@ Trả về đúng định dạng JSON:
   "content": "Nội dung phân tích mở đầu chuyên sâu khoảng 1000 - 1500 từ về đề tài với hộp Tóm Tắt Nhanh (AI Overview Summary Box) 50-65 từ ở đầu bài trả lời thẳng vào câu hỏi chính + các thẻ ## H2 phân tích chi tiết kinh nghiệm hiện trường tại Ninh Bình + 5 câu hỏi đáp ### Câu 1..5 ở cuối phần mở đầu theo chuẩn Answer-First cho Google AI Overview"
 }`;
 
-      const models = ['gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-flash-latest', 'gemini-3.8-flash'];
+      const models = ['gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-flash-latest'];
       for (const m of models) {
         try {
           const res = await ai.models.generateContent({

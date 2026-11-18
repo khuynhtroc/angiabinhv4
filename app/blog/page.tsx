@@ -224,7 +224,7 @@ function BlogListInner() {
   }, []);
 
   useEffect(() => {
-    syncStoreWithServer(true).catch(() => {});
+    syncStoreWithServer().catch(() => {});
   }, []);
 
   useEffect(() => {

@@ -100,11 +100,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           />
         )}
 
-        {/* Google Site Verification (Search Console) */}
-        {googleVerify && (
-          <meta name="google-site-verification" content={googleVerify} />
-        )}
-
         {/* Google Analytics 4 (G-6J50BRBSZS) */}
         {gaId && (
           <>
@@ -144,20 +139,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           </>
         )}
 
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/logo.png" />
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev" />
-        {/* Preload critical LCP image for mobile */}
-        <link
-          rel="preload"
-          as="image"
-          href="https://pub-199a7c334ba049fa93207322cf9ac698.r2.dev/images/tram-be-tong-an-gia-binh.jpg"
-          fetchPriority="high"
-        />
         <link rel="alternate" type="application/rss+xml" title="Bê Tông An Gia Bình RSS Feed" href="/rss.xml" />
         <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
         {/* Server-Side Master JSON-LD (LocalBusiness + OfferCatalog + 12 Q&A FAQPage for Google AI Overview) */}

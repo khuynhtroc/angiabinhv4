@@ -215,7 +215,7 @@ YÊU CẦU BẮT BUỘC VỀ NỘI DUNG VÀ ĐỘ DÀI:
   "content": "Nội dung bài viết đầy đủ định dạng Markdown..."
 }`;
 
-      const models = ['gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-flash-latest', 'gemini-3.8-flash'];
+      const models = ['gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-flash-latest'];
       for (const m of models) {
         try {
           const res = await ai.models.generateContent({

@@ -4,7 +4,7 @@ import { getPostBySlugServer, getPostBySlugServerAsync, getPageBySlugServer } fr
 import { SERVICES_DATABASE, SLUG_ALIASES } from '@/components/ServiceDetailView';
 import DynamicPostClient from '@/components/DynamicPostClient';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 interface PageProps {
   params: Promise<{ postSlug: string }>;
