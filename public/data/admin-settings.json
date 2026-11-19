@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-19T11:01:56.602Z",
-    "autoPublishedCount": 105,
+    "lastRunAt": "2026-11-19T14:01:52.079Z",
+    "autoPublishedCount": 106,
     "logs": [
+      {
+        "id": "news-log-1795096912079",
+        "timestamp": "2026-11-19T14:01:52.079Z",
+        "trendTitle": "Bó thép gần chục tấn đè sập cabin xe đầu kéo ở TP HCM",
+        "generatedTitle": "Bó thép gần chục tấn đè sập cabin xe đầu kéo ở TP HCM: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/bo-thep-gan-chuc-tan-de-sap-cabin-xe-dau-keo-o-tp-hcm-6256.html",
+        "wordCount": 779,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1795086116602",
         "timestamp": "2026-11-19T11:01:56.602Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/tuyen-cao-toc-hon-14-900-ty-dong-dai-22-km-noi-tp-hcm-voi-sieu-san-bay-16-ty-usd-chua-tung-co-trong-lich-su-viet-nam-rong-gap-6-lan-tan-son-nhat-dat-cot-moc-quan-trong-1950.html",
         "wordCount": 836,
         "trendScore": 75,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794573886263",
-        "timestamp": "2026-11-13T12:44:46.263Z",
-        "trendTitle": "Đồng Nai: Đại lộ Nguyễn Hữu Cảnh hơn 6.500 tỷ đồng mở trục kết nối về cao tốc",
-        "generatedTitle": "Đồng Nai: Đại lộ Nguyễn Hữu Cảnh hơn 6.500 tỷ đồng mở trục kết nối về cao tốc: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/dong-nai-dai-lo-nguyen-huu-canh-hon-6-500-ty-dong-mo-truc-ket-noi-ve-cao-toc-7556.html",
-        "wordCount": 806,
-        "trendScore": 78,
         "status": "published"
       }
     ]
