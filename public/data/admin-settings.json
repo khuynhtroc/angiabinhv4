@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-19T05:01:30.286Z",
-    "autoPublishedCount": 104,
+    "lastRunAt": "2026-11-19T11:01:56.602Z",
+    "autoPublishedCount": 105,
     "logs": [
+      {
+        "id": "news-log-1795086116602",
+        "timestamp": "2026-11-19T11:01:56.602Z",
+        "trendTitle": "Đốt vòm thép nặng 62 tấn được cẩu lên độ cao hơn 18m giữa sông Hồng, siêu cầu nối khu phố cổ với Long Biên do Sun Group triển khai dần lộ diện với thiết kế vòm vô cực",
+        "generatedTitle": "Đốt vòm thép nặng 62 tấn được cẩu lên độ cao hơn 18m giữa sông Hồng, siêu cầu nối khu phố cổ với Long Biên do Sun Group triển khai dần lộ diện với thiết kế vòm vô cực: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dot-vom-thep-nang-62-tan-duoc-cau-len-do-cao-hon-18m-giua-song-hong-sieu-cau-noi-khu-pho-co-voi-long-bien-do-sun-group-trien-khai-dan-lo-dien-voi-thiet-ke-vom-vo-cuc-3681.html",
+        "wordCount": 816,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1795064490285",
         "timestamp": "2026-11-19T05:01:30.285Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/dong-nai-dai-lo-nguyen-huu-canh-hon-6-500-ty-dong-mo-truc-ket-noi-ve-cao-toc-7556.html",
         "wordCount": 806,
         "trendScore": 78,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794567743632",
-        "timestamp": "2026-11-13T11:02:23.632Z",
-        "trendTitle": "Vì sao đường Tây Thăng Long ở Hà Nội vẫn 'nằm im' dù đã cơ bản có mặt bằng sạch?",
-        "generatedTitle": "Vì sao đường Tây Thăng Long ở Hà Nội vẫn 'nằm im' dù đã cơ bản có mặt bằng sạch?: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/vi-sao-duong-tay-thang-long-o-ha-noi-van-nam-im-du-da-co-ban-co-mat-bang-sach-4673.html",
-        "wordCount": 790,
-        "trendScore": 85,
         "status": "published"
       }
     ]
