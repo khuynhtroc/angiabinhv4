@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-19T03:55:33.435Z",
-    "autoPublishedCount": 103,
+    "lastRunAt": "2026-11-19T05:01:30.286Z",
+    "autoPublishedCount": 104,
     "logs": [
+      {
+        "id": "news-log-1795064490285",
+        "timestamp": "2026-11-19T05:01:30.285Z",
+        "trendTitle": "Hoá giải áp lực vật liệu, khơi thông dòng chảy công trường, tạo lực đẩy giải ngân vốn",
+        "generatedTitle": "Hoá giải áp lực vật liệu, khơi thông dòng chảy công trường, tạo lực đẩy giải ngân vốn: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/hoa-giai-ap-luc-vat-lieu-khoi-thong-dong-chay-cong-truong-tao-luc-day-giai-ngan-von-8148.html",
+        "wordCount": 810,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1795060533435",
         "timestamp": "2026-11-19T03:55:33.435Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/vi-sao-duong-tay-thang-long-o-ha-noi-van-nam-im-du-da-co-ban-co-mat-bang-sach-4673.html",
         "wordCount": 790,
         "trendScore": 85,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794546128137",
-        "timestamp": "2026-11-13T05:02:08.137Z",
-        "trendTitle": "Hơn 51.000 tấn thép được đưa vào một công trình đặc biệt ở Phú Quốc, riêng hệ mái chiếm 33.000 tấn, nhịp lớn nhất 72m",
-        "generatedTitle": "Hơn 51.000 tấn thép được đưa vào một công trình đặc biệt ở Phú Quốc, riêng hệ mái chiếm 33.000 tấn, nhịp lớn nhất 72m: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/hon-51-000-tan-thep-duoc-dua-vao-mot-cong-trinh-dac-biet-o-phu-quoc-rieng-he-mai-chiem-33-000-tan-nhip-lon-nhat-72m-7765.html",
-        "wordCount": 821,
-        "trendScore": 92,
         "status": "published"
       }
     ]
