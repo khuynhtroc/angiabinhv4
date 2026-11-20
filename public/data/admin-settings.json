@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-19T23:02:25.761Z",
-    "autoPublishedCount": 107,
+    "lastRunAt": "2026-11-20T03:49:06.000Z",
+    "autoPublishedCount": 108,
     "logs": [
+      {
+        "id": "news-log-1795146546000",
+        "timestamp": "2026-11-20T03:49:06.000Z",
+        "trendTitle": "Chuyện chưa kể 'dưới lòng đất tới trên trời' tại tòa tháp Landmark 81",
+        "generatedTitle": "Chuyện chưa kể 'dưới lòng đất tới trên trời' tại tòa tháp Landmark 81: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/chuyen-chua-ke-duoi-long-dat-toi-tren-troi-tai-toa-thap-landmark-81-0140.html",
+        "wordCount": 788,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1795129345761",
         "timestamp": "2026-11-19T23:02:25.761Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/vanh-dai-3-tp-hcm-no-luc-vuot-kho-tang-toc-ve-dich-4184.html",
         "wordCount": 796,
         "trendScore": 88,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794624604805",
-        "timestamp": "2026-11-14T02:50:04.805Z",
-        "trendTitle": "Đồng Nai đón 800 khách quốc tế qua cảng biển duy nhất của thành phố",
-        "generatedTitle": "Đồng Nai đón 800 khách quốc tế qua cảng biển duy nhất của thành phố: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/dong-nai-don-800-khach-quoc-te-qua-cang-bien-duy-nhat-cua-thanh-pho-0241.html",
-        "wordCount": 781,
-        "trendScore": 82,
         "status": "published"
       }
     ]
