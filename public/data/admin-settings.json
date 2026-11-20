@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-20T11:02:23.745Z",
-    "autoPublishedCount": 110,
+    "lastRunAt": "2026-11-20T13:44:45.558Z",
+    "autoPublishedCount": 111,
     "logs": [
+      {
+        "id": "news-log-1795182285558",
+        "timestamp": "2026-11-20T13:44:45.558Z",
+        "trendTitle": "Thần tốc thi công đưa hai cầu vượt trên đường Vành đai 1 về đích",
+        "generatedTitle": "Thần tốc thi công đưa hai cầu vượt trên đường Vành đai 1 về đích: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/than-toc-thi-cong-dua-hai-cau-vuot-tren-duong-vanh-dai-1-ve-dich-8748.html",
+        "wordCount": 806,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1795172543745",
         "timestamp": "2026-11-20T11:02:23.745Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/hue-tinh-mo-rong-truong-hoc-cong-vien-chinh-trang-do-thi-trung-tam-8518.html",
         "wordCount": 799,
         "trendScore": 75,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794657195271",
-        "timestamp": "2026-11-14T11:53:15.271Z",
-        "trendTitle": "Xây cầu vượt thép lớn nhất TP HCM chống ùn tắc cửa ngõ Cát Lái",
-        "generatedTitle": "Xây cầu vượt thép lớn nhất TP HCM chống ùn tắc cửa ngõ Cát Lái: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/xay-cau-vuot-thep-lon-nhat-tp-hcm-chong-un-tac-cua-ngo-cat-lai-2418.html",
-        "wordCount": 791,
-        "trendScore": 85,
         "status": "published"
       }
     ]
