@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-20T03:49:06.000Z",
-    "autoPublishedCount": 108,
+    "lastRunAt": "2026-11-20T05:02:09.229Z",
+    "autoPublishedCount": 109,
     "logs": [
+      {
+        "id": "news-log-1795150929229",
+        "timestamp": "2026-11-20T05:02:09.229Z",
+        "trendTitle": "Đại gia gốc Thanh Hóa từng thi công mái vòm thép lớn nhất hành tinh đã hoàn thành khoảng 70% kết cấu cây cầu có thiết kế đặc biệt tại thành phố giàu nhất Việt Nam",
+        "generatedTitle": "Đại gia gốc Thanh Hóa từng thi công mái vòm thép lớn nhất hành tinh đã hoàn thành khoảng 70% kết cấu cây cầu có thiết kế đặc biệt tại thành phố giàu nhất Việt Nam: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dai-gia-goc-thanh-hoa-tung-thi-cong-mai-vom-thep-lon-nhat-hanh-tinh-da-hoan-thanh-khoang-70-ket-cau-cay-cau-co-thiet-ke-dac-biet-tai-thanh-pho-giau-nhat-viet-nam-5560.html",
+        "wordCount": 817,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1795146546000",
         "timestamp": "2026-11-20T03:49:06.000Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Đường nối cao tốc Biên Hòa - Vũng Tàu: Nhiều gói thầu chậm vì thiếu vật liệu: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/duong-noi-cao-toc-bien-hoa---vung-tau-nhieu-goi-thau-cham-vi-thieu-vat-lieu-0330.html",
         "wordCount": 811,
-        "trendScore": 88,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794632514499",
-        "timestamp": "2026-11-14T05:01:54.499Z",
-        "trendTitle": "Vành đai 3 TP.HCM nỗ lực vượt khó, tăng tốc về đích",
-        "generatedTitle": "Vành đai 3 TP.HCM nỗ lực vượt khó, tăng tốc về đích: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/vanh-dai-3-tp-hcm-no-luc-vuot-kho-tang-toc-ve-dich-4184.html",
-        "wordCount": 796,
         "trendScore": 88,
         "status": "published"
       }
