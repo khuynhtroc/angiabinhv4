@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-20T13:44:45.558Z",
-    "autoPublishedCount": 111,
+    "lastRunAt": "2026-11-20T23:02:16.795Z",
+    "autoPublishedCount": 112,
     "logs": [
+      {
+        "id": "news-log-1795215736795",
+        "timestamp": "2026-11-20T23:02:16.795Z",
+        "trendTitle": "Gia Lai: Nhiều xã, phường chậm triển khai bê tông hóa giao thông nông thôn",
+        "generatedTitle": "Gia Lai: Nhiều xã, phường chậm triển khai bê tông hóa giao thông nông thôn: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/gia-lai-nhieu-xa-phuong-cham-trien-khai-be-tong-hoa-giao-thong-nong-thon-6300.html",
+        "wordCount": 802,
+        "trendScore": 81,
+        "status": "published"
+      },
       {
         "id": "news-log-1795182285558",
         "timestamp": "2026-11-20T13:44:45.558Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/viet-nam-co-mot-noi-quanh-nam-mat-me-chi-20-do-c-nam-o-do-cao-1-200m-duoc-vi-nhu-da-lat-thu-hai-cua-tay-nguyen-sap-co-khu-do-thi-nghin-ty-cua-sun-group-duoc-khoi-cong-7359.html",
         "wordCount": 811,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794697318955",
-        "timestamp": "2026-11-14T23:01:58.955Z",
-        "trendTitle": "Huế tính mở rộng trường học, công viên, chỉnh trang đô thị trung tâm",
-        "generatedTitle": "Huế tính mở rộng trường học, công viên, chỉnh trang đô thị trung tâm: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/hue-tinh-mo-rong-truong-hoc-cong-vien-chinh-trang-do-thi-trung-tam-8518.html",
-        "wordCount": 799,
-        "trendScore": 75,
         "status": "published"
       }
     ]
