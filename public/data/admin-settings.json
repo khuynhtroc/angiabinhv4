@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-20T05:02:09.229Z",
-    "autoPublishedCount": 109,
+    "lastRunAt": "2026-11-20T11:02:23.745Z",
+    "autoPublishedCount": 110,
     "logs": [
+      {
+        "id": "news-log-1795172543745",
+        "timestamp": "2026-11-20T11:02:23.745Z",
+        "trendTitle": "Tăng ca, kíp đẩy nhanh tiến độ cao tốc Cao Lãnh - An Hữu",
+        "generatedTitle": "Tăng ca, kíp đẩy nhanh tiến độ cao tốc Cao Lãnh - An Hữu: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/tang-ca-kip-day-nhanh-tien-do-cao-toc-cao-lanh---an-huu-9620.html",
+        "wordCount": 798,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1795150929229",
         "timestamp": "2026-11-20T05:02:09.229Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/xay-cau-vuot-thep-lon-nhat-tp-hcm-chong-un-tac-cua-ngo-cat-lai-2418.html",
         "wordCount": 791,
         "trendScore": 85,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794654138340",
-        "timestamp": "2026-11-14T11:02:18.340Z",
-        "trendTitle": "Đường nối cao tốc Biên Hòa - Vũng Tàu: Nhiều gói thầu chậm vì thiếu vật liệu",
-        "generatedTitle": "Đường nối cao tốc Biên Hòa - Vũng Tàu: Nhiều gói thầu chậm vì thiếu vật liệu: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/duong-noi-cao-toc-bien-hoa---vung-tau-nhieu-goi-thau-cham-vi-thieu-vat-lieu-0330.html",
-        "wordCount": 811,
-        "trendScore": 88,
         "status": "published"
       }
     ]
