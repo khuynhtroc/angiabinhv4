@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-21T05:02:23.575Z",
-    "autoPublishedCount": 114,
+    "lastRunAt": "2026-11-21T11:02:11.296Z",
+    "autoPublishedCount": 115,
     "logs": [
+      {
+        "id": "news-log-1795258931296",
+        "timestamp": "2026-11-21T11:02:11.296Z",
+        "trendTitle": "Diện mạo cao tốc TP HCM - Long Thành sau khi mở rộng 10 làn",
+        "generatedTitle": "Diện mạo cao tốc TP HCM - Long Thành sau khi mở rộng 10 làn: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dien-mao-cao-toc-tp-hcm---long-thanh-sau-khi-mo-rong-10-lan-4618.html",
+        "wordCount": 780,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1795237343575",
         "timestamp": "2026-11-21T05:02:23.575Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Xe tải lật, hàng tấn đá tảng đổ xuống quốc lộ: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/xe-tai-lat-hang-tan-da-tang-do-xuong-quoc-lo-8084.html",
         "wordCount": 777,
-        "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794740530962",
-        "timestamp": "2026-11-15T11:02:10.962Z",
-        "trendTitle": "Tập đoàn của tỷ phú Nguyễn Thị Phương Thảo đề xuất làm tuyến metro đầu tiên ở khu Nam TP.HCM: Có hơn 20km đi xuyên lòng đất đến trung tâm, dự kiến thu hồi đất của 1.855 hộ dân",
-        "generatedTitle": "Tập đoàn của tỷ phú Nguyễn Thị Phương Thảo đề xuất làm tuyến metro đầu tiên ở khu Nam TP.HCM: Có hơn 20km đi xuyên lòng đất đến trung tâm, dự kiến thu hồi đất của 1.855 hộ dân: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/tap-doan-cua-ty-phu-nguyen-thi-phuong-thao-de-xuat-lam-tuyen-metro-dau-tien-o-khu-nam-tp-hcm-co-hon-20km-di-xuyen-long-dat-den-trung-tam-du-kien-thu-hoi-dat-cua-1-855-ho-dan-0150.html",
-        "wordCount": 846,
         "trendScore": 82,
         "status": "published"
       }
