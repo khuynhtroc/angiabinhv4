@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-21T13:10:30.841Z",
-    "autoPublishedCount": 116,
+    "lastRunAt": "2026-11-21T23:02:23.291Z",
+    "autoPublishedCount": 117,
     "logs": [
+      {
+        "id": "news-log-1795302143291",
+        "timestamp": "2026-11-21T23:02:23.291Z",
+        "trendTitle": "Thành phố đáng sống bậc nhất Việt Nam nghiên cứu mở rộng Khu thương mại tự do thêm 1.205ha, 2 vị trí nằm gần ga đường sắt tốc độ cao, sân bay Chu Lai và loạt cảng biển",
+        "generatedTitle": "Thành phố đáng sống bậc nhất Việt Nam nghiên cứu mở rộng Khu thương mại tự do thêm 1.205ha, 2 vị trí nằm gần ga đường sắt tốc độ cao, sân bay Chu Lai và loạt cảng biển: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/thanh-pho-dang-song-bac-nhat-viet-nam-nghien-cuu-mo-rong-khu-thuong-mai-tu-do-them-1-205ha-2-vi-tri-nam-gan-ga-duong-sat-toc-do-cao-san-bay-chu-lai-va-loat-cang-bien-7884.html",
+        "wordCount": 817,
+        "trendScore": 75,
+        "status": "published"
+      },
       {
         "id": "news-log-1795266630841",
         "timestamp": "2026-11-21T13:10:30.841Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/cong-truong-thi-cong-trong-do-thi-phai-bao-dam-ve-sinh-moi-truong-an-toan-cho-nguoi-dan-0489.html",
         "wordCount": 802,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794783732458",
-        "timestamp": "2026-11-15T23:02:12.458Z",
-        "trendTitle": "Siêu tổ hợp đường sắt 260 ha của Vingroup, nơi dừng chân của dự án đường sắt tốc độ cao 67 tỷ USD đi qua 15 tỉnh thành vừa có diễn biến mới",
-        "generatedTitle": "Siêu tổ hợp đường sắt 260 ha của Vingroup, nơi dừng chân của dự án đường sắt tốc độ cao 67 tỷ USD đi qua 15 tỉnh thành vừa có diễn biến mới: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/sieu-to-hop-duong-sat-260-ha-cua-vingroup-noi-dung-chan-cua-du-an-duong-sat-toc-do-cao-67-ty-usd-di-qua-15-tinh-thanh-vua-co-dien-bien-moi-8149.html",
-        "wordCount": 812,
-        "trendScore": 75,
         "status": "published"
       }
     ]
