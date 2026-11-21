@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-20T23:02:16.795Z",
-    "autoPublishedCount": 112,
+    "lastRunAt": "2026-11-21T03:40:21.891Z",
+    "autoPublishedCount": 113,
     "logs": [
+      {
+        "id": "news-log-1795232421891",
+        "timestamp": "2026-11-21T03:40:21.891Z",
+        "trendTitle": "5 giải pháp giúp giảm nứt tường khi xây nhà",
+        "generatedTitle": "5 giải pháp giúp giảm nứt tường khi xây nhà: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/5-giai-phap-giup-giam-nut-tuong-khi-xay-nha-0521.html",
+        "wordCount": 782,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1795215736795",
         "timestamp": "2026-11-20T23:02:16.795Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Đồng Nai khởi công nhà máy điện rác hơn 2.600 tỷ đồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/dong-nai-khoi-cong-nha-may-dien-rac-hon-2-600-ty-dong-8498.html",
         "wordCount": 779,
-        "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794709051389",
-        "timestamp": "2026-11-15T02:17:31.389Z",
-        "trendTitle": "Việt Nam có một nơi quanh năm mát mẻ chỉ 20 độ C, nằm ở độ cao 1.200m được ví như “Đà Lạt thứ hai” của Tây Nguyên, sắp có khu đô thị nghìn tỷ của Sun Group được khởi công",
-        "generatedTitle": "Việt Nam có một nơi quanh năm mát mẻ chỉ 20 độ C, nằm ở độ cao 1.200m được ví như “Đà Lạt thứ hai” của Tây Nguyên, sắp có khu đô thị nghìn tỷ của Sun Group được khởi công: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/viet-nam-co-mot-noi-quanh-nam-mat-me-chi-20-do-c-nam-o-do-cao-1-200m-duoc-vi-nhu-da-lat-thu-hai-cua-tay-nguyen-sap-co-khu-do-thi-nghin-ty-cua-sun-group-duoc-khoi-cong-7359.html",
-        "wordCount": 811,
         "trendScore": 82,
         "status": "published"
       }
