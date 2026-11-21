@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-21T11:02:11.296Z",
-    "autoPublishedCount": 115,
+    "lastRunAt": "2026-11-21T13:10:30.841Z",
+    "autoPublishedCount": 116,
     "logs": [
+      {
+        "id": "news-log-1795266630841",
+        "timestamp": "2026-11-21T13:10:30.841Z",
+        "trendTitle": "Gần 90km metro TP.HCM thu hút nhà thầu trong và ngoài nước",
+        "generatedTitle": "Gần 90km metro TP.HCM thu hút nhà thầu trong và ngoài nước: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/gan-90km-metro-tp-hcm-thu-hut-nha-thau-trong-va-ngoai-nuoc-6671.html",
+        "wordCount": 787,
+        "trendScore": 78,
+        "status": "published"
+      },
       {
         "id": "news-log-1795258931296",
         "timestamp": "2026-11-21T11:02:11.296Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/sieu-to-hop-duong-sat-260-ha-cua-vingroup-noi-dung-chan-cua-du-an-duong-sat-toc-do-cao-67-ty-usd-di-qua-15-tinh-thanh-vua-co-dien-bien-moi-8149.html",
         "wordCount": 812,
         "trendScore": 75,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794745459745",
-        "timestamp": "2026-11-15T12:24:19.745Z",
-        "trendTitle": "Xe tải lật, hàng tấn đá tảng đổ xuống quốc lộ",
-        "generatedTitle": "Xe tải lật, hàng tấn đá tảng đổ xuống quốc lộ: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/xe-tai-lat-hang-tan-da-tang-do-xuong-quoc-lo-8084.html",
-        "wordCount": 777,
-        "trendScore": 82,
         "status": "published"
       }
     ]
