@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-21T03:40:21.891Z",
-    "autoPublishedCount": 113,
+    "lastRunAt": "2026-11-21T05:02:23.575Z",
+    "autoPublishedCount": 114,
     "logs": [
+      {
+        "id": "news-log-1795237343575",
+        "timestamp": "2026-11-21T05:02:23.575Z",
+        "trendTitle": "Phê bình chủ đầu tư, cảnh cáo nhà thầu dự án giao thông tại Huế",
+        "generatedTitle": "Phê bình chủ đầu tư, cảnh cáo nhà thầu dự án giao thông tại Huế: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/phe-binh-chu-dau-tu-canh-cao-nha-thau-du-an-giao-thong-tai-hue-1043.html",
+        "wordCount": 801,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1795232421891",
         "timestamp": "2026-11-21T03:40:21.891Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Tập đoàn của tỷ phú Nguyễn Thị Phương Thảo đề xuất làm tuyến metro đầu tiên ở khu Nam TP.HCM: Có hơn 20km đi xuyên lòng đất đến trung tâm, dự kiến thu hồi đất của 1.855 hộ dân: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/tap-doan-cua-ty-phu-nguyen-thi-phuong-thao-de-xuat-lam-tuyen-metro-dau-tien-o-khu-nam-tp-hcm-co-hon-20km-di-xuyen-long-dat-den-trung-tam-du-kien-thu-hoi-dat-cua-1-855-ho-dan-0150.html",
         "wordCount": 846,
-        "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794718912468",
-        "timestamp": "2026-11-15T05:01:52.468Z",
-        "trendTitle": "Đồng Nai khởi công nhà máy điện rác hơn 2.600 tỷ đồng",
-        "generatedTitle": "Đồng Nai khởi công nhà máy điện rác hơn 2.600 tỷ đồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/dong-nai-khoi-cong-nha-may-dien-rac-hon-2-600-ty-dong-8498.html",
-        "wordCount": 779,
         "trendScore": 82,
         "status": "published"
       }
