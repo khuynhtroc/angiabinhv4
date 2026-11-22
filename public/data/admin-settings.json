@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-22T05:01:55.222Z",
-    "autoPublishedCount": 119,
+    "lastRunAt": "2026-11-22T11:02:25.914Z",
+    "autoPublishedCount": 120,
     "logs": [
+      {
+        "id": "news-log-1795345345914",
+        "timestamp": "2026-11-22T11:02:25.914Z",
+        "trendTitle": "Hà Nội lấy ý kiến cộng đồng về phương án hướng tuyến, vị trí ga 5 tuyến metro",
+        "generatedTitle": "Hà Nội lấy ý kiến cộng đồng về phương án hướng tuyến, vị trí ga 5 tuyến metro: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/ha-noi-lay-y-kien-cong-dong-ve-phuong-an-huong-tuyen-vi-tri-ga-5-tuyen-metro-5428.html",
+        "wordCount": 837,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1795323715222",
         "timestamp": "2026-11-22T05:01:55.222Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/dien-mao-nut-giao-4-tang-voi-cau-vuot-thep-lon-nhat-tp-hcm-8389.html",
         "wordCount": 786,
         "trendScore": 85,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794826927275",
-        "timestamp": "2026-11-16T11:02:07.275Z",
-        "trendTitle": "Công trường nhà ga T2 Sân bay Phú Quốc phục vụ APEC 2027 tăng tốc về đích",
-        "generatedTitle": "Công trường nhà ga T2 Sân bay Phú Quốc phục vụ APEC 2027 tăng tốc về đích: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/cong-truong-nha-ga-t2-san-bay-phu-quoc-phuc-vu-apec-2027-tang-toc-ve-dich-8747.html",
-        "wordCount": 790,
-        "trendScore": 92,
         "status": "published"
       }
     ]
