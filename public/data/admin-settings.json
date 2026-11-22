@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-21T23:02:23.291Z",
-    "autoPublishedCount": 117,
+    "lastRunAt": "2026-11-22T02:46:03.145Z",
+    "autoPublishedCount": 118,
     "logs": [
+      {
+        "id": "news-log-1795315563145",
+        "timestamp": "2026-11-22T02:46:03.145Z",
+        "trendTitle": "Quá nhanh: Đại lộ rộng gần gấp 3 lần đường băng sân bay, chạy xuyên siêu dự án 925.000 tỷ đồng, kết nối trực tiếp tới sân vận động 135.000 chỗ lớn nhất thế giới của Vingroup dự kiến thông xe sau 10 ngày nữa",
+        "generatedTitle": "Quá nhanh: Đại lộ rộng gần gấp 3 lần đường băng sân bay, chạy xuyên siêu dự án 925.000 tỷ đồng, kết nối trực tiếp tới sân vận động 135.000 chỗ lớn nhất thế giới của Vingroup dự kiến thông xe sau 10 ngày nữa: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/qua-nhanh-dai-lo-rong-gan-gap-3-lan-duong-bang-san-bay-chay-xuyen-sieu-du-an-925-000-ty-dong-ket-noi-truc-tiep-toi-san-van-dong-135-000-cho-lon-nhat-the-gioi-cua-vingroup-du-kien-thong-xe-sau-10-ngay-nua-0943.html",
+        "wordCount": 846,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1795302143291",
         "timestamp": "2026-11-21T23:02:23.291Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/phat-hien-450-xe-tai-lien-tuc-do-60-000-m-be-tong-suot-63-gio-tung-giup-cac-ky-su-trung-quoc-xay-toa-thap-cao-bac-nhat-the-gioi-vuot-landmark-81-gan-200m-7752.html",
         "wordCount": 814,
         "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794796258084",
-        "timestamp": "2026-11-16T02:30:58.084Z",
-        "trendTitle": "Công trường thi công trong đô thị: Phải bảo đảm vệ sinh môi trường, an toàn cho người dân",
-        "generatedTitle": "Công trường thi công trong đô thị: Phải bảo đảm vệ sinh môi trường, an toàn cho người dân: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/cong-truong-thi-cong-trong-do-thi-phai-bao-dam-ve-sinh-moi-truong-an-toan-cho-nguoi-dan-0489.html",
-        "wordCount": 802,
-        "trendScore": 82,
         "status": "published"
       }
     ]
