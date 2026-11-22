@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-22T12:57:37.633Z",
-    "autoPublishedCount": 121,
+    "lastRunAt": "2026-11-22T23:02:01.946Z",
+    "autoPublishedCount": 122,
     "logs": [
+      {
+        "id": "news-log-1795388521946",
+        "timestamp": "2026-11-22T23:02:01.946Z",
+        "trendTitle": "Có nhà, sân bê tông, chuồng trại: Căn cứ nào xác định đất ở khi làm sổ đỏ?",
+        "generatedTitle": "Có nhà, sân bê tông, chuồng trại: Căn cứ nào xác định đất ở khi làm sổ đỏ?: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/co-nha-san-be-tong-chuong-trai-can-cu-nao-xac-dinh-dat-o-khi-lam-so-do-3108.html",
+        "wordCount": 796,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1795352257633",
         "timestamp": "2026-11-22T12:57:37.633Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/hon-150-nha-dan-doc-kenh-thuy-phuong-bi-lun-nut-6731.html",
         "wordCount": 779,
         "trendScore": 85,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794870133056",
-        "timestamp": "2026-11-16T23:02:13.056Z",
-        "trendTitle": "Ngôi nhà ở Campuchia mở sân vườn đón gió sông Mekong",
-        "generatedTitle": "Ngôi nhà ở Campuchia mở sân vườn đón gió sông Mekong: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/ngoi-nha-o-campuchia-mo-san-vuon-don-gio-song-mekong-7304.html",
-        "wordCount": 777,
-        "trendScore": 92,
         "status": "published"
       }
     ]
