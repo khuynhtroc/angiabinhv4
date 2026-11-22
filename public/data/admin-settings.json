@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-22T11:02:25.914Z",
-    "autoPublishedCount": 120,
+    "lastRunAt": "2026-11-22T12:57:37.633Z",
+    "autoPublishedCount": 121,
     "logs": [
+      {
+        "id": "news-log-1795352257633",
+        "timestamp": "2026-11-22T12:57:37.633Z",
+        "trendTitle": "Vành đai 3,5: Tập trung tháo gỡ điểm nghẽn, thúc đẩy tiến độ các dự án thành phần",
+        "generatedTitle": "Vành đai 3,5: Tập trung tháo gỡ điểm nghẽn, thúc đẩy tiến độ các dự án thành phần: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/vanh-dai-3-5-tap-trung-thao-go-diem-nghen-thuc-day-tien-do-cac-du-an-thanh-phan-3454.html",
+        "wordCount": 828,
+        "trendScore": 75,
+        "status": "published"
+      },
       {
         "id": "news-log-1795345345914",
         "timestamp": "2026-11-22T11:02:25.914Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/ngoi-nha-o-campuchia-mo-san-vuon-don-gio-song-mekong-7304.html",
         "wordCount": 777,
         "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794834976452",
-        "timestamp": "2026-11-16T13:16:16.452Z",
-        "trendTitle": "Diện mạo nút giao 4 tầng với cầu vượt thép lớn nhất TP HCM",
-        "generatedTitle": "Diện mạo nút giao 4 tầng với cầu vượt thép lớn nhất TP HCM: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/dien-mao-nut-giao-4-tang-voi-cau-vuot-thep-lon-nhat-tp-hcm-8389.html",
-        "wordCount": 786,
-        "trendScore": 85,
         "status": "published"
       }
     ]
