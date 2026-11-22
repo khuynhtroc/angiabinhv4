@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-22T02:46:03.145Z",
-    "autoPublishedCount": 118,
+    "lastRunAt": "2026-11-22T05:01:55.222Z",
+    "autoPublishedCount": 119,
     "logs": [
+      {
+        "id": "news-log-1795323715222",
+        "timestamp": "2026-11-22T05:01:55.222Z",
+        "trendTitle": "Hôm nay, chính thức khai thác đoạn cao tốc 10 làn xe, vốn gần 15.000 tỷ đồng nối thành phố giàu nhất nước ta với siêu sân bay lớn nhất Việt Nam",
+        "generatedTitle": "Hôm nay, chính thức khai thác đoạn cao tốc 10 làn xe, vốn gần 15.000 tỷ đồng nối thành phố giàu nhất nước ta với siêu sân bay lớn nhất Việt Nam: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/hom-nay-chinh-thuc-khai-thac-doan-cao-toc-10-lan-xe-von-gan-15-000-ty-dong-noi-thanh-pho-giau-nhat-nuoc-ta-voi-sieu-san-bay-lon-nhat-viet-nam-1870.html",
+        "wordCount": 818,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1795315563145",
         "timestamp": "2026-11-22T02:46:03.145Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Công trường nhà ga T2 Sân bay Phú Quốc phục vụ APEC 2027 tăng tốc về đích: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/cong-truong-nha-ga-t2-san-bay-phu-quoc-phuc-vu-apec-2027-tang-toc-ve-dich-8747.html",
         "wordCount": 790,
-        "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794805330911",
-        "timestamp": "2026-11-16T05:02:10.911Z",
-        "trendTitle": "Phát hiện 450 xe tải liên tục đổ 60.000 m³ bê tông suốt 63 giờ, từng giúp các kỹ sư Trung Quốc xây tòa tháp cao bậc nhất thế giới, vượt Landmark 81 gần 200m",
-        "generatedTitle": "Phát hiện 450 xe tải liên tục đổ 60.000 m³ bê tông suốt 63 giờ, từng giúp các kỹ sư Trung Quốc xây tòa tháp cao bậc nhất thế giới, vượt Landmark 81 gần 200m: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/phat-hien-450-xe-tai-lien-tuc-do-60-000-m-be-tong-suot-63-gio-tung-giup-cac-ky-su-trung-quoc-xay-toa-thap-cao-bac-nhat-the-gioi-vuot-landmark-81-gan-200m-7752.html",
-        "wordCount": 814,
         "trendScore": 92,
         "status": "published"
       }
