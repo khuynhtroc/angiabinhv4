@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-23T11:01:56.168Z",
-    "autoPublishedCount": 125,
+    "lastRunAt": "2026-11-23T15:33:01.189Z",
+    "autoPublishedCount": 126,
     "logs": [
+      {
+        "id": "news-log-1795447981189",
+        "timestamp": "2026-11-23T15:33:01.189Z",
+        "trendTitle": "Khởi công tổ hợp cảng biển và nhà máy đất hiếm hơn 26.400 tỷ đồng tại Hải Phòng",
+        "generatedTitle": "Khởi công tổ hợp cảng biển và nhà máy đất hiếm hơn 26.400 tỷ đồng tại Hải Phòng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/khoi-cong-to-hop-cang-bien-va-nha-may-dat-hiem-hon-26-400-ty-dong-tai-hai-phong-5412.html",
+        "wordCount": 811,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1795431716168",
         "timestamp": "2026-11-23T11:01:56.168Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/san-van-dong-75-000-cho-ngoi-lon-gan-gap-doi-my-dinh-duoc-bao-phu-bang-vat-lieu-dac-biet-day-0-2-mm-ben-ngoai-co-the-phat-sang-toi-16-trieu-mau-4816.html",
         "wordCount": 797,
         "trendScore": 85,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794924016931",
-        "timestamp": "2026-11-17T14:00:16.931Z",
-        "trendTitle": "Hà Nội phân luồng giao thông 3 tuyến phố từ ngày 20/11 để thi công cáp ngầm 110kV",
-        "generatedTitle": "Hà Nội phân luồng giao thông 3 tuyến phố từ ngày 20/11 để thi công cáp ngầm 110kV: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/ha-noi-phan-luong-giao-thong-3-tuyen-pho-tu-ngay-20-11-de-thi-cong-cap-ngam-110kv-8742.html",
-        "wordCount": 806,
-        "trendScore": 78,
         "status": "published"
       }
     ]
