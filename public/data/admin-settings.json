@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-23T05:01:58.542Z",
-    "autoPublishedCount": 124,
+    "lastRunAt": "2026-11-23T11:01:56.168Z",
+    "autoPublishedCount": 125,
     "logs": [
+      {
+        "id": "news-log-1795431716168",
+        "timestamp": "2026-11-23T11:01:56.168Z",
+        "trendTitle": "Hải Phòng khởi công nhà máy vật liệu tinh khiết từ đất hiếm",
+        "generatedTitle": "Hải Phòng khởi công nhà máy vật liệu tinh khiết từ đất hiếm: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/hai-phong-khoi-cong-nha-may-vat-lieu-tinh-khiet-tu-dat-hiem-5621.html",
+        "wordCount": 782,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1795410118542",
         "timestamp": "2026-11-23T05:01:58.542Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/ha-noi-phan-luong-giao-thong-3-tuyen-pho-tu-ngay-20-11-de-thi-cong-cap-ngam-110kv-8742.html",
         "wordCount": 806,
         "trendScore": 78,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794913326083",
-        "timestamp": "2026-11-17T11:02:06.083Z",
-        "trendTitle": "Thứ trưởng Lê Anh Tuấn: Huy động máy móc, nhân lực đẩy nhanh cao tốc Dầu Giây - Tân Phú",
-        "generatedTitle": "Thứ trưởng Lê Anh Tuấn: Huy động máy móc, nhân lực đẩy nhanh cao tốc Dầu Giây - Tân Phú: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/thu-truong-le-anh-tuan-huy-dong-may-moc-nhan-luc-day-nhanh-cao-toc-dau-giay---tan-phu-4798.html",
-        "wordCount": 810,
-        "trendScore": 88,
         "status": "published"
       }
     ]
