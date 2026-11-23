@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-23T03:23:46.493Z",
-    "autoPublishedCount": 123,
+    "lastRunAt": "2026-11-23T05:01:58.542Z",
+    "autoPublishedCount": 124,
     "logs": [
+      {
+        "id": "news-log-1795410118542",
+        "timestamp": "2026-11-23T05:01:58.542Z",
+        "trendTitle": "Thành phố nhỏ nhất Việt Nam chuẩn bị khởi công 2 dự án lớn tại đặc khu Cát Hải: Bến cảng gần 25.000 tỷ đồng có quy mô 146,2ha với tổng chiều dài cầu bến 1.800 m",
+        "generatedTitle": "Thành phố nhỏ nhất Việt Nam chuẩn bị khởi công 2 dự án lớn tại đặc khu Cát Hải: Bến cảng gần 25.000 tỷ đồng có quy mô 146,2ha với tổng chiều dài cầu bến 1.800 m: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/thanh-pho-nho-nhat-viet-nam-chuan-bi-khoi-cong-2-du-an-lon-tai-dac-khu-cat-hai-ben-cang-gan-25-000-ty-dong-co-quy-mo-146-2ha-voi-tong-chieu-dai-cau-ben-1-800-m-6118.html",
+        "wordCount": 841,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1795404226493",
         "timestamp": "2026-11-23T03:23:46.493Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/thu-truong-le-anh-tuan-huy-dong-may-moc-nhan-luc-day-nhanh-cao-toc-dau-giay---tan-phu-4798.html",
         "wordCount": 810,
         "trendScore": 88,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794891722361",
-        "timestamp": "2026-11-17T05:02:02.361Z",
-        "trendTitle": "Đổi tên ga Thọ Lộc thành ga Phong Nha trên tuyến đường sắt Bắc - Nam",
-        "generatedTitle": "Đổi tên ga Thọ Lộc thành ga Phong Nha trên tuyến đường sắt Bắc - Nam: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/doi-ten-ga-tho-loc-thanh-ga-phong-nha-tren-tuyen-duong-sat-bac---nam-5711.html",
-        "wordCount": 825,
-        "trendScore": 82,
         "status": "published"
       }
     ]
