@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-22T23:02:01.946Z",
-    "autoPublishedCount": 122,
+    "lastRunAt": "2026-11-23T03:23:46.493Z",
+    "autoPublishedCount": 123,
     "logs": [
+      {
+        "id": "news-log-1795404226493",
+        "timestamp": "2026-11-23T03:23:46.493Z",
+        "trendTitle": "Phó Thủ tướng yêu cầu tiếp tục rà soát các mỏ vật liệu xây dựng thông thường phục vụ công trình trọng điểm quốc gia",
+        "generatedTitle": "Phó Thủ tướng yêu cầu tiếp tục rà soát các mỏ vật liệu xây dựng thông thường phục vụ công trình trọng điểm quốc gia: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/pho-thu-tuong-yeu-cau-tiep-tuc-ra-soat-cac-mo-vat-lieu-xay-dung-thong-thuong-phuc-vu-cong-trinh-trong-diem-quoc-gia-6932.html",
+        "wordCount": 814,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1795388521946",
         "timestamp": "2026-11-22T23:02:01.946Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/doi-ten-ga-tho-loc-thanh-ga-phong-nha-tren-tuyen-duong-sat-bac---nam-5711.html",
         "wordCount": 825,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794891248961",
-        "timestamp": "2026-11-17T04:54:08.961Z",
-        "trendTitle": "Hơn 150 nhà dân dọc kênh Thụy Phương bị lún, nứt",
-        "generatedTitle": "Hơn 150 nhà dân dọc kênh Thụy Phương bị lún, nứt: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/hon-150-nha-dan-doc-kenh-thuy-phuong-bi-lun-nut-6731.html",
-        "wordCount": 779,
-        "trendScore": 85,
         "status": "published"
       }
     ]
