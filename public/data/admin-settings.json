@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-23T15:33:01.189Z",
-    "autoPublishedCount": 126,
+    "lastRunAt": "2026-11-23T23:02:04.437Z",
+    "autoPublishedCount": 127,
     "logs": [
+      {
+        "id": "news-log-1795474924437",
+        "timestamp": "2026-11-23T23:02:04.437Z",
+        "trendTitle": "cục cảnh sát giao thông",
+        "generatedTitle": "cục cảnh sát giao thông: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/cuc-canh-sat-giao-thong-8548.html",
+        "wordCount": 747,
+        "trendScore": 90,
+        "status": "published"
+      },
       {
         "id": "news-log-1795447981189",
         "timestamp": "2026-11-23T15:33:01.189Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/cau-tran-hung-dao-dan-hien-hinh-voi-nhung-vom-thep-vuot-song-0380.html",
         "wordCount": 780,
         "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794956553184",
-        "timestamp": "2026-11-17T23:02:33.184Z",
-        "trendTitle": "Sân vận động 75.000 chỗ ngồi, lớn gần gấp đôi Mỹ Đình: Được bao phủ bằng vật liệu đặc biệt dày 0,2 mm, bên ngoài có thể phát sáng tới 16 triệu màu",
-        "generatedTitle": "Sân vận động 75.000 chỗ ngồi, lớn gần gấp đôi Mỹ Đình: Được bao phủ bằng vật liệu đặc biệt dày 0,2 mm, bên ngoài có thể phát sáng tới 16 triệu màu: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/san-van-dong-75-000-cho-ngoi-lon-gan-gap-doi-my-dinh-duoc-bao-phu-bang-vat-lieu-dac-biet-day-0-2-mm-ben-ngoai-co-the-phat-sang-toi-16-trieu-mau-4816.html",
-        "wordCount": 797,
-        "trendScore": 85,
         "status": "published"
       }
     ]
