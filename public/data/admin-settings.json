@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-23T23:02:04.437Z",
-    "autoPublishedCount": 127,
+    "lastRunAt": "2026-11-24T05:02:28.715Z",
+    "autoPublishedCount": 128,
     "logs": [
+      {
+        "id": "news-log-1795496548715",
+        "timestamp": "2026-11-24T05:02:28.715Z",
+        "trendTitle": "Cao tốc Cao Lãnh - An Hữu: Khó về đích trong năm 2026",
+        "generatedTitle": "Cao tốc Cao Lãnh - An Hữu: Khó về đích trong năm 2026: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/cao-toc-cao-lanh---an-huu-kho-ve-dich-trong-nam-2026-3669.html",
+        "wordCount": 807,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1795474924437",
         "timestamp": "2026-11-23T23:02:04.437Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/tu-dat-xen-ket-den-nhung-cong-vien-trong-pho-7035.html",
         "wordCount": 793,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794974314648",
-        "timestamp": "2026-11-18T03:58:34.648Z",
-        "trendTitle": "Cầu Trần Hưng Đạo dần hiện hình với những vòm thép vượt sông",
-        "generatedTitle": "Cầu Trần Hưng Đạo dần hiện hình với những vòm thép vượt sông: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/cau-tran-hung-dao-dan-hien-hinh-voi-nhung-vom-thep-vuot-song-0380.html",
-        "wordCount": 780,
-        "trendScore": 92,
         "status": "published"
       }
     ]
