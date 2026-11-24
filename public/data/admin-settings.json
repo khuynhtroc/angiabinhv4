@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-24T05:02:28.715Z",
-    "autoPublishedCount": 128,
+    "lastRunAt": "2026-11-24T06:37:50.669Z",
+    "autoPublishedCount": 129,
     "logs": [
+      {
+        "id": "news-log-1795502270669",
+        "timestamp": "2026-11-24T06:37:50.669Z",
+        "trendTitle": "Vành đai 3 TP.HCM: Tăng tốc thi công, áp lực về đích năm 2026",
+        "generatedTitle": "Vành đai 3 TP.HCM: Tăng tốc thi công, áp lực về đích năm 2026: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/vanh-dai-3-tp-hcm-tang-toc-thi-cong-ap-luc-ve-dich-nam-2026-8991.html",
+        "wordCount": 808,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1795496548715",
         "timestamp": "2026-11-24T05:02:28.715Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/khac-phuc-xong-hu-hong-mat-duong-dan-len-cau-thu-bien-8327.html",
         "wordCount": 791,
         "trendScore": 88,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794978091515",
-        "timestamp": "2026-11-18T05:01:31.515Z",
-        "trendTitle": "Từ đất xen kẹt đến những công viên trong phố",
-        "generatedTitle": "Từ đất xen kẹt đến những công viên trong phố: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/tu-dat-xen-ket-den-nhung-cong-vien-trong-pho-7035.html",
-        "wordCount": 793,
-        "trendScore": 82,
         "status": "published"
       }
     ]
