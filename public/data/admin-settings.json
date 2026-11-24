@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-24T20:57:47.651Z",
-    "autoPublishedCount": 131,
+    "lastRunAt": "2026-11-24T23:02:30.292Z",
+    "autoPublishedCount": 132,
     "logs": [
+      {
+        "id": "news-log-1795561350292",
+        "timestamp": "2026-11-24T23:02:30.292Z",
+        "trendTitle": "Hình hài đường nối cao tốc Biên Hòa - Vũng Tàu gần 14.000 tỷ sau hơn 1 năm thi công",
+        "generatedTitle": "Hình hài đường nối cao tốc Biên Hòa - Vũng Tàu gần 14.000 tỷ sau hơn 1 năm thi công: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/hinh-hai-duong-noi-cao-toc-bien-hoa---vung-tau-gan-14-000-ty-sau-hon-1-nam-thi-cong-6701.html",
+        "wordCount": 811,
+        "trendScore": 75,
+        "status": "published"
+      },
       {
         "id": "news-log-1795553867651",
         "timestamp": "2026-11-24T20:57:47.651Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/linh-truong-son-vuot-doi-nui-hiem-tro-mo-cao-toc-len-mien-nguoc-9532.html",
         "wordCount": 804,
         "trendScore": 88,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795042908554",
-        "timestamp": "2026-11-18T23:01:48.554Z",
-        "trendTitle": "Nhà bê tông 400 m2 như phòng trưng bày nghệ thuật",
-        "generatedTitle": "Nhà bê tông 400 m2 như phòng trưng bày nghệ thuật: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/nha-be-tong-400-m2-nhu-phong-trung-bay-nghe-thuat-4870.html",
-        "wordCount": 778,
-        "trendScore": 85,
         "status": "published"
       }
     ]
