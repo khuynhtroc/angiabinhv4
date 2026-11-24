@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-24T11:02:31.329Z",
-    "autoPublishedCount": 130,
+    "lastRunAt": "2026-11-24T20:57:47.651Z",
+    "autoPublishedCount": 131,
     "logs": [
+      {
+        "id": "news-log-1795553867651",
+        "timestamp": "2026-11-24T20:57:47.651Z",
+        "trendTitle": "Thép Nam Kim muốn ‘rót’ thêm 1.500 tỷ đồng vào công ty con",
+        "generatedTitle": "Thép Nam Kim muốn ‘rót’ thêm 1.500 tỷ đồng vào công ty con: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/thep-nam-kim-muon-rot-them-1-500-ty-dong-vao-cong-ty-con-2317.html",
+        "wordCount": 784,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1795518151329",
         "timestamp": "2026-11-24T11:02:31.329Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/nha-be-tong-400-m2-nhu-phong-trung-bay-nghe-thuat-4870.html",
         "wordCount": 778,
         "trendScore": 85,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795008938404",
-        "timestamp": "2026-11-18T13:35:38.404Z",
-        "trendTitle": "Đắk Lắk: Cận cảnh công trường cầu vượt đường sắt 753 tỷ đồng trên quốc lộ 1",
-        "generatedTitle": "Đắk Lắk: Cận cảnh công trường cầu vượt đường sắt 753 tỷ đồng trên quốc lộ 1: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/dak-lak-can-canh-cong-truong-cau-vuot-duong-sat-753-ty-dong-tren-quoc-lo-1-7948.html",
-        "wordCount": 792,
-        "trendScore": 78,
         "status": "published"
       }
     ]
