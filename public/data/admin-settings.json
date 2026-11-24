@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-24T06:37:50.669Z",
-    "autoPublishedCount": 129,
+    "lastRunAt": "2026-11-24T11:02:31.329Z",
+    "autoPublishedCount": 130,
     "logs": [
+      {
+        "id": "news-log-1795518151329",
+        "timestamp": "2026-11-24T11:02:31.329Z",
+        "trendTitle": "Thông xe cầu vòm thép lớn nhất Quảng Trị, vốn đầu tư 1.325 tỷ đồng",
+        "generatedTitle": "Thông xe cầu vòm thép lớn nhất Quảng Trị, vốn đầu tư 1.325 tỷ đồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/thong-xe-cau-vom-thep-lon-nhat-quang-tri-von-dau-tu-1-325-ty-dong-0777.html",
+        "wordCount": 800,
+        "trendScore": 81,
+        "status": "published"
+      },
       {
         "id": "news-log-1795502270669",
         "timestamp": "2026-11-24T06:37:50.669Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/dak-lak-can-canh-cong-truong-cau-vuot-duong-sat-753-ty-dong-tren-quoc-lo-1-7948.html",
         "wordCount": 792,
         "trendScore": 78,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1794999698649",
-        "timestamp": "2026-11-18T11:01:38.649Z",
-        "trendTitle": "Khắc phục xong hư hỏng mặt đường dẫn lên cầu Thủ Biên",
-        "generatedTitle": "Khắc phục xong hư hỏng mặt đường dẫn lên cầu Thủ Biên: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/khac-phuc-xong-hu-hong-mat-duong-dan-len-cau-thu-bien-8327.html",
-        "wordCount": 791,
-        "trendScore": 88,
         "status": "published"
       }
     ]
