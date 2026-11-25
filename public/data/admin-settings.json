@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-25T05:10:37.552Z",
-    "autoPublishedCount": 134,
+    "lastRunAt": "2026-11-25T11:01:57.093Z",
+    "autoPublishedCount": 135,
     "logs": [
+      {
+        "id": "news-log-1795604517093",
+        "timestamp": "2026-11-25T11:01:57.093Z",
+        "trendTitle": "Siêu sân vận động 81.000 chỗ ngồi, lớn gấp đôi sân Mỹ Đình: Xác lập 2 kỷ lục về mái che, vốn đầu tư gần 21.000 tỷ đồng, dự kiến hoàn thành vào cuối năm 2028",
+        "generatedTitle": "Siêu sân vận động 81.000 chỗ ngồi, lớn gấp đôi sân Mỹ Đình: Xác lập 2 kỷ lục về mái che, vốn đầu tư gần 21.000 tỷ đồng, dự kiến hoàn thành vào cuối năm 2028: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/sieu-san-van-dong-81-000-cho-ngoi-lon-gap-doi-san-my-dinh-xac-lap-2-ky-luc-ve-mai-che-von-dau-tu-gan-21-000-ty-dong-du-kien-hoan-thanh-vao-cuoi-nam-2028-2841.html",
+        "wordCount": 812,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1795583437552",
         "timestamp": "2026-11-25T05:10:37.552Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Bó thép gần chục tấn đè sập cabin xe đầu kéo ở TP HCM: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/bo-thep-gan-chuc-tan-de-sap-cabin-xe-dau-keo-o-tp-hcm-6256.html",
         "wordCount": 779,
-        "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795086116602",
-        "timestamp": "2026-11-19T11:01:56.602Z",
-        "trendTitle": "Đốt vòm thép nặng 62 tấn được cẩu lên độ cao hơn 18m giữa sông Hồng, siêu cầu nối khu phố cổ với Long Biên do Sun Group triển khai dần lộ diện với thiết kế vòm vô cực",
-        "generatedTitle": "Đốt vòm thép nặng 62 tấn được cẩu lên độ cao hơn 18m giữa sông Hồng, siêu cầu nối khu phố cổ với Long Biên do Sun Group triển khai dần lộ diện với thiết kế vòm vô cực: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/dot-vom-thep-nang-62-tan-duoc-cau-len-do-cao-hon-18m-giua-song-hong-sieu-cau-noi-khu-pho-co-voi-long-bien-do-sun-group-trien-khai-dan-lo-dien-voi-thiet-ke-vom-vo-cuc-3681.html",
-        "wordCount": 816,
         "trendScore": 92,
         "status": "published"
       }
