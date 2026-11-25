@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-25T05:02:16.989Z",
-    "autoPublishedCount": 133,
+    "lastRunAt": "2026-11-25T05:10:37.552Z",
+    "autoPublishedCount": 134,
     "logs": [
+      {
+        "id": "news-log-1795583437552",
+        "timestamp": "2026-11-25T05:10:37.552Z",
+        "trendTitle": "Siêu sân bay lớn nhất miền Bắc, vốn 8 tỷ USD rộng hơn 1.880 ha, cách Hà Nội 40 km đón chuyến bay đặc biệt",
+        "generatedTitle": "Siêu sân bay lớn nhất miền Bắc, vốn 8 tỷ USD rộng hơn 1.880 ha, cách Hà Nội 40 km đón chuyến bay đặc biệt: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/sieu-san-bay-lon-nhat-mien-bac-von-8-ty-usd-rong-hon-1-880-ha-cach-ha-noi-40-km-don-chuyen-bay-dac-biet-8982.html",
+        "wordCount": 789,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1795582936989",
         "timestamp": "2026-11-25T05:02:16.989Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/dot-vom-thep-nang-62-tan-duoc-cau-len-do-cao-hon-18m-giua-song-hong-sieu-cau-noi-khu-pho-co-voi-long-bien-do-sun-group-trien-khai-dan-lo-dien-voi-thiet-ke-vom-vo-cuc-3681.html",
         "wordCount": 816,
         "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795064490285",
-        "timestamp": "2026-11-19T05:01:30.285Z",
-        "trendTitle": "Hoá giải áp lực vật liệu, khơi thông dòng chảy công trường, tạo lực đẩy giải ngân vốn",
-        "generatedTitle": "Hoá giải áp lực vật liệu, khơi thông dòng chảy công trường, tạo lực đẩy giải ngân vốn: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/hoa-giai-ap-luc-vat-lieu-khoi-thong-dong-chay-cong-truong-tao-luc-day-giai-ngan-von-8148.html",
-        "wordCount": 810,
-        "trendScore": 88,
         "status": "published"
       }
     ]
