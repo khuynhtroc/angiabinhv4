@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-25T11:01:57.093Z",
-    "autoPublishedCount": 135,
+    "lastRunAt": "2026-11-25T20:20:24.261Z",
+    "autoPublishedCount": 136,
     "logs": [
+      {
+        "id": "news-log-1795638024261",
+        "timestamp": "2026-11-25T20:20:24.261Z",
+        "trendTitle": "Tái hiện nét kiến trúc Chợ Lớn trong nhà phố hiện đại",
+        "generatedTitle": "Tái hiện nét kiến trúc Chợ Lớn trong nhà phố hiện đại: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/tai-hien-net-kien-truc-cho-lon-trong-nha-pho-hien-dai-3970.html",
+        "wordCount": 781,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1795604517093",
         "timestamp": "2026-11-25T11:01:57.093Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/hai-hai-cot-liet-si-kem-bia-khac-ten-to-ng-lang-va-nguyen-gia-9129.html",
         "wordCount": 788,
         "trendScore": 85,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795096912079",
-        "timestamp": "2026-11-19T14:01:52.079Z",
-        "trendTitle": "Bó thép gần chục tấn đè sập cabin xe đầu kéo ở TP HCM",
-        "generatedTitle": "Bó thép gần chục tấn đè sập cabin xe đầu kéo ở TP HCM: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/bo-thep-gan-chuc-tan-de-sap-cabin-xe-dau-keo-o-tp-hcm-6256.html",
-        "wordCount": 779,
-        "trendScore": 92,
         "status": "published"
       }
     ]
