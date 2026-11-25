@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-25T20:20:24.261Z",
-    "autoPublishedCount": 136,
+    "lastRunAt": "2026-11-25T23:02:23.341Z",
+    "autoPublishedCount": 137,
     "logs": [
+      {
+        "id": "news-log-1795647743341",
+        "timestamp": "2026-11-25T23:02:23.341Z",
+        "trendTitle": "Thử nghiệm thành công biến 1.000 m³ bùn nạo vét sông thành vật liệu đắp nền cao tốc",
+        "generatedTitle": "Thử nghiệm thành công biến 1.000 m³ bùn nạo vét sông thành vật liệu đắp nền cao tốc: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/thu-nghiem-thanh-cong-bien-1-000-m-bun-nao-vet-song-thanh-vat-lieu-dap-nen-cao-toc-1032.html",
+        "wordCount": 812,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1795638024261",
         "timestamp": "2026-11-25T20:20:24.261Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/chuyen-chua-ke-duoi-long-dat-toi-tren-troi-tai-toa-thap-landmark-81-0140.html",
         "wordCount": 788,
         "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795129345761",
-        "timestamp": "2026-11-19T23:02:25.761Z",
-        "trendTitle": "Hai hài cốt liệt sĩ kèm bia khắc tên Tô Ng... Lang và Nguyễn Gia",
-        "generatedTitle": "Hai hài cốt liệt sĩ kèm bia khắc tên Tô Ng... Lang và Nguyễn Gia: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/hai-hai-cot-liet-si-kem-bia-khac-ten-to-ng-lang-va-nguyen-gia-9129.html",
-        "wordCount": 788,
-        "trendScore": 85,
         "status": "published"
       }
     ]
