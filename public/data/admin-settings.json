@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-24T23:02:30.292Z",
-    "autoPublishedCount": 132,
+    "lastRunAt": "2026-11-25T05:02:16.989Z",
+    "autoPublishedCount": 133,
     "logs": [
+      {
+        "id": "news-log-1795582936989",
+        "timestamp": "2026-11-25T05:02:16.989Z",
+        "trendTitle": "Lần đầu tiên, Việt Nam đưa công nghệ hiện đại vào tuyến đường sắt dài 363 km, siêu dự án gần 290.000 tỷ đồng có gì đặc biệt?",
+        "generatedTitle": "Lần đầu tiên, Việt Nam đưa công nghệ hiện đại vào tuyến đường sắt dài 363 km, siêu dự án gần 290.000 tỷ đồng có gì đặc biệt?: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/lan-dau-tien-viet-nam-dua-cong-nghe-hien-dai-vao-tuyen-duong-sat-dai-363-km-sieu-du-an-gan-290-000-ty-dong-co-gi-dac-biet-7062.html",
+        "wordCount": 812,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1795561350292",
         "timestamp": "2026-11-24T23:02:30.292Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Hoá giải áp lực vật liệu, khơi thông dòng chảy công trường, tạo lực đẩy giải ngân vốn: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/hoa-giai-ap-luc-vat-lieu-khoi-thong-dong-chay-cong-truong-tao-luc-day-giai-ngan-von-8148.html",
         "wordCount": 810,
-        "trendScore": 88,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795060533435",
-        "timestamp": "2026-11-19T03:55:33.435Z",
-        "trendTitle": "Lính Trường Sơn vượt đồi núi hiểm trở, mở cao tốc lên miền ngược",
-        "generatedTitle": "Lính Trường Sơn vượt đồi núi hiểm trở, mở cao tốc lên miền ngược: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/linh-truong-son-vuot-doi-nui-hiem-tro-mo-cao-toc-len-mien-nguoc-9532.html",
-        "wordCount": 804,
         "trendScore": 88,
         "status": "published"
       }
