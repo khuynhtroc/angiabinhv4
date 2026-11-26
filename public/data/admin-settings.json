@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-26T05:02:25.797Z",
-    "autoPublishedCount": 139,
+    "lastRunAt": "2026-11-26T11:02:24.805Z",
+    "autoPublishedCount": 140,
     "logs": [
+      {
+        "id": "news-log-1795690944805",
+        "timestamp": "2026-11-26T11:02:24.805Z",
+        "trendTitle": "Chung cư cũ TPHCM: \"Chuồng cọp\" treo lơ lửng, hàng quán bịt kín lối thoát",
+        "generatedTitle": "Chung cư cũ TPHCM: \"Chuồng cọp\" treo lơ lửng, hàng quán bịt kín lối thoát: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/chung-cu-cu-tphcm-chuong-cop-treo-lo-lung-hang-quan-bit-kin-loi-thoat-8159.html",
+        "wordCount": 816,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1795669345797",
         "timestamp": "2026-11-26T05:02:25.797Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/than-toc-thi-cong-dua-hai-cau-vuot-tren-duong-vanh-dai-1-ve-dich-8748.html",
         "wordCount": 806,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795172543745",
-        "timestamp": "2026-11-20T11:02:23.745Z",
-        "trendTitle": "Tăng ca, kíp đẩy nhanh tiến độ cao tốc Cao Lãnh - An Hữu",
-        "generatedTitle": "Tăng ca, kíp đẩy nhanh tiến độ cao tốc Cao Lãnh - An Hữu: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/tang-ca-kip-day-nhanh-tien-do-cao-toc-cao-lanh---an-huu-9620.html",
-        "wordCount": 798,
-        "trendScore": 88,
         "status": "published"
       }
     ]
