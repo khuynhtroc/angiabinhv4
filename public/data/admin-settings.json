@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-26T14:37:56.279Z",
-    "autoPublishedCount": 141,
+    "lastRunAt": "2026-11-26T23:02:12.061Z",
+    "autoPublishedCount": 142,
     "logs": [
+      {
+        "id": "news-log-1795734132061",
+        "timestamp": "2026-11-26T23:02:12.061Z",
+        "trendTitle": "Đại dự án nhà máy thép gần 80.000 tỷ đồng công suất 20 triệu tấn/năm khi hoàn thành của Vingroup tại Hà Tĩnh có thêm công trình dài gần 30 km, vốn hơn 2.244 tỷ đồng",
+        "generatedTitle": "Đại dự án nhà máy thép gần 80.000 tỷ đồng công suất 20 triệu tấn/năm khi hoàn thành của Vingroup tại Hà Tĩnh có thêm công trình dài gần 30 km, vốn hơn 2.244 tỷ đồng: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dai-du-an-nha-may-thep-gan-80-000-ty-dong-cong-suat-20-trieu-tan-nam-khi-hoan-thanh-cua-vingroup-tai-ha-tinh-co-them-cong-trinh-dai-gan-30-km-von-hon-2-244-ty-dong-3588.html",
+        "wordCount": 833,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1795703876279",
         "timestamp": "2026-11-26T14:37:56.279Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/5-giai-phap-giup-giam-nut-tuong-khi-xay-nha-0521.html",
         "wordCount": 782,
         "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795215736795",
-        "timestamp": "2026-11-20T23:02:16.795Z",
-        "trendTitle": "Gia Lai: Nhiều xã, phường chậm triển khai bê tông hóa giao thông nông thôn",
-        "generatedTitle": "Gia Lai: Nhiều xã, phường chậm triển khai bê tông hóa giao thông nông thôn: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/gia-lai-nhieu-xa-phuong-cham-trien-khai-be-tong-hoa-giao-thong-nong-thon-6300.html",
-        "wordCount": 802,
-        "trendScore": 81,
         "status": "published"
       }
     ]
