@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-26T04:37:31.318Z",
-    "autoPublishedCount": 138,
+    "lastRunAt": "2026-11-26T05:02:25.797Z",
+    "autoPublishedCount": 139,
     "logs": [
+      {
+        "id": "news-log-1795669345797",
+        "timestamp": "2026-11-26T05:02:25.797Z",
+        "trendTitle": "Lập mũi thi công phản ứng nhanh, vượt khó làm cao tốc với bản lĩnh của lính thợ Trường Sơn",
+        "generatedTitle": "Lập mũi thi công phản ứng nhanh, vượt khó làm cao tốc với bản lĩnh của lính thợ Trường Sơn: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/lap-mui-thi-cong-phan-ung-nhanh-vuot-kho-lam-cao-toc-voi-ban-linh-cua-linh-tho-truong-son-7480.html",
+        "wordCount": 809,
+        "trendScore": 88,
+        "status": "published"
+      },
       {
         "id": "news-log-1795667851318",
         "timestamp": "2026-11-26T04:37:31.318Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/tang-ca-kip-day-nhanh-tien-do-cao-toc-cao-lanh---an-huu-9620.html",
         "wordCount": 798,
         "trendScore": 88,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795150929229",
-        "timestamp": "2026-11-20T05:02:09.229Z",
-        "trendTitle": "Đại gia gốc Thanh Hóa từng thi công mái vòm thép lớn nhất hành tinh đã hoàn thành khoảng 70% kết cấu cây cầu có thiết kế đặc biệt tại thành phố giàu nhất Việt Nam",
-        "generatedTitle": "Đại gia gốc Thanh Hóa từng thi công mái vòm thép lớn nhất hành tinh đã hoàn thành khoảng 70% kết cấu cây cầu có thiết kế đặc biệt tại thành phố giàu nhất Việt Nam: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/dai-gia-goc-thanh-hoa-tung-thi-cong-mai-vom-thep-lon-nhat-hanh-tinh-da-hoan-thanh-khoang-70-ket-cau-cay-cau-co-thiet-ke-dac-biet-tai-thanh-pho-giau-nhat-viet-nam-5560.html",
-        "wordCount": 817,
-        "trendScore": 92,
         "status": "published"
       }
     ]
