@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-25T23:02:23.341Z",
-    "autoPublishedCount": 137,
+    "lastRunAt": "2026-11-26T04:37:31.318Z",
+    "autoPublishedCount": 138,
     "logs": [
+      {
+        "id": "news-log-1795667851318",
+        "timestamp": "2026-11-26T04:37:31.318Z",
+        "trendTitle": "Vụ cọc bê tông “bẫy” ghe tàu trên biển Tây: Đã tháo dỡ 15 cọc bê tông lắp đặt sai tọa độ",
+        "generatedTitle": "Vụ cọc bê tông “bẫy” ghe tàu trên biển Tây: Đã tháo dỡ 15 cọc bê tông lắp đặt sai tọa độ: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/vu-coc-be-tong-bay-ghe-tau-tren-bien-tay-da-thao-do-15-coc-be-tong-lap-dat-sai-toa-do-6990.html",
+        "wordCount": 795,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1795647743341",
         "timestamp": "2026-11-25T23:02:23.341Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Đại gia gốc Thanh Hóa từng thi công mái vòm thép lớn nhất hành tinh đã hoàn thành khoảng 70% kết cấu cây cầu có thiết kế đặc biệt tại thành phố giàu nhất Việt Nam: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/dai-gia-goc-thanh-hoa-tung-thi-cong-mai-vom-thep-lon-nhat-hanh-tinh-da-hoan-thanh-khoang-70-ket-cau-cay-cau-co-thiet-ke-dac-biet-tai-thanh-pho-giau-nhat-viet-nam-5560.html",
         "wordCount": 817,
-        "trendScore": 92,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795146546000",
-        "timestamp": "2026-11-20T03:49:06.000Z",
-        "trendTitle": "Chuyện chưa kể 'dưới lòng đất tới trên trời' tại tòa tháp Landmark 81",
-        "generatedTitle": "Chuyện chưa kể 'dưới lòng đất tới trên trời' tại tòa tháp Landmark 81: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/chuyen-chua-ke-duoi-long-dat-toi-tren-troi-tai-toa-thap-landmark-81-0140.html",
-        "wordCount": 788,
         "trendScore": 92,
         "status": "published"
       }
