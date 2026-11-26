@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-26T11:02:24.805Z",
-    "autoPublishedCount": 140,
+    "lastRunAt": "2026-11-26T14:37:56.279Z",
+    "autoPublishedCount": 141,
     "logs": [
+      {
+        "id": "news-log-1795703876279",
+        "timestamp": "2026-11-26T14:37:56.279Z",
+        "trendTitle": "Hà Tĩnh mở tuyến buýt số 12 kết nối Hương Khê - ga Vinh",
+        "generatedTitle": "Hà Tĩnh mở tuyến buýt số 12 kết nối Hương Khê - ga Vinh: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/ha-tinh-mo-tuyen-buyt-so-12-ket-noi-huong-khe---ga-vinh-8591.html",
+        "wordCount": 787,
+        "trendScore": 78,
+        "status": "published"
+      },
       {
         "id": "news-log-1795690944805",
         "timestamp": "2026-11-26T11:02:24.805Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/gia-lai-nhieu-xa-phuong-cham-trien-khai-be-tong-hoa-giao-thong-nong-thon-6300.html",
         "wordCount": 802,
         "trendScore": 81,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795182285558",
-        "timestamp": "2026-11-20T13:44:45.558Z",
-        "trendTitle": "Thần tốc thi công đưa hai cầu vượt trên đường Vành đai 1 về đích",
-        "generatedTitle": "Thần tốc thi công đưa hai cầu vượt trên đường Vành đai 1 về đích: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/than-toc-thi-cong-dua-hai-cau-vuot-tren-duong-vanh-dai-1-ve-dich-8748.html",
-        "wordCount": 806,
-        "trendScore": 82,
         "status": "published"
       }
     ]
