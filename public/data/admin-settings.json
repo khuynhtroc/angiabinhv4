@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-26T23:02:12.061Z",
-    "autoPublishedCount": 142,
+    "lastRunAt": "2026-11-27T04:40:38.766Z",
+    "autoPublishedCount": 143,
     "logs": [
+      {
+        "id": "news-log-1795754438766",
+        "timestamp": "2026-11-27T04:40:38.766Z",
+        "trendTitle": "Phá dỡ nhà thi đấu hơn 30 năm tuổi trên khu đất vàng tại thành phố giàu nhất Việt Nam, nhường chỗ cho công trình 1.850 tỷ đồng, sức chứa 4.000 chỗ ngồi, dự kiến khởi công năm 2027",
+        "generatedTitle": "Phá dỡ nhà thi đấu hơn 30 năm tuổi trên khu đất vàng tại thành phố giàu nhất Việt Nam, nhường chỗ cho công trình 1.850 tỷ đồng, sức chứa 4.000 chỗ ngồi, dự kiến khởi công năm 2027: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/pha-do-nha-thi-dau-hon-30-nam-tuoi-tren-khu-dat-vang-tai-thanh-pho-giau-nhat-viet-nam-nhuong-cho-cho-cong-trinh-1-850-ty-dong-suc-chua-4-000-cho-ngoi-du-kien-khoi-cong-nam-2027-6643.html",
+        "wordCount": 818,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1795734132061",
         "timestamp": "2026-11-26T23:02:12.061Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/phe-binh-chu-dau-tu-canh-cao-nha-thau-du-an-giao-thong-tai-hue-1043.html",
         "wordCount": 801,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795232421891",
-        "timestamp": "2026-11-21T03:40:21.891Z",
-        "trendTitle": "5 giải pháp giúp giảm nứt tường khi xây nhà",
-        "generatedTitle": "5 giải pháp giúp giảm nứt tường khi xây nhà: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/5-giai-phap-giup-giam-nut-tuong-khi-xay-nha-0521.html",
-        "wordCount": 782,
-        "trendScore": 92,
         "status": "published"
       }
     ]
