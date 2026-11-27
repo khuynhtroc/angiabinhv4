@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-27T11:02:13.120Z",
-    "autoPublishedCount": 145,
+    "lastRunAt": "2026-11-27T14:31:16.203Z",
+    "autoPublishedCount": 146,
     "logs": [
+      {
+        "id": "news-log-1795789876203",
+        "timestamp": "2026-11-27T14:31:16.203Z",
+        "trendTitle": "thứ hạng của thép xanh nam định gặp cahn",
+        "generatedTitle": "thứ hạng của thép xanh nam định gặp cahn: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/thu-hang-cua-thep-xanh-nam-dinh-gap-cahn-0910.html",
+        "wordCount": 755,
+        "trendScore": 100,
+        "status": "published"
+      },
       {
         "id": "news-log-1795777333120",
         "timestamp": "2026-11-27T11:02:13.120Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/thanh-pho-dang-song-bac-nhat-viet-nam-nghien-cuu-mo-rong-khu-thuong-mai-tu-do-them-1-205ha-2-vi-tri-nam-gan-ga-duong-sat-toc-do-cao-san-bay-chu-lai-va-loat-cang-bien-7884.html",
         "wordCount": 817,
         "trendScore": 75,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795266630841",
-        "timestamp": "2026-11-21T13:10:30.841Z",
-        "trendTitle": "Gần 90km metro TP.HCM thu hút nhà thầu trong và ngoài nước",
-        "generatedTitle": "Gần 90km metro TP.HCM thu hút nhà thầu trong và ngoài nước: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/gan-90km-metro-tp-hcm-thu-hut-nha-thau-trong-va-ngoai-nuoc-6671.html",
-        "wordCount": 787,
-        "trendScore": 78,
         "status": "published"
       }
     ]
