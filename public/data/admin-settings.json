@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-27T04:40:38.766Z",
-    "autoPublishedCount": 143,
+    "lastRunAt": "2026-11-27T05:02:23.793Z",
+    "autoPublishedCount": 144,
     "logs": [
+      {
+        "id": "news-log-1795755743793",
+        "timestamp": "2026-11-27T05:02:23.793Z",
+        "trendTitle": "Cao tốc Hữu Nghị - Chi Lăng tăng tốc về đích, hướng tới khai thác dịp Tết 2027",
+        "generatedTitle": "Cao tốc Hữu Nghị - Chi Lăng tăng tốc về đích, hướng tới khai thác dịp Tết 2027: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/cao-toc-huu-nghi---chi-lang-tang-toc-ve-dich-huong-toi-khai-thac-dip-tet-2027-6877.html",
+        "wordCount": 792,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1795754438766",
         "timestamp": "2026-11-27T04:40:38.766Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Diện mạo cao tốc TP HCM - Long Thành sau khi mở rộng 10 làn: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/dien-mao-cao-toc-tp-hcm---long-thanh-sau-khi-mo-rong-10-lan-4618.html",
         "wordCount": 780,
-        "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795237343575",
-        "timestamp": "2026-11-21T05:02:23.575Z",
-        "trendTitle": "Phê bình chủ đầu tư, cảnh cáo nhà thầu dự án giao thông tại Huế",
-        "generatedTitle": "Phê bình chủ đầu tư, cảnh cáo nhà thầu dự án giao thông tại Huế: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/phe-binh-chu-dau-tu-canh-cao-nha-thau-du-an-giao-thong-tai-hue-1043.html",
-        "wordCount": 801,
         "trendScore": 82,
         "status": "published"
       }
