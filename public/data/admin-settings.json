@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-27T05:02:23.793Z",
-    "autoPublishedCount": 144,
+    "lastRunAt": "2026-11-27T11:02:13.120Z",
+    "autoPublishedCount": 145,
     "logs": [
+      {
+        "id": "news-log-1795777333120",
+        "timestamp": "2026-11-27T11:02:13.120Z",
+        "trendTitle": "Đại gia quê gốc Thanh Hóa từng thi công vòm thép lớn nhất hành tinh, góp mặt làm công trình World Cup…vừa có bước đi mới: Bắt tay ngân hàng quốc tế, nghiên cứu khoản tài trợ 50 triệu USD để mở rộng nhà máy xanh",
+        "generatedTitle": "Đại gia quê gốc Thanh Hóa từng thi công vòm thép lớn nhất hành tinh, góp mặt làm công trình World Cup…vừa có bước đi mới: Bắt tay ngân hàng quốc tế, nghiên cứu khoản tài trợ 50 triệu USD để mở rộng nhà máy xanh: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dai-gia-que-goc-thanh-hoa-tung-thi-cong-vom-thep-lon-nhat-hanh-tinh-gop-mat-lam-cong-trinh-world-cup-vua-co-buoc-di-moi-bat-tay-ngan-hang-quoc-te-nghien-cuu-khoan-tai-tro-50-trieu-usd-de-mo-rong-nha-may-xanh-7471.html",
+        "wordCount": 838,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1795755743793",
         "timestamp": "2026-11-27T05:02:23.793Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/gan-90km-metro-tp-hcm-thu-hut-nha-thau-trong-va-ngoai-nuoc-6671.html",
         "wordCount": 787,
         "trendScore": 78,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795258931296",
-        "timestamp": "2026-11-21T11:02:11.296Z",
-        "trendTitle": "Diện mạo cao tốc TP HCM - Long Thành sau khi mở rộng 10 làn",
-        "generatedTitle": "Diện mạo cao tốc TP HCM - Long Thành sau khi mở rộng 10 làn: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/dien-mao-cao-toc-tp-hcm---long-thanh-sau-khi-mo-rong-10-lan-4618.html",
-        "wordCount": 780,
-        "trendScore": 82,
         "status": "published"
       }
     ]
