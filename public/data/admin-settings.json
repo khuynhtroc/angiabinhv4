@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-27T14:31:16.203Z",
-    "autoPublishedCount": 146,
+    "lastRunAt": "2026-11-27T23:02:27.935Z",
+    "autoPublishedCount": 147,
     "logs": [
+      {
+        "id": "news-log-1795820547935",
+        "timestamp": "2026-11-27T23:02:27.935Z",
+        "trendTitle": "Sân vận động 60.000 chỗ ngồi, lớn gấp 1,5 lần sân Mỹ Đình do Vingroup xây dựng, đang lắp màng xuyên sáng ETFE trên mái vòm thép khổng lồ nặng 8.600 tấn có thể đóng mở trong 20 phút",
+        "generatedTitle": "Sân vận động 60.000 chỗ ngồi, lớn gấp 1,5 lần sân Mỹ Đình do Vingroup xây dựng, đang lắp màng xuyên sáng ETFE trên mái vòm thép khổng lồ nặng 8.600 tấn có thể đóng mở trong 20 phút: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/san-van-dong-60-000-cho-ngoi-lon-gap-1-5-lan-san-my-dinh-do-vingroup-xay-dung-dang-lap-mang-xuyen-sang-etfe-tren-mai-vom-thep-khong-lo-nang-8-600-tan-co-the-dong-mo-trong-20-phut-4887.html",
+        "wordCount": 817,
+        "trendScore": 85,
+        "status": "published"
+      },
       {
         "id": "news-log-1795789876203",
         "timestamp": "2026-11-27T14:31:16.203Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/qua-nhanh-dai-lo-rong-gan-gap-3-lan-duong-bang-san-bay-chay-xuyen-sieu-du-an-925-000-ty-dong-ket-noi-truc-tiep-toi-san-van-dong-135-000-cho-lon-nhat-the-gioi-cua-vingroup-du-kien-thong-xe-sau-10-ngay-nua-0943.html",
         "wordCount": 846,
         "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795302143291",
-        "timestamp": "2026-11-21T23:02:23.291Z",
-        "trendTitle": "Thành phố đáng sống bậc nhất Việt Nam nghiên cứu mở rộng Khu thương mại tự do thêm 1.205ha, 2 vị trí nằm gần ga đường sắt tốc độ cao, sân bay Chu Lai và loạt cảng biển",
-        "generatedTitle": "Thành phố đáng sống bậc nhất Việt Nam nghiên cứu mở rộng Khu thương mại tự do thêm 1.205ha, 2 vị trí nằm gần ga đường sắt tốc độ cao, sân bay Chu Lai và loạt cảng biển: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/thanh-pho-dang-song-bac-nhat-viet-nam-nghien-cuu-mo-rong-khu-thuong-mai-tu-do-them-1-205ha-2-vi-tri-nam-gan-ga-duong-sat-toc-do-cao-san-bay-chu-lai-va-loat-cang-bien-7884.html",
-        "wordCount": 817,
-        "trendScore": 75,
         "status": "published"
       }
     ]
