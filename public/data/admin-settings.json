@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-28T04:26:34.431Z",
-    "autoPublishedCount": 148,
+    "lastRunAt": "2026-11-28T05:02:28.029Z",
+    "autoPublishedCount": 149,
     "logs": [
+      {
+        "id": "news-log-1795842148029",
+        "timestamp": "2026-11-28T05:02:28.029Z",
+        "trendTitle": "Hơn 1.500m³ đất đá đổ sập chắn ngang Quốc lộ 15D",
+        "generatedTitle": "Hơn 1.500m³ đất đá đổ sập chắn ngang Quốc lộ 15D: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/hon-1-500m-dat-da-do-sap-chan-ngang-quoc-lo-15d-1030.html",
+        "wordCount": 794,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1795839994431",
         "timestamp": "2026-11-28T04:26:34.431Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Hà Nội lấy ý kiến cộng đồng về phương án hướng tuyến, vị trí ga 5 tuyến metro: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/ha-noi-lay-y-kien-cong-dong-ve-phuong-an-huong-tuyen-vi-tri-ga-5-tuyen-metro-5428.html",
         "wordCount": 837,
-        "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795323715222",
-        "timestamp": "2026-11-22T05:01:55.222Z",
-        "trendTitle": "Hôm nay, chính thức khai thác đoạn cao tốc 10 làn xe, vốn gần 15.000 tỷ đồng nối thành phố giàu nhất nước ta với siêu sân bay lớn nhất Việt Nam",
-        "generatedTitle": "Hôm nay, chính thức khai thác đoạn cao tốc 10 làn xe, vốn gần 15.000 tỷ đồng nối thành phố giàu nhất nước ta với siêu sân bay lớn nhất Việt Nam: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/hom-nay-chinh-thuc-khai-thac-doan-cao-toc-10-lan-xe-von-gan-15-000-ty-dong-noi-thanh-pho-giau-nhat-nuoc-ta-voi-sieu-san-bay-lon-nhat-viet-nam-1870.html",
-        "wordCount": 818,
         "trendScore": 82,
         "status": "published"
       }
