@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-28T05:02:28.029Z",
-    "autoPublishedCount": 149,
+    "lastRunAt": "2026-11-28T11:02:16.029Z",
+    "autoPublishedCount": 150,
     "logs": [
+      {
+        "id": "news-log-1795863736029",
+        "timestamp": "2026-11-28T11:02:16.029Z",
+        "trendTitle": "Đất rơi vãi, bụi mù mịt trên đường Vành đai 3.5 đoạn qua xã Hoài Đức",
+        "generatedTitle": "Đất rơi vãi, bụi mù mịt trên đường Vành đai 3.5 đoạn qua xã Hoài Đức: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/dat-roi-vai-bui-mu-mit-tren-duong-vanh-dai-3-5-doan-qua-xa-hoai-duc-1222.html",
+        "wordCount": 798,
+        "trendScore": 82,
+        "status": "published"
+      },
       {
         "id": "news-log-1795842148029",
         "timestamp": "2026-11-28T05:02:28.029Z",
@@ -378,16 +388,6 @@
         "permalink": "/blog/tin-tuc/vanh-dai-3-5-tap-trung-thao-go-diem-nghen-thuc-day-tien-do-cac-du-an-thanh-phan-3454.html",
         "wordCount": 828,
         "trendScore": 75,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795345345914",
-        "timestamp": "2026-11-22T11:02:25.914Z",
-        "trendTitle": "Hà Nội lấy ý kiến cộng đồng về phương án hướng tuyến, vị trí ga 5 tuyến metro",
-        "generatedTitle": "Hà Nội lấy ý kiến cộng đồng về phương án hướng tuyến, vị trí ga 5 tuyến metro: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/ha-noi-lay-y-kien-cong-dong-ve-phuong-an-huong-tuyen-vi-tri-ga-5-tuyen-metro-5428.html",
-        "wordCount": 837,
-        "trendScore": 82,
         "status": "published"
       }
     ]
