@@ -87,9 +87,19 @@
   },
   "updatedAt": "2026-10-31T16:44:53.539Z",
   "socialListening": {
-    "lastRunAt": "2026-11-27T23:02:27.935Z",
-    "autoPublishedCount": 147,
+    "lastRunAt": "2026-11-28T04:26:34.431Z",
+    "autoPublishedCount": 148,
     "logs": [
+      {
+        "id": "news-log-1795839994431",
+        "timestamp": "2026-11-28T04:26:34.431Z",
+        "trendTitle": "Quá nhanh: Khối mái thép nặng gấp 1,2 lần tháp Eiffel đã được đưa lên độ cao 40m, mái dài hơn 300m che phòng đại tiệc 11.050m2 vượt nhịp không cột 81m lớn nhất thế giới, công nghệ Thụy Sĩ góp sức",
+        "generatedTitle": "Quá nhanh: Khối mái thép nặng gấp 1,2 lần tháp Eiffel đã được đưa lên độ cao 40m, mái dài hơn 300m che phòng đại tiệc 11.050m2 vượt nhịp không cột 81m lớn nhất thế giới, công nghệ Thụy Sĩ góp sức: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
+        "permalink": "/blog/tin-tuc/qua-nhanh-khoi-mai-thep-nang-gap-1-2-lan-thap-eiffel-da-duoc-dua-len-do-cao-40m-mai-dai-hon-300m-che-phong-dai-tiec-11-050m2-vuot-nhip-khong-cot-81m-lon-nhat-the-gioi-cong-nghe-thuy-si-gop-suc-3683.html",
+        "wordCount": 834,
+        "trendScore": 92,
+        "status": "published"
+      },
       {
         "id": "news-log-1795820547935",
         "timestamp": "2026-11-27T23:02:27.935Z",
@@ -377,16 +387,6 @@
         "generatedTitle": "Hôm nay, chính thức khai thác đoạn cao tốc 10 làn xe, vốn gần 15.000 tỷ đồng nối thành phố giàu nhất nước ta với siêu sân bay lớn nhất Việt Nam: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
         "permalink": "/blog/tin-tuc/hom-nay-chinh-thuc-khai-thac-doan-cao-toc-10-lan-xe-von-gan-15-000-ty-dong-noi-thanh-pho-giau-nhat-nuoc-ta-voi-sieu-san-bay-lon-nhat-viet-nam-1870.html",
         "wordCount": 818,
-        "trendScore": 82,
-        "status": "published"
-      },
-      {
-        "id": "news-log-1795315563145",
-        "timestamp": "2026-11-22T02:46:03.145Z",
-        "trendTitle": "Quá nhanh: Đại lộ rộng gần gấp 3 lần đường băng sân bay, chạy xuyên siêu dự án 925.000 tỷ đồng, kết nối trực tiếp tới sân vận động 135.000 chỗ lớn nhất thế giới của Vingroup dự kiến thông xe sau 10 ngày nữa",
-        "generatedTitle": "Quá nhanh: Đại lộ rộng gần gấp 3 lần đường băng sân bay, chạy xuyên siêu dự án 925.000 tỷ đồng, kết nối trực tiếp tới sân vận động 135.000 chỗ lớn nhất thế giới của Vingroup dự kiến thông xe sau 10 ngày nữa: Phân Tích Dưới Góc Nhìn Kỹ Thuật Bê Tông An Gia Bình",
-        "permalink": "/blog/tin-tuc/qua-nhanh-dai-lo-rong-gan-gap-3-lan-duong-bang-san-bay-chay-xuyen-sieu-du-an-925-000-ty-dong-ket-noi-truc-tiep-toi-san-van-dong-135-000-cho-lon-nhat-the-gioi-cua-vingroup-du-kien-thong-xe-sau-10-ngay-nua-0943.html",
-        "wordCount": 846,
         "trendScore": 82,
         "status": "published"
       }
